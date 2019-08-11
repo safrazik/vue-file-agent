@@ -29,7 +29,7 @@
   "homepage": "https://github.com/safrazik/vue-file-agent#readme",
   "files": [
     "/src",
-    "/dist",
+    "/dist"
   ],
   "dependencies": {
     "core-js": "^2.6.5",
