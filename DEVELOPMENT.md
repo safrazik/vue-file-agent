@@ -10,7 +10,7 @@ npm install
 `Jekyll` is needed for documentation to be generated
 ```
 npm run watch
-jekyll serve
+jekyll serve --config _config.yml,_config_dev.yml
 ```
 
 ### Compiles and minifies for production
