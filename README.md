@@ -75,11 +75,12 @@ or with script tag
 
 ```html
  <!-- jsdelivr cdn -->
-  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.umd.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.umd.js"></script>
 
   <!-- unpkg -->
-  <script src="https://unpkg.com/vue-file-agent@latest"></script>
+  <link rel="stylesheet" href="https://unpkg.com/vue-file-agent@latest/dist/vue-file-agent.css">
+  <script src="https://unpkg.com/vue-file-agent@latest/dist/vue-file-agent.umd.js"></script>
 ```
 
 ## Advanced Usage

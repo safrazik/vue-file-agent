@@ -1,16 +1,5 @@
 <div class="appa">
   <VueFileAgent
-    ref="vueFileInput"
-    :xurl="uploadUrl"
-    :multiple="true"
-    :xaccept="'image/png,.zip'"
-    :xmaxSize="'10MB'"
-    :xmaxFiles="14"
-    :xhelpText="'Choose files mate'"
-    :errorText="{
-      type: 'Invalid file type. Only png or zip Allowed',
-      size: 'Files should not exceed 8MB in size',
-    }"
     v-model="filesData"
     @select="filesSelected($event)"
     deletable

@@ -86,7 +86,7 @@ import FileData, {getAverageColor} from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 
 export default {
-	props: ['url', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText'],
+	props: ['uploadUrl', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText'],
 	components: {
 		VueFileIcon
 	},
@@ -308,16 +308,16 @@ export default {
       }
 		},
 		autoUpload(filesData){
-			if(!this.url){
+			if(!this.uploadUrl){
 				return;
 			}
-			this.upload(this.url, filesData);
+			this.upload(this.uploadUrl, filesData);
 		},
 		autoDeleteUpload(fileData){
-			if(!this.url){
+			if(!this.uploadUrl){
 				return;
 			}
-			this.deleteUpload(this.url, fileData);
+			this.deleteUpload(this.uploadUrl, fileData);
 		},
 		equalFiles(file1, file2){
 			return true &&
