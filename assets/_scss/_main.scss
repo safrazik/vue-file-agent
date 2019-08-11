@@ -1,0 +1,54 @@
+
+
+
+
+.main-header {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	// border-bottom: 1px solid red;
+	margin-bottom: 1rem;
+
+	padding-top: 1.5rem;
+	margin-bottom: 3rem;
+
+	.tagline {
+		color: #AAA;
+		font-style: italic;
+		// font-size: 0.75rem;
+	}
+}
+
+.main-content {
+	// max-width: 38rem;
+	// margin-left:  auto;
+	// margin-right: auto;
+}
+
+.post {
+	margin-bottom: 2rem;
+	.post-header {
+		margin-bottom: 1rem;
+		.post-date {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.posts .post {
+	margin-bottom: 3.5rem;
+}
+
+.related {
+	padding-top: 1rem;
+	margin-top: 2rem;
+	display: none;
+}
+
+#disqus_thread {
+	margin-bottom: 2rem;
+}
+
+/* hide the nprogress spinner (in case the javascript setting doesn't work) */
+#nprogress .spinner {
+	display: none !important;
+}

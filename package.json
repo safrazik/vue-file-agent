@@ -1,0 +1,48 @@
+{
+  "name": "vue-file-agent",
+  "version": "1.0.0",
+  "description": "\"Every file deserves to be treated equally\" - High performant Vue file upload component with elegant and distinguishable previews for every file type and support for drag and drop, validations, default uploader with progress support and externally customizable in the \"vue way\"",
+  "main": "src/index.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name vue-file-agent ./src/index.js",
+    "watch": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safrazik/vue-file-agent.git"
+  },
+  "keywords": [
+    "vue",
+    "file",
+    "upload",
+    "input",
+    "progress",
+    "drag",
+    "drop"
+  ],
+  "author": "Safraz Razik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/safrazik/vue-file-agent/issues"
+  },
+  "homepage": "https://github.com/safrazik/vue-file-agent#readme",
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}

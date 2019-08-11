@@ -1,0 +1,617 @@
+.vue-file-agent, .vue-file-agent * {
+  box-sizing: border-box;
+}
+
+.vue-file-agent.file-input-wrapper {
+  position: relative;
+  border: 2px dashed #AAA;
+  /*margin: 10px;*/
+/*  padding: 10px;
+  padding: 54px;*/
+  /*padding: 8px;*/
+  text-align: center;
+  transition: all 600ms;
+}
+
+.vue-file-agent.file-input-wrapper.is-drag-over {
+  border-color: #f61a1a;
+  box-shadow: inset 0px 0px 20px 1px #f61a1a;
+}
+
+.vue-file-agent .file-preview-wrapper {
+  display: inline-block;
+  margin: 5px;
+  position: relative;
+  vertical-align: top;
+  margin: 16px;
+  margin: 8px;
+}
+
+.vue-file-agent .file-preview-wrapper::before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.25);
+  /*z-index: 2;*/
+}
+
+.vue-file-agent .file-preview-wrapper-png, .vue-file-agent .file-preview-wrapper-gif, .vue-file-agent .file-preview-wrapper-svg {
+  /*.vue-file-agent .file-preview-wrapper-image {*/
+  /*background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAKklEQVR42mL5//8/Azbw+PFjrOJMDCSCUQ3EABZc4S0rKzsaSvTTABBgAMyfCMsY4B9iAAAAAElFTkSuQmCC") repeat 0 0;*/
+}
+
+.vue-file-agent .file-preview .file-preview-img {
+  max-width: 100%;
+  max-height: 100%;
+  /*background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAKklEQVR42mL5//8/Azbw+PFjrOJMDCSCUQ3EABZc4S0rKzsaSvTTABBgAMyfCMsY4B9iAAAAAElFTkSuQmCC") repeat 0 0;*/
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.1)" /><rect x="50%" y="0" width="50%" height="50%" fill="rgba(0, 0, 0, 0.25)" /><rect x="0" y="50%" width="50%" height="50%" fill="rgba(0, 0, 0, 0.25)" /></svg>');
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.1)" /><rect x="50%" y="0" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /><rect x="0" y="50%" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /></svg>');
+  background-repeat: repeat;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.vue-file-agent .file-preview .file-preview-img-clone {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  object-fit: cover;
+  filter: blur(10px);
+  height: 100%;
+  width: 100%;
+}
+
+/*.vue-file-agent .file-preview-wrapper-png .image-preview, .vue-file-agent .file-preview-wrapper-gif .image-preview, .vue-file-agent .file-preview-wrapper-svg .image-preview {*/
+.vue-file-agent .file-preview-wrapper-image .image-preview {
+  /* background-color: rgba(0, 0, 0, 0.25) !important; */
+  /*background-color: transparent !important;*/
+}
+
+.vue-file-agent .file-preview-wrapper-image .image-preview::after,
+.vue-file-agent .file-category-video-playable .file-preview::after {
+  content: " ";
+  background: rgba(0, 0, 0, 0.25);
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;
+}
+.vue-file-agent .file-preview-wrapper-image .image-preview.dark-content::after {
+  background: rgba(255, 255, 255, 0.25);
+}
+.vue-file-agent .file-category-video-playable .file-preview::after {
+  z-index: 1;
+}
+
+.vue-file-agent .file-preview {
+  /*background-size: contain;*/
+  /*background-size: cover;*/
+  /*display: block;*/
+  /*	background-repeat: no-repeat;
+	background-position: center;*/
+  position: relative;
+  z-index: 1;
+  float: left;
+  /*	width: 1200px !important;
+	height: 1200px !important;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+}
+
+.vue-file-agent .image-preview:hover {
+  /*background-size: contain;*/
+}
+
+.vue-file-agent .file-preview .file-name {
+  color: #FFF;
+  color: #FFF;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0 5px;
+  z-index: 4;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 28px;
+  height: 28px;
+  font-size: 16px;
+}
+
+.vue-file-agent .is-deletable .file-preview .file-name {
+  padding-right: 16px;
+}
+
+.vue-file-agent .file-preview .file-name {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.vue-file-agent .file-preview .file-delete {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0 5px 0 0;
+  padding: 5px 5px 0 5px;
+  font-size: 125%;
+
+  font-size: 20px;
+  background: #e553537d;
+  background: rgba(229, 83, 83, 0.5);
+  /*height: 24px;*/
+  line-height: 24px;
+  height: 28px;
+  width: 28px;
+  padding: 0 5px;
+  display: block;
+  color: #FFF;
+  z-index: 5;
+}
+
+.vue-file-agent .file-preview .file-icon {
+  z-index: 455;
+  position: absolute;
+  top: 50%;
+  height: 72px;
+  width: 72px;
+  margin-top: -36px;
+  left: 50%;
+  margin-left: -36px;
+}
+
+.vue-file-agent .file-preview .file-icon svg {
+  width: 72px;
+  height: 72px;
+  fill: #FFF;
+}
+
+.vue-file-agent .image-preview .file-icon {
+  display: none;
+}
+
+.vue-file-agent .file-preview::before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  top: auto;
+  height: 25px;
+}
+
+/*.vue-file-agent .file-category-video-playable .file-preview::before {
+  top: 0;
+  height: 100%;
+}*/
+
+.vue-file-agent .file-preview .file-ext {
+  position: absolute;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #FFF;
+  text-align: left;
+  display: block;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  line-height: 25px;
+  padding: 0 5px;
+  z-index: 3;
+}
+
+.vue-file-agent .file-preview .file-size {
+  position: absolute;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #FFF;
+  text-align: right;
+  display: block;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  line-height: 25px;
+  padding: 0 5px;
+  z-index: 4;
+}
+
+.vue-file-agent .file-preview .image-dimension .image-dimension-width,
+.vue-file-agent .file-preview .image-dimension .image-dimension-height {
+  /*float: left;*/
+  display: inline-block;
+}
+
+.vue-file-agent .file-preview .image-dimension .image-dimension-width::after {
+  content: "x";
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.vue-file-agent .file-preview .image-dimension {
+  position: absolute;
+  font-size: 12px;
+  /*text-transform: uppercase;*/
+  color: #FFF;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  display: block;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  line-height: 25px;
+  padding: 0 5px;
+  z-index: 4;
+  /*background: yellow;*/
+}
+
+.vue-file-agent .file-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.vue-file-agent .file-preview-new {
+  /*padding: 10px;*/
+/*  width: 200px;
+  height: 200px;*/
+  /*display: inline-block;*/
+  /*width: 100% !important;*/
+  /*height: 200px !important;*/
+  text-align: center;
+  /*border: 1px solid red;*/
+  /*margin: 8px;*/
+  padding: 8px;
+/*  margin-left: 0;
+  margin-right: 0;*/
+
+  z-index: 1;
+}
+
+/*.vue-file-agent .file-preview-wrapper::before*/
+.vue-file-agent .file-preview-new::before {
+  /*display: none;*/
+  background: rgba(0, 0, 0, 0.05);
+}
+.vue-file-agent .file-preview-new .file-preview::before {
+  display: none;
+}
+
+.vue-file-agent .file-preview-new svg {
+  fill: rgba(0, 0, 0, 0.25);
+  fill: #AAA;
+  /*fill: #CCC;*/
+/*  height: 60px;
+  margin-top: 16px;*/
+  margin-top: 16%;
+  height: 36%;
+}
+
+.vue-file-agent .file-preview-new .help-text {
+  color: rgba(0, 0, 0, 0.25);
+  color: #AAA;
+  /*color: #CCC;*/
+  text-align: center;
+  /*font-weight: bold;*/
+  font-size: 16px;
+  line-height: 20px;
+  height: 20px;
+  display: block;
+}
+
+.vue-file-agent .file-progress {
+  display: block;
+  height: 3px;
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  top: 32px;
+  top: 1px;
+
+  top: 0;
+  height: 28px;
+}
+
+.vue-file-agent .file-progress.has-file-progress {
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0.5;
+}
+.vue-file-agent .is-deletable .file-progress {
+  right: 28px;
+}
+
+.vue-file-agent .file-progress-bar {
+  background: #FFEB3B;
+  display: block;
+  height: 100%;
+  transition: all 100ms;
+  width: 0;
+}
+
+.vue-file-agent .file-progress-full .file-progress-bar {
+  background: #6eef1a;
+}
+
+/*.vue-file-agent .has-error .file-progress-bar {
+  background: #ea3939;
+}*/
+
+.overall-progress {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /*bottom: 0;*/
+  left: 0;
+  z-index: 10;
+  height: 10px;
+}
+
+.overall-progress .overall-progress-bar {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 229, 0, 0.25);
+}
+
+.overall-progress .overall-progress-left {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.overall-progress.overall-progress-full .overall-progress-bar {
+  background: rgba(63, 255, 0, 0.25);
+}
+
+.overall-progress {
+  display: none;
+}
+
+
+.vue-file-agent .file-error-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: #FFF;
+  bottom: 25px;
+  z-index: 900;
+  padding: 10px;
+  background: #ea2626;
+  background: rgba(234, 38, 38, 0.85);
+  top: 28px;
+  font-size: 14px;
+}
+
+
+.vue-file-agent .file-av-wrapper {
+/*  z-index: 800;
+  position: absolute;
+  top: 0;*/
+}
+
+.vue-file-agent .file-category-audio-playable .file-preview .file-icon {
+  /*display: none;*/
+}
+
+.vue-file-agent .file-av-wrapper .file-av-action {
+  width: 60px;
+  height: 60px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  margin-left: -30px;
+  background: transparent;
+  /*background: red;*/
+  border-radius: 50%;
+  z-index: 800;
+  cursor: pointer;
+}
+
+
+.vue-file-agent .file-category-audio-playable .file-icon,
+.vue-file-agent .file-category-video-playable .file-icon {
+  display: none;
+}
+
+.vue-file-agent .file-av-wrapper .file-av-stop,
+.vue-file-agent .file-av-wrapper .file-av-play {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  display: none;
+}
+.vue-file-agent .file-av-wrapper .file-av-play {
+  height: 90%;
+  width: 90%;
+  left: 5%;
+  top: 5%;
+  display: block;
+}
+
+.vue-file-agent .file-is-playing-av .file-av-wrapper .file-av-stop {
+  display: block;
+}
+.vue-file-agent .file-is-playing-av .file-av-wrapper .file-av-play {
+  display: none;
+}
+
+/*.vue-file-agent .file-is-playing-av .file-icon {
+  display: none;
+}*/
+
+.vue-file-agent .file-av-wrapper .file-av-stop svg,
+.vue-file-agent .file-av-wrapper .file-av-play svg {
+  fill: #FFF;
+  width: 100%;
+  height: 100%;
+}
+
+.vue-file-agent .file-av-wrapper video, .vue-file-agent .file-av-wrapper audio {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 799;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+
+.grid-box-item {
+  transition: all 600ms;
+  /*display: inline-block;*/
+  /*margin-right: 10px;*/
+}
+.grid-box-enter, .grid-box-leave-to
+/* .list-complete-leave-active below version 2.1.8 */ {
+  opacity: 0 !important;
+  /*transform: translateY(30px) !important;*/
+  transform: 
+  translate3d(-20px, -20px, -20px) 
+  scale(0) !important;
+
+  transform: translate3d(-25%, -25%, 0) scale(0.5) !important;
+  transform: translate3d(0, 0, 0) scale(0.25) !important;
+
+  /*transform-origin: top right !important;*/
+}
+.grid-box-leave-active {
+  position: absolute !important;
+}
+
+
+/*.vue-file-agent.file-input-wrapper.is-drag-over .file-preview-wrapper {
+  opacity: 0.125;
+}*/
+
+
+
+/* ----------- */
+
+.vue-file-agent-light .file-preview::before,
+.vue-file-agent-light .file-preview .file-name {
+  background: rgba(255, 255, 255, 0.5);
+  background: rgba(100, 100, 100, 0.5);
+}
+
+.vue-file-agent-light .file-preview .file-name,
+.vue-file-agent-light .file-preview .file-ext,
+.vue-file-agent-light .file-preview .file-size,
+.vue-file-agent-light .file-preview .image-dimension,
+.vue-file-agent-light .file-preview .image-dimension .image-dimension-width::after {
+  color: #000;
+  color: #333;
+  color: #FFF;
+}
+
+
+.transparent-image-wrapper {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.transparent-image-bg {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.1)" /><rect x="50%" y="0" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /><rect x="0" y="50%" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /></svg>');
+  background-repeat: repeat;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.1)" /><rect x="50%" y="0" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /><rect x="0" y="50%" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /></svg>');
+  background-repeat: repeat;
+}
+
+
+
+
+
+.grid-block-wrapper .grid-block {
+  width: 50%;
+  border: 1px solid transparent;
+  margin: 0 !important;
+}
+.grid-block-wrapper {
+  padding: 2px;
+}
+.grid-block-wrapper .grid-block .file-preview {
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%; /* 4:3 aspect ratio */;
+  padding-bottom: 100%; /* square */;
+}
+
+@media (min-width: 576px) {
+  .grid-block-wrapper .grid-block {
+    width: 33.3333%;
+    /*border-width: 8px;*/
+    border-width: 2px;
+  }
+  .grid-block-wrapper {
+    /*padding: 8px;*/
+    padding: 2px;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-block-wrapper .grid-block {
+    width: 25%;
+  }
+  .grid-block-wrapper {
+    /*padding: 8px;*/
+  }
+/*  .grid-block .item-pic-wrapper {
+    height: 164px;
+  }*/
+}
+@media (min-width: 992px) {
+  .grid-block-wrapper .grid-block {
+    width: 25%;
+    width: 20%;
+    /*border-width: 8px;*/
+  }
+  .grid-block-wrapper {
+    /*padding: 8px;*/
+  }
+/*  .grid-block .item-pic-wrapper {
+    height: 198px;
+  }*/
+}
+@media (min-width: 1200px) {
+  .grid-block-wrapper .grid-block {
+    width: 20%;
+    width: 16.6666%;
+  }
+/*  .grid-block .item-pic-wrapper {
+    height: 198px;
+  }*/
+}
+@media (min-width: 1440px) {
+  .grid-block-wrapper .grid-block {
+    width: 20%;
+    width: 16.6666%;
+  }
+/*  .grid-block .item-pic-wrapper {
+    height: 198px;
+  }*/
+}

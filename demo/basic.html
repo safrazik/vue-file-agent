@@ -1,0 +1,33 @@
+<div class="appa">
+  <VueFileAgent
+    ref="vueFileInput"
+    :xurl="uploadUrl"
+    :multiple="true"
+    :xaccept="'image/png,.zip'"
+    :xmaxSize="'10MB'"
+    :xmaxFiles="14"
+    :xhelpText="'Choose files mate'"
+    :errorText="{
+      type: 'Invalid file type. Only png or zip Allowed',
+      size: 'Files should not exceed 8MB in size',
+    }"
+    v-model="filesData"
+    @select="filesSelected($event)"
+    deletable
+    @delete="fileDeleted($event)"
+  ></VueFileAgent>
+<!--   <div>
+    Move: <input type="number" ref="moveInput" value="1">
+    <button @click="moveIndex(-1)">&lt;&lt;</button>
+    <button @click="moveIndex(1)">&gt;&gt;</button>
+  </div> -->
+  <!-- </div> -->
+<!--   <div>
+    <button @click="removeAll()">Remove All</button>
+    <input type="number" ref="removeIdx" value="1">
+    <button @click="remove()">Remove</button>
+    <button @click="sortBy('lastModified')">Sort by Last Modified</button>
+    <button @click="sortBy('name')">Sort by Name</button>
+  </div> -->
+  <!-- </div></div> -->
+</div>

@@ -1,0 +1,5 @@
+_site
+.sass-cache
+.jekyll-metadata
+dist_dev
+node_modules
