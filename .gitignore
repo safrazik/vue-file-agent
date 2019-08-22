@@ -3,3 +3,4 @@ _site
 .jekyll-metadata
 dist_dev
 node_modules
+uploads

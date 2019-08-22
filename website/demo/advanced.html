@@ -33,33 +33,63 @@
         </div>
       </div>
     </div>
-    <div>
-      <div class="input-group input-group-sm">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><small>Upload URL</small></span>
+    <div class="row mx-n2">
+      <div class="col-md-4 px-2 mb-1">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><small>Upload URL</small></span>
+          </div>
+          <input id="advanced-demo-upload-url" class="form-control" type="text" v-model="uploadUrl">
         </div>
-        <input id="advanced-demo-upload-url" class="form-control" type="text" v-model="uploadUrl">
+      </div>
+      <div class="col-md-2 px-2">
+        <div class="custom-control custom-checkbox mt-1">
+          <input type="checkbox" class="custom-control-input" id="advanced-demo-meta" v-model="meta">
+          <label class="custom-control-label" for="advanced-demo-meta">:meta</label>
+        </div>
+      </div>
+      <div class="col-md-2 px-2">
+        <div class="custom-control custom-checkbox mt-1">
+          <input type="checkbox" class="custom-control-input" id="advanced-demo-multiple" v-model="multiple">
+          <label class="custom-control-label" for="advanced-demo-multiple">:multiple</label>
+        </div>
+      </div>
+      <div class="col-md-2 px-2">
+        <div class="custom-control custom-checkbox mt-1">
+          <input type="checkbox" class="custom-control-input" id="advanced-demo-deletable" v-model="deletable">
+          <label class="custom-control-label" for="advanced-demo-deletable">:deletable</label>
+        </div>
+      </div>
+      <div class="col-md-2 px-2">
+        <div class="custom-control custom-checkbox mt-1">
+          <input type="checkbox" class="custom-control-input" id="advanced-demo-compact" v-model="compact">
+          <label class="custom-control-label" for="advanced-demo-compact">:compact</label>
+        </div>
       </div>
     </div>
   </div>
 
-  <VueFileAgent
-    ref="vueFileAgent"
-    :multiple="true"
-    :deletable="true"
-    :accept="valAccept"
-    :maxSize="valMaxSize"
-    :maxFiles="valMaxFiles"
-    :helpTextOld="'Choose images or zip files'"
-    :errorTextOld="{
-      type: 'Invalid file type. Only png or zip Allowed',
-      size: 'Files should not exceed 10MB in size',
-    }"
-    :meta="true"
-    @select="filesSelected($event)"
-    @delete="fileDeleted($event)"
-    v-model="filesData"
-  ></VueFileAgent>
+  <div class="mx-auto" :style="compact ? {width: '200px'} : {}">
+    <VueFileAgent
+      ref="vueFileAgent"
+      :uploadUrl="uploadUrl"
+      :multiple="multiple"
+      :meta="meta"
+      :deletable="deletable"
+      :compact="compact"
+      :accept="valAccept"
+      :maxSize="valMaxSize"
+      :maxFiles="valMaxFiles"
+      :helpTextOld="'Choose images or zip files'"
+      :errorTextOld="{
+        type: 'Invalid file type. Only png or zip Allowed',
+        size: 'Files should not exceed 10MB in size',
+      }"
+      @select="filesSelected($event)"
+      @delete="fileDeleted($event)"
+      v-model="filesData"
+    ></VueFileAgent>
+  </div>
 
 
   <div class="card card-body mt-3">

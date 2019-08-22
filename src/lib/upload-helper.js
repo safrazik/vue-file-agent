@@ -47,6 +47,20 @@ class UploadHelper {
 		});
 	}
 
+	prepareUploadError(fileData, err){
+		var errorText = err.message;
+		if(err.response && err.response.data){
+			try {
+				var errorMsg = err.response.data.error || JSON.parse(err.response.data).error;
+				errorText = errorMsg;
+			} catch(e){}
+		}
+		if(!fileData.error){
+			fileData.error = {};
+		}
+		fileData.error.upload = errorText;
+	}
+
 	upload(url, headers, filesData, progressFn){
 		var self = this;
 		progressFn = progressFn || function(){};
@@ -62,40 +76,20 @@ class UploadHelper {
 		  let fileData = filesData[i];
 		  var formData = new FormData();
 		  formData.append('file', fileData.file);
-		  // function updateOverallProgress(){
-		  //   var prgTotal = 0;
-		  //   for(var fD of filesData){
-		  //     prgTotal += fD.progress();
-		  //   }
-		  //   progressFn(prgTotal/filesData.length);
-		  // }
 		  (function(fileData){
 		    var promise = self.doUpload(url, headers, formData, function(progressEvent) {
 		        var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
 		        var percentCompletedRounded = Math.round(percentCompleted);
-		        console.log(percentCompletedRounded, percentCompleted, progressEvent);
 		        fileData.progress(percentCompleted);
 		        updateOverallProgress();
 		    }, function(xhr){
 		    	fileData.xhr = xhr;
 		    });
 		    promise.then(function(response){
-		      console.log('received data:::::', response.data);
 		      delete fileData.xhr;
 		      fileData.upload = response.data;
 		    } /* */ , function(err){
-		    	var errorText = err.message;
-		    	if(err.response && err.response.data){
-		    		try {
-		    			var errorMsg = JSON.parse(err.response.data).error;
-			    		errorText = errorMsg;
-		    		} catch(e){}
-		    	}
-		    	if(!fileData.error){
-		    		fileData.error = {};
-		    	}
-		    	fileData.error.upload = errorText;
-		      console.log('upload failed:::::', err);
+		    	self.prepareUploadError(fileData, err);
 		    } /* */);
 		    promises.push(promise);
 		  })(fileData);
@@ -105,16 +99,17 @@ class UploadHelper {
 
 	deleteUpload(url, headers, fileData){
 		return new Promise((resolve, reject)=> {
-			console.log('to be deleted fileData:', fileData);
 			if (fileData.xhr) {
 				fileData.xhr.abort();
-				console.log('xhr.readyState:', fileData.xhr.readyState);
 			}
 			if (fileData.upload) {
 				this.doDeleteUpload(url, headers, fileData.upload, (xhr)=> {
 				}).then((result)=> {
 					resolve(result);
-				}, reject);
+				}, (err)=> {
+		    	this.prepareUploadError(fileData, err);
+		    	reject(err);
+				});
 			}
 		});
 	}

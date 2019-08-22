@@ -53,8 +53,6 @@ class AjaxRequest {
 
 			  // Prepare the response
 			  var responseHeaders = request.getAllResponseHeaders();
-			  // console.log('All response headers', responseHeaders);
-			  // console.log('Content-Type response headers', request.getResponseHeader('Content-Type'));
 			  var responseData = request.responseText;
 			  var contentType = request.getResponseHeader('Content-Type');
 			  if (contentType && contentType.indexOf('application/json') != -1) {

@@ -38,7 +38,12 @@ var component = {
       filesData: filesData,
       filesDataForUpload: [],
       uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
+      uploadUrl: 'http://localhost/safrazik/vue-file-agent/upload-server-examples/php/upload-server.php',
       uploadHeaders: {'X-Test-Header': 'vue-file-agent'},
+      meta: true,
+      multiple: true,
+      deletable: true,
+      compact: false,
       sortDirection: {
         lastModified: 'ASC',
         name: 'ASC',
@@ -151,7 +156,9 @@ var component = {
       // console.log('sortBy', prop, this.filesData);
       var ret = direction == 'DESC' ? -1 : 1;
       this.filesData = this.filesData.sort(function(fd1, fd2){
-        return fd1.file[prop] > fd2.file[prop] ? 1*ret : -1*ret;
+        var f1 = fd1.file || fd1;
+        var f2 = fd2.file || fd2;
+        return f1[prop] > f2[prop] ? 1*ret : -1*ret;
       });
       // console.log('sortBy after', prop, this.filesData);
     },

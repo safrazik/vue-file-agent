@@ -2,16 +2,56 @@
 layout: home
 ---
 
-<!-- <demo-basic></demo-basic> -->
+{% capture code %}
+{% raw %}
+<template>
+  <div style="width: 180px;">
+    <VueFileAgent
+      :uploadUrl="uploadUrl"
+      :multiple="false"
+      :deletable="false"
+      :meta="false"
+      :compact="true"
+      accept="image/*"
+      help-text="Select or drag an image here"
+      :errorText="{
+        type: 'Please select an image',
+      }"
+      v-model="profilePic"
+      @select="onSelect($event)"
+    ></VueFileAgent>
+  </div>
+</template>
+<script>
+export default {
+  data: function(){
+    return {
+      // ...
+      profilePic: null,
+      uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
+      // ...
+    };
+  },
+  methods: {
+    onSelect: function(filesData){
+      var fd = this.profilePic;
+      console.log('profilePic', fd);
+      // alert('You selected a ' + fd.sizeText + ' ' + fd.ext + ' file (' + fd.name + ')');
+    }
+  },
+  // ...
+}
+</script>
+{% endraw %}
+{% endcapture %}
 
-<!-- # Basic Demo -->
 
-<!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum. -->
+<div style="float: left;padding: 20px 20px 10px 0;background: #FFF;">
+{% include_relative website/includes/vue-code.md name="profile_picture" code=code result_only=true %}
+</div>
 
-{% include_relative README.md %}
+{% capture README %}{% include_relative README.md %}{% endcapture %}
 
+<div class="readme-content" v-pre>
+  {{ README | markdownify }}
+</div>

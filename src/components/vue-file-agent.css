@@ -5,10 +5,6 @@
 .vue-file-agent.file-input-wrapper {
   position: relative;
   border: 2px dashed #AAA;
-  /*margin: 10px;*/
-/*  padding: 10px;
-  padding: 54px;*/
-  /*padding: 8px;*/
   text-align: center;
   transition: all 600ms;
 }
@@ -35,22 +31,13 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.25);
-  /*z-index: 2;*/
-}
-
-.vue-file-agent .file-preview-wrapper-png, .vue-file-agent .file-preview-wrapper-gif, .vue-file-agent .file-preview-wrapper-svg {
-  /*.vue-file-agent .file-preview-wrapper-image {*/
-  /*background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAKklEQVR42mL5//8/Azbw+PFjrOJMDCSCUQ3EABZc4S0rKzsaSvTTABBgAMyfCMsY4B9iAAAAAElFTkSuQmCC") repeat 0 0;*/
 }
 
 .vue-file-agent .file-preview .file-preview-img {
   max-width: 100%;
   max-height: 100%;
-  /*background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAKklEQVR42mL5//8/Azbw+PFjrOJMDCSCUQ3EABZc4S0rKzsaSvTTABBgAMyfCMsY4B9iAAAAAElFTkSuQmCC") repeat 0 0;*/
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.1)" /><rect x="50%" y="0" width="50%" height="50%" fill="rgba(0, 0, 0, 0.25)" /><rect x="0" y="50%" width="50%" height="50%" fill="rgba(0, 0, 0, 0.25)" /></svg>');
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.1)" /><rect x="50%" y="0" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /><rect x="0" y="50%" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /></svg>');
   background-repeat: repeat;
-
   position: absolute;
   left: 50%;
   top: 50%;
@@ -64,12 +51,6 @@
   filter: blur(10px);
   height: 100%;
   width: 100%;
-}
-
-/*.vue-file-agent .file-preview-wrapper-png .image-preview, .vue-file-agent .file-preview-wrapper-gif .image-preview, .vue-file-agent .file-preview-wrapper-svg .image-preview {*/
-.vue-file-agent .file-preview-wrapper-image .image-preview {
-  /* background-color: rgba(0, 0, 0, 0.25) !important; */
-  /*background-color: transparent !important;*/
 }
 
 .vue-file-agent .file-preview-wrapper-image .image-preview::after,
@@ -88,29 +69,21 @@
 }
 
 .vue-file-agent .file-preview {
-  /*background-size: contain;*/
-  /*background-size: cover;*/
-  /*display: block;*/
-  /*	background-repeat: no-repeat;
-	background-position: center;*/
   position: relative;
   z-index: 1;
   float: left;
-  /*	width: 1200px !important;
-	height: 1200px !important;*/
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9;
+}
+
+.vue-file-agent.has-multiple .file-preview,
+.vue-file-agent.is-single .file-preview-wrapper.is-deletable .file-preview {
   z-index: 11;
 }
 
-.vue-file-agent .image-preview:hover {
-  /*background-size: contain;*/
-}
-
 .vue-file-agent .file-preview .file-name {
-  color: #FFF;
-  color: #FFF;
   position: absolute;
   top: 0;
   left: 0;
@@ -140,14 +113,10 @@
   position: absolute;
   right: 0;
   top: 0;
-  padding: 0 5px 0 0;
   padding: 5px 5px 0 5px;
-  font-size: 125%;
-
   font-size: 20px;
   background: #e553537d;
   background: rgba(229, 83, 83, 0.5);
-  /*height: 24px;*/
   line-height: 24px;
   height: 28px;
   width: 28px;
@@ -191,11 +160,6 @@
   height: 25px;
 }
 
-/*.vue-file-agent .file-category-video-playable .file-preview::before {
-  top: 0;
-  height: 100%;
-}*/
-
 .vue-file-agent .file-preview .file-ext {
   position: absolute;
   font-size: 16px;
@@ -228,7 +192,6 @@
 
 .vue-file-agent .file-preview .image-dimension .image-dimension-width,
 .vue-file-agent .file-preview .image-dimension .image-dimension-height {
-  /*float: left;*/
   display: inline-block;
 }
 
@@ -240,7 +203,6 @@
 .vue-file-agent .file-preview .image-dimension {
   position: absolute;
   font-size: 12px;
-  /*text-transform: uppercase;*/
   color: #FFF;
   color: rgba(255, 255, 255, 0.75);
   text-align: center;
@@ -251,7 +213,6 @@
   line-height: 25px;
   padding: 0 5px;
   z-index: 4;
-  /*background: yellow;*/
 }
 
 .vue-file-agent .file-input {
@@ -268,25 +229,12 @@
 }
 
 .vue-file-agent .file-preview-new {
-  /*padding: 10px;*/
-/*  width: 200px;
-  height: 200px;*/
-  /*display: inline-block;*/
-  /*width: 100% !important;*/
-  /*height: 200px !important;*/
   text-align: center;
-  /*border: 1px solid red;*/
-  /*margin: 8px;*/
   padding: 8px;
-/*  margin-left: 0;
-  margin-right: 0;*/
-
   z-index: 1;
 }
 
-/*.vue-file-agent .file-preview-wrapper::before*/
 .vue-file-agent .file-preview-new::before {
-  /*display: none;*/
   background: rgba(0, 0, 0, 0.05);
 }
 .vue-file-agent .file-preview-new .file-preview::before {
@@ -294,21 +242,14 @@
 }
 
 .vue-file-agent .file-preview-new svg {
-  fill: rgba(0, 0, 0, 0.25);
   fill: #AAA;
-  /*fill: #CCC;*/
-/*  height: 60px;
-  margin-top: 16px;*/
   margin-top: 16%;
   height: 36%;
 }
 
 .vue-file-agent .file-preview-new .help-text {
-  color: rgba(0, 0, 0, 0.25);
   color: #AAA;
-  /*color: #CCC;*/
   text-align: center;
-  /*font-weight: bold;*/
   font-size: 16px;
   line-height: 20px;
   height: 20px;
@@ -318,7 +259,7 @@
 .vue-file-agent .file-progress {
   display: block;
   height: 3px;
-  z-index: 5;
+  z-index: 3;
   position: absolute;
   top: 0;
   left: 0;
@@ -326,14 +267,19 @@
   overflow: hidden;
   top: 32px;
   top: 1px;
-
   top: 0;
   height: 28px;
 }
 
+.vue-file-agent.no-meta .file-progress {
+    height: 4px;
+    margin-top: 1px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
 .vue-file-agent .file-progress.has-file-progress {
   background: rgba(255, 255, 255, 0.5);
-  opacity: 0.5;
 }
 .vue-file-agent .is-deletable .file-progress {
   right: 28px;
@@ -351,15 +297,10 @@
   background: #6eef1a;
 }
 
-/*.vue-file-agent .has-error .file-progress-bar {
-  background: #ea3939;
-}*/
-
 .overall-progress {
   position: absolute;
   top: 0;
   right: 0;
-  /*bottom: 0;*/
   left: 0;
   z-index: 10;
   height: 10px;
@@ -403,17 +344,6 @@
   font-size: 14px;
 }
 
-
-.vue-file-agent .file-av-wrapper {
-/*  z-index: 800;
-  position: absolute;
-  top: 0;*/
-}
-
-.vue-file-agent .file-category-audio-playable .file-preview .file-icon {
-  /*display: none;*/
-}
-
 .vue-file-agent .file-av-wrapper .file-av-action {
   width: 60px;
   height: 60px;
@@ -423,7 +353,6 @@
   margin-top: -30px;
   margin-left: -30px;
   background: transparent;
-  /*background: red;*/
   border-radius: 50%;
   z-index: 800;
   cursor: pointer;
@@ -459,10 +388,6 @@
   display: none;
 }
 
-/*.vue-file-agent .file-is-playing-av .file-icon {
-  display: none;
-}*/
-
 .vue-file-agent .file-av-wrapper .file-av-stop svg,
 .vue-file-agent .file-av-wrapper .file-av-play svg {
   fill: #FFF;
@@ -494,30 +419,19 @@
 
 .grid-box-item {
   transition: all 600ms;
-  /*display: inline-block;*/
-  /*margin-right: 10px;*/
 }
-.grid-box-enter, .grid-box-leave-to
-/* .list-complete-leave-active below version 2.1.8 */ {
+
+.grid-box-enter, .grid-box-leave-to  {
   opacity: 0 !important;
-  /*transform: translateY(30px) !important;*/
   transform: 
   translate3d(-20px, -20px, -20px) 
   scale(0) !important;
-
-  transform: translate3d(-25%, -25%, 0) scale(0.5) !important;
   transform: translate3d(0, 0, 0) scale(0.25) !important;
-
-  /*transform-origin: top right !important;*/
 }
+
 .grid-box-leave-active {
   position: absolute !important;
 }
-
-
-/*.vue-file-agent.file-input-wrapper.is-drag-over .file-preview-wrapper {
-  opacity: 0.125;
-}*/
 
 
 
@@ -586,41 +500,23 @@
   .grid-block-wrapper .grid-block {
     width: 25%;
   }
-  .grid-block-wrapper {
-    /*padding: 8px;*/
-  }
-/*  .grid-block .item-pic-wrapper {
-    height: 164px;
-  }*/
 }
 @media (min-width: 992px) {
   .grid-block-wrapper .grid-block {
-    width: 25%;
     width: 20%;
-    /*border-width: 8px;*/
   }
-  .grid-block-wrapper {
-    /*padding: 8px;*/
-  }
-/*  .grid-block .item-pic-wrapper {
-    height: 198px;
-  }*/
 }
 @media (min-width: 1200px) {
   .grid-block-wrapper .grid-block {
-    width: 20%;
     width: 16.6666%;
   }
-/*  .grid-block .item-pic-wrapper {
-    height: 198px;
-  }*/
 }
 @media (min-width: 1440px) {
   .grid-block-wrapper .grid-block {
-    width: 20%;
     width: 16.6666%;
   }
-/*  .grid-block .item-pic-wrapper {
-    height: 198px;
-  }*/
+}
+
+.grid-block-wrapper.is-compact .grid-block {
+  width: 100%;
 }

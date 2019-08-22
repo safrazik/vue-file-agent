@@ -4,9 +4,12 @@
 
 High performant Vue file **upload** component with elegant and distinguishable **previews** for every file type and support for **drag and drop**, **validations**, default uploader with **progress** support and externally customizable in the "vue way"
 
-## [See it in action](http://codepen.io/safrazik/)
+<div class="clearfix"></div>
+
+## [Live Demo][]
 
 ![Demo](website/assets/demo.gif)
+
 
 ## Features
 
@@ -91,6 +94,8 @@ or with script tag
   <script src="https://unpkg.com/vue-file-agent@latest/dist/vue-file-agent.umd.js"></script>
 ```
 
+[Download from Github](https://github.com/safrazik/vue-file-agent/releases)
+
 ## Advanced Usage
 
 
@@ -169,3 +174,9 @@ export default {
 ## License
 
 The MIT License
+
+
+## [Live Demo][]
+
+
+[Live Demo]: https://safrazik.github.io/vue-file-agent

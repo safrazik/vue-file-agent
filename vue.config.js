@@ -9,6 +9,9 @@ module.exports = {
         // .filename('[name].[hash].js') 
         .filename('[name].js') 
         .end() 
-    }  
+    }
+  },
+  css: {
+    extract: true,
   }
 }

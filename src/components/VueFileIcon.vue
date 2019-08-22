@@ -1,11 +1,9 @@
 <template>
-	<!-- <span>{{ ext }} -->
 	<svg :viewBox="viewBoxComputed">
 		<template v-for="d in icon.paths">
 	  		<path :d="d" v-if="d" />
 		</template>
 	</svg>
-	<!-- </span> -->
 </template>
 <style>
 </style>

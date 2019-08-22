@@ -33,7 +33,9 @@ layout: default
       <main role="main" class="inner cover my-5">
 <!--             <h1 class="cover-heading">Cover your page.</h1>
         <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p> -->
-        <demo-basic></demo-basic>
+        <div id="demo-basic-mount">
+          <demo-basic></demo-basic>
+        </div>
 <!--             <p class="lead">
           <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
         </p> -->
@@ -44,10 +46,10 @@ layout: default
         <p class="lead-old">
           <!-- <a href="#" class="btn btn-lg btn-secondary">Get Started</a> -->
            <!-- by <a href="https://twitter.com/safrazik">@safrazik</a>.</p> -->
-           <!-- Scroll down for  -->
+           Scroll down for 
            <a href="#docs">Docs</a>
-           &middot;
-           <a href="#advanced-demo">Advanced Demo</a>
+<!--            &middot;
+           <a href="#advanced-demo">Advanced Demo</a> -->
         </p>
            <!-- by <a href="https://twitter.com/safrazik">@safrazik</a>.</p> -->
         </div>
@@ -56,14 +58,16 @@ layout: default
   </div>
   <div class="container">
     <div id="docs" name="docs"></div>
-    <div class="markdown-body" style="margin: 40px 0;" v-pre>
+    <div class="markdown-body" style="margin: 40px 0;">
       {{ content }}
     </div>
   </div>
   <div class="container">
     <div id="advanced-demo" name="advanced-demo"></div>
     <h2>Advanced Demo</h2>
-    <demo-advanced></demo-advanced>
+    <div id="demo-advanced-mount">
+      <demo-advanced></demo-advanced>
+    </div>
 <!--         <div class="mb-5">
     </div> -->
   </div> 

@@ -76,92 +76,6 @@ export function getAverageColor(arr) {
     ] : [0, 0, 0, 0];
 }
 
-function getAverageRGB(pixels, pixelCount) {
-  // https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
-  // http://jsfiddle.net/xLF38/818/    
-    var blockSize = 5, // only visit every x pirxels. e.g: every 5 pixels
-        defaultRGB = {r:0,g:0,b:0}, // for non-supporting envs
-        canvas = document.createElement('canvas'),
-        context = canvas.getContext && canvas.getContext('2d'),
-        width, height,
-        i = -4,
-        length,
-        rgb = {r:0,g:0,b:0},
-        count = 0;
-        
-    if (!context) {
-        return defaultRGB;
-    }
-    
-    // height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
-    // width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
-    
-    // context.drawImage(imgEl, 0, 0);
-    
-    // try {
-    //     imageData = context.getImageData(0, 0, width, height);
-    // } catch(e) {
-    //     /* security error, img on diff domain */alert('x');
-    //     return defaultRGB;
-    // }
-    
-    length = pixels.length;
-
-    // var pixelCount = pixels.length;
-    var quality = 100;
-
-    console.log('pixels: ', pixelCount);
-
-    for (var i = 0, offset, r, g, b, a; i < pixelCount; i = i + quality) {
-        offset = i * 4;
-        r = pixels[offset + 0];
-        g = pixels[offset + 1];
-        b = pixels[offset + 2];
-        a = pixels[offset + 3];
-
-        // If pixel is mostly opaque and not white
-        if (typeof a === 'undefined' || a >= 125) {
-            if (!(r > 250 && g > 250 && b > 250)) {
-                // pixelArray.push([r, g, b]);
-              rgb.r += r;
-              rgb.g += g;
-              rgb.b += b;
-              ++count;
-            }
-        }
-    }
-    
-    // while ( (i += blockSize * 4) < length ) {
-    //     ++count;
-    //     var r = pixels[i+0];
-    //     var g = pixels[i+1];
-    //     var b = pixels[i+2];
-
-    //     var a = pixels[i + 3];
-
-    //     // If pixel is mostly opaque and not white
-    //     if (false || a >= 125) {
-    //         if (true){//!(r > 250 && g > 250 && b > 250)) {
-    //           rgb.r += r;
-    //           rgb.g += g;
-    //           rgb.b += b;
-
-    //         }
-    //         else {
-    //           console.log('wt?', r, g, b, a);
-    //         }
-    //     }
-    // }
-    
-    // ~~ can be used instead of Math.floor
-    rgb.r = Math.floor(rgb.r/count);
-    rgb.g = Math.floor(rgb.g/count);
-    rgb.b = Math.floor(rgb.b/count);
-    
-    return rgb;
-    
-}
-
 var resizeImage = function(settings, fileData) {
   var file = settings.file;
   var url = settings.url;
@@ -211,14 +125,11 @@ var resizeImage = function(settings, fileData) {
     var context = canvas.getContext('2d');
     context.drawImage(image, 0, 0, width, height);
     try {
-      console.log('gonna getAverageColor', width, height, width*height);
         var imageData = context.getImageData(0, 0, width, height);
         var rgb = getAverageColor(imageData.data);
         if(rgb){
           avgColor = rgb;
         }
-        console.log('getAverageColor', rgb, 'rgba(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ', ' + rgb[3] + ')');
-
     } catch(e) {
         /* security error, img on diff domain */
     }
@@ -247,7 +158,6 @@ var resizeImage = function(settings, fileData) {
   		return;
   	};
   	if(url){
-  		// console.log('Yeah URL!!!!!!!');
   		image.src = url;
   		return;
   	}
@@ -364,6 +274,7 @@ FileData = function(data, options = {}){
 	self.resizeLimit = FileData.defaultResizeLimit;
 	self.read = !!options.read;
 	self.image = {};
+  self.dimensions = {width: 0, height: 0};
   self.error = data.error;
   self.options = options;
   self.maxSize = options.maxSize;
@@ -466,7 +377,6 @@ FileData = function(data, options = {}){
 				self.resizeImage().then(function(){ 
 					resolve(self);
 				}, reject);
-				console.log('resizing');
 				return;
 			}
 			resolve(self);
@@ -475,6 +385,10 @@ FileData = function(data, options = {}){
 	self.imageResized = function(resized){
 		self.urlResized = resized.url;
 		self.image = resized.image;
+    if(resized.image && resized.image.width && resized.image.height){
+      self.dimensions.width = resized.image.width;
+      self.dimensions.height = resized.image.height;
+    }
 		self.lastKnownSrc = self.urlResized;
     self.imageColor = resized.color;
 	}
@@ -556,6 +470,7 @@ FileData.toRaw = function(filesData){
 		fileDataRaw.file = fileData.file;
 		fileDataRaw.progress = fileData.progress; // pass it as a function
     fileDataRaw.error = fileData.error;
+    fileDataRaw.dimensions = fileData.dimensions;
 		filesDataRaw.push(fileDataRaw);
 	})
 	return filesDataRaw;

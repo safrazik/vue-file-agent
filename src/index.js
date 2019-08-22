@@ -1,5 +1,3 @@
-export * from './components';
-
 import VueFileIcon from './components/VueFileIcon.vue';
 import VueFileAgent from './components/VueFileAgent.vue';
 

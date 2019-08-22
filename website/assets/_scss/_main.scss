@@ -54,5 +54,12 @@
 }
 
 #see-it-in-action, #see-it-in-action + p {
+}
+
+#live-demo + p, .readme-content img {
+	display: none;
+}
+
+#live-demo, #live-demo-1 {
 	display: none;
 }
