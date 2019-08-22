@@ -38,7 +38,6 @@ var component = {
       filesData: filesData,
       filesDataForUpload: [],
       uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
-      uploadUrl: 'http://localhost/safrazik/vue-file-agent/upload-server-examples/php/upload-server.php',
       uploadHeaders: {'X-Test-Header': 'vue-file-agent'},
       meta: true,
       multiple: true,
