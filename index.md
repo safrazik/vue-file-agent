@@ -32,13 +32,6 @@ export default {
       // ...
     };
   },
-  methods: {
-    onSelect: function(filesData){
-      var fd = this.profilePic;
-      console.log('profilePic', fd);
-      // alert('You selected a ' + fd.sizeText + ' ' + fd.ext + ' file (' + fd.name + ')');
-    }
-  },
   // ...
 }
 </script>
