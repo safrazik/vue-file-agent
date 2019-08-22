@@ -6,7 +6,7 @@ High performant Vue file **upload** component with elegant and distinguishable *
 
 ## [See it in action](http://codepen.io/safrazik/)
 
-![Demo](assets/demo.gif)
+![Demo](website/assets/demo.gif)
 
 ## Features
 
