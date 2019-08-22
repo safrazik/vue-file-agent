@@ -2,65 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" c4ontent="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.5">
-    <title>{{ site.title }}</title>
+    <meta name="author" content="Safraz Razik">
+    <meta name="generator" content="Jekyll v3.8.6">
 
-    <link rel="canonical" href="https://safrazik.github.io/vue-file-agent">
+    <title>Upload Server Examples - Vue File Agent</title>
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/assets/github-markdown.css">
-
-    <!-- <link rel="stylesheet" href="{{ "/assets/styles.css" | prepend: site.baseurl }}"> -->
-    <!-- <link rel="stylesheet" href="{{ "/vue-file-agent.css" | prepend: site.dist_baseurl }}"> -->
-    <!-- <link rel="stylesheet" href="{{ "/vue-file-agent.css" | prepend: "../dist" }}"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.css">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    <script type="text/javascript">
-      var components = {};
-    </script>
-    <!-- Custom styles for this template -->
-    <!-- <link href="cover.css" rel="stylesheet"> -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.css">
   </head>
   <body>
     <div id="app">
-
-            <section class="text-center p-3" style="background: #333">
-              <div>              
-                <h3>
-                  <a href="{{ "/" | prepend: site.baseurl }}">
-                    Vue File Agent
-                  </a>
-                </h3>
-                <div style="color: #ACB5BD">
-                  <p>
-                    Every file deserves to be treated equally
-                  </p>
-                </div>
-              </div>
-              <nav>
-                <a href="https://github.com/safrazik/vue-file-agent" target="_blank">Github</a>
-              </nav>
-            </section>
+      <section class="text-center p-3" style="background: #333">
+        <div>              
+          <h3>
+            <a href="{{ "/" | prepend: site.baseurl }}">
+              Vue File Agent
+            </a>
+          </h3>
+          <div style="color: #ACB5BD">
+            <p>
+              Every file deserves to be treated equally
+            </p>
+          </div>
+        </div>
+        <nav>
+          <a href="https://github.com/safrazik/vue-file-agent" target="_blank">Github</a>
+        </nav>
+      </section>
 
       <div class="container">
         <div id="docs" name="docs"></div>
@@ -69,11 +41,7 @@
         </div>
       </div>
       <div class="container">
-<!--         <div id="advanced-demo" name="advanced-demo"></div>
-        <h2>Upload Server Example</h2> -->
         <demo-advanced></demo-advanced>
-<!--         <div class="mb-5">
-        </div> -->
       </div> 
       <div class="bg-secondary text-white mt-5 py-3">
         <div class="container">
@@ -84,45 +52,11 @@
       </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.umd.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.umd.js"></script>
+    {% include_relative website/includes/components.html %}
 
-  <script type="text/x-template" id="demo-basic-template">
-    {% include_relative demo/basic.html %}
-  </script>
-  <script type="text/javascript" id="demo-basic-script">
-    (function(){
-      {% include_relative demo/basic.js %}
-      component.template = '#demo-basic-template';
-      // Vue.component('demo-basic', component);
-      components['demo-basic'] = component;
-    })();
-  </script>
-
-  <script type="text/x-template" id="demo-advanced-template">
-    {% include_relative demo/advanced.html %}
-  </script>
-  <script type="text/javascript" id="demo-advanced-script">
-    (function(){
-      {% include_relative demo/advanced.js %}
-      component.template = '#demo-advanced-template';
-      components['demo-advanced'] = component;
-      // Vue.component('demo-advanced', component);
-    })();
-  </script>
-
-
-  <!-- <script src='{{ "/assets/js/scripts.js" | prepend: site.baseurl }}'></script> -->
-
-  <script type="text/javascript">
-    // Vue.component
-
-    var vm = new Vue({
-      el: '#app',
-      components: components,
-    });
-  </script>
 </body>
 </html>

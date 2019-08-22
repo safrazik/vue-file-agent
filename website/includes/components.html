@@ -1,0 +1,35 @@
+  <script type="text/javascript" id="demo-basic-script">
+    window.components = {};
+  </script>
+  <script type="text/x-template" id="demo-basic-template">
+    {% include_relative website/demo/basic.html %}
+  </script>
+  <script type="text/javascript" id="demo-basic-script">
+    (function(){
+      {% include_relative website/demo/basic.js %}
+      component.template = '#demo-basic-template';
+      // Vue.component('demo-basic', component);
+      components['demo-basic'] = component;
+    })();
+  </script>
+
+  <script type="text/x-template" id="demo-advanced-template">
+    {% include_relative website/demo/advanced.html %}
+  </script>
+  <script type="text/javascript" id="demo-advanced-script">
+    (function(){
+      {% include_relative website/demo/advanced.js %}
+      component.template = '#demo-advanced-template';
+      components['demo-advanced'] = component;
+      // Vue.component('demo-advanced', component);
+    })();
+  </script>
+
+  <script type="text/javascript">
+    // Vue.component
+
+    var vm = new Vue({
+      el: '#app',
+      components: components,
+    });
+  </script>

@@ -19,7 +19,7 @@ email: safrazik@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Aw
 baseurl: "/vue-file-agent" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: http://safrazik.github.io/vue-file-agent # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: safrazik
 github_username:  safrazik
 dist_baseurl: "/vue-file-agent/dist"
@@ -49,4 +49,4 @@ exclude:
   - the-library
 
 sass:
-    sass_dir: assets/_scss
+    sass_dir: website/assets/_scss

@@ -1,4 +1,4 @@
-var filesBaseUrl = '/vue-file-agent/assets/files/';
+var filesBaseUrl = '/vue-file-agent/website/assets/files/';
 
 var videoData = {"name":"Cat Licking Its Paw.mp4","lastModified":1565241222998,"sizeText":"433 KB","size":443767,"type":"video/mp4","ext":"mp4"};
 videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';

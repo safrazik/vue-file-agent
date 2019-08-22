@@ -63,7 +63,7 @@ export default {
 
 ### That's it?
 
-Yes. That's it. It's that simple. See [Advanced Usage](#advanced-usage) section below to tailor it for your specific needs.
+Yes. That's it. It's *that* simple. See [Advanced Usage](#advanced-usage) section below to tailor it for your specific needs.
 
 ## Installation
 
