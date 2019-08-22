@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-file-agent ./src/index.js",
-    "watch": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.js"
+    "watch": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.js",
+    "upload-server": "node upload-server-examples/node/upload-server.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,9 @@
   ],
   "dependencies": {
     "core-js": "^2.6.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {

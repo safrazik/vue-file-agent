@@ -72,10 +72,7 @@
           <main role="main" class="inner cover my-5">
 <!--             <h1 class="cover-heading">Cover your page.</h1>
             <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p> -->
-            <!-- <demo-basic></demo-basic> -->
-            <div class="markdown-body-alt" v-pre>
-              {{ content }}
-            </div>
+            <demo-basic></demo-basic>
 <!--             <p class="lead">
               <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
             </p> -->
@@ -87,12 +84,33 @@
               <!-- <a href="#" class="btn btn-lg btn-secondary">Get Started</a> -->
                <!-- by <a href="https://twitter.com/safrazik">@safrazik</a>.</p> -->
                <!-- Scroll down for  -->
-
-              Designed with love by <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
+               <a href="#docs">Docs</a>
+               &middot;
+               <a href="#advanced-demo">Advanced Demo</a>
             </p>
                <!-- by <a href="https://twitter.com/safrazik">@safrazik</a>.</p> -->
             </div>
           </footer>
+        </div>
+      </div>
+      <div class="container">
+        <div id="docs" name="docs"></div>
+        <div class="markdown-body" style="margin: 40px 0;" v-pre>
+          {{ content }}
+        </div>
+      </div>
+      <div class="container">
+        <div id="advanced-demo" name="advanced-demo"></div>
+        <h2>Advanced Demo</h2>
+        <demo-advanced></demo-advanced>
+<!--         <div class="mb-5">
+        </div> -->
+      </div> 
+      <div class="bg-secondary text-white mt-5 py-3">
+        <div class="container">
+          <div class="text-center">
+            Made with love from <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
+          </div>
         </div>
       </div>
     </div>

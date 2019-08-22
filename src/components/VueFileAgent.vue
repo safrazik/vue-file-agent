@@ -1,5 +1,5 @@
 <template>
-	<div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-on:dragover="dragOver" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="{'is-drag-over': isDragging}">
+	<div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-on:dragover="dragOver" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="{'is-drag-over': isDragging, 'no-meta': meta === false}">
 <!-- 		<div class="drop-help-wrapper">
 			<div class="drop-help-text">
 				Drop the files
@@ -86,7 +86,7 @@ import FileData, {getAverageColor} from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 
 export default {
-	props: ['uploadUrl', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText'],
+	props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta'],
 	components: {
 		VueFileIcon
 	},
@@ -279,14 +279,14 @@ export default {
 			}
 			return errorText.common;
 		},
-		upload(url, filesData){
+		upload(url, headers, filesData){
 			var validFilesData = [];
 			for(var i = 0; i < filesData.length; i++){
 				if(!filesData[i].error){
 					validFilesData.push(filesData[i]);
 				}
 			}
-      uploader.upload(url, validFilesData, (overallProgress)=> {
+      uploader.upload(url, headers, validFilesData, (overallProgress)=> {
         this.overallProgress = overallProgress;
       }).then(()=> {
         // alert('file upload ok');
@@ -294,8 +294,8 @@ export default {
         // alert('ERRR: ' + err);
       });
 		},
-		deleteUpload(url, fileData){
-      uploader.deleteUpload(url, fileData).then((result)=> {
+		deleteUpload(url, headers, fileData){
+      uploader.deleteUpload(url, headers, fileData).then((result)=> {
         // console.log('where done?', result);
         // model.__meta__.isUploading = false;  
       }, err => {
@@ -311,13 +311,13 @@ export default {
 			if(!this.uploadUrl){
 				return;
 			}
-			this.upload(this.uploadUrl, filesData);
+			this.upload(this.uploadUrl, this.uploadHeaders, filesData);
 		},
 		autoDeleteUpload(fileData){
 			if(!this.uploadUrl){
 				return;
 			}
-			this.deleteUpload(this.uploadUrl, fileData);
+			this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
 		},
 		equalFiles(file1, file2){
 			return true &&

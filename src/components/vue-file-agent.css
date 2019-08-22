@@ -482,6 +482,15 @@
   background: rgba(0, 0, 0, 0.75);
 }
 
+.vue-file-agent.no-meta .file-preview .file-ext,
+.vue-file-agent.no-meta .file-preview .file-name,
+.vue-file-agent.no-meta .file-preview .file-size,
+.vue-file-agent.no-meta .file-preview .image-dimension,
+.vue-file-agent.no-meta .file-preview::before
+{
+  display: none;
+}
+
 
 .grid-box-item {
   transition: all 600ms;

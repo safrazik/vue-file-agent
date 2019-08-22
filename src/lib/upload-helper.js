@@ -6,22 +6,32 @@ class UploadHelper {
 		this.axios = axios;
 	}
 
-	doUpload(url, formData, progressCallback, configureFn){
+	addHeaders(xhr, headers){
+		xhr.setRequestHeader('Accept', 'application/json');
+		if(headers){
+			for(var key in headers){
+				xhr.setRequestHeader(key, headers[key]);
+			}
+		}
+		return xhr;
+	}
+
+	doUpload(url, headers, formData, progressCallback, configureFn){
 		return ajax.post(url, formData, (xhr)=> {
-			xhr.setRequestHeader('Accept', 'application/json');
+			this.addHeaders(xhr, headers);
 			xhr.upload.addEventListener('progress', progressCallback, false);
 			configureFn(xhr);
 		});
 
 	}
 
-	doDeleteUpload(url, data, configureFn){
+	doDeleteUpload(url, headers, data, configureFn){
 		if (typeof data != 'string') {
 			data = JSON.stringify(data);
 		}
 		return ajax.delete(url, data, (xhr)=> {
 			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.setRequestHeader('Accept', 'application/json');
+			this.addHeaders(xhr, headers);
 			configureFn(xhr);
 		});
 	}
@@ -37,7 +47,7 @@ class UploadHelper {
 		});
 	}
 
-	upload(url, filesData, progressFn){
+	upload(url, headers, filesData, progressFn){
 		var self = this;
 		progressFn = progressFn || function(){};
 		var promises = [];
@@ -60,7 +70,7 @@ class UploadHelper {
 		  //   progressFn(prgTotal/filesData.length);
 		  // }
 		  (function(fileData){
-		    var promise = self.doUpload(url, formData, function(progressEvent) {
+		    var promise = self.doUpload(url, headers, formData, function(progressEvent) {
 		        var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
 		        var percentCompletedRounded = Math.round(percentCompleted);
 		        console.log(percentCompletedRounded, percentCompleted, progressEvent);
@@ -93,7 +103,7 @@ class UploadHelper {
 		return Promise.all(promises);
 	}
 
-	deleteUpload(url, fileData){
+	deleteUpload(url, headers, fileData){
 		return new Promise((resolve, reject)=> {
 			console.log('to be deleted fileData:', fileData);
 			if (fileData.xhr) {
@@ -101,7 +111,7 @@ class UploadHelper {
 				console.log('xhr.readyState:', fileData.xhr.readyState);
 			}
 			if (fileData.upload) {
-				this.doDeleteUpload(url, fileData.upload, (xhr)=> {
+				this.doDeleteUpload(url, headers, fileData.upload, (xhr)=> {
 				}).then((result)=> {
 					resolve(result);
 				}, reject);

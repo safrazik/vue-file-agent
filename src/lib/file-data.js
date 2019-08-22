@@ -552,6 +552,7 @@ FileData.toRaw = function(filesData){
 		fileDataRaw.size = fileData.file.size;
 		fileDataRaw.type = fileData.file.type;
 		fileDataRaw.ext = fileData.ext();
+    fileDataRaw.color = fileData.color();
 		fileDataRaw.file = fileData.file;
 		fileDataRaw.progress = fileData.progress; // pass it as a function
     fileDataRaw.error = fileData.error;

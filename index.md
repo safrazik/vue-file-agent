@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 ---
 
 <!-- <demo-basic></demo-basic> -->

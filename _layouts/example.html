@@ -12,11 +12,12 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/assets/github-markdown.css">
 
-    <link rel="stylesheet" href="{{ "/assets/styles.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/assets/github-markdown.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/vue-file-agent.css" | prepend: site.dist_baseurl }}">
-
+    <!-- <link rel="stylesheet" href="{{ "/assets/styles.css" | prepend: site.baseurl }}"> -->
+    <!-- <link rel="stylesheet" href="{{ "/vue-file-agent.css" | prepend: site.dist_baseurl }}"> -->
+    <!-- <link rel="stylesheet" href="{{ "/vue-file-agent.css" | prepend: "../dist" }}"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.css">
 
     <style>
       .bd-placeholder-img {
@@ -40,59 +41,45 @@
     <!-- Custom styles for this template -->
     <!-- <link href="cover.css" rel="stylesheet"> -->
   </head>
-  <body class="w-100 h-100">
-    <div id="app" class="w-100 h-100">
-      <div class="cover-body text-center d-flex w-100 xh-100">
-        <div class="text-center cover-container container w-100 xh-100 p-3 mx-auto d-flex flex-column">
-          <header class="masthead clearfix mb-auto">
-            <div class="inner">
-              <div class="masthead-brand">              
+  <body>
+    <div id="app">
+
+            <section class="text-center p-3" style="background: #333">
+              <div>              
                 <h3>
                   <a href="{{ "/" | prepend: site.baseurl }}">
                     Vue File Agent
                   </a>
                 </h3>
-                <div class="text-mutedx" style="color: #ACB5BD">
+                <div style="color: #ACB5BD">
                   <p>
                     Every file deserves to be treated equally
                   </p>
                 </div>
               </div>
-              <nav class="nav nav-masthead justify-content-center">
-                <!-- <a class="nav-link active" href="#">Home</a> -->
-                <!-- <a class="nav-link" href="#">Docs</a> -->
-                <a class="nav-link" href="https://github.com/safrazik/vue-file-agent" target="_blank">Github</a>
+              <nav>
+                <a href="https://github.com/safrazik/vue-file-agent" target="_blank">Github</a>
               </nav>
-<!--             <div class="highlight">
-              <p>Every file deserves to be treated equally.</p>
-            </div> -->
-            </div>
-          </header>
+            </section>
 
-          <main role="main" class="inner cover my-5">
-<!--             <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p> -->
-            <!-- <demo-basic></demo-basic> -->
-            <div class="markdown-body-alt" v-pre>
-              {{ content }}
-            </div>
-<!--             <p class="lead">
-              <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-            </p> -->
-          </main>
-
-          <footer class="mastfoot mt-auto">
-            <div class="inner">
-            <p class="lead-old">
-              <!-- <a href="#" class="btn btn-lg btn-secondary">Get Started</a> -->
-               <!-- by <a href="https://twitter.com/safrazik">@safrazik</a>.</p> -->
-               <!-- Scroll down for  -->
-
-              Designed with love by <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
-            </p>
-               <!-- by <a href="https://twitter.com/safrazik">@safrazik</a>.</p> -->
-            </div>
-          </footer>
+      <div class="container">
+        <div id="docs" name="docs"></div>
+        <div class="markdown-body" style="margin: 40px 0;" v-pre>
+          {{ content }}
+        </div>
+      </div>
+      <div class="container">
+<!--         <div id="advanced-demo" name="advanced-demo"></div>
+        <h2>Upload Server Example</h2> -->
+        <demo-advanced></demo-advanced>
+<!--         <div class="mb-5">
+        </div> -->
+      </div> 
+      <div class="bg-secondary text-white mt-5 py-3">
+        <div class="container">
+          <div class="text-center">
+            Made with love from <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
+          </div>
         </div>
       </div>
     </div>
@@ -100,7 +87,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src='{{ "/vue-file-agent.umd.js" | prepend: site.dist_baseurl }}'></script>
+  <script src='{{ "/vue-file-agent.umd.js" | prepend: "../dist" }}'></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@latest/dist/vue-file-agent.umd.js"></script>
 
   <script type="text/x-template" id="demo-basic-template">
     {% include_relative demo/basic.html %}
@@ -127,7 +115,7 @@
   </script>
 
 
-  <script src='{{ "/assets/js/scripts.js" | prepend: site.baseurl }}'></script>
+  <!-- <script src='{{ "/assets/js/scripts.js" | prepend: site.baseurl }}'></script> -->
 
   <script type="text/javascript">
     // Vue.component

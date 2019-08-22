@@ -45,6 +45,7 @@ exclude:
   - README.md
   - vue.config.js
   - src
+  - examples
   - the-library
 
 sass:
