@@ -4,6 +4,9 @@
 
 High performant Vue file **upload** component with elegant and distinguishable **previews** for every file type and support for **drag and drop**, **validations**, default uploader with **progress** support and externally customizable in the "vue way"
 
+
+## [CodePen Playground](https://codepen.io/safrazik/pen/BaBpYme)
+
 <div class="clearfix"></div>
 
 ## [Live Demo][]

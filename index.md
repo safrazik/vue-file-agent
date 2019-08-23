@@ -41,6 +41,7 @@ export default {
 
 <div style="float: left;padding: 20px 20px 10px 0;background: #FFF;">
 {% include_relative website/includes/vue-code.md name="profile_picture" code=code result_only=true %}
+  <a href="https://codepen.io/safrazik/pen/BaBpYme" class="mt-1 d-inline-block" style="width: 180px; text-align: center; font-size: 14px;">CodePen Playground</a>
 </div>
 
 {% capture README %}{% include_relative README.md %}{% endcapture %}
