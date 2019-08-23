@@ -9,7 +9,7 @@ High performant Vue file **upload** component with elegant and distinguishable *
 
 <div class="clearfix"></div>
 
-## [Live Demo][]
+## [Live Demo][] · [CodePen Playground](https://codepen.io/safrazik/pen/BaBpYme)
 
 ![Demo](website/assets/demo.gif)
 
