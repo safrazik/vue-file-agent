@@ -1,4 +1,4 @@
-# 🖼 Vue File Agent
+# Vue File Agent
 
 >  Every file deserves to be treated equally
 

@@ -10,7 +10,7 @@ layout: default
           <div class="masthead-brand">              
             <h3>
               <a href="{{ "/" | prepend: site.baseurl }}">
-                🖼 Vue File Agent
+                Vue File Agent
               </a>
             </h3>
             <div class="text-mutedx" style="color: #ACB5BD">
@@ -68,6 +68,13 @@ layout: default
     <div id="demo-advanced-mount">
       <demo-advanced></demo-advanced>
     </div>
+
+    {% comment %}
+    <h2 class="mt-5 mb-3">Activity Feed</h2>
+
+    {% include_relative website/includes/activity-feed.html %}
+    {% endcomment %}
+
 <!--         <div class="mb-5">
     </div> -->
   </div> 
