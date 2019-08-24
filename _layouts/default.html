@@ -24,6 +24,18 @@
     <link rel="stylesheet" href="{{ "/vue-file-agent.css" | prepend: site.dist_baseurl }}">
     {% endif %}
 
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146428731-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146428731-2');
+    </script>
+
+
 {% capture site_base_url %}{% if layout.external_urls %}http://safrazik.github.io/vue-file-agent{% else %}{{ site.baseurl }}{% endif %}{% endcapture %}
 
 </head>
