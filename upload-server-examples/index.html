@@ -1,43 +1,63 @@
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" c4ontent="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Safraz Razik">
     <meta name="generator" content="Jekyll v3.8.6">
 
-    <title>Upload Server Examples - Vue File Agent</title>
+    <title>DEV - Vue File Agent</title>
 
+    <link rel="canonical" href="https://safrazik.github.io/vue-file-agent">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/github-markdown.css">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent/dist/vue-file-agent.css">
-  </head>
-  <body>
-    <div id="app">
-      <section class="text-center p-3" style="background: #333">
-        <div>              
-          <h3>
-            <a href="/vue-file-agent/">
-              Vue File Agent
-            </a>
-          </h3>
-          <div style="color: #ACB5BD">
-            <p>
-              Every file deserves to be treated equally
-            </p>
-          </div>
-        </div>
-        <nav>
-          <a href="https://github.com/safrazik/vue-file-agent" target="_blank">Github</a>
-        </nav>
-      </section>
 
-      <div class="container">
-        <div id="docs" name="docs"></div>
-        <div class="markdown-body" style="margin: 40px 0;">
-          <h1 id="upload-server-examples">Upload Server Examples</h1>
+
+    
+    <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/styles.css">
+    <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/github-markdown.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent/dist/vue-file-agent.css">
+    
+
+
+
+</head>
+<body class="w-100 h-100" style="padding-top: 3.5rem;">
+
+<nav class="navbar navbar-expand fixed-top navbar-dark bg-dark px-0" style="background: rgba(52, 58, 64, 0.95) !important; height: 3.5rem;">
+  <div class="container" style="padding-left: 15px;
+    padding-right: 15px;">
+    <a class="navbar-brand" href="http://safrazik.github.io/vue-file-agent/">Vue File Agent</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="http://safrazik.github.io/vue-file-agent/api/">API</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/safrazik/vue-file-agent">GitHub</a>
+        </li>
+      </ul>
+    </div>
+    <!-- <small class="navbar-text">Every file deserves to be treated equally</small> -->
+  </div>
+</nav>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent/dist/vue-file-agent.umd.js"></script>
+  
+  <div id="app">
+  <div class="container">
+    <div id="docs" name="docs"></div>
+    <div class="markdown-body" style="margin: 40px 0;">
+      <h1 id="upload-server-examples">Upload Server Examples</h1>
 
 <h2 id="node-js">Node Js</h2>
 
@@ -54,28 +74,24 @@ node upload-server.js
 
 <p>Change Upload URL to: <code class="highlighter-rouge">http://localhost/upload-server-examples/php/upload-server.php</code></p>
 
-        </div>
-      </div>
-      <div class="container">
-        <div id="demo-basic-mount"></div>
-        <div id="demo-advanced-mount">
-          <demo-advanced></demo-advanced>
-        </div>
-      </div> 
-      <div class="bg-secondary text-white mt-5 py-3">
-        <div class="container">
-          <div class="text-center">
-            Made with love from <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
-          </div>
-        </div>
+    </div>
+  </div>
+  <div class="container">
+    <div id="demo-basic-mount"></div>
+    <div id="demo-advanced-mount">
+      <demo-advanced></demo-advanced>
+    </div>
+  </div> 
+  <div class="bg-secondary text-white mt-5 py-3">
+    <div class="container">
+      <div class="text-center">
+        Made with love from <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
       </div>
     </div>
+  </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-file-agent/dist/vue-file-agent.umd.js"></script>
-
-      <script type="text/x-template" id="demo-basic-template">
+  <script type="text/x-template" id="demo-basic-template">
     
 <div class="appa">
   <VueFileAgent
@@ -241,7 +257,6 @@ var component = {
   <div class="mx-auto" :style="compact ? {width: '200px'} : {}">
     <VueFileAgent
       ref="vueFileAgent"
-      :uploadUrl="uploadUrl"
       :multiple="multiple"
       :meta="meta"
       :deletable="deletable"
@@ -344,7 +359,7 @@ var component = {
   </script>
   <script type="text/javascript" id="demo-advanced-script">
     (function(){
-      var filesBaseUrl = '/vue-file-agent/website/assets/files/';
+      var filesBaseUrl = window.location.host == 'localhost:4000' ? '/vue-file-agent/website/assets/files/' : 'https://safrazik.github.io/vue-file-agent/website/assets/files/';
 
 var videoData = {"name":"Cat Licking Its Paw.mp4","lastModified":1565241222998,"sizeText":"433 KB","size":443767,"type":"video/mp4","ext":"mp4"};
 videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';
@@ -384,7 +399,6 @@ var component = {
       filesData: filesData,
       filesDataForUpload: [],
       uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
-      uploadUrl: 'http://localhost/safrazik/vue-file-agent/upload-server-examples/php/upload-server.php',
       uploadHeaders: {'X-Test-Header': 'vue-file-agent'},
       meta: true,
       multiple: true,
