@@ -1,4 +1,4 @@
-# DEVELOPMENT
+# CONTRIBUTING
 
 ## Project setup
 ```
