@@ -70,6 +70,18 @@ object `{
 
 The error text messages to be displayed when `accept` or `maxSize` validation fails.
 
+### uploadUrl
+
+string default none
+
+When this prop is provided, built in uploader is triggerred as soon as files are selected. And when delete button is clicked, built in uploader's delete function is called. 
+
+### uploadHeaders
+
+object default none
+
+Headers to pass to `uploadUrl`
+
 ### value
 
 See `v-model` below
@@ -86,6 +98,8 @@ Accepts an object for single file upload and an array of serialized FileData obj
 <template>
 <div>
   <VueFileAgent
+    :uploadUrl="'https://www.mocky.io/v2/5d4fb20b3000005c111099e3'"
+    :uploadHeaders="{}"
     :multiple="true"
     :deletable="true"
     :meta="true"
