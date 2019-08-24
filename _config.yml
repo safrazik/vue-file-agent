@@ -23,6 +23,7 @@ url: http://safrazik.github.io/vue-file-agent # the base hostname & protocol for
 twitter_username: safrazik
 github_username:  safrazik
 dist_baseurl: "/vue-file-agent/dist"
+activity_feed: true
 
 # Build settings
 markdown: kramdown

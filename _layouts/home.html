@@ -68,13 +68,14 @@ layout: default
     <div id="demo-advanced-mount">
       <demo-advanced></demo-advanced>
     </div>
+    {% if site.activity_feed %}
     <h2 class="mt-5 mb-2">Activity on
       <a href="https://github.com/safrazik/vue-file-agent">Github</a>
     </h2>
     <div class="text-muted mb-3">Thank you for your interest and contributions</div>
 
-
     {% include_relative website/includes/activity-feed.html %}
+    {% endif %}
 
 <!--         <div class="mb-5">
     </div> -->

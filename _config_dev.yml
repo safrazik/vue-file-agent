@@ -1,2 +1,3 @@
 title: DEV - Vue File Agent
 dist_baseurl: "/vue-file-agent/dist_dev"
+activity_feed: false
