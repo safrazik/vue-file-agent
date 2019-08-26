@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ "/vue-file-agent.css" | prepend: site.dist_baseurl }}">
     {% endif %}
 
-
+    {% if site.google_analytics %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146428731-2"></script>
     <script>
@@ -34,6 +34,7 @@
 
       gtag('config', 'UA-146428731-2');
     </script>
+    {% endif %}
 
 
 {% capture site_base_url %}{% if layout.external_urls %}http://safrazik.github.io/vue-file-agent{% else %}{{ site.baseurl }}{% endif %}{% endcapture %}

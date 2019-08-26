@@ -24,6 +24,7 @@ twitter_username: safrazik
 github_username:  safrazik
 dist_baseurl: "/vue-file-agent/dist"
 activity_feed: true
+google_analytics: true
 
 # Build settings
 markdown: kramdown
