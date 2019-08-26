@@ -1,4 +1,5 @@
-import {getIconFromExt} from '../lib/icons';
+import {getIconFromExt} from './icons';
+import utils from './utils';
 
 var readFileContent = function(file){
 	return new Promise(function(resolve, reject) {
@@ -12,68 +13,7 @@ var readFileContent = function(file){
 
 
 export function getAverageColor(arr) {
-  var bytesPerPixel = 4, arrLength = arr.length;
-  if (arrLength < bytesPerPixel) {
-      return false;
-  }
-  var step = 5;
-  var len = arrLength - arrLength % bytesPerPixel,
-            preparedStep = (step || 1) * bytesPerPixel;
-
-
-    var
-        redTotal = 0,
-        greenTotal = 0,
-        blueTotal = 0,
-        alphaTotal = 0,
-        count = 0;
-
-    var simple = false;
-    simple = true;
-
-    if(simple){
-      for (var i = 0; i < len; i += preparedStep) {
-          var
-              alpha = arr[i + 3],
-              red = arr[i] * alpha,
-              green = arr[i + 1] * alpha,
-              blue = arr[i + 2] * alpha;
-
-          redTotal += red;
-          greenTotal += green;
-          blueTotal += blue;
-          alphaTotal += alpha;
-          count++;
-      }
-
-      return alphaTotal ? [
-          Math.round(redTotal / alphaTotal),
-          Math.round(greenTotal / alphaTotal),
-          Math.round(blueTotal / alphaTotal),
-          Math.round(alphaTotal / count)
-      ] : [0, 0, 0, 0];
-    }
-
-    for (var i = 0; i < len; i += preparedStep) {
-        var
-            red = arr[i],
-            green = arr[i + 1],
-            blue = arr[i + 2],
-            alpha = arr[i + 3];
-
-        redTotal += red * red * alpha;
-        greenTotal += green * green * alpha;
-        blueTotal += blue * blue * alpha;
-        alphaTotal += alpha;
-        count++;
-    }
-
-    return alphaTotal ? [
-        Math.round(Math.sqrt(redTotal / alphaTotal)),
-        Math.round(Math.sqrt(greenTotal / alphaTotal)),
-        Math.round(Math.sqrt(blueTotal / alphaTotal)),
-        Math.round(alphaTotal / count)
-    ] : [0, 0, 0, 0];
+  return utils.getAverageColor(arr);
 }
 
 var resizeImage = function(settings, fileData) {
@@ -415,6 +355,28 @@ FileData = function(data, options = {}){
     // var cat = extensionsMap[ext];
     // return icons[cat] || icons.other;
   }
+  self.getErrorMessage = function(errorText){
+    var error = self.error;
+    if(!error){
+      return '';
+    }
+    errorText = errorText || {};
+    errorText = {
+      common: errorText.common || 'Invalid file.',
+      type: errorText.type || 'Invalid file type.',
+      size: errorText.size || ('Files should not exceed ' + this.maxSize + ' in size'),
+    };
+    if(error.type){
+      return errorText.type;
+    }
+    else if(error.size){
+      return errorText.size;
+    }
+    else if(error.upload){
+      return (self.upload && self.upload.error) ? self.upload.error : error.upload;
+    }
+    return errorText.common;
+  };
   self.validate = function(){
     var validType = validateType(self.file, self.accept);
     var validSize = validateSize(self.file, self.maxSize);
