@@ -8,7 +8,7 @@
 
   <transition-group name="grid-box" tag="div" class="">
   	<VueFilePreview 
-  		:fileData="fileData" :index="index" :deletable="isDeletable" :errorText="errorText" @remove="removeFileData($event)" :width="prvWidth"
+  		:fileData="fileData" :index="index" :deletable="isDeletable" :errorText="errorText" @remove="removeFileData($event)"
   		 :key="fileData.id" v-for="(fileData, index) in filesData" class="file-preview-wrapper grid-box-item grid-block" v-bind:class="['file-preview-wrapper-' + fileData.ext(), fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other', 'file-category-' + fileData.icon().category, {'file-is-playing-av': fileData.isPlayingAv}, {'is-deletable': isDeletable}, {'is-deletable': isDeletable}, {'has-error': fileData.error}]"></VueFilePreview>
 	  <div v-if="canAddMore" key="new" class="file-preview-wrapper grid-box-item grid-block file-preview-new">
 	  	<span class="file-preview">
@@ -38,12 +38,12 @@ import FileData, {getAverageColor} from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 
 export default {
-	props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact'],
+	props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'resizeLimit'],
 	components: {
 		VueFileIcon,
 		VueFilePreview
 	},
-	data: function(){
+	data(){
 		return {
 			filesData: [],
 			filesDataRaw: [],
@@ -73,7 +73,7 @@ export default {
 			}
 			return !!this.deletable;
 		},
-		hasMultiple: function(){
+		hasMultiple(){
 			if(typeof this.multiple == 'string'){
 				return this.multiple !== 'false';
 			}
@@ -82,24 +82,18 @@ export default {
 			}
 			return !!this.multiple;
 		},
-		shouldRead: function(){
+		shouldRead(){
 			if(typeof this.read == 'string'){
 				return this.read === 'true';
 			}
 			return !!this.read;
-		},
-		prvWidth: function(){
-			return FileData.defaultWidth;
-		},
-		prvHeight: function(){
-			return FileData.defaultHeight;
 		}
 	},
 	methods: {
 	  createThumbnail(fileData, video){
 	  	return new Promise((resolve, reject)=> {  		
 		    var canvas = document.createElement('canvas');
-		    utils.createVideoThumbnail(video, canvas, this.width, this.prvWidth).then((thumbnail) => {
+		    utils.createVideoThumbnail(video, canvas, this.width, fileData.resizeLimit).then((thumbnail) => {
 		      fileData.imageColor = thumbnail.color;
 		      fileData.videoThumbnail = thumbnail.url;
 		      fileData.dimensions.width = thumbnail.width;
@@ -166,7 +160,7 @@ export default {
 			}
 			return false;
 		},
-		handleFiles: function(files){
+		handleFiles(files){
 			if(this.hasMultiple && !this.canAddMore){
 				return;
 			}
@@ -189,6 +183,7 @@ export default {
 					read: this.shouldRead,
 					maxSize: this.maxSize,
 					accept: this.accept,
+					resizeLimit: this.resizeLimit,
 				}));
 			}
 
@@ -209,21 +204,19 @@ export default {
 				this.filesData = filesData;
 			}
 
-			var self = this;
-			var allFilesData = this.filesData;
-			FileData.readFiles(filesData).then(function(filesData){  
+			FileData.readFiles(filesData).then((filesData)=> {  
 				// var filesDataRaw = FileData.toRaw(filesData);
-				var allFilesDataRaw = FileData.toRaw(allFilesData);
-				self.filesDataRaw = allFilesDataRaw;
+				var allFilesDataRaw = FileData.toRawArray(this.filesData);
+				this.filesDataRaw = allFilesDataRaw;
 				// filesDataRaw = self.hasMultiple ? filesDataRaw : filesDataRaw[0];
-				allFilesDataRaw = Array.isArray(self.value) ? allFilesDataRaw : allFilesDataRaw[0];
-				self.$emit('input', allFilesDataRaw);	
+				allFilesDataRaw = Array.isArray(this.value) ? allFilesDataRaw : allFilesDataRaw[0];
+				this.$emit('input', allFilesDataRaw);	
 				// self.$emit('select', filesData);	
-				self.$emit('select', FileData.toRaw(filesData));
+				this.$emit('select', FileData.toRawArray(filesData));
 			});
 			this.autoUpload(filesData);
 		},
-		filesChanged: function(event){
+		filesChanged(event){
 			var files = event.target.files;
 			this.$emit('change', event);
 			if(!files[0]){
@@ -235,7 +228,7 @@ export default {
 				this.$refs.fileInput.value = null; // do not use '' because chrome won't fire change event for same file
 			}
 		},
-		drop: function(event) {
+		drop(event) {
 			this.isDragging = false;
 			event.stopPropagation();
 			event.preventDefault();
@@ -249,13 +242,13 @@ export default {
 			}
 			this.handleFiles(files);
 		},
-		dragOver: function(event) {
+		dragOver(event) {
 			this.isDragging = true;
 			event.stopPropagation();
 			event.preventDefault();
 			event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 		},
-		dragLeave: function(event) {
+		dragLeave(event) {
 			this.isDragging = false;
 		},
 		removeFileData(fileData){
@@ -270,13 +263,12 @@ export default {
 			this.filesDataRaw.splice(i, 1);
 			this.$emit('input', this.filesDataRaw);
 			// this.$emit('delete', fileData);
-			this.$emit('delete', FileData.toRaw([fileData])[0]);
+			this.$emit('delete', FileData.toRawArray([fileData])[0]);
 			this.autoDeleteUpload(fileData).then((res)=> { }, (err)=> {
 				this.filesData.splice(i, 1, fileData);
 			});
 		},
 		checkValue(){
-			var self = this;
 			var filesDataRaw = this.value || [];
 			filesDataRaw = Array.isArray(filesDataRaw) ? filesDataRaw : [filesDataRaw];
 
@@ -294,19 +286,20 @@ export default {
 						read: this.shouldRead,
 						maxSize: this.maxSize,
 						accept: this.accept,
+						resizeLimit: this.resizeLimit,
 					}));
 					filesDataRawNew.push(filesDataRaw[i]);
 				}
 			}
 
 			this.filesDataRaw = filesDataRawNew;
-			Promise.all(fdPromises).then(function(filesData){
-				self.filesData = filesData;
+			Promise.all(fdPromises).then((filesData)=> {
+				this.filesData = filesData;
 			});
 
 		},
 	},
-	created: function(){
+	created(){
 		this.checkValue();
 	},
 	watch: {

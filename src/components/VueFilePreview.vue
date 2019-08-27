@@ -5,8 +5,8 @@
         {{ fileData.getErrorMessage(errorText) }}
       </div>
     </div>
-    <div ref="wrapper" :id="'file-av-player-' + index" class="file-av-wrapper" v-if="fileData.isPlayableAudio() || fileData.isPlayableVideo()">
-        <div class="file-av-action" @click="playAv(fileData, 'file-av-player-' + index)">
+    <div ref="wrapper" class="file-av-wrapper" v-if="fileData.isPlayableAudio() || fileData.isPlayableVideo()">
+        <div class="file-av-action" @click="playAv(fileData)">
           <span class="file-av-stop">
             <svg width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
           </span>
@@ -44,14 +44,14 @@
   import utils from '../lib/utils';
 
   export default {
-    props: ['fileData', 'index', 'deletable', 'errorText', 'width'],
+    props: ['fileData', 'deletable', 'errorText'],
     // computed: {
     // },
     methods: {
 
       createThumbnail(fileData, video){
         var canvas = document.createElement('canvas');
-        utils.createVideoThumbnail(video, canvas, this.width).then((thumbnail) => {
+        utils.createVideoThumbnail(video, canvas, this.fileData.resizeLimit).then((thumbnail) => {
           fileData.imageColor = thumbnail.color;
           fileData.videoThumbnail = thumbnail.url;
           fileData.dimensions.width = thumbnail.width;
