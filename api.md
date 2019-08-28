@@ -82,6 +82,25 @@ object default none
 
 Headers to pass to `uploadUrl`
 
+### thumbnailSize
+
+number, default `360`
+
+Image and Video file preview thumbnails are resized to this size. Bigger numbers resut in better quality thumbnails, smaller numbers result in faster preview generation.
+
+### compact
+
+boolean, default false
+
+Enables the compact mode which is useful for single file upload within a fixed size container. (See Profile Picture example below)
+
+### theme
+
+string, default none
+
+When provided, a theme class is added to the container `.theme-<theme>`.
+Officially supported themes: `default` (grid view), `list` (list view)
+
 ### value
 
 See `v-model` below
@@ -96,57 +115,59 @@ Accepts an object for single file upload and an array of serialized FileData obj
 {% capture code %}
 {% raw %}
 <template>
-<div>
-  <VueFileAgent
-    :uploadUrl="'https://www.mocky.io/v2/5d4fb20b3000005c111099e3'"
-    :uploadHeaders="{}"
-    :multiple="true"
-    :deletable="true"
-    :meta="true"
-    :accept="'image/*,video/*,.pdf,.zip'"
-    :maxSize="'14MB'"
-    :maxFiles="8"
-    :helpText="'Select files'"
-    :errorText="{
-      type: 'Please select images, videos, pdf or zip files',
-      size: 'You selected a larger file!',
-    }"
-    v-model="filesData"
-  ></VueFileAgent>
-</div>
+  <div>
+    <VueFileAgent
+      :uploadUrl="'https://www.mocky.io/v2/5d4fb20b3000005c111099e3'"
+      :uploadHeaders="{}"
+      :multiple="true"
+      :deletable="true"
+      :meta="true"
+      :accept="'image/*,video/*,.pdf,.zip'"
+      :maxSize="'14MB'"
+      :maxFiles="8"
+      :helpText="'Select files'"
+      :errorText="{
+        type: 'Please select images, videos, pdf or zip files',
+        size: 'You selected a larger file!',
+      }"
+      :thumbnailSize="120"
+      :theme="'list'"
+      v-model="filesData"
+    ></VueFileAgent>
+  </div>
 </template>
 <script>
-export default {
-  // ...
-  data: function(){
-    return {
-      filesData: [
-        {
-          "name":"Some Invalid.exe",
-          "size": 8165824,
-          "type": "application/vnd.microsoft.portable-executable",
-          "ext":"exe",
-        },
-        {
-          "name":"DSC_0261.jpg",
-          "lastModified":1564648335292,
-          "sizeText":"64 KB",
-          "size":65762,
-          "type":"image/jpeg",
-          "ext":"jpg",
-          "url": "https://safrazik.github.io/vue-file-agent/website/assets/files/DSC_0261.jpg"
-        },
-        {
-          "name":"Some Large File.zip",
-          "size": 25165824, // 24 MB
-          "type": "application/zip",
-          "ext":"zip",
-        },
-      ]
-    };
-  },
-  // ...
-}
+  export default {
+    // ...
+    data: function(){
+      return {
+        filesData: [
+          {
+            "name":"Some Invalid.exe",
+            "size": 8165824,
+            "type": "application/vnd.microsoft.portable-executable",
+            "ext":"exe",
+          },
+          {
+            "name":"DSC_0261.jpg",
+            "lastModified":1564648335292,
+            "sizeText":"64 KB",
+            "size":65762,
+            "type":"image/jpeg",
+            "ext":"jpg",
+            "url": "https://safrazik.github.io/vue-file-agent/website/assets/files/DSC_0261.jpg"
+          },
+          {
+            "name":"Some Large File.zip",
+            "size": 25165824, // 24 MB
+            "type": "application/zip",
+            "ext":"zip",
+          },
+        ]
+      };
+    },
+    // ...
+  }
 </script>
 {% endraw %}
 {% endcapture %}
@@ -191,14 +212,32 @@ Trigger the default upload action.
 Trigger the default delete upload action.
 
 
-## Events and Methods Demo
+## Slots
+
+### before-outer
+
+Content is placed (before) outside of the dotted container. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
+
+### before-inner
+
+Content is placed (before) inside of the dotted container.
+
+### after-inner
+
+Content is placed (before) inside of the dotted container.
+
+### after-outer
+
+Content is placed (after) outside of the dotted container. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
+
+## Events, Methods and Slots Demo
 
 {% capture code2 %}
 {% raw %}
 <template>
-<div>
-  <div style="width: 180px; float: left; margin: 0 15px 5px 0;">
+  <div id="profile-pic-demo" class="bg-light">
     <VueFileAgent
+      class="profile-pic-upload-block"
       ref="profilePicRef"
       :multiple="false"
       :deletable="false"
@@ -211,48 +250,80 @@ Trigger the default delete upload action.
       }"
       v-model="profilePic"
       @select="onSelect($event)"
-    ></VueFileAgent>
+    >
+      <template v-slot:before-outer>
+        <h2 title="before-outer">Profile Picture Demo</h2>
+      </template >
+      <template v-slot:after-outer>
+        <div title="after-outer">
+          <p>Please select an image and click the upload button</p>
+          <div class="drop-help-text">
+            <p class="text-success">Drop the file!</p>
+          </div>
+          <button type="button" class="btn btn-primary" :class="{'disabled': uploaded || !profilePic}" @click="upload()">Upload</button>
+          <button type="button" class="btn" :class="[uploaded ? 'btn-danger' : 'btn-secondary']" v-if="profilePic" @click="removePic()">Remove</button>
+          <div class="clearfix"></div>
+        </div>
+      </template >
+    </VueFileAgent>
   </div>
-  <h4>Profile Picture Demo</h4>
-  <p>Please select an image and click the upload button</p>
-  <button type="button" class="btn btn-primary" :class="{'disabled': uploaded || !profilePic}" @click="upload()">Upload</button>
-  <button type="button" class="btn" :class="[uploaded ? 'btn-danger' : 'btn-light']" v-if="profilePic" @click="removePic()">Remove</button>
-  <div class="clearfix"></div>
-</div>
 </template>
 <script>
-export default {
-  data: function(){
-    return {
-      name: 'Gapal',
-      profilePic: null,
-      uploaded: false,
-      uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
-      uploadHeaders: {},
-    }
-  },
-  methods: {
-    removePic: function(){
-     var profilePic = this.profilePic;
-      this.$refs.profilePicRef.deleteUpload(this.uploadUrl, this.uploadHeaders, [profilePic]);
-      this.profilePic = null;
-      this.uploaded = false;
+  export default {
+    data: function(){
+      return {
+        name: 'Gapal',
+        profilePic: null,
+        uploaded: false,
+        uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
+        uploadHeaders: {},
+      }
     },
-    upload: function(){
-      var self = this;
-      this.$refs.profilePicRef.upload(this.uploadUrl, this.uploadHeaders, [this.profilePic]).then(function(){
-        self.uploaded = true;
-        setTimeout(function(){
-          self.profilePic.progress(0);          
-        }, 500);
-      });
-    },
-    onSelect: function(filesData){
-      this.uploaded = false;
+    methods: {
+      removePic: function(){
+       var profilePic = this.profilePic;
+        this.$refs.profilePicRef.deleteUpload(this.uploadUrl, this.uploadHeaders, [profilePic]);
+        this.profilePic = null;
+        this.uploaded = false;
+      },
+      upload: function(){
+        var self = this;
+        this.$refs.profilePicRef.upload(this.uploadUrl, this.uploadHeaders, [this.profilePic]).then(function(){
+          self.uploaded = true;
+          setTimeout(function(){
+            self.profilePic.progress(0);          
+          }, 500);
+        });
+      },
+      onSelect: function(filesData){
+        this.uploaded = false;
+      }
     }
   }
-}
 </script>
+<style>
+  #profile-pic-demo .drop-help-text {
+    display: none;
+  }
+  #profile-pic-demo .is-drag-over .drop-help-text {
+    display: block;
+  }
+  #profile-pic-demo .profile-pic-upload-block {
+    border: 2px dashed transparent;
+    padding: 20px;
+  }
+
+  #profile-pic-demo .is-drag-over.profile-pic-upload-block {
+    border-color: #AAA;
+  }
+  #profile-pic-demo .vue-file-agent {
+    width: 180px;
+    float: left;
+    margin: 0 15px 5px 0;
+    border: 0;
+    box-shadow: none;
+  }
+</style>
 {% endraw %}
 {% endcapture %}
 

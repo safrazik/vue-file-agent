@@ -16,33 +16,42 @@ var component = { template: '#{{ include.name }}-template',
 {% endcapture %}
 
 {% capture processed_code %}
-{{ include.code | replace: "export default {", cmp_start, | replace: "<script>", "<script type='text/javascript'>" | replace: "</script>", vue_mount | replace: "<template>", el_start | replace: "</template>", "</script>" }}
+{{ include.code | replace: "export default {", cmp_start, | replace: "<script>", "<script type='text/javascript'>" | replace: "</script>", vue_mount | replace: "<template>", el_start | replace: "</template>", "</script>" | replace: "<style>", "<style type='text/css'>" }}
 {% endcapture %}
 
 
-{% capture output %}
 {% if include.result_only %}
-  {{ processed_code }}
+  <div id="{{ include.name }}-wrapper">
+    {{ processed_code }}
+  </div>
 {% else %}
+  {% capture highlighted_code %}
 
-> Code
+    ```html
+    {{ include.code | strip }}
+    ```
 
+  {% endcapture %}
 
-```html
-{{ include.code | strip }}
-```
-
-> Result
-
----
-
-{{ processed_code }}
-
----
+  <div id="{{ include.name }}-wrapper">
+    <div class="row">
+      <div class="col-md-6">
+        <blockquote>Code</blockquote>
+        <hr>
+        {% highlight html %}{{ include.code | strip }}{% endhighlight %}
+      </div>
+      <div class="col-md-6">
+        <blockquote>Result</blockquote>
+        <hr>
+        {{ processed_code }}
+      </div>
+    </div>
+  </div>
 
 {% endif %}
-{% endcapture %}
 
-<div id="{{ include.name }}-wrapper">
-  {{ output | markdownify }}
-</div>
+<style type="text/css">
+  #{{ include.name }}-wrapper .highlight pre {
+    max-height: 300px;
+  }
+</style>

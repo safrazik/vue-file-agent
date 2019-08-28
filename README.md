@@ -105,6 +105,7 @@ or with script tag
 <template>
   <VueFileAgent
     ref="vueFileAgent"
+    :theme="'list'"
     :multiple="true"
     :deletable="true"
     :meta="true"
