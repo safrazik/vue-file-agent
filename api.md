@@ -6,6 +6,14 @@ permalink: /api/
 # API Docs
 
 
+- [Props](#props)
+    - [Props Demo](#props-demo)
+- [Events](#events)
+- [Methods](#methods)
+- [Slots](#slots)
+    - [Events, Methods and Slots Demo](#events-methods-and-slots-demo)
+
+
 ## Props
 
 ### multiple
@@ -216,19 +224,19 @@ Trigger the default delete upload action.
 
 ### before-outer
 
-Content is placed (before) outside of the dotted container. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
+Content is placed (before) outside of the file input. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
 
 ### before-inner
 
-Content is placed (before) inside of the dotted container.
+Content is placed (before) inside of the file input.
 
 ### after-inner
 
-Content is placed (before) inside of the dotted container.
+Content is placed (before) inside of the file input.
 
 ### after-outer
 
-Content is placed (after) outside of the dotted container. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
+Content is placed (after) outside of the file input. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
 
 ## Events, Methods and Slots Demo
 
@@ -244,7 +252,7 @@ Content is placed (after) outside of the dotted container. Files can be dragged 
       :meta="false"
       :compact="true"
       :accept="'image/*'"
-      :helpText="'Select or drag an image here'"
+      :helpText="'Drag an image file here'"
       :errorText="{
         type: 'Please select an image',
       }"
@@ -253,6 +261,9 @@ Content is placed (after) outside of the dotted container. Files can be dragged 
     >
       <template v-slot:before-outer>
         <h2 title="before-outer">Profile Picture Demo</h2>
+      </template >
+      <template v-slot:after-inner>
+        <span title="after-inner" class="btn btn-link btn-sm btn-block">Select image file</span>
       </template >
       <template v-slot:after-outer>
         <div title="after-outer">
