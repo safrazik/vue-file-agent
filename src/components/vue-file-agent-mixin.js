@@ -283,7 +283,6 @@ export default {
 		},
 	},
 	created(){
-		console.log('created in mixin!');
 		this.checkValue();
 	},
 	watch: {

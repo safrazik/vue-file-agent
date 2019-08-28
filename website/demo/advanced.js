@@ -85,7 +85,6 @@ var component = {
         return;
       }
       var prg = this.$refs.prgInput.value;
-      console.log('prg', prg);
       fileData.progress(prg);
     },
     removeInvalid: function(){
