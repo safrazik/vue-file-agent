@@ -20,7 +20,9 @@ class FileData {
     this.thumbnailSize = options.thumbnailSize || 360;
     this.read = !!options.read;
     this.image = {};
-    this.dimensions = {width: 0, height: 0};
+    this.dimensions = data.dimensions || {};
+    this.dimensions.width = this.dimensions.width || 0;
+    this.dimensions.height = this.dimensions.height || 0;
     this.error = data.error;
     this.options = options;
     this.maxSize = options.maxSize;
