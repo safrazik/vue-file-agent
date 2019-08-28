@@ -9,9 +9,14 @@
   transition: all 600ms;
 }
 
-.vue-file-agent.file-input-wrapper.is-drag-over {
+.vue-file-agent.file-input-wrapper.is-drag-over,
+.is-drag-over .vue-file-agent.file-input-wrapper {
   border-color: #f61a1a;
   box-shadow: inset 0px 0px 20px 1px #f61a1a;
+}
+
+.is-drag-over::before {
+  content: " ";
 }
 
 .vue-file-agent .file-preview-wrapper {
@@ -171,7 +176,8 @@
   color: #FFF;
   text-align: left;
   display: block;
-  width: 100%;
+  /*width: 100%;*/
+  right: 0;
   left: 0;
   bottom: 0;
   line-height: 25px;
@@ -186,7 +192,7 @@
   color: #FFF;
   text-align: right;
   display: block;
-  width: 100%;
+  /*width: 100%;*/
   right: 0;
   bottom: 0;
   line-height: 25px;
@@ -258,6 +264,24 @@
   line-height: 20px;
   height: 20px;
   display: block;
+}
+
+.vue-file-agent .file-preview-new-full  {
+  width: 100% !important;
+}
+
+.vue-file-agent .file-preview-new-full .file-preview {
+  padding: 0 !important;
+  height: 100px !important;
+}
+
+.vue-file-agent .file-preview-new-full svg {
+  margin-top: 10px !important;
+  height: 50px !important;
+}
+
+.vue-file-agent .file-preview-new-full::before {
+  background: transparent !important;
 }
 
 .vue-file-agent .file-progress {
@@ -427,9 +451,7 @@
 
 .grid-box-enter, .grid-box-leave-to  {
   opacity: 0 !important;
-  transform: 
-  translate3d(-20px, -20px, -20px) 
-  scale(0) !important;
+  /*transform: translate3d(-20px, -20px, -20px) scale(0) !important;*/
   transform: translate3d(0, 0, 0) scale(0.25) !important;
 }
 
@@ -477,6 +499,7 @@
   width: 50%;
   border: 1px solid transparent;
   margin: 0 !important;
+  min-width: 156px;
 }
 .grid-block-wrapper {
   padding: 2px;
@@ -523,4 +546,185 @@
 
 .grid-block-wrapper.is-compact .grid-block {
   width: 100%;
+}
+
+
+
+
+/* list theme */
+
+.theme-list .vue-file-agent .file-preview-wrapper {
+  width: 100%;
+  border-width: 2px;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview {
+  height: 53px;
+  padding: 0;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .thumbnail,
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-icon {
+  width: 100%;
+  left: 0;
+  margin: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 53px;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-icon svg {
+  height: 46px;
+  width: 46px;
+  margin-top: 4px;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-progress {
+  z-index: 2;
+  top: 0;
+  right: 0;
+  height: 100%;
+  bottom: 0;
+  opacity: 0.3;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-name,
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-ext {
+  /*background: #DCDCDF;*/
+  background: transparent;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-progress,
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-name,
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-ext {
+  left: 53px;
+  text-align: left;
+  color: #333;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-name {
+  font-weight: bold;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-size {
+  color: #333;
+}
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview::before {
+  background: #DCDCDF;
+  left: 53px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper.has-error .file-preview::before {
+  background: #ffc1c1;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper.has-error .file-name {
+  display: none;
+}
+
+
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-error-wrapper {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 5px;
+  left: 53px;
+  text-align: left;
+  /*display: flex;*/
+  /*align-items: center;*/
+  height: 100%;
+  color: #ea2626;
+  font-weight: bold;
+  background: transparent;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper.is-deletable .file-error-wrapper {
+  right: 28px;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-delete {
+/*  bottom: 0;
+  height: 100%;
+  line-height: 53px;*/
+  color: #e55353;
+  background: transparent;
+}
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview .image-dimension {
+  left: 53px;
+  text-align: left;
+  padding-left: 53px;
+  right: 0;
+}
+
+.theme-list .vue-file-agent .file-preview .image-dimension,
+.theme-list .vue-file-agent .file-preview .image-dimension .image-dimension-width::after {
+  color: #666;
+}
+
+.theme-list .vue-file-agent .file-av-wrapper .file-av-action {
+  width: 53px;
+  height: 53px;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+
+.theme-list .vue-file-agent .file-av-wrapper .file-av-stop,
+.theme-list .vue-file-agent .file-av-wrapper .file-av-play {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  left: 25%;
+  top: 25%;
+}
+
+
+.theme-list .vue-file-agent .file-preview-new {
+  padding: 0;
+}
+
+.theme-list .vue-file-agent .file-preview-new svg {
+  height: 36px;
+  width: 36px;
+  margin: 0;
+  position: absolute;
+  left: 10px;
+  top: 8px;
+}
+
+.theme-list .vue-file-agent .file-preview-new .help-text {
+  padding: 5px;
+  text-align: left;
+  position: absolute;
+  top: 0;
+  left: 53px;
+  display: flex;
+  align-items: center;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+}
+
+.theme-list .grid-box-item {
+  transition: all 600ms;
+}
+
+.theme-list .grid-box-enter, .theme-list .grid-box-leave-to  {
+  /*transform: translate3d(-20px, -20px, -20px) scale(0) !important;*/
+  transform: translate3d(0px, -20px, 0px) !important;
+  /*transform: translate3d(0px, -58px, 0px) !important;*/
+  opacity: 0 !important;
+  /*transform: translate3d(0, 0, 0) scale(0.25) !important;*/
+}
+
+.theme-list .grid-box-leave-active {
+  position: absolute !important;
+  left: 0 !important;
 }

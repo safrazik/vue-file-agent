@@ -43,6 +43,7 @@ var component = {
       multiple: true,
       deletable: true,
       compact: false,
+      theme: 'list',
       sortDirection: {
         lastModified: 'ASC',
         name: 'ASC',
@@ -174,6 +175,7 @@ var component = {
       this.$refs.vueFileAgent.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
     filesSelected: function(filesData){
+      console.log('filesSelected', filesData);
       var validFilesData = [];
       for(var i = 0; i < filesData.length; i++){
         if(!filesData[i].error){
