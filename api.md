@@ -12,6 +12,7 @@ permalink: /api/
 - [Methods](#methods)
 - [Slots](#slots)
     - [Events, Methods and Slots Demo](#events-methods-and-slots-demo)
+- [Extending](#extending)
 
 
 ## Props
@@ -340,3 +341,36 @@ Content is placed (after) outside of the file input. Files can be dragged here. 
 {% endcapture %}
 
 {% include_relative website/includes/vue-code.md name="profile_picture2" code=code2 %}
+
+
+## Extending
+
+If you still can't make it with the built in customizations, (1) you can create a theme and pass it via theme prop, or (2) you can import the provided mixin and define a custom template. e.g:
+
+{% raw %}
+```html
+<!-- my-vue-file-agent.vue (component) -->
+<template>
+  <div class="my-vue-file-agent">
+    <ul>
+      <li v-for="fileData in filesData">
+        {{ fileData.name() }}
+      </li>
+    </ul>
+    <button @click="myCustomMethod()">Custom Button</button>
+  </div>
+</template>
+<script>
+  import {mixin} from 'vue-file-agent';
+
+  export default {
+    mixins: [mixin],
+    methods: {
+      myCustomMethod(){
+        // bla bla
+      }
+    }
+  }
+</script>
+```
+{% endraw %}
