@@ -659,8 +659,9 @@
 .theme-list .vue-file-agent .file-preview-wrapper .file-preview .image-dimension {
   left: 53px;
   text-align: left;
-  padding-left: 53px;
-  right: 0;
+  margin-left: 53px;
+  right: auto;
+  width: auto;
 }
 
 .theme-list .vue-file-agent .file-preview .image-dimension,
