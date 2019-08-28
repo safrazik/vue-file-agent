@@ -169,12 +169,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"459d17d4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueFileIcon.vue?vue&type=template&id=48bef045&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"459d17d4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-icon.vue?vue&type=template&id=4154e94d&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":_vm.viewBoxComputed}},[_vm._l((_vm.icon.paths),function(d){return [(d)?_c('path',{attrs:{"d":d}}):_vm._e()]})],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueFileIcon.vue?vue&type=template&id=48bef045&
+// CONCATENATED MODULE: ./src/components/vue-file-icon.vue?vue&type=template&id=4154e94d&
 
 // CONCATENATED MODULE: ./src/lib/extensions.js
 /* harmony default export */ var extensions = ({
@@ -268,7 +268,7 @@ function getIconFromExt(ext) {
   var svgIcon = icons[cat] || icons.other;
   return svgIcon;
 }
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueFileIcon.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-icon.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -279,7 +279,7 @@ function getIconFromExt(ext) {
 //
 //
 
-/* harmony default export */ var VueFileIconvue_type_script_lang_js_ = ({
+/* harmony default export */ var vue_file_iconvue_type_script_lang_js_ = ({
   props: ['ext', 'viewBox'],
   computed: {
     viewBoxComputed() {
@@ -297,8 +297,8 @@ function getIconFromExt(ext) {
 
   }
 });
-// CONCATENATED MODULE: ./src/components/VueFileIcon.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_VueFileIconvue_type_script_lang_js_ = (VueFileIconvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/vue-file-icon.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_vue_file_iconvue_type_script_lang_js_ = (vue_file_iconvue_type_script_lang_js_); 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
 
@@ -394,7 +394,7 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./src/components/VueFileIcon.vue
+// CONCATENATED MODULE: ./src/components/vue-file-icon.vue
 
 
 
@@ -403,7 +403,7 @@ function normalizeComponent (
 /* normalize component */
 
 var component = normalizeComponent(
-  components_VueFileIconvue_type_script_lang_js_,
+  components_vue_file_iconvue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
@@ -413,52 +413,33 @@ var component = normalizeComponent(
   
 )
 
-/* harmony default export */ var VueFileIcon = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"459d17d4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueFileAgent.vue?vue&type=template&id=23f5b5dc&
-var VueFileAgentvue_type_template_id_23f5b5dc_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone",class:{'is-drag-over': _vm.isDragging, 'is-compact': !!_vm.compact, 'is-single': !_vm.hasMultiple, 'has-multiple': _vm.hasMultiple, 'no-meta': _vm.meta === false},on:{"dragover":_vm.dragOver,"dragleave":_vm.dragLeave,"drop":_vm.drop}},[_c('canvas',{ref:"thumbnailCanvas",staticStyle:{"position":"fixed","visibility":"hidden","z-index":"-3"}}),(_vm.overallProgress)?_c('div',{staticClass:"overall-progress",class:{'overall-progress-full': _vm.overallProgress >= 100}},[_c('div',{staticClass:"overall-progress-bar",style:({width: _vm.overallProgress + '%'})}),_c('div',{staticClass:"overall-progress-left",style:({width: (100 - _vm.overallProgress) + '%'})})]):_vm._e(),_c('transition-group',{attrs:{"name":"grid-box","tag":"div"}},[_vm._l((_vm.filesData),function(fileData,index){return _c('div',{key:fileData.id,staticClass:"file-preview-wrapper grid-box-item grid-block",class:['file-preview-wrapper-' + fileData.ext(), fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other', 'file-category-' + fileData.icon().category, {'file-is-playing-av': fileData.isPlayingAv}, {'is-deletable': _vm.isDeletable}, {'is-deletable': _vm.isDeletable}, {'has-error': fileData.error}]},[(fileData.error)?_c('div',{staticClass:"file-error-wrapper"},[(fileData.error)?_c('div',{staticClass:"file-error-message file-error-message-client"},[_vm._v("\n\t  \t\t\t"+_vm._s(_vm.getErrorMessage(fileData))+"\n\t  \t\t")]):_vm._e()]):_vm._e(),(fileData.isPlayableAudio() || fileData.isPlayableVideo())?_c('div',{staticClass:"file-av-wrapper",attrs:{"id":'file-av-player-' + index}},[_c('div',{staticClass:"file-av-action",on:{"click":function($event){return _vm.playAv(fileData, 'file-av-player-' + index)}}},[_c('span',{staticClass:"file-av-stop"},[_c('svg',{attrs:{"width":"24","height":"24","viewBox":"0 0 24 24"}},[_c('path',{attrs:{"d":"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"}}),_c('path',{attrs:{"d":"M0 0h24v24H0z","fill":"none"}})])]),_c('span',{staticClass:"file-av-play"},[_c('svg',{attrs:{"width":"48","height":"48","viewBox":"0 0 48 48"}},[_c('path',{attrs:{"d":"M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm-4 29V15l12 9-12 9z"}})])])])]):_vm._e(),_c('span',{staticClass:"file-preview",class:{'image-preview': fileData.isImage(), 'other-preview': !fileData.isImage(), 'dark-content': fileData.isImage() && fileData.isDarkColor()},style:({'background-color': fileData.color(), 'background-imagex': 'url(' + fileData.src() + ')', widthx: fileData.width + 'px', heightx: fileData.height + 'px'})},[_c('span',{staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0","overflow":"hidden"}},[(fileData.isImage() || fileData.isPlayableVideo())?_c('img',{staticClass:"file-preview-img",attrs:{"src":fileData.src()}}):_vm._e()]),_c('span',{staticClass:"file-ext"},[_vm._v(_vm._s(fileData.ext()))]),_c('span',{staticClass:"file-size"},[_vm._v(_vm._s(fileData.size()))]),(_vm.isDeletable)?_c('span',{staticClass:"file-delete",on:{"click":function($event){return _vm.removeFileData(fileData)}}},[_vm._v("\n        \t×\n    \t\t")]):_vm._e(),_c('span',{staticClass:"file-name"},[_vm._v("\n\t        "+_vm._s(fileData.name(true))+"\n\t      ")]),(fileData.dimensions.width && fileData.dimensions.height)?_c('span',{staticClass:"image-dimension"},[_c('span',{staticClass:"image-dimension-width"},[_vm._v(_vm._s(fileData.dimensions.width))]),_c('span',{staticClass:"image-dimension-height"},[_vm._v(_vm._s(fileData.dimensions.height))])]):_vm._e(),(fileData.hasProgress())?_c('span',{staticClass:"file-progress",class:{'file-progress-full': fileData.progress() >= 100, 'has-file-progress': fileData.progress() > 0}},[_c('span',{staticClass:"file-progress-bar",style:({width: fileData.progress() + '%'})})]):_vm._e(),_c('span',{staticClass:"file-icon"},[_c('VueFileIcon',{attrs:{"ext":fileData.ext()}})],1)])])}),(_vm.canAddMore)?_c('div',{key:"new",staticClass:"file-preview-wrapper grid-box-item grid-block file-preview-new"},[_c('span',{staticClass:"file-preview"},[_c('span',{staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0"}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink","version":"1.1","x":"100px","y":"0px","viewBox":"0 0 1000 1000","enable-background":"new 0 0 1000 1000","xml:space":"preserve"}},[_c('path',{attrs:{"d":"M745,353c-5.6,0-11.3,0.2-17.2,0.7C687.4,237.3,577.8,157,451,157c-162.1,0-294,131.9-294,294c0,2.1,0,4.1,0,6.2C72.6,479,10,555.8,10,647c0,108.1,87.9,196,196,196h245V618.3l-63.4,63.4c-9.6,9.6-22.1,14.4-34.6,14.4s-25.1-4.8-34.6-14.4c-19.2-19.2-19.2-50.1,0-69.3l147-147c4.6-4.6,9.9-8.1,16-10.6c12-4.9,25.5-4.9,37.4,0c6,2.5,11.4,6.1,16,10.6l147,147c19.2,19.2,19.2,50.1,0,69.3c-9.6,9.6-22.1,14.4-34.6,14.4s-25.1-4.8-34.6-14.4L549,618.3V843h196c135.1,0,245-109.9,245-245S880.1,353,745,353z"}})]),_c('span',{staticClass:"help-text"},[_vm._v(_vm._s(_vm.helpTextComputed))])])])]):_vm._e()],2),_c('input',{ref:"fileInput",staticClass:"file-input",attrs:{"title":"","disabled":_vm.hasMultiple && !_vm.canAddMore,"type":"file","multiple":_vm.hasMultiple,"accept":_vm.accept || '*'},on:{"change":_vm.filesChanged}}),( false)?undefined:_vm._e()],1)}
-var VueFileAgentvue_type_template_id_23f5b5dc_staticRenderFns = []
+/* harmony default export */ var vue_file_icon = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"459d17d4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-preview.vue?vue&type=template&id=0402fc15&
+var vue_file_previewvue_type_template_id_0402fc15_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.fileData.error)?_c('div',{staticClass:"file-error-wrapper"},[(_vm.fileData.error)?_c('div',{staticClass:"file-error-message file-error-message-client"},[_vm._v("\n      "+_vm._s(_vm.fileData.getErrorMessage(_vm.errorText))+"\n    ")]):_vm._e()]):_vm._e(),(_vm.fileData.isPlayableAudio() || _vm.fileData.isPlayableVideo())?_c('div',{ref:"wrapper",staticClass:"file-av-wrapper"},[_c('div',{staticClass:"file-av-action",on:{"click":function($event){return _vm.playAv(_vm.fileData)}}},[_c('span',{staticClass:"file-av-stop"},[_c('svg',{attrs:{"width":"24","height":"24","viewBox":"0 0 24 24"}},[_c('path',{attrs:{"d":"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"}}),_c('path',{attrs:{"d":"M0 0h24v24H0z","fill":"none"}})])]),_c('span',{staticClass:"file-av-play"},[_c('svg',{attrs:{"width":"48","height":"48","viewBox":"0 0 48 48"}},[_c('path',{attrs:{"d":"M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm-4 29V15l12 9-12 9z"}})])])])]):_vm._e(),_c('span',{staticClass:"file-preview",class:{'image-preview': _vm.fileData.isImage(), 'other-preview': !_vm.fileData.isImage(), 'dark-content': _vm.fileData.isImage() && _vm.fileData.isDarkColor()},style:({'background-color': _vm.fileData.color(), 'background-imagex': 'url(' + _vm.fileData.src() + ')', widthx: _vm.fileData.width + 'px', heightx: _vm.fileData.height + 'px'})},[_c('span',{staticClass:"thumbnail",staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0","overflow":"hidden"}},[(_vm.fileData.isImage() || _vm.fileData.isPlayableVideo())?_c('img',{staticClass:"file-preview-img",attrs:{"src":_vm.fileData.src()}}):_vm._e()]),_c('span',{staticClass:"file-ext"},[_vm._v(_vm._s(_vm.fileData.ext()))]),_c('span',{staticClass:"file-size"},[_vm._v(_vm._s(_vm.fileData.size()))]),(_vm.deletable)?_c('span',{staticClass:"file-delete",on:{"click":function($event){return _vm.removeFileData(_vm.fileData)}}},[_vm._v("\n      ×\n    ")]):_vm._e(),_c('span',{staticClass:"file-name"},[_vm._v("\n      "+_vm._s(_vm.fileData.name(true))+"\n    ")]),(_vm.fileData.dimensions.width && _vm.fileData.dimensions.height)?_c('span',{staticClass:"image-dimension"},[_c('span',{staticClass:"image-dimension-width"},[_vm._v(_vm._s(_vm.fileData.dimensions.width))]),_c('span',{staticClass:"image-dimension-height"},[_vm._v(_vm._s(_vm.fileData.dimensions.height))])]):_vm._e(),(_vm.fileData.hasProgress())?_c('span',{staticClass:"file-progress",class:{'file-progress-full': _vm.fileData.progress() >= 100, 'has-file-progress': _vm.fileData.progress() > 0}},[_c('span',{staticClass:"file-progress-bar",style:({width: _vm.fileData.progress() + '%'})})]):_vm._e(),_c('span',{staticClass:"file-icon"},[_c('VueFileIcon',{attrs:{"ext":_vm.fileData.ext()}})],1)])])}
+var vue_file_previewvue_type_template_id_0402fc15_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueFileAgent.vue?vue&type=template&id=23f5b5dc&
+// CONCATENATED MODULE: ./src/components/vue-file-preview.vue?vue&type=template&id=0402fc15&
 
-// EXTERNAL MODULE: ./src/components/vue-file-agent.css
-var vue_file_agent = __webpack_require__("e8b6");
+// CONCATENATED MODULE: ./src/lib/utils.js
+class Utils {
+  getAverageColor(arr) {
+    var bytesPerPixel = 4,
+        arrLength = arr.length;
 
-// CONCATENATED MODULE: ./src/lib/file-data.js
+    if (arrLength < bytesPerPixel) {
+      return false;
+    }
 
+    var step = 5;
+    var len = arrLength - arrLength % bytesPerPixel,
+        preparedStep = (step || 1) * bytesPerPixel;
+    var redTotal = 0,
+        greenTotal = 0,
+        blueTotal = 0,
+        alphaTotal = 0,
+        count = 0;
 
-var readFileContent = function (file) {
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-
-    reader.onload = function (readerEvent) {
-      resolve(readerEvent.target['result']);
-    };
-
-    reader.readAsDataURL(file);
-  });
-};
-
-function getAverageColor(arr) {
-  var bytesPerPixel = 4,
-      arrLength = arr.length;
-
-  if (arrLength < bytesPerPixel) {
-    return false;
-  }
-
-  var step = 5;
-  var len = arrLength - arrLength % bytesPerPixel,
-      preparedStep = (step || 1) * bytesPerPixel;
-  var redTotal = 0,
-      greenTotal = 0,
-      blueTotal = 0,
-      alphaTotal = 0,
-      count = 0;
-  var simple = false;
-  simple = true;
-
-  if (simple) {
     for (var i = 0; i < len; i += preparedStep) {
       var alpha = arr[i + 3],
           red = arr[i] * alpha,
@@ -474,71 +455,92 @@ function getAverageColor(arr) {
     return alphaTotal ? [Math.round(redTotal / alphaTotal), Math.round(greenTotal / alphaTotal), Math.round(blueTotal / alphaTotal), Math.round(alphaTotal / count)] : [0, 0, 0, 0];
   }
 
-  for (var i = 0; i < len; i += preparedStep) {
-    var red = arr[i],
-        green = arr[i + 1],
-        blue = arr[i + 2],
-        alpha = arr[i + 3];
-    redTotal += red * red * alpha;
-    greenTotal += green * green * alpha;
-    blueTotal += blue * blue * alpha;
-    alphaTotal += alpha;
-    count++;
+  createVideoThumbnail(video, canvas, thumbnailSize) {
+    return new Promise((resolve, reject) => {
+      var ctx = canvas.getContext('2d');
+      var loadedmetadata = false;
+      var loadeddata = false;
+
+      var tryGetThumbnail = () => {
+        if (!(loadedmetadata && loadeddata)) {
+          return;
+        }
+
+        var context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        var url = canvas.toDataURL();
+        resolve({
+          url: url,
+          color: this.getAverageColor(imageData.data),
+          width: video.videoWidth,
+          height: video.videoHeight
+        });
+      }; // Load metadata of the video to get video duration and dimensions
+
+
+      video.addEventListener('loadedmetadata', () => {
+        // var video_duration = video.duration;
+        canvas.width = thumbnailSize;
+        canvas.height = canvas.width / video.videoWidth * video.videoHeight;
+        video.currentTime = 1; // video time
+
+        loadedmetadata = true;
+        tryGetThumbnail();
+      });
+      video.addEventListener('loadeddata', () => {
+        loadeddata = true;
+        tryGetThumbnail();
+      });
+    });
   }
 
-  return alphaTotal ? [Math.round(Math.sqrt(redTotal / alphaTotal)), Math.round(Math.sqrt(greenTotal / alphaTotal)), Math.round(Math.sqrt(blueTotal / alphaTotal)), Math.round(alphaTotal / count)] : [0, 0, 0, 0];
-}
+  getDataURL(file) {
+    return new Promise((resolve, reject) => {
+      var reader = new FileReader();
 
-var resizeImage = function (settings, fileData) {
-  var file = settings.file;
-  var url = settings.url;
-  var resizeLimit = settings.resizeLimit;
-  var binary = settings.binary;
-  var image;
-  image = new Image();
-  var avgColor = null;
-  var canvas = document.createElement('canvas'); // var dataURItoBlob = function(dataURI) {
-  //   var bytes = dataURI.split(',')[0].indexOf('base64') >= 0 ?
-  //       atob(dataURI.split(',')[1]) :
-  //       decodeURI(dataURI.split(',')[1]);
-  //   var mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
-  //   var max = bytes.length;
-  //   var ia = new Uint8Array(max);
-  //   for (var i = 0; i < max; i++) ia[i] = bytes.charCodeAt(i);
-  //   return new Blob([ia], {type:mime});
-  // };
+      reader.onload = readerEvent => {
+        resolve(readerEvent.target['result']);
+      };
 
-  var resize = function () {
+      reader.readAsDataURL(file);
+    });
+  }
+
+  getImageResized(image, widthLimit, heightLimit) {
     var width = image.width;
     var height = image.height;
+    var thumbnailSize = widthLimit;
 
-    if (settings.width && settings.height) {
-      width = settings.width;
-      height = settings.height;
+    if (widthLimit && heightLimit) {
+      width = widthLimit;
+      height = heightLimit;
     } else {
       if (width > height) {
-        if (width > resizeLimit) {
-          height *= resizeLimit / width;
-          width = resizeLimit;
+        if (width > thumbnailSize) {
+          height *= thumbnailSize / width;
+          width = thumbnailSize;
         }
       } else {
-        if (height > resizeLimit) {
-          width *= resizeLimit / height;
-          height = resizeLimit;
+        if (height > thumbnailSize) {
+          width *= thumbnailSize / height;
+          height = thumbnailSize;
         }
       }
     }
 
     width = Math.floor(width);
     height = Math.floor(height);
+    var canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
     var context = canvas.getContext('2d');
     context.drawImage(image, 0, 0, width, height);
+    var avgColor = null;
 
     try {
       var imageData = context.getImageData(0, 0, width, height);
-      var rgb = getAverageColor(imageData.data);
+      var rgb = this.getAverageColor(imageData.data);
 
       if (rgb) {
         avgColor = rgb;
@@ -547,230 +549,372 @@ var resizeImage = function (settings, fileData) {
       /* security error, img on diff domain */
     }
 
-    var dataUrl = canvas.toDataURL('image/png');
+    return {
+      image: image,
+      url: canvas.toDataURL('image/png'),
+      color: avgColor
+    };
+  }
 
-    if (!binary) {
-      return dataUrl;
-    } // return dataURItoBlob(dataUrl);
+  resizeImageUrl(image, url, thumbnailSize) {
+    return new Promise((resolve, reject) => {
+      image.onload = () => {
+        var resized = this.getImageResized(image, thumbnailSize);
+        resolve(resized);
+      };
 
-  };
+      image.src = url;
+    });
+  }
 
-  return new Promise(function (resolve, reject) {
-    if (file.type.indexOf('image') == -1) {
-      reject(new Error("Not an image"));
-      return;
-    }
-
-    var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;
-    var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
-    var shouldRevoke = false;
-    image.setAttribute('crossOrigin', 'anonymous'); // works for me
-
-    image.onload = function () {
-      if (shouldRevoke) {
-        revokeObjectURL(image.src);
+  resizeImageFile(image, file, thumbnailSize) {
+    return new Promise((resolve, reject) => {
+      if (file.type.indexOf('image') == -1) {
+        reject(new Error("Not an image"));
+        return;
       }
 
-      var url = resize();
-      resolve({
-        image: image,
-        url: url,
-        color: avgColor
+      var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;
+      var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
+      var shouldRevoke = false;
+
+      image.onload = () => {
+        if (shouldRevoke) {
+          revokeObjectURL(image.src);
+        }
+
+        var resized = this.getImageResized(image, thumbnailSize);
+        resolve(resized);
+        return;
+      };
+
+      if (!(file instanceof File)) {
+        return reject('Invalid file object. Use url or a valid instance of File class');
+      }
+
+      if (createObjectURL && revokeObjectURL) {
+        shouldRevoke = true;
+        image.src = createObjectURL(file);
+        return;
+      }
+
+      this.getDataURL(file).then(dataUrl => {
+        image.src = dataUrl;
       });
-      return;
+    });
+  }
+
+  resizeImage(thumbnailSize, file, url) {
+    var image = new Image();
+    image.setAttribute('crossOrigin', 'anonymous');
+    return url ? this.resizeImageUrl(image, url, thumbnailSize) : this.resizeImageFile(image, file, thumbnailSize);
+  }
+
+  getSizeFormatted(bytes) {
+    var sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes == 0) return '0 B';
+    var i = Math.floor(Math.log(bytes) / Math.log(1024));
+    i = parseInt('' + i);
+    return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i];
+  }
+
+  getSizeParsed(size) {
+    size = ('' + size).toUpperCase();
+    var matches = size.match(/([\d|.]+?)\s*?([A-Z]+)/);
+    var sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+    var i = sizes.indexOf(matches[2]);
+
+    if (i == -1) {
+      return size;
+    }
+
+    return parseFloat(matches[1]) * Math.pow(1024, i);
+  }
+
+  getColorForText(value) {
+    var getHashCode = function (value) {
+      var hash = 0;
+      if (value.length == 0) return hash;
+
+      for (var i = 0; i < value.length; i++) {
+        hash = value.charCodeAt(i) + ((hash << 5) - hash);
+        hash = hash & hash; // Convert to 32bit integer
+      }
+
+      return hash;
     };
 
-    if (url) {
-      image.src = url;
-      return;
-    }
+    var intToHSL = function (value) {
+      var h = value % 360; // var s = 100;
 
-    if (!(file instanceof File)) {
-      return reject('Invalid file object. Use url or a valid instance of File class');
-    }
+      var s = value % 100;
+      var l = 50; // var l = value % 100;
+      // return 'hsl(' + h + ',' + s + '%,' + l + '%)';
 
-    if (createObjectURL && revokeObjectURL) {
-      shouldRevoke = true;
-      image.src = createObjectURL(file);
-      return;
-    }
+      return 'hsl(' + h + ',' + s + '%,' + l + '%, 0.75)';
+    };
 
-    readFileContent(file).then(function (dataUrl) {
-      image.src = dataUrl;
-    });
-  });
-};
-
-var bytesToSize = function (bytes) {
-  var sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes == 0) return '0 B';
-  var i = Math.floor(Math.log(bytes) / Math.log(1024));
-  i = parseInt('' + i);
-  return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i];
-};
-
-var sizeToBytes = function (size) {
-  size = ('' + size).toUpperCase();
-  var matches = size.match(/([\d|.]+?)\s*?([A-Z]+)/);
-  var sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-  var i = sizes.indexOf(matches[2]);
-
-  if (i == -1) {
-    return size;
+    return intToHSL(getHashCode(value.toLowerCase()));
   }
 
-  return parseFloat(matches[1]) * Math.pow(1024, i);
-};
-
-var getHashCode = function (value) {
-  var hash = 0;
-  if (value.length == 0) return hash;
-
-  for (var i = 0; i < value.length; i++) {
-    hash = value.charCodeAt(i) + ((hash << 5) - hash);
-    hash = hash & hash; // Convert to 32bit integer
-  }
-
-  return hash;
-};
-
-var intToHSL = function (value) {
-  var h = value % 360; // var s = 100;
-
-  var s = value % 100;
-  var l = 50; // var l = value % 100;
-  // return 'hsl(' + h + ',' + s + '%,' + l + '%)';
-
-  return 'hsl(' + h + ',' + s + '%,' + l + '%, 0.75)';
-};
-
-var colorByHashCode = function (value) {
-  // var val = value.split('');
-  // return intToHSL(getHashCode(val.shift().toLowerCase() + val.shift().toUpperCase() + val.shift().toLowerCase() + val.join().toLowerCase()));
-  // return intToHSL(getHashCode(value.toUpperCase()));
-  // return intToHSL(getHashCode(value[0].toUpperCase() + value.substr(1).toLowerCase()));
-  return intToHSL(getHashCode(value.toLowerCase()));
-}; // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
-// https://gitlab.com/meno/dropzone/blob/master/src/dropzone.js#L2511
+  validateType(file, acceptedFiles) {
+    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
+    // https://gitlab.com/meno/dropzone/blob/master/src/dropzone.js#L2511
+    if (!acceptedFiles) {
+      return true;
+    } // If there are no accepted mime types, it's OK
 
 
-var validateType = function (file, acceptedFiles) {
-  if (!acceptedFiles) {
-    return true;
-  } // If there are no accepted mime types, it's OK
+    acceptedFiles = acceptedFiles.split(",");
+    let mimeType = file.type;
+    let baseMimeType = mimeType.replace(/\/.*$/, "");
 
+    for (let validType of acceptedFiles) {
+      validType = validType.trim();
 
-  acceptedFiles = acceptedFiles.split(",");
-  let mimeType = file.type;
-  let baseMimeType = mimeType.replace(/\/.*$/, "");
-
-  for (let validType of acceptedFiles) {
-    validType = validType.trim();
-
-    if (validType.charAt(0) === ".") {
-      // extension
-      if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
-        return true;
-      }
-    } else if (/\/\*$/.test(validType)) {
-      // This is something like a image/* mime type
-      if (baseMimeType === validType.replace(/\/.*$/, "")) {
-        return true;
-      }
-    } else {
-      if (mimeType === validType) {
-        return true;
+      if (validType.charAt(0) === ".") {
+        // extension
+        if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
+          return true;
+        }
+      } else if (/\/\*$/.test(validType)) {
+        // This is something like a image/* mime type
+        if (baseMimeType === validType.replace(/\/.*$/, "")) {
+          return true;
+        }
+      } else {
+        if (mimeType === validType) {
+          return true;
+        }
       }
     }
+
+    return false;
   }
 
-  return false;
-};
+  validateSize(file, maxSize) {
+    if (!maxSize) {
+      return true;
+    }
 
-var validateSize = function (file, maxSize) {
-  if (!maxSize) {
-    return true;
+    var bytes = this.getSizeParsed(maxSize);
+    return file.size <= bytes;
   }
 
-  var bytes = sizeToBytes(maxSize);
-  return file.size <= bytes;
-};
+}
 
-var FileData;
+/* harmony default export */ var utils = (new Utils());
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-preview.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-FileData = function (data, options = {}) {
-  var self = this;
-  self.raw = data;
-  self.file = data.file instanceof File ? data.file : data;
-  self.url = null;
-  self.urlResized = null;
-  self.lastKnownSrc = null;
-  self._progress = !isNaN(data.progress) ? data.progress : false;
-  self.width = FileData.defaultWidth;
-  self.height = FileData.defaultHeight;
-  self.resizeLimit = FileData.defaultResizeLimit;
-  self.read = !!options.read;
-  self.image = {};
-  self.dimensions = {
-    width: 0,
-    height: 0
-  };
-  self.error = data.error;
-  self.options = options;
-  self.maxSize = options.maxSize;
-  self.accept = options.accept;
-  self.isPlayingAv = false;
-  self.id = Math.random() + ':' + new Date().getTime();
-  self.videoThumbnail = data.videoThumbnail;
-  self.imageColor = data.imageColor;
-  self.upload = null;
+/* harmony default export */ var vue_file_previewvue_type_script_lang_js_ = ({
+  props: ['fileData', 'deletable', 'errorText'],
+  // computed: {
+  // },
+  methods: {
+    createThumbnail(fileData, video) {
+      var canvas = document.createElement('canvas');
+      utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then(thumbnail => {
+        fileData.imageColor = thumbnail.color;
+        fileData.videoThumbnail = thumbnail.url;
+        fileData.dimensions.width = thumbnail.width;
+        fileData.dimensions.height = thumbnail.height;
+      });
+    },
 
-  self.hasProgress = function () {
+    playAv(fileData) {
+      if (fileData.stopAv) {
+        fileData.stopAv();
+        return;
+      }
+
+      var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;
+      var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
+      var wrapper = this.$refs.wrapper;
+      var player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
+
+      if (fileData.isPlayableVideo()) {
+        this.createThumbnail(fileData, player);
+        player.poster = fileData.src();
+      }
+
+      player.controls = true; // player.style.width = this.prvWidth + 'px';
+
+      wrapper.appendChild(player);
+      var url = fileData.url || createObjectURL(fileData.file);
+      player.src = url;
+      player.play();
+      fileData.isPlayingAv = true;
+
+      fileData.stopAv = function () {
+        player.src = null;
+        wrapper.removeChild(player);
+        revokeObjectURL(url);
+        fileData.isPlayingAv = false;
+        fileData.stopAv = null;
+      };
+    },
+
+    removeFileData(fileData) {
+      this.$emit('remove', fileData);
+    }
+
+  }
+});
+// CONCATENATED MODULE: ./src/components/vue-file-preview.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_vue_file_previewvue_type_script_lang_js_ = (vue_file_previewvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/vue-file-preview.vue
+
+
+
+
+
+/* normalize component */
+
+var vue_file_preview_component = normalizeComponent(
+  components_vue_file_previewvue_type_script_lang_js_,
+  vue_file_previewvue_type_template_id_0402fc15_render,
+  vue_file_previewvue_type_template_id_0402fc15_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var vue_file_preview = (vue_file_preview_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"459d17d4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-agent.vue?vue&type=template&id=76c53e2c&
+var vue_file_agentvue_type_template_id_76c53e2c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[{'is-drag-over': _vm.isDragging}, 'theme-' + _vm.theme],on:{"dragover":_vm.dragOver,"dragenter":_vm.dragEnter,"dragleave":_vm.dragLeave,"drop":_vm.drop}},[_vm._t("before-outer"),_c('div',{staticClass:"grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone",class:{'is-drag-overx': _vm.isDragging, 'is-compact': !!_vm.compact, 'is-single': !_vm.hasMultiple, 'has-multiple': _vm.hasMultiple, 'no-meta': _vm.meta === false}},[_vm._t("before-inner"),_c('canvas',{ref:"thumbnailCanvas",staticStyle:{"position":"fixed","visibility":"hidden","z-index":"-3"}}),(_vm.overallProgress)?_c('div',{staticClass:"overall-progress",class:{'overall-progress-full': _vm.overallProgress >= 100}},[_c('div',{staticClass:"overall-progress-bar",style:({width: _vm.overallProgress + '%'})}),_c('div',{staticClass:"overall-progress-left",style:({width: (100 - _vm.overallProgress) + '%'})})]):_vm._e(),_c('transition-group',{attrs:{"name":"grid-box","tag":"div"}},[_vm._l((_vm.filesData),function(fileData,index){return _c('VueFilePreview',{key:fileData.id,staticClass:"file-preview-wrapper grid-box-item grid-block",class:['file-preview-wrapper-' + fileData.ext(), fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other', 'file-category-' + fileData.icon().category, {'file-is-playing-av': fileData.isPlayingAv}, {'is-deletable': _vm.isDeletable}, {'is-deletable': _vm.isDeletable}, {'has-error': fileData.error}],attrs:{"fileData":fileData,"index":index,"deletable":_vm.isDeletable,"errorText":_vm.errorText},on:{"remove":function($event){return _vm.removeFileData($event)}}})}),(_vm.canAddMore)?_c('div',{key:"new",staticClass:"file-preview-wrapper grid-box-item grid-block file-preview-new"},[_c('span',{staticClass:"file-preview"},[_c('span',{staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0"}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink","version":"1.1","x":"100px","y":"0px","viewBox":"0 0 1000 1000","enable-background":"new 0 0 1000 1000","xml:space":"preserve"}},[_c('path',{attrs:{"d":"M745,353c-5.6,0-11.3,0.2-17.2,0.7C687.4,237.3,577.8,157,451,157c-162.1,0-294,131.9-294,294c0,2.1,0,4.1,0,6.2C72.6,479,10,555.8,10,647c0,108.1,87.9,196,196,196h245V618.3l-63.4,63.4c-9.6,9.6-22.1,14.4-34.6,14.4s-25.1-4.8-34.6-14.4c-19.2-19.2-19.2-50.1,0-69.3l147-147c4.6-4.6,9.9-8.1,16-10.6c12-4.9,25.5-4.9,37.4,0c6,2.5,11.4,6.1,16,10.6l147,147c19.2,19.2,19.2,50.1,0,69.3c-9.6,9.6-22.1,14.4-34.6,14.4s-25.1-4.8-34.6-14.4L549,618.3V843h196c135.1,0,245-109.9,245-245S880.1,353,745,353z"}})]),_c('span',{staticClass:"help-text"},[_vm._v(_vm._s(_vm.helpTextComputed))])])])]):_vm._e()],2),_c('input',{ref:"fileInput",staticClass:"file-input",attrs:{"title":"","disabled":_vm.hasMultiple && !_vm.canAddMore,"type":"file","multiple":_vm.hasMultiple,"accept":_vm.accept || '*'},on:{"change":_vm.filesChanged}}),_vm._t("after-inner")],2),_vm._t("after-outer")],2)}
+var vue_file_agentvue_type_template_id_76c53e2c_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/vue-file-agent.vue?vue&type=template&id=76c53e2c&
+
+// EXTERNAL MODULE: ./src/components/vue-file-agent.css
+var vue_file_agent = __webpack_require__("e8b6");
+
+// CONCATENATED MODULE: ./src/lib/file-data.js
+
+
+
+class file_data_FileData {
+  constructor(data, options = {}) {
+    this.populate(data, options);
+    this.validate();
+  }
+
+  populate(data, options = {}) {
+    this.raw = data;
+    this.file = data.file instanceof File ? data.file : data;
+    this.url = null;
+    this.urlResized = null;
+    this.lastKnownSrc = null;
+    this._progress = !isNaN(data.progress) ? data.progress : false;
+    this.width = file_data_FileData.defaultWidth;
+    this.height = file_data_FileData.defaultHeight;
+    this.thumbnailSize = options.thumbnailSize || 360;
+    this.read = !!options.read;
+    this.image = {};
+    this.dimensions = data.dimensions || {};
+    this.dimensions.width = this.dimensions.width || 0;
+    this.dimensions.height = this.dimensions.height || 0;
+    this.error = data.error;
+    this.options = options;
+    this.maxSize = options.maxSize;
+    this.accept = options.accept;
+    this.isPlayingAv = false;
+    this.id = Math.random() + ':' + new Date().getTime();
+    this.videoThumbnail = data.videoThumbnail;
+    this.imageColor = data.imageColor;
+    this.upload = null;
+  }
+
+  hasProgress() {
     return !isNaN(this._progress); // && this._progress <= 100;
-  };
+  }
 
-  self.progress = function (value) {
+  progress(value) {
     if (value !== undefined) {
-      self._progress = value;
+      this._progress = value;
       return;
     }
 
-    return self._progress || 0;
-  };
+    return this._progress || 0;
+  }
 
-  self.src = function () {
-    if (self.isImage()) {
-      return self.urlResized || self.url || self.file.url;
+  src() {
+    if (this.isImage()) {
+      return this.urlResized || this.url || this.file.url;
     }
 
-    if (self.isPlayableVideo()) {
-      return self.videoThumbnail || '';
+    if (this.isPlayableVideo()) {
+      return this.videoThumbnail || '';
     }
 
     return '';
-  };
+  }
 
-  self.size = function () {
+  size() {
     if (!this.file) {
       return '';
     }
 
-    return bytesToSize(this.file.size);
-  };
+    return utils.getSizeFormatted(this.file.size);
+  }
 
-  self.ext = function () {
-    if (self.file && self.file.name.indexOf('.') !== -1) {
-      return self.file.name.split('.').pop();
+  ext() {
+    if (this.file && this.file.name.indexOf('.') !== -1) {
+      return this.file.name.split('.').pop();
     }
 
-    return '?'; // return self.file.type.split('/').shift();
-  };
+    return '?'; // return this.file.type.split('/').shift();
+  }
 
-  self.name = function (withoutExt) {
+  name(withoutExt) {
     var name = this.file && this.file.name;
 
     if (withoutExt) {
-      var ext = self.ext();
+      var ext = this.ext();
 
       if (ext != '?') {
         return name.substr(0, name.length - (ext.length + 1));
@@ -778,207 +922,215 @@ FileData = function (data, options = {}) {
     }
 
     return name;
-  };
+  }
 
-  self.isDarkColor = function () {
-    if (self.imageColor) {
-      var rgb = self.imageColor;
+  isDarkColor() {
+    if (this.imageColor) {
+      var rgb = this.imageColor;
       var darkPoint = 20;
       return rgb[0] <= darkPoint && rgb[1] <= darkPoint && rgb[2] <= darkPoint;
     }
 
     return false;
-  };
+  }
 
-  self.color = function () {
-    if (self.imageColor) {
-      var rgb = self.imageColor;
+  color() {
+    if (this.imageColor) {
+      var rgb = this.imageColor;
       return 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
     }
 
-    if (self.isImage()) {
+    if (this.isImage()) {
       return 'transparent';
     }
 
-    var ext = self.ext();
-    var svgIcon = self.icon(); // var svgIcon = getIconFromExt(ext);
+    var ext = this.ext();
+    var svgIcon = this.icon(); // var svgIcon = getIconFromExt(ext);
 
     if (svgIcon.color) {
       return svgIcon.color;
-    } // return colorByHashCode(self.file.type);
+    }
 
+    return utils.getColorForText(ext);
+  }
 
-    return colorByHashCode(ext);
-  };
+  isImage() {
+    return this.file && this.file.type.indexOf('image') != -1;
+  }
 
-  self.isImage = function () {
-    return self.file && self.file.type.indexOf('image') != -1;
-  };
+  isVideo() {
+    return this.file && this.file.type.indexOf('video') != -1;
+  }
 
-  self.isVideo = function () {
-    return self.file && self.file.type.indexOf('video') != -1;
-  };
+  isPlayableVideo() {
+    return this.icon().category == 'video-playable';
+  }
 
-  self.isPlayableVideo = function () {
-    return self.icon().category == 'video-playable';
-  };
+  isAudio() {
+    return this.file && this.file.type.indexOf('audio') != -1;
+  }
 
-  self.isAudio = function () {
-    return self.file && self.file.type.indexOf('audio') != -1;
-  };
+  isPlayableAudio() {
+    return this.icon().category == 'audio-playable';
+  }
 
-  self.isPlayableAudio = function () {
-    return self.icon().category == 'audio-playable';
-  };
+  isText() {
+    return this.file && this.file.type.indexOf('text') != -1;
+  }
 
-  self.isText = function () {
-    return self.file && self.file.type.indexOf('text') != -1;
-  };
+  setUrl(url) {
+    return new Promise((resolve, reject) => {
+      this.url = url;
 
-  self.setUrl = function (url) {
-    return new Promise(function (resolve, reject) {
-      self.url = url;
-
-      if (self.isImage()) {
-        self.resizeImage().then(function () {
-          resolve(self);
+      if (this.isImage()) {
+        this.resizeImage().then(() => {
+          resolve(this);
         }, reject);
         return;
       }
 
-      resolve(self);
+      resolve(this);
     });
-  };
+  }
 
-  self.imageResized = function (resized) {
-    self.urlResized = resized.url;
-    self.image = resized.image;
+  imageResized(resized) {
+    this.urlResized = resized.url;
+    this.image = resized.image;
 
     if (resized.image && resized.image.width && resized.image.height) {
-      self.dimensions.width = resized.image.width;
-      self.dimensions.height = resized.image.height;
+      this.dimensions.width = resized.image.width;
+      this.dimensions.height = resized.image.height;
     }
 
-    self.lastKnownSrc = self.urlResized;
-    self.imageColor = resized.color;
-  };
+    this.lastKnownSrc = this.urlResized;
+    this.imageColor = resized.color;
+  }
 
-  self.resizeImage = function () {
-    return new Promise(function (resolve, reject) {
-      resizeImage({
-        file: self.file,
-        resizeLimit: self.resizeLimit,
-        // width: self.width,
-        // height: self.height,
-        binary: false,
-        url: self.url
-      }, self).then(function (resized) {
-        self.imageResized(resized);
-        resolve(self);
+  resizeImage() {
+    return new Promise((resolve, reject) => {
+      utils.resizeImage(this.thumbnailSize, this.file, this.url, this).then(resized => {
+        this.imageResized(resized);
+        resolve(this);
       }).catch(reject);
     });
-  };
+  }
 
-  self.icon = function () {
-    var ext = self.ext();
+  icon() {
+    var ext = this.ext();
     var svgIcon = getIconFromExt(ext);
-    return svgIcon; // var ext = self.ext().toLowerCase();
-    // var cat = extensionsMap[ext];
-    // return icons[cat] || icons.other;
-  };
+    return svgIcon;
+  }
 
-  self.validate = function () {
-    var validType = validateType(self.file, self.accept);
-    var validSize = validateSize(self.file, self.maxSize);
+  getErrorMessage(errorText) {
+    var error = this.error;
+
+    if (!error) {
+      return '';
+    }
+
+    errorText = errorText || {};
+    errorText = {
+      common: errorText.common || 'Invalid file.',
+      type: errorText.type || 'Invalid file type.',
+      size: errorText.size || 'Files should not exceed ' + this.maxSize + ' in size'
+    };
+
+    if (error.type) {
+      return errorText.type;
+    } else if (error.size) {
+      return errorText.size;
+    } else if (error.upload) {
+      return this.upload && this.upload.error ? this.upload.error : error.upload;
+    }
+
+    return errorText.common;
+  }
+
+  toRaw() {
+    var raw = this.raw || {};
+    raw.url = this.url;
+    raw.urlResized = this.urlResized;
+    raw.src = this.src;
+    raw.name = this.file.name;
+    raw.lastModified = this.file.lastModified;
+    raw.sizeText = this.size();
+    raw.size = this.file.size;
+    raw.type = this.file.type;
+    raw.ext = this.ext();
+    raw.color = this.color();
+    raw.file = this.file;
+    raw.progress = this.progress.bind(this); // pass it as a function
+
+    raw.error = this.error;
+    raw.dimensions = this.dimensions;
+    return raw;
+  }
+
+  validate() {
+    var validType = utils.validateType(this.file, this.accept);
+    var validSize = utils.validateSize(this.file, this.maxSize);
 
     if (!validType || !validSize) {
-      self.error = {
+      this.error = {
         type: !validType,
         size: !validSize
       };
     } else {
-      self.error = false;
+      this.error = false;
     }
-  };
+  }
 
-  self.validate(); // self.initVideo();
-}; // FileData.defaultResizeLimit = 200;
+  static fromRaw(fileDataRaw, options) {
+    var fileData = new file_data_FileData(fileDataRaw, options);
+    var promise = fileData.setUrl(fileDataRaw.url);
+    fileDataRaw.progress = fileData.progress.bind(fileData); // convert it as a function
 
+    return promise;
+  }
 
-FileData.defaultResizeLimit = 360;
-FileData.defaultWidth = FileData.defaultResizeLimit; // FileData.defaultHeight = FileData.defaultResizeLimit;
+  static fromRawArray(filesDataRaw, options) {
+    var promises = [];
+    filesDataRaw.forEach(fileDataRaw => {
+      promises.push(file_data_FileData.fromRaw(fileDataRaw, options));
+    });
+    return Promise.all(promises);
+  }
 
-FileData.defaultHeight = FileData.defaultResizeLimit * (3 / 4); // 4:3 aspect ratio
+  static toRawArray(filesData) {
+    var filesDataRaw = [];
+    filesData.forEach(fileData => {
+      filesDataRaw.push(fileData.toRaw());
+    });
+    return filesDataRaw;
+  }
 
-FileData.all = function (filesDataRaw, options) {
-  var promises = [];
-  filesDataRaw.forEach(function (fileDataRaw) {
-    promises.push(FileData.fromRaw(fileDataRaw, options));
-  });
-  return Promise.all(promises);
-};
-
-FileData.fromRaw = function (fileDataRaw, options) {
-  var fileData = new FileData(fileDataRaw, options);
-  var promise = fileData.setUrl(fileDataRaw.url);
-  fileDataRaw.progress = fileData.progress; // convert it as a function
-
-  return promise;
-};
-
-FileData.toRaw = function (filesData) {
-  var filesDataRaw = [];
-  filesData.forEach(function (fileData) {
-    var fileDataRaw = fileData.raw || {};
-    fileDataRaw.url = fileData.url;
-    fileDataRaw.urlResized = fileData.urlResized;
-    fileDataRaw.src = fileData.src;
-    fileDataRaw.name = fileData.file.name;
-    fileDataRaw.lastModified = fileData.file.lastModified;
-    fileDataRaw.sizeText = fileData.size();
-    fileDataRaw.size = fileData.file.size;
-    fileDataRaw.type = fileData.file.type;
-    fileDataRaw.ext = fileData.ext();
-    fileDataRaw.color = fileData.color();
-    fileDataRaw.file = fileData.file;
-    fileDataRaw.progress = fileData.progress; // pass it as a function
-
-    fileDataRaw.error = fileData.error;
-    fileDataRaw.dimensions = fileData.dimensions;
-    filesDataRaw.push(fileDataRaw);
-  });
-  return filesDataRaw;
-};
-
-FileData.readFile = function (fileData) {
-  return new Promise(function (resolve, reject) {
-    if (!fileData.read) {
-      fileData.setUrl(null);
-      resolve(fileData);
-      return;
-    }
-
-    var reader = new FileReader();
-
-    reader.onload = function (readerEvent) {
-      fileData.setUrl(readerEvent.target['result']).then(function () {
+  static readFile(fileData) {
+    return new Promise((resolve, reject) => {
+      if (!fileData.read) {
+        fileData.setUrl(null);
         resolve(fileData);
+        return;
+      }
+
+      utils.getDataURL(fileData.file).then(dataUrl => {
+        fileData.setUrl(dataUrl).then(() => {
+          resolve(fileData);
+        }, reject);
       }, reject);
-    };
+    });
+  }
 
-    reader.readAsDataURL(fileData.file);
-  });
-};
+  static readFiles(filesData) {
+    var promises = [];
+    filesData.forEach(fileData => {
+      promises.push(file_data_FileData.readFile(fileData));
+    });
+    return Promise.all(promises);
+  }
 
-FileData.readFiles = function (filesData) {
-  var promises = [];
-  filesData.forEach(function (fileData) {
-    promises.push(FileData.readFile(fileData));
-  });
-  return Promise.all(promises);
-};
+}
 
-/* harmony default export */ var file_data = (FileData);
+/* harmony default export */ var file_data = (file_data_FileData);
 // CONCATENATED MODULE: ./src/lib/ajax-request.js
 /* inspired by axios */
 class AjaxRequest {
@@ -1195,7 +1347,8 @@ class upload_helper_UploadHelper {
         var promise = self.doUpload(url, headers, formData, function (progressEvent) {
           var percentCompleted = progressEvent.loaded * 100 / progressEvent.total;
           var percentCompletedRounded = Math.round(percentCompleted);
-          fileData.progress(percentCompleted);
+          fileData.progress(percentCompleted >= 100 ? 99.99 : percentCompleted); // do not complete until promise resolved
+
           updateOverallProgress();
         }, function (xhr) {
           fileData.xhr = xhr;
@@ -1203,6 +1356,7 @@ class upload_helper_UploadHelper {
         promise.then(function (response) {
           delete fileData.xhr;
           fileData.upload = response.data;
+          fileData.progress(100);
         }
         /* */
         , function (err) {
@@ -1237,87 +1391,22 @@ class upload_helper_UploadHelper {
 }
 
 /* harmony default export */ var upload_helper = (new upload_helper_UploadHelper());
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueFileAgent.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+// CONCATENATED MODULE: ./src/components/vue-file-agent-mixin.js
 
 
 
 
-/* harmony default export */ var VueFileAgentvue_type_script_lang_js_ = ({
-  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact'],
+
+
+var dragCounter = 0;
+/* harmony default export */ var vue_file_agent_mixin = ({
+  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme'],
   components: {
-    VueFileIcon: VueFileIcon
+    VueFileIcon: vue_file_icon,
+    VueFilePreview: vue_file_preview
   },
-  data: function () {
+
+  data() {
     return {
       filesData: [],
       filesDataRaw: [],
@@ -1325,6 +1414,7 @@ class upload_helper_UploadHelper {
       overallProgress: 0
     };
   },
+
   computed: {
     canAddMore() {
       if (!this.hasMultiple) {
@@ -1346,30 +1436,6 @@ class upload_helper_UploadHelper {
       return 'Choose ' + (this.hasMultiple ? 'files' : 'file') + ' or drag & drop here';
     },
 
-    errorTextComputed() {
-      var errorText = {
-        common: 'Invalid file.',
-        type: 'Invalid file type.',
-        size: 'Files should not exceed ' + this.maxSize + ' in size'
-      };
-
-      if (this.errorText) {
-        if (this.errorText.type) {
-          errorText.type = this.errorText.type;
-        }
-
-        if (this.errorText.size) {
-          errorText.size = this.errorText.size;
-        }
-
-        if (this.errorText.common) {
-          errorText.common = this.errorText.common;
-        }
-      }
-
-      return errorText;
-    },
-
     isDeletable() {
       if (typeof this.deletable == 'string') {
         return this.deletable !== 'false';
@@ -1378,7 +1444,7 @@ class upload_helper_UploadHelper {
       return !!this.deletable;
     },
 
-    hasMultiple: function () {
+    hasMultiple() {
       if (typeof this.multiple == 'string') {
         return this.multiple !== 'false';
       }
@@ -1389,62 +1455,27 @@ class upload_helper_UploadHelper {
 
       return !!this.multiple;
     },
-    shouldRead: function () {
+
+    shouldRead() {
       if (typeof this.read == 'string') {
         return this.read === 'true';
       }
 
       return !!this.read;
-    },
-    prvWidth: function () {
-      return file_data.defaultWidth;
-    },
-    prvHeight: function () {
-      return file_data.defaultHeight;
     }
+
   },
   methods: {
-    createThumbnail(fileData, video, destroy = false) {
-      var canvas = this.$refs.thumbnailCanvas;
-      var ctx = canvas.getContext('2d');
-      var loadedmetadata = false;
-      var loadeddata = false;
-      var prvWidth = this.prvWidth;
-      var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
-
-      var tryGetThumbnail = function () {
-        if (!(loadedmetadata && loadeddata)) {
-          return;
-        }
-
-        var context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        fileData.imageColor = getAverageColor(imageData.data);
-        var url = canvas.toDataURL();
-        fileData.videoThumbnail = url;
-
-        if (destroy) {
-          // video.currentTime = 0; // Reset video current time
-          revokeObjectURL(video.src);
-        }
-      }; // Load metadata of the video to get video duration and dimensions
-
-
-      video.addEventListener('loadedmetadata', function () {
-        // var video_duration = video.duration;
-        canvas.width = prvWidth;
-        canvas.height = canvas.width / video.videoWidth * video.videoHeight;
-        fileData.dimensions.width = video.videoWidth;
-        fileData.dimensions.height = video.videoHeight;
-        video.currentTime = 1; // video time
-
-        loadedmetadata = true;
-        tryGetThumbnail();
-      });
-      video.addEventListener('loadeddata', function () {
-        loadeddata = true;
-        tryGetThumbnail();
+    createThumbnail(fileData, video) {
+      return new Promise((resolve, reject) => {
+        var canvas = document.createElement('canvas');
+        utils.createVideoThumbnail(video, canvas, fileData.thumbnailSize).then(thumbnail => {
+          fileData.imageColor = thumbnail.color;
+          fileData.videoThumbnail = thumbnail.url;
+          fileData.dimensions.width = thumbnail.width;
+          fileData.dimensions.height = thumbnail.height;
+          resolve();
+        }, reject);
       });
     },
 
@@ -1454,64 +1485,13 @@ class upload_helper_UploadHelper {
       }
 
       var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;
+      var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
       var video = document.createElement('video');
       video.src = createObjectURL(fileData.file);
-      this.createThumbnail(fileData, video, true);
+      this.createThumbnail(fileData, video, true).then(() => {
+        revokeObjectURL(video.src);
+      });
       video.load();
-    },
-
-    playAv(fileData, id) {
-      if (fileData.stopAv) {
-        fileData.stopAv();
-        return;
-      }
-
-      var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;
-      var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
-      var wrapper = this.$el.querySelector('#' + id);
-      var player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
-
-      if (fileData.isPlayableVideo()) {
-        this.createThumbnail(fileData, player);
-        player.poster = fileData.src();
-      }
-
-      player.controls = true; // player.style.width = this.prvWidth + 'px';
-
-      wrapper.appendChild(player); // var player = this.$el.querySelector('#' + id);
-
-      var url = fileData.url || createObjectURL(fileData.file);
-      player.src = url;
-      player.play();
-      fileData.isPlayingAv = true;
-
-      fileData.stopAv = function () {
-        player.src = null;
-        wrapper.removeChild(player);
-        revokeObjectURL(url);
-        fileData.isPlayingAv = false;
-        fileData.stopAv = null;
-      };
-    },
-
-    getErrorMessage(fileData) {
-      var error = fileData.error;
-
-      if (!error) {
-        return '';
-      }
-
-      var errorText = this.errorTextComputed;
-
-      if (error.type) {
-        return errorText.type;
-      } else if (error.size) {
-        return errorText.size;
-      } else if (error.upload) {
-        return fileData.upload && fileData.upload.error ? fileData.upload.error : error.upload;
-      }
-
-      return errorText.common;
     },
 
     upload(url, headers, filesData) {
@@ -1567,7 +1547,7 @@ class upload_helper_UploadHelper {
       return false;
     },
 
-    handleFiles: function (files) {
+    handleFiles(files) {
       if (this.hasMultiple && !this.canAddMore) {
         return;
       }
@@ -1595,7 +1575,8 @@ class upload_helper_UploadHelper {
         }, {
           read: this.shouldRead,
           maxSize: this.maxSize,
-          accept: this.accept
+          accept: this.accept,
+          thumbnailSize: this.thumbnailSize
         }));
       } //////////// disables list transitions
       // var allFilesData = this.filesData.concat(filesData);
@@ -1617,21 +1598,20 @@ class upload_helper_UploadHelper {
         this.filesData = filesData;
       }
 
-      var self = this;
-      var allFilesData = this.filesData;
-      file_data.readFiles(filesData).then(function (filesData) {
+      file_data.readFiles(filesData).then(filesData => {
         // var filesDataRaw = FileData.toRaw(filesData);
-        var allFilesDataRaw = file_data.toRaw(allFilesData);
-        self.filesDataRaw = allFilesDataRaw; // filesDataRaw = self.hasMultiple ? filesDataRaw : filesDataRaw[0];
+        var allFilesDataRaw = file_data.toRawArray(this.filesData);
+        this.filesDataRaw = allFilesDataRaw; // filesDataRaw = self.hasMultiple ? filesDataRaw : filesDataRaw[0];
 
-        allFilesDataRaw = Array.isArray(self.value) ? allFilesDataRaw : allFilesDataRaw[0];
-        self.$emit('input', allFilesDataRaw); // self.$emit('select', filesData);	
+        allFilesDataRaw = Array.isArray(this.value) ? allFilesDataRaw : allFilesDataRaw[0];
+        this.$emit('input', allFilesDataRaw); // self.$emit('select', filesData);	
 
-        self.$emit('select', file_data.toRaw(filesData));
+        this.$emit('select', file_data.toRawArray(filesData));
       });
       this.autoUpload(filesData);
     },
-    filesChanged: function (event) {
+
+    filesChanged(event) {
       var files = event.target.files;
       this.$emit('change', event);
 
@@ -1646,7 +1626,9 @@ class upload_helper_UploadHelper {
         this.$refs.fileInput.value = null; // do not use '' because chrome won't fire change event for same file
       }
     },
-    drop: function (event) {
+
+    drop(event) {
+      dragCounter = 0;
       this.isDragging = false;
       event.stopPropagation();
       event.preventDefault();
@@ -1664,14 +1646,28 @@ class upload_helper_UploadHelper {
 
       this.handleFiles(files);
     },
-    dragOver: function (event) {
+
+    dragEnter(event) {
+      this.isDragging = true;
+      event.stopPropagation();
+      event.preventDefault();
+      dragCounter++;
+      event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    },
+
+    dragOver(event) {
       this.isDragging = true;
       event.stopPropagation();
       event.preventDefault();
       event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     },
-    dragLeave: function (event) {
-      this.isDragging = false;
+
+    dragLeave(event) {
+      dragCounter--;
+
+      if (dragCounter === 0) {
+        this.isDragging = false;
+      }
     },
 
     removeFileData(fileData) {
@@ -1687,14 +1683,13 @@ class upload_helper_UploadHelper {
       this.filesDataRaw.splice(i, 1);
       this.$emit('input', this.filesDataRaw); // this.$emit('delete', fileData);
 
-      this.$emit('delete', file_data.toRaw([fileData])[0]);
+      this.$emit('delete', file_data.toRawArray([fileData])[0]);
       this.autoDeleteUpload(fileData).then(res => {}, err => {
         this.filesData.splice(i, 1, fileData);
       });
     },
 
     checkValue() {
-      var self = this;
       var filesDataRaw = this.value || [];
       filesDataRaw = Array.isArray(filesDataRaw) ? filesDataRaw : [filesDataRaw];
       var fdPromises = [];
@@ -1710,22 +1705,25 @@ class upload_helper_UploadHelper {
           fdPromises.push(file_data.fromRaw(filesDataRaw[i], {
             read: this.shouldRead,
             maxSize: this.maxSize,
-            accept: this.accept
+            accept: this.accept,
+            thumbnailSize: this.thumbnailSize
           }));
           filesDataRawNew.push(filesDataRaw[i]);
         }
       }
 
       this.filesDataRaw = filesDataRawNew;
-      Promise.all(fdPromises).then(function (filesData) {
-        self.filesData = filesData;
+      Promise.all(fdPromises).then(filesData => {
+        this.filesData = filesData;
       });
     }
 
   },
-  created: function () {
+
+  created() {
     this.checkValue();
   },
+
   watch: {
     value() {
       this.checkValue();
@@ -1733,9 +1731,49 @@ class upload_helper_UploadHelper {
 
   }
 });
-// CONCATENATED MODULE: ./src/components/VueFileAgent.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_VueFileAgentvue_type_script_lang_js_ = (VueFileAgentvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/VueFileAgent.vue
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-agent.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var vue_file_agentvue_type_script_lang_js_ = ({
+  mixins: [vue_file_agent_mixin]
+});
+// CONCATENATED MODULE: ./src/components/vue-file-agent.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_vue_file_agentvue_type_script_lang_js_ = (vue_file_agentvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/vue-file-agent.vue
 
 
 
@@ -1743,10 +1781,10 @@ class upload_helper_UploadHelper {
 
 /* normalize component */
 
-var VueFileAgent_component = normalizeComponent(
-  components_VueFileAgentvue_type_script_lang_js_,
-  VueFileAgentvue_type_template_id_23f5b5dc_render,
-  VueFileAgentvue_type_template_id_23f5b5dc_staticRenderFns,
+var vue_file_agent_component = normalizeComponent(
+  components_vue_file_agentvue_type_script_lang_js_,
+  vue_file_agentvue_type_template_id_76c53e2c_render,
+  vue_file_agentvue_type_template_id_76c53e2c_staticRenderFns,
   false,
   null,
   null,
@@ -1754,16 +1792,27 @@ var VueFileAgent_component = normalizeComponent(
   
 )
 
-/* harmony default export */ var VueFileAgent = (VueFileAgent_component.exports);
+/* harmony default export */ var components_vue_file_agent = (vue_file_agent_component.exports);
 // CONCATENATED MODULE: ./src/index.js
+
+
 
 
 
 var VueFileAgentPlugin = function VueFileAgentPlugin() {};
 
+VueFileAgentPlugin.VueFileIcon = vue_file_icon;
+VueFileAgentPlugin.VueFilePreview = vue_file_preview;
+VueFileAgentPlugin.VueFileAgent = components_vue_file_agent;
+VueFileAgentPlugin.component = components_vue_file_agent;
+VueFileAgentPlugin.mixin = vue_file_agent_mixin;
+
 VueFileAgentPlugin.install = function (Vue, options) {
-  Vue.component('VueFileIcon', VueFileIcon);
-  Vue.component('VueFileAgent', VueFileAgent);
+  Vue.component('VueFileIcon', vue_file_icon);
+  Vue.component('VueFileAgent', components_vue_file_agent);
+  Vue.prototype.$vueFileAgent = {
+    mixin: vue_file_agent_mixin
+  };
 }; // auto install
 
 
@@ -1772,7 +1821,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 /* harmony default export */ var src = (VueFileAgentPlugin);
+var mixin = vue_file_agent_mixin;
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
+/* concated harmony reexport mixin */__webpack_require__.d(__webpack_exports__, "mixin", function() { return mixin; });
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (src);
