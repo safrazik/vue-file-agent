@@ -80,7 +80,7 @@ class UploadHelper {
 		    var promise = self.doUpload(url, headers, formData, function(progressEvent) {
 		        var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
 		        var percentCompletedRounded = Math.round(percentCompleted);
-		        fileData.progress(percentCompleted);
+		        fileData.progress(percentCompleted >= 100 ? 99.99 : percentCompleted); // do not complete until promise resolved
 		        updateOverallProgress();
 		    }, function(xhr){
 		    	fileData.xhr = xhr;
@@ -88,6 +88,7 @@ class UploadHelper {
 		    promise.then(function(response){
 		      delete fileData.xhr;
 		      fileData.upload = response.data;
+		      fileData.progress(100);
 		    } /* */ , function(err){
 		    	self.prepareUploadError(fileData, err);
 		    } /* */);
