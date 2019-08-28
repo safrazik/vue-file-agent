@@ -207,7 +207,7 @@ class FileData {
     raw.ext = this.ext();
     raw.color = this.color();
     raw.file = this.file;
-    raw.progress = this.progress; // pass it as a function
+    raw.progress = this.progress.bind(this); // pass it as a function
     raw.error = this.error;
     raw.dimensions = this.dimensions;
     return raw;
@@ -230,7 +230,7 @@ class FileData {
   static fromRaw(fileDataRaw, options){
       var fileData = new FileData(fileDataRaw, options);
       var promise = fileData.setUrl(fileDataRaw.url);
-      fileDataRaw.progress = fileData.progress; // convert it as a function
+      fileDataRaw.progress = fileData.progress.bind(fileData); // convert it as a function
       return promise;
   }
 
