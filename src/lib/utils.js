@@ -38,7 +38,7 @@ class Utils {
     ] : [0, 0, 0, 0];
   }
 
-  createVideoThumbnail(video, canvas, resizeLimit){
+  createVideoThumbnail(video, canvas, thumbnailSize){
     return new Promise((resolve, reject)=> {
       var ctx = canvas.getContext('2d');
       var loadedmetadata = false;
@@ -61,7 +61,7 @@ class Utils {
       // Load metadata of the video to get video duration and dimensions
       video.addEventListener('loadedmetadata', ()=> {
         // var video_duration = video.duration;
-        canvas.width = resizeLimit;
+        canvas.width = thumbnailSize;
         canvas.height = (canvas.width/video.videoWidth) * video.videoHeight;
         video.currentTime = 1; // video time
         loadedmetadata = true;
@@ -88,21 +88,21 @@ class Utils {
   getImageResized(image, widthLimit, heightLimit){
     var width = image.width;
     var height = image.height;
-    var resizeLimit = widthLimit;
+    var thumbnailSize = widthLimit;
     if(widthLimit && heightLimit){
       width = widthLimit;
       height = heightLimit;
     }
     else {
       if (width > height) {
-          if (width > resizeLimit) {
-              height *= resizeLimit / width;
-              width = resizeLimit;
+          if (width > thumbnailSize) {
+              height *= thumbnailSize / width;
+              width = thumbnailSize;
           }
       } else {
-          if (height > resizeLimit) {
-              width *= resizeLimit / height;
-              height = resizeLimit;
+          if (height > thumbnailSize) {
+              width *= thumbnailSize / height;
+              height = thumbnailSize;
           }
       }
     }
@@ -132,17 +132,17 @@ class Utils {
     };
   }
 
-  resizeImageUrl(image, url, resizeLimit){
+  resizeImageUrl(image, url, thumbnailSize){
     return new Promise((resolve, reject)=> {
       image.onload = ()=>{
-        var resized = this.getImageResized(image, resizeLimit);
+        var resized = this.getImageResized(image, thumbnailSize);
         resolve(resized);
       };
       image.src = url;
     });
   }
 
-  resizeImageFile(image, file, resizeLimit){
+  resizeImageFile(image, file, thumbnailSize){
     return new Promise((resolve, reject)=> {
       if (file.type.indexOf('image') == -1) {
         reject(new Error("Not an image"));
@@ -155,7 +155,7 @@ class Utils {
         if(shouldRevoke){
           revokeObjectURL(image.src);
         }
-        var resized = this.getImageResized(image, resizeLimit);
+        var resized = this.getImageResized(image, thumbnailSize);
         resolve(resized);
         return;
       };
@@ -173,11 +173,11 @@ class Utils {
     });
   }
 
-  resizeImage(resizeLimit, file, url){
+  resizeImage(thumbnailSize, file, url){
     var image = new Image();
     image.setAttribute('crossOrigin', 'anonymous');
-    return url ? this.resizeImageUrl(image, url, resizeLimit)
-      : this.resizeImageFile(image, file, resizeLimit);
+    return url ? this.resizeImageUrl(image, url, thumbnailSize)
+      : this.resizeImageFile(image, file, thumbnailSize);
   }
 
   getSizeFormatted(bytes) {

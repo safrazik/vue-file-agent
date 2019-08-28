@@ -1,7 +1,8 @@
 <template>
 	<div v-on:dragover="dragOver" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="[{'is-drag-over': isDragging}, 'theme-' + theme]">
-		<slot name="before"></slot>
+		<slot name="before-outer"></slot>
 	<div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-bind:class="{'is-drag-overx': isDragging, 'is-compact': !!compact, 'is-single': !hasMultiple, 'has-multiple': hasMultiple, 'no-meta': meta === false}">
+		<slot name="before-inner"></slot>
 		<canvas ref="thumbnailCanvas" style="position: fixed; visibility: hidden; z-index: -3;"></canvas>
 	  <div class="overall-progress" v-if="overallProgress" v-bind:class="{'overall-progress-full': overallProgress >= 100}">
 	    <div class="overall-progress-bar" v-bind:style="{width: overallProgress + '%'}"></div>
@@ -24,8 +25,10 @@
 	  </div>
 	</transition-group>
 	  <input title="" :disabled="hasMultiple && !canAddMore" ref="fileInput" type="file" v-bind:multiple="hasMultiple" class="file-input" v-on:change="filesChanged" v-bind:accept="accept || '*'">
+
+		<slot name="after-inner"></slot>
 	</div>
-	<slot name="after"></slot>
+	<slot name="after-outer"></slot>
 	</div>
 </template>
 <style>

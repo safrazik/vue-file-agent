@@ -51,7 +51,7 @@
 
       createThumbnail(fileData, video){
         var canvas = document.createElement('canvas');
-        utils.createVideoThumbnail(video, canvas, this.fileData.resizeLimit).then((thumbnail) => {
+        utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then((thumbnail) => {
           fileData.imageColor = thumbnail.color;
           fileData.videoThumbnail = thumbnail.url;
           fileData.dimensions.width = thumbnail.width;

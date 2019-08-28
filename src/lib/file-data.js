@@ -17,7 +17,7 @@ class FileData {
     this._progress = !isNaN(data.progress) ? data.progress : false;
     this.width = FileData.defaultWidth;
     this.height = FileData.defaultHeight;
-    this.resizeLimit = options.resizeLimit || 360;
+    this.thumbnailSize = options.thumbnailSize || 360;
     this.read = !!options.read;
     this.image = {};
     this.dimensions = {width: 0, height: 0};
@@ -156,7 +156,7 @@ class FileData {
 
   resizeImage(){
     return new Promise((resolve, reject)=> {
-      utils.resizeImage(this.resizeLimit, this.file, this.url, this).then((resized)=> {
+      utils.resizeImage(this.thumbnailSize, this.file, this.url, this).then((resized)=> {
         this.imageResized(resized);
         resolve(this);
       }).catch(reject);

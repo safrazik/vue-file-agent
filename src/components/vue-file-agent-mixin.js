@@ -8,7 +8,7 @@ import FileData from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 
 export default {
- 	props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'resizeLimit', 'theme'],
+ 	props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme'],
 	components: {
 		VueFileIcon,
 		VueFilePreview
@@ -63,7 +63,7 @@ export default {
 	  createThumbnail(fileData, video){
 	  	return new Promise((resolve, reject)=> {  		
 		    var canvas = document.createElement('canvas');
-		    utils.createVideoThumbnail(video, canvas, fileData.resizeLimit).then((thumbnail) => {
+		    utils.createVideoThumbnail(video, canvas, fileData.thumbnailSize).then((thumbnail) => {
 		      fileData.imageColor = thumbnail.color;
 		      fileData.videoThumbnail = thumbnail.url;
 		      fileData.dimensions.width = thumbnail.width;
@@ -153,7 +153,7 @@ export default {
 					read: this.shouldRead,
 					maxSize: this.maxSize,
 					accept: this.accept,
-					resizeLimit: this.resizeLimit,
+					thumbnailSize: this.thumbnailSize,
 				}));
 			}
 
@@ -256,7 +256,7 @@ export default {
 						read: this.shouldRead,
 						maxSize: this.maxSize,
 						accept: this.accept,
-						resizeLimit: this.resizeLimit,
+						thumbnailSize: this.thumbnailSize,
 					}));
 					filesDataRawNew.push(filesDataRaw[i]);
 				}
