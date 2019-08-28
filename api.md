@@ -311,6 +311,7 @@ Content is placed (after) outside of the dotted container. Files can be dragged 
   #profile-pic-demo .profile-pic-upload-block {
     border: 2px dashed transparent;
     padding: 20px;
+    padding-top: 0;
   }
 
   #profile-pic-demo .is-drag-over.profile-pic-upload-block {

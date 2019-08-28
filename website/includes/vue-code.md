@@ -25,32 +25,26 @@ var component = { template: '#{{ include.name }}-template',
     {{ processed_code }}
   </div>
 {% else %}
-  {% capture highlighted_code %}
-
-    ```html
-    {{ include.code | strip }}
-    ```
-
-  {% endcapture %}
-
   <div id="{{ include.name }}-wrapper">
     <div class="row">
       <div class="col-md-6">
         <blockquote>Code</blockquote>
-        <hr>
         {% highlight html %}{{ include.code | strip }}{% endhighlight %}
       </div>
       <div class="col-md-6">
         <blockquote>Result</blockquote>
-        <hr>
         {{ processed_code }}
       </div>
     </div>
   </div>
-
 {% endif %}
 
 <style type="text/css">
+  #{{ include.name }}-wrapper blockquote {
+    background: #BBB;
+    color: #FFF;
+    margin-bottom: 0;
+  }
   #{{ include.name }}-wrapper .highlight pre {
     max-height: 300px;
   }
