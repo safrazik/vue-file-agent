@@ -7,6 +7,8 @@ import FileData from '../lib/file-data';
 
 import uploader from '../lib/upload-helper';
 
+var dragCounter = 0;
+
 export default {
  	props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme'],
 	components: {
@@ -199,6 +201,7 @@ export default {
 			}
 		},
 		drop(event) {
+			dragCounter = 0;
 			this.isDragging = false;
 			event.stopPropagation();
 			event.preventDefault();
@@ -212,6 +215,13 @@ export default {
 			}
 			this.handleFiles(files);
 		},
+		dragEnter(event) {
+			this.isDragging = true;
+			event.stopPropagation();
+			event.preventDefault();
+			dragCounter++;
+			event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+		},
 		dragOver(event) {
 			this.isDragging = true;
 			event.stopPropagation();
@@ -219,7 +229,10 @@ export default {
 			event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 		},
 		dragLeave(event) {
-			this.isDragging = false;
+			dragCounter--;
+      if (dragCounter === 0) { 
+				this.isDragging = false;
+			}
 		},
 		removeFileData(fileData){
 			var i;

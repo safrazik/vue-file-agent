@@ -1,5 +1,5 @@
 <template>
-	<div v-on:dragover="dragOver" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="[{'is-drag-over': isDragging}, 'theme-' + theme]">
+	<div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="[{'is-drag-over': isDragging}, 'theme-' + theme]">
 		<slot name="before-outer"></slot>
 	<div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-bind:class="{'is-drag-overx': isDragging, 'is-compact': !!compact, 'is-single': !hasMultiple, 'has-multiple': hasMultiple, 'no-meta': meta === false}">
 		<slot name="before-inner"></slot>

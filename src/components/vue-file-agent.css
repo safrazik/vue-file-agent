@@ -15,6 +15,10 @@
   box-shadow: inset 0px 0px 20px 1px #f61a1a;
 }
 
+.is-drag-over * {
+  pointer-events: none !important;
+}
+
 .is-drag-over::before {
   content: " ";
 }
