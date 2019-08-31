@@ -21,6 +21,7 @@ var filesData = [];
 var component = {
   data: function(){
     return {
+      theme: 'default',
       lastProgress: 0,
       filesData: filesData,
       uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
@@ -46,6 +47,9 @@ var component = {
     fileDeleted: function(fileData){
       // manual handling
       // this.$refs.vueFileInput.deleteUpload(this.uploadUrl, fileData);
+    },
+    switchTheme: function(){
+      this.theme = this.theme == 'list' ? 'default' : 'list';
     },
   },
   mounted: function(){
