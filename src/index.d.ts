@@ -1,5 +1,4 @@
 import Vue, { PluginFunction } from "vue";
-import FileData from './lib/file-data';
 
 interface Dimensions {
   height: number;
