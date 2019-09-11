@@ -5,7 +5,7 @@ layout: default
 <div id="app" class="w-100 h-100">
   <div class="cover-body text-center d-flex w-100 xh-100">
     <div class="text-center cover-container container w-100 xh-100 p-3 mx-auto d-flex flex-column">
-      <header class="masthead clearfix mb-auto">
+<!--       <header class="masthead clearfix mb-auto">
         <div class="inner">
           <div class="masthead-brand">              
             <div class="text-mutedx" style="color: #ACB5BD">
@@ -15,13 +15,21 @@ layout: default
             </div>
           </div>
         </div>
-      </header>
+      </header> -->
 
-      <main role="main" class="inner cover my-5">
+      <main role="main" class="inner cover mb-3">
+        <div class="text-left" style="color: #ACB5BD">
+          <p>
+            Every file deserves to be treated equally
+          </p>
+        </div>
 <!--             <h1 class="cover-heading">Cover your page.</h1>
         <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p> -->
-        <div id="demo-basic-mount">
-          <demo-basic></demo-basic>
+        <div id="demo-basic-wrapper">
+          {% capture demo_basic %}
+            {% include_relative src/demo/demo-basic.vue %}
+          {% endcapture %}
+          {% include_relative website/includes/vue-code.md name="demo_basic" code=demo_basic result_only=true %}
         </div>
 <!--             <p class="lead">
           <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
@@ -51,10 +59,15 @@ layout: default
   </div>
   <div class="container">
     <div id="advanced-demo" name="advanced-demo"></div>
-    <h2>Advanced Demo</h2>
-    <div id="demo-advanced-mount">
-      <demo-advanced></demo-advanced>
-    </div>
+      <h2>Advanced Demo</h2>
+      <div id="demo-advanced-wrapper">
+        {% capture demo_advanced %}
+          {% include_relative src/demo/demo-advanced.vue %}
+        {% endcapture %}
+        {% include_relative website/includes/vue-code.md name="demo_advanced" code=demo_advanced result_only=true %}
+      </div> 
+
+
     {% if site.activity_feed %}
     <h2 class="mt-5 mb-2">Activity on
       <a href="https://github.com/safrazik/vue-file-agent">Github</a>
@@ -75,5 +88,3 @@ layout: default
     </div>
   </div>
 </div>
-
-{% include_relative website/includes/components.html %}

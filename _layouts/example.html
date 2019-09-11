@@ -11,9 +11,11 @@ external_urls: true
     </div>
   </div>
   <div class="container">
-    <div id="demo-basic-mount"></div>
-    <div id="demo-advanced-mount">
-      <demo-advanced></demo-advanced>
+    <div id="demo-advanced-wrapper">
+      {% capture demo_advanced %}
+        {% include_relative src/demo/demo-advanced.vue %}
+      {% endcapture %}
+      {% include_relative website/includes/vue-code.md name="demo_advanced" code=demo_advanced result_only=true %}
     </div>
   </div> 
   <div class="bg-secondary text-white mt-5 py-3">
@@ -24,5 +26,3 @@ external_urls: true
     </div>
   </div>
 </div>
-
-{% include_relative website/includes/components.html %}

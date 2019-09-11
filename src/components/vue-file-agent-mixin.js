@@ -1,10 +1,7 @@
 import utils from '../lib/utils';
-
-import './vue-file-agent.css';
 import VueFileIcon from './vue-file-icon.vue';
 import VueFilePreview from './vue-file-preview.vue';
 import FileData from '../lib/file-data';
-
 import uploader from '../lib/upload-helper';
 
 var dragCounter = 0;
