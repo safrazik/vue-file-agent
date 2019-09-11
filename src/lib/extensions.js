@@ -187,7 +187,7 @@ export default {
     'epub',
   ],
   pdf: [
-  	'pdf'
+    'pdf'
   ],
   folder: [
     'folder'
