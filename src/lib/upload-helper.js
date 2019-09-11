@@ -53,7 +53,9 @@ class UploadHelper {
       try {
         var errorMsg = err.response.data.error || JSON.parse(err.response.data).error;
         errorText = errorMsg;
-      } catch(e){}
+      } catch(e){
+        // ignore
+      }
     }
     if(!fileData.error){
       fileData.error = {};
@@ -79,7 +81,6 @@ class UploadHelper {
       (function(fileData){
         var promise = self.doUpload(url, headers, formData, function(progressEvent) {
             var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
-            var percentCompletedRounded = Math.round(percentCompleted);
             fileData.progress(percentCompleted >= 100 ? 99.99 : percentCompleted); // do not complete until promise resolved
             updateOverallProgress();
         }, function(xhr){

@@ -40,7 +40,6 @@ class Utils {
 
   createVideoThumbnail(video, canvas, thumbnailSize){
     return new Promise((resolve, reject)=> {
-      var ctx = canvas.getContext('2d');
       var loadedmetadata = false;
       var loadeddata = false;
       var tryGetThumbnail = ()=> {

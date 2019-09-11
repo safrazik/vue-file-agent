@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import VueFilePreview from '@/components/vue-file-preview.vue'
 import FileData from '@/lib/file-data'
 import helper from './helper'

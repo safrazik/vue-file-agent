@@ -138,7 +138,7 @@ export default {
       }
       var filesData = [];
       var filesFiltered = [];
-      for(var i = 0; i < files.length; i++){
+      for(let i = 0; i < files.length; i++){
         if(this.isFileAddedAlready(files[i])){
           continue;
         }
@@ -148,7 +148,7 @@ export default {
       if(this.maxFiles && files.length > (this.maxFiles - this.filesData.length)){
         files = files.slice(0, (this.maxFiles - this.filesData.length));
       }
-      for(var i = 0; i < files.length; i++){
+      for(let i = 0; i < files.length; i++){
         filesData.push(new FileData({
           file: files[i],
         }, {
@@ -163,7 +163,7 @@ export default {
           // var allFilesData = this.filesData.concat(filesData);
           // this.filesData = allFilesData;
       ////////////
-      for(var i = 0; i < filesData.length; i++){
+      for(let i = 0; i < filesData.length; i++){
         // this.filesData.push(filesData[i]);
         if(filesData[i].file.size <= 20 * 1024 * 1024){ // <= 20MB
           this.initVideo(filesData[i]);

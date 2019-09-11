@@ -1,7 +1,7 @@
 <template>
   <svg :viewBox="viewBoxComputed">
-    <template v-for="d in icon.paths">
-        <path :d="d" v-if="d" />
+    <template v-for="(d, index) in icon.paths">
+        <path :d="d" v-if="d" :key="index" />
     </template>
   </svg>
 </template>
