@@ -7,7 +7,7 @@ import uploader from '../lib/upload-helper';
 var dragCounter = 0;
 
 export default {
-  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme'],
+  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme', 'disabled'],
   components: {
     VueFileIcon,
     VueFilePreview
@@ -130,6 +130,9 @@ export default {
       return false;
     },
     handleFiles(files){
+      if(this.disabled === true){
+        return;
+      }
       if(this.hasMultiple && !this.canAddMore){
         return;
       }

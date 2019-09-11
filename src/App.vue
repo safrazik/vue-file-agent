@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
   <h2>Demo Basic</h2>
   <div>
     <demo-basic></demo-basic>
@@ -11,7 +11,9 @@
   </div>
 </div>
 </template>
-
+<style>
+  @import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+</style>
 <script>
 
   import DemoBasic from './demo/demo-basic.vue';

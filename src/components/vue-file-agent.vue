@@ -1,5 +1,5 @@
 <template>
-  <div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="[{'is-drag-over': isDragging}, 'theme-' + theme]">
+  <div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="[{'is-drag-over': isDragging, 'is-disabled': disabled === true}, 'theme-' + theme]">
     <slot name="before-outer"></slot>
   <div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-bind:class="{'is-drag-overx': isDragging, 'is-compact': !!compact, 'is-single': !hasMultiple, 'has-multiple': hasMultiple, 'no-meta': meta === false}">
     <slot name="before-inner"></slot>
@@ -11,7 +11,7 @@
 
   <transition-group name="grid-box" tag="div" class="">
     <VueFilePreview 
-      :fileData="fileData" :index="index" :deletable="isDeletable" :errorText="errorText" @remove="removeFileData($event)"
+      :fileData="fileData" :index="index" :deletable="isDeletable" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
        :key="fileData.id" v-for="(fileData, index) in filesData" class="file-preview-wrapper grid-box-item grid-block" v-bind:class="['file-preview-wrapper-' + fileData.ext(), fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other', 'file-category-' + fileData.icon().category, {'file-is-playing-av': fileData.isPlayingAv}, {'is-deletable': isDeletable}, {'is-deletable': isDeletable}, {'has-error': fileData.error}]"></VueFilePreview>
     <div v-if="canAddMore" key="new" class="file-preview-wrapper grid-box-item grid-block file-preview-new">
       <span class="file-preview">
@@ -24,7 +24,7 @@
       </span>
     </div>
   </transition-group>
-    <input title="" :disabled="hasMultiple && !canAddMore" ref="fileInput" type="file" v-bind:multiple="hasMultiple" class="file-input" v-on:change="filesChanged" v-bind:accept="accept || '*'">
+    <input title="" :disabled="disabled === true || (hasMultiple && !canAddMore)" ref="fileInput" type="file" v-bind:multiple="hasMultiple" class="file-input" v-on:change="filesChanged" v-bind:accept="accept || '*'">
 
     <slot name="after-inner"></slot>
   </div>

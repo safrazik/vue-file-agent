@@ -29,6 +29,12 @@ boolean, default  `false`
 
 Whether the file delete/cancel button should be showed.
 
+### disabled
+
+boolean, default  `undefined`
+
+Disables all user interactions on the component
+
 ### meta
 
 boolean, default  `true`

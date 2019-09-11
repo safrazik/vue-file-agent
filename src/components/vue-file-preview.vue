@@ -45,7 +45,7 @@
   import VueFileIcon from './vue-file-icon.vue';
 
   export default {
-    props: ['fileData', 'deletable', 'errorText'],
+    props: ['fileData', 'deletable', 'errorText', 'disabled'],
     components: {
       VueFileIcon
     },
@@ -92,6 +92,9 @@
       },
 
       removeFileData(fileData){
+        if(this.disabled === true){
+          return;
+        }
         this.$emit('remove', fileData);
       },
 

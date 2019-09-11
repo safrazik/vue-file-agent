@@ -63,6 +63,12 @@
           </div>
         </div>
         <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled">
+            <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
           <select class="custom-select custom-select-sm mt-1" v-model="theme">
             <option selected>- Theme -</option>
             <option value="default">Default Theme (default)</option>
@@ -85,6 +91,7 @@
         :multiple="multiple"
         :meta="meta"
         :deletable="deletable"
+        :disabled="disabled"
         :compact="compact"
         :accept="valAccept"
         :maxSize="valMaxSize"
@@ -194,6 +201,7 @@ export default {
       meta: true,
       multiple: true,
       deletable: true,
+      disabled: false,
       compact: false,
       theme: 'list',
       sortDirection: {
