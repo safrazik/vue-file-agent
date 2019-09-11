@@ -1,9 +1,9 @@
 ---
 layout: page
-permalink: /api/
+permalink: /docs/
 ---
 
-# API Docs
+# Docs & Examples
 
 
 - [Props](#props)
@@ -13,6 +13,7 @@ permalink: /api/
 - [Slots](#slots)
     - [Events, Methods and Slots Demo](#events-methods-and-slots-demo)
 - [Extending](#extending)
+    - [Gmail Inspired Demo](#gmail-inspired-demo)
 
 
 ## Props
@@ -229,6 +230,14 @@ Trigger the default delete upload action.
 
 ## Slots
 
+### file-preview
+
+Preview block of each FileData 
+
+### file-preview-new
+
+Upload help text ("Choose files...") and icon
+
 ### before-outer
 
 Content is placed (before) outside of the file input. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
@@ -380,3 +389,168 @@ If you still can't make it with the built in customizations, (1) you can create 
 </script>
 ```
 {% endraw %}
+
+
+## Gmail Inspired Demo
+
+`NOTE` In an ES6 environment, instead of using `<template v-slot:file-preview="slotProps">` you can use `<template v-slot:file-preview="{ fileData, index }">`
+
+
+{% capture gmail_inspired_demo %}
+{% raw %}
+<template>
+  <div class="vfa-demo bg-light">
+    <VueFileAgent
+      class="upload-block"
+      ref="vfaDemoRef"
+      :uploadUrl="'https://www.mocky.io/v2/5d4fb20b3000005c111099e3'"
+      :uploadHeaders="{}"
+      :multiple="true"
+      :deletable="true"
+      :theme="'list'"
+      :maxSize="'25MB'"
+      :errorText="{
+        size: 'This file is too large to be attached',
+      }"
+      v-model="filesData"
+    >
+      <template v-slot:before-outer>
+        <h3 class="my-3">Send Email</h3>
+        <p>Email Attachment example with drag & drop support and <span class="badge">attachment</span> keyword basic detection.</p>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Your Name" value="John Doe">
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Email address" value="johndoe@example.com">
+        </div>
+        <div class="form-group">
+          <textarea v-model="message" class="form-control" placeholder="Your Message"></textarea>
+        </div>
+      </template >
+      <template v-slot:file-preview="slotProps">
+        <div :key="slotProps.index" class="grid-box-item file-row">
+          <button type="button" class="close remove" aria-label="Remove" @click="removeFileData(slotProps.fileData)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="progress" :class="{'completed': slotProps.fileData.progress() == 100}">
+            <div class="progress-bar" role="progressbar" :style="{width: slotProps.fileData.progress() + '%'}"></div>
+          </div>
+          <strong>{{ slotProps.fileData.name() }}</strong> <span class="text-muted">({{ slotProps.fileData.size() }})</span>
+        </div>
+      </template >
+      <template v-slot:file-preview-new>
+        <div class="text-left my-3" key="new">
+          <a href="#" class="">Select files</a> or drag & drop here
+        </div>
+      </template >
+<!--       <template v-slot:after-inner>
+        <div class="text-left pt-1">
+          <a href="#" class="">Select files</a> or drag & drop here
+        </div>
+      </template > -->
+      <template v-slot:after-outer>
+        <div title="after-outer">
+          <div class="drop-help-text">
+            <p>Drop here</p>
+          </div>
+          <button type="button" class="btn btn-primary" @click="send()">Send</button>
+        </div>
+      </template >
+    </VueFileAgent>
+  </div>
+</template>
+<script>
+  export default {
+    data: function(){
+      return {
+        filesData: [],
+        message: 'I am sending you the attachments',
+      }
+    },
+    methods: {
+      removeFileData: function(fileData){
+        return this.$refs.vfaDemoRef.removeFileData(fileData);
+      },
+      send: function(){
+        if(this.message.indexOf('attachment') !== -1 && this.filesData.length < 1){
+          if(!confirm('You have mentioned about attachments in your message. Are you sure to send without attachments?')){
+            return;
+          }
+        }
+        alert('Message sent!');
+      }
+    }
+  }
+</script>
+<style>
+  .vfa-demo {
+    position: relative;
+  }
+
+  .vfa-demo .file-row {
+    position: relative;
+    z-index: 15;
+    line-height: 24px;
+    text-align: left;
+    background: #EEE;
+    margin-bottom: 5px;
+    padding: 2px 5px;
+  }
+
+  .vfa-demo .remove {
+    float: right;
+    margin-top: -3px;
+  }
+
+  .vfa-demo .progress {
+    float: right;
+    width: 85px;
+    height: 10px;
+    margin-top: 7px;
+    margin-right: 10px;
+    background: #FFF;
+    border: 1px solid #AAA;
+  }
+
+  .vfa-demo .progress.completed {
+    display: none;
+  }
+
+  .vfa-demo .drop-help-text {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: 2px;
+    background: rgba(255, 255, 255, 0.75);
+    z-index: 1200;
+    font-size: 32px;
+    font-weight: bold;
+    color: #888;
+    align-items: center;
+    justify-content: center;
+    display: none;
+  }
+
+  .vfa-demo .is-drag-over .drop-help-text {
+    display: flex;
+  }
+
+  .vfa-demo .upload-block  {
+    border: 2px dashed transparent;
+    padding: 20px;
+    padding-top: 0;
+  }
+
+  .vfa-demo .is-drag-over.upload-block {
+    border-color: #AAA;
+  }
+
+  .vfa-demo .vue-file-agent {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+</style>
+{% endraw %}
+{% endcapture %}
+
+{% include_relative website/includes/vue-code.md name="gmail_inspired_demo" code=gmail_inspired_demo %}
