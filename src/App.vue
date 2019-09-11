@@ -14,7 +14,6 @@
 
 <script>
 
-  import './scss/vue-file-agent.scss';
   import DemoBasic from './demo/demo-basic.vue';
   import DemoAdvanced from './demo/demo-advanced.vue';
 

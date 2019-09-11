@@ -31,7 +31,8 @@
   <slot name="after-outer"></slot>
   </div>
 </template>
-<style>
+<style lang="scss">
+  @import "../scss/vue-file-agent.scss";
 </style>
 <script>
   import mixin from './vue-file-agent-mixin';
