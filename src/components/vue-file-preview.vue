@@ -25,7 +25,7 @@
         &times;
       </span>
       <span class="file-name">
-        [s] {{ fileData.name(true) }}
+        {{ fileData.name(true) }}
       </span>
       <span v-if="fileData.dimensions.width && fileData.dimensions.height" class="image-dimension">
         <span class="image-dimension-width">{{ fileData.dimensions.width }}</span><span class="image-dimension-height">{{ fileData.dimensions.height }}</span>
