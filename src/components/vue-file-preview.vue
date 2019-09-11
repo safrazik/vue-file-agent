@@ -42,11 +42,13 @@
 <script>
 
   import utils from '../lib/utils';
+  import VueFileIcon from './vue-file-icon.vue';
 
   export default {
     props: ['fileData', 'deletable', 'errorText'],
-    // computed: {
-    // },
+    components: {
+      VueFileIcon
+    },
     methods: {
 
       createThumbnail(fileData, video){
