@@ -20,9 +20,23 @@
       z-index: -5;
   }
 
+  .file-name .file-name-edit-icon svg {
+    height: 1em;
+    width: 1em;
+    margin-right: 2px;
+    opacity: 0.5;
+    fill: currentColor;
+    vertical-align: middle;
+    margin-top: -2px;
+  }
+
   &.is-edit-input-focused {
     .file-name {
       border-bottom: 1px solid currentColor;
+    }
+
+    .file-name .file-name-edit-icon {
+      display: none;
     }
 
     .file-name .file-name-text {

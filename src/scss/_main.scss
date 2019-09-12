@@ -114,7 +114,7 @@
 }
 
 .vue-file-agent .is-deletable .file-preview .file-name {
-  padding-right: 16px;
+  padding-right: 20px;
 }
 
 .vue-file-agent .file-preview .file-name {
@@ -126,16 +126,22 @@
   position: absolute;
   right: 0;
   top: 0;
-  padding: 5px 5px 0 5px;
-  font-size: 20px;
+  padding: 0;
+  font-size: 16px;
   background: transparent;
-  line-height: 24px;
   height: 28px;
-  width: 28px;
-  padding: 0 5px;
+  width: 22px;
   display: block;
   color: #FFF;
+  color: rgba(255, 255, 255, 0.75);
   z-index: 5;
+}
+
+.vue-file-agent .file-preview .file-delete svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  vertical-align: middle;
 }
 
 .vue-file-agent .file-preview .file-icon {
@@ -312,8 +318,8 @@
 .vue-file-agent .file-progress.has-file-progress {
   background: rgba(255, 255, 255, 0.5);
 }
+
 .vue-file-agent .is-deletable .file-progress {
-  right: 28px;
 }
 
 .vue-file-agent .file-progress-bar {
