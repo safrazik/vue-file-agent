@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="['file-preview-wrapper-' + fileData.ext(), fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other', 'file-category-' + fileData.icon().category, {'file-is-playing-av': fileData.isPlayingAv}, {'is-deletable': deletable === true}, {'is-editable': editable === true}, {'is-edit-input-focused': isEditInputFocused}, {'has-error': fileData.error}]">
     <div class="file-error-wrapper" v-if="fileData.error">
       <div class="file-error-message file-error-message-client" v-if="fileData.error">
         {{ fileData.getErrorMessage(errorText) }}
@@ -21,11 +21,12 @@
       </span>
       <span class="file-ext">{{ fileData.ext() }}</span>
       <span class="file-size">{{ fileData.size() }}</span>
-      <span v-if="deletable" class="file-delete" @click="removeFileData(fileData)">
+      <span v-if="deletable" class="file-delete" @click="removeFileData(fileData)" @touchstart="filenameClearPressed()" @mousedown="filenameClearPressed()" >
         &times;
       </span>
-      <span class="file-name">
-        {{ fileData.name(true) }}
+      <span class="file-name" @click="editFileName()">
+        <input class="file-name-input" ref="input" v-if="editable === true" :disabled="disabled === true" type="text" :value="fileData.name(true)" @focus="editInputFocused()" @blur="editInputBlured()" @change="filenameChanged()" @input="filenameChanged()" @keyup.enter="filenameChanged(true)">
+        <span class="file-name-text">{{ fileData.name(true) }}</span>
       </span>
       <span v-if="fileData.dimensions.width && fileData.dimensions.height" class="image-dimension">
         <span class="image-dimension-width">{{ fileData.dimensions.width }}</span><span class="image-dimension-height">{{ fileData.dimensions.height }}</span>
@@ -45,9 +46,15 @@
   import VueFileIcon from './vue-file-icon.vue';
 
   export default {
-    props: ['fileData', 'deletable', 'errorText', 'disabled'],
+    props: ['fileData', 'deletable', 'editable', 'errorText', 'disabled'],
     components: {
       VueFileIcon
+    },
+    data: function(){
+      return {
+        isEditInputFocused: false,
+        isEditCancelable: true,
+      }
     },
     methods: {
 
@@ -92,10 +99,65 @@
       },
 
       removeFileData(fileData){
+        if(this.clearFilename()){
+          return;
+        }
         if(this.disabled === true){
           return;
         }
         this.$emit('remove', fileData);
+      },
+
+      editFileName(){
+        if(this.editable !== true){
+          return;
+        }
+        if(!this.$refs.input){
+          return;
+        }
+        this.$refs.input.focus();
+      },
+
+      editInputFocused(){
+        this.isEditInputFocused = true;
+        this.isEditCancelable = true;
+      },
+
+      editInputBlured(){
+        var value = this.$refs.input.value;
+        this.fileData.customName = value;
+        var timeout = 100;
+        setTimeout(()=> {
+          this.$nextTick(()=> {
+            if(!this.isEditCancelable){
+              return;
+            }
+            this.isEditInputFocused = false;
+          });
+        }, timeout);
+      },
+
+      filenameChanged(completed){
+        if(completed){
+          this.$refs.input.blur();
+        }
+      },
+
+      filenameClearPressed(){
+        if(!(this.editable === true && this.isEditInputFocused)){
+          return;
+        }
+        this.isEditCancelable = false;
+      },
+
+      clearFilename(){
+        if(!(this.editable === true && this.isEditInputFocused)){
+          return false;
+        }
+        this.$refs.input.value = '';
+        this.isEditCancelable = true;
+        this.editInputBlured();
+        return true;
       },
 
     },

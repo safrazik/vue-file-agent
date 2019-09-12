@@ -13,8 +13,8 @@
     <template v-for="(fileData, index) in filesData">
       <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
         <VueFilePreview 
-          :fileData="fileData" :index="index" :deletable="isDeletable" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
-           :key="fileData.id" class="file-preview-wrapper grid-box-item grid-block" v-bind:class="['file-preview-wrapper-' + fileData.ext(), fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other', 'file-category-' + fileData.icon().category, {'file-is-playing-av': fileData.isPlayingAv}, {'is-deletable': isDeletable}, {'is-deletable': isDeletable}, {'has-error': fileData.error}]"></VueFilePreview>
+          :fileData="fileData" :index="index" :deletable="isDeletable" :editable="editable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
+           :key="fileData.id" class="file-preview-wrapper grid-box-item grid-block"></VueFilePreview>
       </slot>
     </template>
     <template v-if="canAddMore">

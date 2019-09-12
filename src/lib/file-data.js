@@ -31,6 +31,7 @@ class FileData {
     this.id = Math.random() + ':' + (new Date()).getTime();
     this.videoThumbnail = data.videoThumbnail;
     this.imageColor = data.imageColor;
+    this.customName = data.customName;
     this.upload = null;
   }
 
@@ -72,6 +73,9 @@ class FileData {
   }
 
   name(withoutExt){
+    if(this.customName){
+      return this.customName;
+    }
     var name = this.file && this.file.name;
     if(withoutExt){
       var ext = this.ext();

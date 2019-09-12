@@ -64,6 +64,12 @@
         </div>
         <div class="col-6 col-md-12 px-2">
           <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-editable" v-model="editable">
+            <label class="custom-control-label" for="advanced-demo-editable">:editable</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
             <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled">
             <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
           </div>
@@ -91,6 +97,7 @@
         :multiple="multiple"
         :meta="meta"
         :deletable="deletable"
+        :editable="editable"
         :disabled="disabled"
         :compact="compact"
         :accept="valAccept"
@@ -201,6 +208,7 @@ export default {
       meta: true,
       multiple: true,
       deletable: true,
+      editable: true,
       disabled: false,
       compact: false,
       theme: 'list',
