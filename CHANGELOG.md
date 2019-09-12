@@ -9,6 +9,7 @@
 - Made CSS modular and added SCSS support #11
 - Added support for custom `FormData` #12
 - Added [Gmail Inspired Demo](https://safrazik.github.io/vue-file-agent/docs/#gmail-inspired-demo) in Docs page
+- [BREAKING CHANGE] `Raw FileData.name` is a function now.
 
 ### 1.1.2
 
