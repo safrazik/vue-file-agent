@@ -1,5 +1,15 @@
 # Change Log
 
+### 1.2.0
+
+- Initial Unit Tests added #3
+- New Feature 🎉 File names can be renamed with `editable` prop #5
+- Added `disabled` prop #8
+- Added new slots `file-preview` and `file-preview-new` #10
+- Made CSS modular and added SCSS support #11
+- Added support for custom `FormData` #12
+- Added [Gmail Inspired Demo](https://safrazik.github.io/vue-file-agent/docs/#gmail-inspired-demo) in Docs page
+
 ### 1.1.2
 
 - Basic TypeScript support #4 (yanqd0)

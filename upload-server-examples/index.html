@@ -8,7 +8,7 @@
     <meta name="author" content="Safraz Razik">
     <meta name="generator" content="Jekyll v3.8.6">
 
-    <title>DEV - Vue File Agent</title>
+    <title>Vue File Agent</title>
 
     <link rel="canonical" href="https://safrazik.github.io/vue-file-agent">
 
@@ -18,7 +18,7 @@
     
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/styles.css">
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/github-markdown.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.1.1/dist/vue-file-agent.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.2.0-beta.0/dist/vue-file-agent.css">
     
 
     
@@ -40,7 +40,7 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="http://safrazik.github.io/vue-file-agent/api/">API</a>
+          <a class="nav-link" href="http://safrazik.github.io/vue-file-agent/docs/">Docs</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/safrazik/vue-file-agent">GitHub</a>
@@ -54,7 +54,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.1.1/dist/vue-file-agent.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.2.0-beta.0/dist/vue-file-agent.umd.js"></script>
   
   <div id="app">
   <div class="container">
@@ -80,113 +80,29 @@ node upload-server.js
     </div>
   </div>
   <div class="container">
-    <div id="demo-basic-mount"></div>
-    <div id="demo-advanced-mount">
-      <demo-advanced></demo-advanced>
-    </div>
-  </div> 
-  <div class="bg-secondary text-white mt-5 py-3">
-    <div class="container">
-      <div class="text-center">
-        Made with love from <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
-      </div>
-    </div>
-  </div>
-</div>
+    <div id="demo-advanced-wrapper">
+      
+      
 
-  <script type="text/x-template" id="demo-basic-template">
+
+
+
+
+
+
+
+
+
+  <div id="demo_advanced-wrapper">
     
-<div class="appa">
-  <VueFileAgent
-    v-model="filesData"
-    @select="filesSelected($event)"
-    deletable
-    @delete="fileDeleted($event)"
-  ></VueFileAgent>
-<!--   <div>
-    Move: <input type="number" ref="moveInput" value="1">
-    <button @click="moveIndex(-1)">&lt;&lt;</button>
-    <button @click="moveIndex(1)">&gt;&gt;</button>
-  </div> -->
-  <!-- </div> -->
-<!--   <div>
-    <button @click="removeAll()">Remove All</button>
-    <input type="number" ref="removeIdx" value="1">
-    <button @click="remove()">Remove</button>
-    <button @click="sortBy('lastModified')">Sort by Last Modified</button>
-    <button @click="sortBy('name')">Sort by Name</button>
-  </div> -->
-  <!-- </div></div> -->
+
+        
+<div id="demo_advanced-mount">
+  <demo_advanced></demo_advanced>
 </div>
+<script type="text/x-template" id="demo_advanced-template">
 
-  </script>
-  <script type="text/javascript" id="demo-basic-script">
-    (function(){
-      var filesBaseUrl = '/vue-file-agent/website/assets/files/';
-
-var videoData = {"name":"Cat Licking Its Paw.mp4","lastModified":1565241222998,"sizeText":"433 KB","size":443767,"type":"video/mp4","ext":"mp4", "dimensions": {"width": 640, "height": 360}};
-videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';
-videoData.imageColor = [66, 62, 45];
-
-var filesData = [];
-[
-  {"name":"sample.pdf","lastModified":1565232623243,"sizeText":"3 KB","size":3028,"type":"application/pdf","ext":"pdf"},
-  {"name":"DSC_0261.jpg","lastModified":1564648335292,"sizeText":"64 KB","size":65762,"type":"image/jpeg","ext":"jpg"},
-  {"name":"Important sheet.ods","lastModified":1564392646095,"sizeText":"31 KB","size":31276,"type":"","ext":"ods"},
-  videoData,
-  {"name":"Collection of something.zip","lastModified":1564392646087,"sizeText":"2 MB","size":1640378,"type":"application/x-zip-compressed","ext":"zip"},
-  {"name":"Document 3.docx","lastModified":1564392646097,"sizeText":"109 KB","size":111303,"type":"","ext":"doc"},
-].forEach(function(fd){
-  fd.url = filesBaseUrl + fd.name;
-  // fd.progress = 10;
-  filesData.push(fd);
-});
-
-var component = {
-  data: function(){
-    return {
-      lastProgress: 0,
-      filesData: filesData,
-      uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
-    };
-  },
-  methods: {
-    demonstrate: function(){
-      if(this.lastProgress >= 100){
-        return;
-      }
-      setTimeout(function() {
-        this.lastProgress = this.lastProgress + 5;
-        this.filesData[0].progress(this.lastProgress);
-        this.demonstrate();
-      }.bind(this), 400);
-    },
-    filesSelected: function(filesData){
-      console.log(filesData);
-      console.log(JSON.stringify(filesData));
-      // manual handling
-      // this.$refs.vueFileInput.upload(this.uploadUrl, filesData);
-    },
-    fileDeleted: function(fileData){
-      // manual handling
-      // this.$refs.vueFileInput.deleteUpload(this.uploadUrl, fileData);
-    },
-  },
-  mounted: function(){
-    // console.log('bali this.filesData', this.filesData);
-    // this.demonstrate();
-  }
-}
-      component.template = '#demo-basic-template';
-      var vm = new Vue({
-        el: '#demo-basic-mount',
-        components: {'demo-basic': component},
-      });
-    })();
-  </script>
-
-  <script type="text/x-template" id="demo-advanced-template">
-    
+<!--  -->
 <div class="row">
 
   <div class="col-md-3 mb-3">
@@ -250,6 +166,18 @@ var component = {
           </div>
         </div>
         <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-editable" v-model="editable">
+            <label class="custom-control-label" for="advanced-demo-editable">:editable</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled">
+            <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
           <select class="custom-select custom-select-sm mt-1" v-model="theme">
             <option selected>- Theme -</option>
             <option value="default">Default Theme (default)</option>
@@ -272,6 +200,8 @@ var component = {
         :multiple="multiple"
         :meta="meta"
         :deletable="deletable"
+        :editable="editable"
+        :disabled="disabled"
         :compact="compact"
         :accept="valAccept"
         :maxSize="valMaxSize"
@@ -301,7 +231,7 @@ var component = {
               <option v-for="i in filesData.length" :value="i">{{ i }}</option>
             </select> -->
           <!-- </div><div> -->
-            <button type="button" class="btn mr-1 mb-1" v-for="(fileData, i) in filesData"
+            <button type="button" class="btn mr-1 mb-1" :key="i" v-for="(fileData, i) in filesData"
             :class="{'btn-secondary': selectedIdx == i+1, 'btn-light': selectedIdx != i+1}"
             @click="selectedIdx = i+1"
             >
@@ -366,54 +296,25 @@ var component = {
   </div>
 
 </div>
+<!--  -->
+</script>
 
-  </script>
-  <script type="text/javascript" id="demo-advanced-script">
-    (function(){
-      var filesBaseUrl = window.location.host == 'localhost:4000' ? '/vue-file-agent/website/assets/files/' : 'https://safrazik.github.io/vue-file-agent/website/assets/files/';
-
-var videoData = {"name":"Cat Licking Its Paw.mp4","lastModified":1565241222998,"sizeText":"433 KB","size":443767,"type":"video/mp4","ext":"mp4", "dimensions": {"width": 640, "height": 360}};
-videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';
-videoData.imageColor = [66, 62, 45];
+<script type='text/javascript'>
 
 
-// // ...
-// {
-//   name: 'DSC_0261.jpg',
-//   lastModified: 1564648335292,
-//   sizeText: '64 KB',
-//   size: 65762,
-//   type: 'image/jpeg',
-//   ext: 'jpg',
-//   url: '/vue-file-agent/assets/files/DSC_0261.jpg',
-// },
-// // ...
+var component = { template: '#demo_advanced-template',
 
-var filesData = [];
-[
-  {"name":"sample.pdf","lastModified":1565232623243,"sizeText":"3 KB","size":3028,"type":"application/pdf","ext":"pdf"},
-  {"name":"DSC_0261.jpg","lastModified":1564648335292,"sizeText":"64 KB","size":65762,"type":"image/jpeg","ext":"jpg"},
-  {"name":"Important sheet.ods","lastModified":1564392646095,"sizeText":"31 KB","size":31276,"type":"","ext":"ods"},
-  videoData,
-  {"name":"Collection of something.zip","lastModified":1564392646087,"sizeText":"2 MB","size":1640378,"type":"application/x-zip-compressed","ext":"zip"},
-  {"name":"Document 3.doc","lastModified":1564392646097,"sizeText":"109 KB","size":111303,"type":"","ext":"doc"},
-].forEach(function(fd){
-  fd.url = filesBaseUrl + fd.name;
-  // fd.progress = 10;
-  filesData.push(fd);
-});
-
-var component = {
   data: function(){
     return {
-      filesData: [],
-      filesData: filesData,
+      filesData: this.getFilesDataInitial(),
       filesDataForUpload: [],
       uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
       uploadHeaders: {'X-Test-Header': 'vue-file-agent'},
       meta: true,
       multiple: true,
       deletable: true,
+      editable: true,
+      disabled: false,
       compact: false,
       theme: 'list',
       sortDirection: {
@@ -438,7 +339,30 @@ var component = {
     },
   },
   methods: {
-    getSelectedFileData(){
+    getFilesDataInitial: function(){
+      var filesBaseUrl = window.location.host == 'localhost:4000' ? '/vue-file-agent/website/assets/files/' : 'https://safrazik.github.io/vue-file-agent/website/assets/files/';
+
+      var videoData = {"name":"Cat Licking Its Paw.mp4","lastModified":1565241222998,"sizeText":"433 KB","size":443767,"type":"video/mp4","ext":"mp4", "dimensions": {"width": 640, "height": 360}};
+      videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';
+      videoData.imageColor = [66, 62, 45];
+
+      var filesData = [];
+      [
+        {"name":"sample.pdf","lastModified":1565232623243,"sizeText":"3 KB","size":3028,"type":"application/pdf","ext":"pdf"},
+        {"name":"DSC_0261.jpg","lastModified":1564648335292,"sizeText":"64 KB","size":65762,"type":"image/jpeg","ext":"jpg"},
+        {"name":"Important sheet.ods","lastModified":1564392646095,"sizeText":"31 KB","size":31276,"type":"","ext":"ods"},
+        videoData,
+        {"name":"Collection of something.zip","lastModified":1564392646087,"sizeText":"2 MB","size":1640378,"type":"application/x-zip-compressed","ext":"zip"},
+        {"name":"Document 3.doc","lastModified":1564392646097,"sizeText":"109 KB","size":111303,"type":"","ext":"doc"},
+      ].forEach(function(fd){
+        fd.url = filesBaseUrl + fd.name;
+        // fd.progress = 10;
+        filesData.push(fd);
+      });
+
+      return filesData;
+    },
+    getSelectedFileData: function(){
       var i = this.selectedIdx;
       i = i - 1;
       if(!this.filesData[i]){
@@ -467,8 +391,8 @@ var component = {
           filesDataNew.splice(idx, 1);
         }
       }
-      var filesDataNew = [];
-      for(var i = 0; i < this.filesData.length; i++){
+      filesDataNew = [];
+      for(i = 0; i < this.filesData.length; i++){
         if(!this.filesData[i].error){
           filesDataNew.push(this.filesData[i]);
         }
@@ -569,13 +493,36 @@ var component = {
 
   }
 }
-      component.template = '#demo-advanced-template';
-      var vm = new Vue({
-        el: '#demo-advanced-mount',
-        components: {'demo-advanced': component},
-      });
-    })();
-  </script>
+
+
+; new Vue({ components: {'demo_advanced': component}, el: '#demo_advanced-mount'});
+</script>
+
+      
+
+  </div>
+
+
+<style type="text/css">
+  #demo_advanced-wrapper blockquote {
+    background: #BBB;
+    color: #FFF;
+    margin-bottom: 0;
+  }
+  #demo_advanced-wrapper .highlight pre {
+    max-height: 300px;
+  }
+</style>
+    </div>
+  </div> 
+  <div class="bg-secondary text-white mt-5 py-3">
+    <div class="container">
+      <div class="text-center">
+        Made with love from <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

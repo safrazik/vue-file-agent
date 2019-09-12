@@ -28,11 +28,21 @@ var component = { template: '#{{ include.name }}-template',
   <div id="{{ include.name }}-wrapper">
     <div class="row">
       <div class="col-md-6">
-        <blockquote>Code</blockquote>
+        <blockquote>
+          Code
+          {% if include.codepen %}
+            <a target="_blank" class="codepen-link" href="{{ include.codepen }}">Edit CodePen</a>
+          {% endif %}
+        </blockquote>
         {% highlight html %}{{ include.code | strip }}{% endhighlight %}
       </div>
       <div class="col-md-6">
-        <blockquote>Result</blockquote>
+        <blockquote>
+          Result
+          {% if include.codepen %}
+            <a target="_blank" class="codepen-link" href="{{ include.codepen }}">Edit CodePen</a>
+          {% endif %}
+        </blockquote>
         {{ processed_code }}
       </div>
     </div>
@@ -41,9 +51,14 @@ var component = { template: '#{{ include.name }}-template',
 
 <style type="text/css">
   #{{ include.name }}-wrapper blockquote {
-    background: #BBB;
-    color: #FFF;
+    background: #EEE;
+    color: #000;
+    font-weight: bold;
     margin-bottom: 0;
+    padding: 2px 10px;
+  }
+  #{{ include.name }}-wrapper .codepen-link {
+    float: right;
   }
   #{{ include.name }}-wrapper .highlight pre {
     max-height: 300px;

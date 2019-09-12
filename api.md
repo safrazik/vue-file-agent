@@ -134,7 +134,9 @@ Accepts an object for single file upload and an array of serialized FileData obj
 
 ## Props Demo
 
-{% capture code %}
+Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/safrazik/pen/BaBVNEE">CodePen</a>)
+
+{% capture props_demo %}
 {% raw %}
 <template>
   <div>
@@ -194,7 +196,7 @@ Accepts an object for single file upload and an array of serialized FileData obj
 {% endraw %}
 {% endcapture %}
 
-{% include_relative website/includes/vue-code.md name="props_demo" code=code %}
+{% include_relative website/includes/vue-code.md name="props_demo" code=props_demo codepen="https://codepen.io/safrazik/pen/BaBVNEE" title="Props Demo" %}
 
 ## Events
 
@@ -262,10 +264,12 @@ Content is placed (after) outside of the file input. Files can be dragged here. 
 
 ## Events, Methods and Slots Demo
 
-{% capture code2 %}
+Demo 2. Profile Picture (<a target="_blank" href="https://codepen.io/safrazik/pen/BaBpYme">CodePen</a>)
+
+{% capture profile_picture_demo %}
 {% raw %}
 <template>
-  <div id="profile-pic-demo" class="bg-light">
+  <div id="profile-pic-demo" class="bg-light pt-3">
     <VueFileAgent
       class="profile-pic-upload-block"
       ref="profilePicRef"
@@ -281,9 +285,6 @@ Content is placed (after) outside of the file input. Files can be dragged here. 
       v-model="profilePic"
       @select="onSelect($event)"
     >
-      <template v-slot:before-outer>
-        <h2 title="before-outer">Profile Picture Demo</h2>
-      </template >
       <template v-slot:after-inner>
         <span title="after-inner" class="btn btn-link btn-sm btn-block">Select image file</span>
       </template >
@@ -361,7 +362,7 @@ Content is placed (after) outside of the file input. Files can be dragged here. 
 {% endraw %}
 {% endcapture %}
 
-{% include_relative website/includes/vue-code.md name="profile_picture2" code=code2 %}
+{% include_relative website/includes/vue-code.md name="profile_picture_demo" code=profile_picture_demo codepen="https://codepen.io/safrazik/pen/BaBpYme" title="Profile Picture Demo" %}
 
 
 ## Extending
@@ -399,13 +400,15 @@ If you still can't make it with the built in customizations, (1) you can create 
 
 ## Gmail Inspired Demo
 
+Demo 3. Gmail Inspired Upload (<a target="_blank" href="https://codepen.io/safrazik/pen/OJLgvya">CodePen</a>)
+
 `NOTE` In an ES6 environment, instead of using `<template v-slot:file-preview="slotProps">` you can use `<template v-slot:file-preview="{ fileData, index }">`
 
 
 {% capture gmail_inspired_demo %}
 {% raw %}
 <template>
-  <div class="vfa-demo bg-light">
+  <div class="vfa-demo bg-light pt-3">
     <VueFileAgent
       class="upload-block"
       ref="vfaDemoRef"
@@ -421,7 +424,6 @@ If you still can't make it with the built in customizations, (1) you can create 
       v-model="filesData"
     >
       <template v-slot:before-outer>
-        <h3 class="my-3">Send Email</h3>
         <p>Email Attachment example with drag & drop support and <span class="badge">attachment</span> keyword basic detection.</p>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Your Name" value="John Doe">
@@ -559,4 +561,4 @@ If you still can't make it with the built in customizations, (1) you can create 
 {% endraw %}
 {% endcapture %}
 
-{% include_relative website/includes/vue-code.md name="gmail_inspired_demo" code=gmail_inspired_demo %}
+{% include_relative website/includes/vue-code.md name="gmail_inspired_demo" code=gmail_inspired_demo codepen="https://codepen.io/safrazik/pen/OJLgvya" title="Gmail Inspired Demo" %}
