@@ -63,7 +63,7 @@ class UploadHelper {
     fileData.error.upload = errorText;
   }
 
-  upload(url, headers, filesData, progressFn){
+  upload(url, headers, filesData, createFormData, progressFn, configureFn){
     var self = this;
     progressFn = progressFn || function(){};
     var promises = [];
@@ -76,8 +76,14 @@ class UploadHelper {
     }
     for(let i = 0; i < filesData.length; i++){
       let fileData = filesData[i];
-      var formData = new FormData();
-      formData.append('file', fileData.file);
+      var formData;
+      if(typeof createFormData == 'function'){
+        formData = createFormData(fileData);
+      }
+      else {
+        formData = new FormData();
+        formData.append('file', fileData.file);
+      }
       (function(fileData){
         var promise = self.doUpload(url, headers, formData, function(progressEvent) {
             var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
@@ -85,6 +91,9 @@ class UploadHelper {
             updateOverallProgress();
         }, function(xhr){
           fileData.xhr = xhr;
+          if(typeof configureFn == 'function'){
+            configureFn(xhr);
+          }
         });
         promise.then(function(response){
           delete fileData.xhr;
@@ -99,13 +108,16 @@ class UploadHelper {
     return Promise.all(promises);
   }
 
-  deleteUpload(url, headers, fileData){
+  deleteUpload(url, headers, fileData, uploadData){
     return new Promise((resolve, reject)=> {
       if (fileData.xhr) {
         fileData.xhr.abort();
       }
-      if (fileData.upload) {
-        this.doDeleteUpload(url, headers, fileData.upload, (xhr)=> {
+      if(uploadData === undefined){
+        uploadData = fileData.upload;
+      }
+      if (uploadData) {
+        this.doDeleteUpload(url, headers, uploadData, (xhr)=> {
         }).then((result)=> {
           resolve(result);
         }, (err)=> {

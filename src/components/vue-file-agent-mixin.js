@@ -84,22 +84,22 @@ export default {
       })
       video.load();
     },
-    upload(url, headers, filesData){
+    upload(url, headers, filesData, createFormData){
       var validFilesData = [];
       for(var i = 0; i < filesData.length; i++){
         if(!filesData[i].error){
           validFilesData.push(filesData[i]);
         }
       }
-      return uploader.upload(url, headers, validFilesData, (overallProgress)=> {
+      return uploader.upload(url, headers, validFilesData, createFormData, (overallProgress)=> {
         this.overallProgress = overallProgress;
       });
     },
-    deleteUpload(url, headers, fileData){
+    deleteUpload(url, headers, fileData, uploadData){
       if(this.filesData.length < 1){
         this.overallProgress = 0;
       }
-      return uploader.deleteUpload(url, headers, fileData);
+      return uploader.deleteUpload(url, headers, fileData, uploadData);
     },
     autoUpload(filesData){
       if(!this.uploadUrl){
