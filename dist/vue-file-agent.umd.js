@@ -4740,7 +4740,7 @@ function () {
     }
   }, {
     key: "upload",
-    value: function upload(url, headers, filesData, progressFn) {
+    value: function upload(url, headers, filesData, createFormData, progressFn, configureFn) {
       var self = this;
 
       progressFn = progressFn || function () {};
@@ -4759,8 +4759,14 @@ function () {
 
       for (var i = 0; i < filesData.length; i++) {
         var fileData = filesData[i];
-        var formData = new FormData();
-        formData.append('file', fileData.file);
+        var formData;
+
+        if (typeof createFormData == 'function') {
+          formData = createFormData(fileData);
+        } else {
+          formData = new FormData();
+          formData.append('file', fileData.file);
+        }
 
         (function (fileData) {
           var promise = self.doUpload(url, headers, formData, function (progressEvent) {
@@ -4770,6 +4776,10 @@ function () {
             updateOverallProgress();
           }, function (xhr) {
             fileData.xhr = xhr;
+
+            if (typeof configureFn == 'function') {
+              configureFn(xhr);
+            }
           });
           promise.then(function (response) {
             delete fileData.xhr;
@@ -4790,7 +4800,7 @@ function () {
     }
   }, {
     key: "deleteUpload",
-    value: function deleteUpload(url, headers, fileData) {
+    value: function deleteUpload(url, headers, fileData, uploadData) {
       var _this3 = this;
 
       return new Promise(function (resolve, reject) {
@@ -4798,8 +4808,12 @@ function () {
           fileData.xhr.abort();
         }
 
-        if (fileData.upload) {
-          _this3.doDeleteUpload(url, headers, fileData.upload, function (xhr) {}).then(function (result) {
+        if (uploadData === undefined) {
+          uploadData = fileData.upload;
+        }
+
+        if (uploadData) {
+          _this3.doDeleteUpload(url, headers, uploadData, function (xhr) {}).then(function (result) {
             resolve(result);
           }, function (err) {
             _this3.prepareUploadError(fileData, err);
@@ -4913,7 +4927,7 @@ var dragCounter = 0;
       });
       video.load();
     },
-    upload: function upload(url, headers, filesData) {
+    upload: function upload(url, headers, filesData, createFormData) {
       var _this = this;
 
       var validFilesData = [];
@@ -4924,16 +4938,16 @@ var dragCounter = 0;
         }
       }
 
-      return upload_helper.upload(url, headers, validFilesData, function (overallProgress) {
+      return upload_helper.upload(url, headers, validFilesData, createFormData, function (overallProgress) {
         _this.overallProgress = overallProgress;
       });
     },
-    deleteUpload: function deleteUpload(url, headers, fileData) {
+    deleteUpload: function deleteUpload(url, headers, fileData, uploadData) {
       if (this.filesData.length < 1) {
         this.overallProgress = 0;
       }
 
-      return upload_helper.deleteUpload(url, headers, fileData);
+      return upload_helper.deleteUpload(url, headers, fileData, uploadData);
     },
     autoUpload: function autoUpload(filesData) {
       if (!this.uploadUrl) {
