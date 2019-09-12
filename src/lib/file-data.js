@@ -10,7 +10,7 @@ class FileData {
 
   populate(data, options = {}){
     this.raw = data;
-    this.file = data.file instanceof File ? data.file : data;
+    this.file = data.file instanceof File ? data.file : this.createDummyFile(data);
     this.url = null;
     this.urlResized = null;
     this.lastKnownSrc = null;
@@ -33,6 +33,20 @@ class FileData {
     this.imageColor = data.imageColor;
     this.customName = data.customName;
     this.upload = null;
+  }
+
+  createDummyFile(data){
+    var file = {};
+    file.lastModified = data.lastModified;
+    var d = new Date();
+    if(file.lastModified){
+      d.setTime(file.lastModified);
+    }
+    file.lastModifiedDate = d;
+    file.name = data.name;
+    file.size = data.size;
+    file.type = data.type;
+    return file;
   }
 
   hasProgress(){
@@ -73,12 +87,12 @@ class FileData {
   }
 
   name(withoutExt){
+    var ext = this.ext();
     if(this.customName){
-      return this.customName;
+      return this.customName + (withoutExt ? '' : (ext != '?' ? '.' + ext : ''));
     }
     var name = this.file && this.file.name;
     if(withoutExt){
-      var ext = this.ext();
       if(ext != '?'){
         return name.substr(0, name.length - (ext.length + 1));
       }
@@ -202,8 +216,8 @@ class FileData {
     var raw = this.raw || {};
     raw.url = this.url;
     raw.urlResized = this.urlResized;
-    raw.src = this.src;
-    raw.name = this.file.name;
+    raw.src = this.src.bind(this);
+    raw.name = this.name.bind(this);
     raw.lastModified = this.file.lastModified;
     raw.sizeText = this.size();
     raw.size = this.file.size;
@@ -235,6 +249,8 @@ class FileData {
       var fileData = new FileData(fileDataRaw, options);
       var promise = fileData.setUrl(fileDataRaw.url);
       fileDataRaw.progress = fileData.progress.bind(fileData); // convert it as a function
+      fileDataRaw.src = fileData.src.bind(fileData);
+      fileDataRaw.name = fileData.name.bind(fileData); // convert it as a function
       return promise;
   }
 

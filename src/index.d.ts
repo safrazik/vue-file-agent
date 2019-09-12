@@ -74,7 +74,7 @@ interface RawFileData {
   url: string | null;
   urlResized: string | null;
   src: () => any;
-  name: string;
+  name: string | () => string;
   lastModified: number;
   sizeText: string;
   size: number;
