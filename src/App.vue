@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <h2>Demo Basic</h2>
-  <div>
+  <div class="bg-dark p-3">
     <demo-basic></demo-basic>
   </div>
   <hr>
@@ -13,6 +13,10 @@
 </template>
 <style>
   @import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+  .bg-dark {
+    background: #333;
+    color: #FFF;
+  }
 </style>
 <script>
 
