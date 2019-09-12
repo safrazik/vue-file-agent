@@ -30,6 +30,12 @@ boolean, default  `false`
 
 Whether the file delete/cancel button should be showed.
 
+### editable
+
+boolean, default  `false`
+
+Whether the file name can be edited. The (modified) name can be retrieved by `fileData.name(withoutExtension = true)`
+
 ### disabled
 
 boolean, default  `undefined`
