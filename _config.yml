@@ -16,8 +16,7 @@
 title: Vue File Agent
 tagline: Every file deserves to be treated equally
 email: safrazik@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
-  High performant Vue file upload component with elegant and distinguishable previews for every file type and support for drag and drop, validations, default uploader with progress support and externally customizable in "vue way"
+description: Full featured drag & drop enabled Vue file upload component with previews and upload progress
 baseurl: "/vue-file-agent" # the subpath of your site, e.g. /blog
 url: http://safrazik.github.io/vue-file-agent # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: safrazik
