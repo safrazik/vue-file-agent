@@ -3,9 +3,10 @@
 <div>
   <VueFileAgent
     v-model="filesData"
-    @select="filesSelected($event)"
-    deletable
+    :deletable="true"
+    :editable="true"
     :theme="theme"
+    @select="filesSelected($event)"
     @delete="fileDeleted($event)"
   >
     <template v-slot:before-outer>
