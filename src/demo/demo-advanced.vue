@@ -270,7 +270,7 @@ export default {
       this.filesData = [];
       this.filesDataForUpload = [];
     },
-    setProgress(){
+    setProgress: function(){
       var fileData = this.getSelectedFileData();
       if(!fileData){
         return;
