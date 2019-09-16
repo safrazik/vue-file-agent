@@ -51,7 +51,10 @@ is_home: true
       </p>
       <p style="margin-top: -1rem;">
         <a class="btn btn-outline-secondary btn-sm github-button" href="https://github.com/safrazik/vue-file-agent" data-size="large" data-show-count="true" aria-label="Star safrazik/vue-file-agent on GitHub">Star</a>
-        <a href="https://twitter.com/safrazik?ref_src=vfa" class="btn btn-outline-secondary btn-sm twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Follow @safrazik</a>
+
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="btn btn-outline-secondary btn-sm twitter-share-button" data-size="large" data-text="Full featured #vuejs file upload component with multi-file, preview, progress, drag &amp; drop support" data-url="https://safrazik.github.io/vue-file-agent" data-via="safrazik" data-related="safrazik" data-show-count="false">Tweet</a>
+
+<!--         <a href="https://twitter.com/safrazik?ref_src=vfa" class="btn btn-outline-secondary btn-sm twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Follow @safrazik</a> -->
       </p>
          <!-- by <a href="https://twitter.com/safrazik">@safrazik</a>.</p> -->
       </div>
@@ -66,25 +69,36 @@ is_home: true
 </div>
 <div class="container">
   <div id="advanced-demo" name="advanced-demo"></div>
-    <h2>Advanced Demo</h2>
-    <div id="demo-advanced-wrapper">
-      {% capture demo_advanced %}
-        {% include_relative src/demo/demo-advanced.vue %}
-      {% endcapture %}
-      {% include_relative website/includes/vue-code.md name="demo_advanced" code=demo_advanced result_only=true %}
-    </div> 
+  <h2>Advanced Demo</h2>
+  <div id="demo-advanced-wrapper">
+    {% capture demo_advanced %}
+      {% include_relative src/demo/demo-advanced.vue %}
+    {% endcapture %}
+    {% include_relative website/includes/vue-code.md name="demo_advanced" code=demo_advanced result_only=true %}
+  </div> 
+
+  <div class="row">
+    <div class="col-md-3">
+      &nbsp;
+    </div>
+    <div class="col-md-5">
+      <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I&#39;m going to release two big open source projects that I&#39;m working on for 2 years: one for <a href="https://twitter.com/hashtag/vuejs?src=hash&amp;ref_src=twsrc%5Etfw">#vuejs</a> and another for <a href="https://twitter.com/hashtag/php?src=hash&amp;ref_src=twsrc%5Etfw">#php</a> (with <a href="https://twitter.com/hashtag/vuejs?src=hash&amp;ref_src=twsrc%5Etfw">#vuejs</a> support)<br>Stay tuned for updates!</p>&mdash; Safraz Razik (@safrazik) <a href="https://twitter.com/safrazik/status/1173642557470822401?ref_src=twsrc%5Etfw">September 16, 2019</a></blockquote>
+    </div>
+  </div>
 
 
-  {% if site.activity_feed %}
   <h2 class="mt-5 mb-2">Activity on
     <a href="https://github.com/safrazik/vue-file-agent">Github</a>
     <!-- Place this tag where you want the button to render. -->
     <a class="github-button" href="https://github.com/safrazik/vue-file-agent" data-size="large" data-show-count="true" aria-label="Star safrazik/vue-file-agent on GitHub">Star</a>
-        <a href="https://twitter.com/safrazik?ref_src=vfa" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Follow @safrazik</a>
+
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Full featured #vuejs file upload component with multi-file, preview, progress, drag &amp; drop support" data-url="https://safrazik.github.io/vue-file-agent" data-via="safrazik" data-related="safrazik" data-show-count="false">Tweet</a>
+        <!-- <a href="https://twitter.com/safrazik?ref_src=vfa" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Follow @safrazik</a> -->
   </h2>
   <div class="text-muted mb-3">Thank you for your interest and contributions</div>
 
-  {% include_relative website/includes/activity-feed.html %}
+  {% if site.activity_feed %}
+    {% include_relative website/includes/activity-feed.html %}
   {% endif %}
 
 <!--         <div class="mb-5">
