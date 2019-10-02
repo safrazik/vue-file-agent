@@ -3,6 +3,7 @@ import VueFileIcon from './vue-file-icon.vue';
 import VueFilePreview from './vue-file-preview.vue';
 import FileData from '../lib/file-data';
 import uploader from '../lib/upload-helper';
+import { getFilesFromDroppedItems } from '../lib/data-transfer';
 
 var dragCounter = 0;
 
@@ -205,15 +206,16 @@ export default {
       this.isDragging = false;
       event.stopPropagation();
       event.preventDefault();
-      var files = event.dataTransfer.files; // FileList object.
-      this.$emit('drop', event);
-      if(!files[0]){
-        return;
-      }
-      if(!this.hasMultiple){
-        files = [files[0]];
-      }
-      this.handleFiles(files);
+      getFilesFromDroppedItems(event.dataTransfer).then(files => {
+        this.$emit('drop', event);
+        if(!files || !files[0]){
+          return;
+        }
+        if(!this.hasMultiple){
+          files = [files[0]];
+        }
+        this.handleFiles(files);
+      });
     },
     dragEnter(event) {
       this.isDragging = true;
