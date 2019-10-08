@@ -13,7 +13,7 @@
     <template v-for="(fileData, index) in filesData">
       <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
         <VueFilePreview 
-          :fileData="fileData" :index="index" :deletable="isDeletable" :editable="editable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
+          :value="fileData" :index="index" :deletable="isDeletable" :editable="editable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
            :key="fileData.id" class="file-preview-wrapper grid-box-item grid-block"></VueFilePreview>
       </slot>
     </template>

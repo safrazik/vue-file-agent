@@ -43,7 +43,7 @@ class FileData {
       d.setTime(file.lastModified);
     }
     file.lastModifiedDate = d;
-    file.name = data.name;
+    file.name = typeof data.name == 'function' ? data.name() : data.name;
     file.size = data.size;
     file.type = data.type;
     return file;
@@ -151,8 +151,8 @@ class FileData {
   }
 
   setUrl(url){
+    this.url = url;
     return new Promise((resolve, reject)=> {
-      this.url = url;
       if(this.isImage()){
         this.resizeImage().then(()=> { 
           resolve(this);
@@ -245,13 +245,24 @@ class FileData {
     }
   }
 
-  static fromRaw(fileDataRaw, options){
+  static getFromRaw(fileDataRaw, options, isSync = false){
       var fileData = new FileData(fileDataRaw, options);
       var promise = fileData.setUrl(fileDataRaw.url);
       fileDataRaw.progress = fileData.progress.bind(fileData); // convert it as a function
       fileDataRaw.src = fileData.src.bind(fileData);
       fileDataRaw.name = fileData.name.bind(fileData); // convert it as a function
+      if(isSync){
+        return fileData;
+      }
       return promise;
+  }
+
+  static fromRaw(fileDataRaw, options){
+    return FileData.getFromRaw(fileDataRaw, options, false);
+  }
+
+  static fromRawSync(fileDataRaw, options){
+    return FileData.getFromRaw(fileDataRaw, options, true);
   }
 
   static fromRawArray(filesDataRaw, options){

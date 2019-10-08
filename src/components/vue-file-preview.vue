@@ -47,9 +47,10 @@
 
   import utils from '../lib/utils';
   import VueFileIcon from './vue-file-icon.vue';
+  import FileData from '../lib/file-data';
 
   export default {
-    props: ['fileData', 'deletable', 'editable', 'errorText', 'disabled'],
+    props: ['value', 'deletable', 'editable', 'errorText', 'disabled'],
     components: {
       VueFileIcon
     },
@@ -57,10 +58,26 @@
       return {
         isEditInputFocused: false,
         isEditCancelable: true,
+        fileData: this.getFileData(),
       }
     },
+    computed: {
+    },
     methods: {
-
+      getFileData(){
+        return null;
+        // return this.value instanceof FileData ? this.value : FileData.fromRawSync(this.value, {});
+      },
+      updateFileData(){
+        if(this.value instanceof FileData){
+          this.fileData = this.value;
+          return;
+        }
+        FileData.fromRaw(this.value, {}).then(fileData => {
+          this.fileData = fileData;
+        });
+        this.fileData = FileData.fromRawSync(this.value, {});
+      },
       createThumbnail(fileData, video){
         var canvas = document.createElement('canvas');
         utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then((thumbnail) => {
@@ -165,7 +182,14 @@
         this.editInputBlured();
         return true;
       },
-
+    },
+    created(){
+      this.updateFileData();
+    },
+    watch: {
+      value(){
+        this.updateFileData();
+      }
     },
   }
 </script>
