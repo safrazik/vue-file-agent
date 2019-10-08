@@ -1,4 +1,4 @@
-import { getFilesFromDroppedItems } from './data-transfer';
+import { getFilesFromDroppedItems } from './drop-handler';
 
 class Utils {
 
