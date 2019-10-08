@@ -41,6 +41,7 @@ class Utils {
   }
 
   createVideoThumbnail(video, canvas, thumbnailSize){
+    video.setAttribute('crossOrigin', 'anonymous'); // fix cross origin issue
     return new Promise((resolve, reject)=> {
       var loadedmetadata = false;
       var loadeddata = false;
