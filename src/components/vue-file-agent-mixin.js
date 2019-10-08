@@ -3,7 +3,6 @@ import VueFileIcon from './vue-file-icon.vue';
 import VueFilePreview from './vue-file-preview.vue';
 import FileData from '../lib/file-data';
 import uploader from '../lib/upload-helper';
-import { getFilesFromDroppedItems } from '../lib/data-transfer';
 
 var dragCounter = 0;
 
@@ -206,7 +205,7 @@ export default {
       this.isDragging = false;
       event.stopPropagation();
       event.preventDefault();
-      getFilesFromDroppedItems(event.dataTransfer).then(files => {
+      utils.getFilesFromDroppedItems(event.dataTransfer).then(files => {
         this.$emit('drop', event);
         if(!files || !files[0]){
           return;

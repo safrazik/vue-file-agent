@@ -1,3 +1,5 @@
+import { getFilesFromDroppedItems } from './data-transfer';
+
 class Utils {
 
   getAverageColor(arr){
@@ -150,13 +152,12 @@ class Utils {
       var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;
       var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
       var shouldRevoke = false;
-      image.onload = ()=>{
+      image.onload = ()=> {
+        var resized = this.getImageResized(image, thumbnailSize);
         if(shouldRevoke){
           revokeObjectURL(image.src);
         }
-        var resized = this.getImageResized(image, thumbnailSize);
         resolve(resized);
-        return;
       };
       if (!(file instanceof File)) {
         return reject('Invalid file object. Use url or a valid instance of File class');
@@ -258,6 +259,10 @@ class Utils {
     }
     var bytes = this.getSizeParsed(maxSize);
     return file.size <= bytes;
+  }
+
+  getFilesFromDroppedItems(dataTransfer){
+    return getFilesFromDroppedItems(dataTransfer);
   }
 
 }

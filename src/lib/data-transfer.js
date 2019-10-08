@@ -1,6 +1,8 @@
 export function getFilesFromDroppedItems(dataTransfer) {
   return new Promise(resolve => {
-    if (!includesFolder(dataTransfer.files)) resolve(dataTransfer.files);
+    if (!includesFolder(dataTransfer.files)){
+      return resolve(dataTransfer.files);
+    }
     var files = [];
     var folderReadQueue = [];
     for (var i = 0; i < dataTransfer.items.length; i++) {
@@ -38,12 +40,13 @@ function getEntries(entry) {
       var entryReader = entry.createReader();
       var readEntries = () => {
         entryReader.readEntries(entries => {
-          var iterateEntry = async i => {
+          var iterateEntry = i => {
             if (!entries[i] && i === 0) return resolve(files);
             if (!entries[i]) return readEntries();
-            var entryFiles = await getEntries(entries[i]);
-            files.push(...entryFiles);
-            iterateEntry(i + 1);
+            getEntries(entries[i]).then(entryFiles => {
+              files.push(...entryFiles);
+              iterateEntry(i + 1);
+            });
           };
           iterateEntry(0);
         });
