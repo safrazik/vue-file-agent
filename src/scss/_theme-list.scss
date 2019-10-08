@@ -57,6 +57,12 @@
 .theme-list .vue-file-agent .file-preview-wrapper .file-size {
   color: #333;
 }
+
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview::before,
+.theme-list .vue-file-agent .file-preview-wrapper .file-preview::after {
+  box-shadow: none;
+}
+
 .theme-list .vue-file-agent .file-preview-wrapper .file-preview::before {
   background: #DCDCDF;
   left: 53px;

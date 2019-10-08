@@ -62,18 +62,18 @@
   width: 100%;
 }
 
-.vue-file-agent .file-preview-wrapper-image .image-preview::after,
-.vue-file-agent .file-category-video-playable .file-preview::after {
+.vue-file-agent .file-preview-wrapper-image .image-preview .file-preview-overlay,
+.vue-file-agent .file-category-video-playable .file-preview .file-preview-overlay {
   content: " ";
   background: rgba(0, 0, 0, 0.25);
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   z-index: -1;
 }
-.vue-file-agent .file-preview-wrapper-image .image-preview.dark-content::after {
+.vue-file-agent .file-preview-wrapper-image .image-preview.dark-content .file-preview-overlay {
   background: rgba(255, 255, 255, 0.25);
 }
-.vue-file-agent .file-category-video-playable .file-preview::after {
+.vue-file-agent .file-category-video-playable .file-preview .file-preview-overlay {
   z-index: 1;
 }
 
@@ -101,7 +101,6 @@
   top: 0;
   left: 0;
   right: 0;
-  color: rgba(255, 255, 255, 0.75);
   padding: 0 5px;
   z-index: 4;
   text-align: center;
@@ -118,7 +117,6 @@
 }
 
 .vue-file-agent .file-preview .file-name {
-  background: rgba(0, 0, 0, 0.5);
 }
 
 .vue-file-agent .file-preview .file-delete {
@@ -165,24 +163,29 @@
   display: none;
 }
 
-.vue-file-agent .file-preview::before {
+.vue-file-agent .file-preview::before,
+.vue-file-agent .file-preview::after {
   content: " ";
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   z-index: 2;
   top: auto;
   height: 25px;
+}
+
+.vue-file-agent .file-preview::before {
+  height: 28px;
+  top: 0;
+  bottom: auto;
 }
 
 .vue-file-agent .file-preview .file-ext {
   position: absolute;
   font-size: 16px;
   text-transform: uppercase;
-  color: #FFF;
   text-align: left;
   display: block;
   /*width: 100%;*/
@@ -198,7 +201,6 @@
   position: absolute;
   font-size: 16px;
   text-transform: uppercase;
-  color: #FFF;
   text-align: right;
   display: block;
   /*width: 100%;*/
@@ -216,14 +218,11 @@
 
 .vue-file-agent .file-preview .image-dimension .image-dimension-width::after {
   content: "x";
-  color: rgba(255, 255, 255, 0.7);
 }
 
 .vue-file-agent .file-preview .image-dimension {
   position: absolute;
   font-size: 12px;
-  color: #FFF;
-  color: rgba(255, 255, 255, 0.75);
   text-align: center;
   display: block;
   width: 100%;
@@ -256,7 +255,8 @@
 .vue-file-agent .file-preview-new::before {
   background: rgba(0, 0, 0, 0.05);
 }
-.vue-file-agent .file-preview-new .file-preview::before {
+.vue-file-agent .file-preview-new .file-preview::before,
+.vue-file-agent .file-preview-new .file-preview::after {
   display: none;
 }
 
@@ -448,7 +448,7 @@
 .vue-file-agent.no-meta .file-preview .file-name,
 .vue-file-agent.no-meta .file-preview .file-size,
 .vue-file-agent.no-meta .file-preview .image-dimension,
-.vue-file-agent.no-meta .file-preview::before
+.vue-file-agent.no-meta .file-preview::after
 {
   display: none;
 }
@@ -472,19 +472,26 @@
 
 /* ----------- */
 
-.vue-file-agent-light .file-preview::before,
-.vue-file-agent-light .file-preview .file-name {
-  background: rgba(255, 255, 255, 0.5);
-  background: rgba(100, 100, 100, 0.5);
+.vue-file-agent .file-preview-wrapper-image .file-preview::before,
+.vue-file-agent .file-category-video-playable .file-preview::before {
+  // background: rgba(100, 100, 100, 0.5);
+  box-shadow: inset 0px 40px 20px -25px rgba(0, 0, 0, 0.5);
+  height: 40px;
 }
 
-.vue-file-agent-light .file-preview .file-name,
-.vue-file-agent-light .file-preview .file-ext,
-.vue-file-agent-light .file-preview .file-size,
-.vue-file-agent-light .file-preview .image-dimension,
-.vue-file-agent-light .file-preview .image-dimension .image-dimension-width::after {
-  color: #000;
-  color: #333;
+.vue-file-agent .file-preview-wrapper-image .file-preview::after,
+.vue-file-agent .file-category-video-playable .file-preview::after {  
+  // background: rgba(100, 100, 100, 0.5);
+  box-shadow: inset 0px -40px 20px -25px rgba(0, 0, 0, 0.5);
+  height: 40px;
+}
+
+
+.vue-file-agent .file-preview .file-name,
+.vue-file-agent .file-preview .file-ext,
+.vue-file-agent .file-preview .file-size,
+.vue-file-agent .file-preview .image-dimension,
+.vue-file-agent .file-preview .image-dimension .image-dimension-width::after {
   color: #FFF;
 }
 
