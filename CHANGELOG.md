@@ -1,6 +1,17 @@
 # Change Log
 
-### 1.2.0
+### 1.3.0 Rock Wren
+
+- New Feature 🎉 Support dropping folders (Thanks to @kevinleedrum) #17
+- Exposed `utils`, `VueFilePreview` and `FileData`
+- Allow raw file data in `VueFilePreview` component #18
+- Fixed a crossbrowser issue when creating video thumbnails (tainted canvas)
+- Vibrant update for default theme with seamless background for meta.
+- Error message style updated for both themes
+- Progress bar updated for both themes
+- Project logo added
+
+### 1.2.0 Yellow Canary
 
 - Initial Unit Tests added #3
 - New Feature 🎉 File names can be renamed with `editable` prop #5
@@ -13,9 +24,9 @@
 
 ### 1.1.2
 
-- Basic TypeScript support #4 (yanqd0)
+- Basic TypeScript support (Thanks to @yanqd0 & @seriouslag) #4 #7 #9
 
-### 1.1.1
+### 1.1.1 Humming Bird
 
 - Internal code refactor
 - Added `thumbnailSize` prop
@@ -29,4 +40,6 @@
 
 - Fixed a CSS issue that prevented the file input button to be triggered  #1
 
-1.0.4 - Initial Release
+### 1.0.4 Zebra Finch
+
+- Initial Release
