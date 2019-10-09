@@ -46,6 +46,7 @@ is_home: true
          <a href="#features" class="btn btn-outline-secondary btn-sm mb-2">Features</a>
          <a href="#installation" class="btn btn-outline-secondary btn-sm mb-2">Installation</a>
          <a href="#advanced-demo" class="btn btn-outline-secondary btn-sm mb-2">Advanced Demo</a>
+         <a href="#community" class="btn btn-outline-secondary btn-sm mb-2">Community</a>
          <a href="{{ "/docs/" | prepend: site.baseurl }}" class="btn btn-outline-secondary btn-sm mb-2">Docs & Examples</a>
 
       </p>
@@ -87,15 +88,18 @@ is_home: true
   </div>
 
 
-  <h2 class="mt-5 mb-2">Activity on
-    <a href="https://github.com/safrazik/vue-file-agent">Github</a>
+  <h2 class="mt-5 mb-2" id="community">Community</h2>
+  <div class="text-muted mb-3">Thank you for your interest and contributions.</div>
+  <div>
     <!-- Place this tag where you want the button to render. -->
     <a class="github-button" href="https://github.com/safrazik/vue-file-agent" data-size="large" data-show-count="true" aria-label="Star safrazik/vue-file-agent on GitHub">Star</a>
 
     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Full featured #vuejs file upload component with multi-file, preview, progress, drag &amp; drop support" data-url="https://safrazik.github.io/vue-file-agent" data-via="safrazik" data-related="safrazik" data-show-count="false">Tweet</a>
+  </div>
+  <h3 class="mt-5 mb-2">Activity on
+    <a href="https://github.com/safrazik/vue-file-agent">Github</a>
         <!-- <a href="https://twitter.com/safrazik?ref_src=vfa" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Follow @safrazik</a> -->
-  </h2>
-  <div class="text-muted mb-3">Thank you for your interest and contributions</div>
+  </h3>
 
   {% if site.activity_feed %}
     {% include_relative website/includes/activity-feed.html %}
