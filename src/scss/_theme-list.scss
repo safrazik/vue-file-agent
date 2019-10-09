@@ -31,9 +31,13 @@
   z-index: 2;
   top: 0;
   right: 0;
-  height: 100%;
+  // height: 100%;
   bottom: 0;
-  opacity: 0.3;
+  // opacity: 0.3;
+}
+
+.theme-list .vue-file-agent .file-progress.has-file-progress {
+  box-shadow: none;
 }
 
 .theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-name,
@@ -73,11 +77,11 @@
 }
 
 .theme-list .vue-file-agent .file-preview-wrapper.has-error .file-preview::before {
-  background: #ffc1c1;
+  // background: #ffc1c1;
 }
 
 .theme-list .vue-file-agent .file-preview-wrapper.has-error .file-name {
-  display: none;
+  // display: none;
 }
 
 
@@ -95,10 +99,12 @@
   color: #ea2626;
   font-weight: bold;
   background: transparent;
+  display: block;
 }
 
 .theme-list .vue-file-agent .file-preview-wrapper.is-deletable .file-error-wrapper {
-  right: 28px;
+  // right: 28px;
+  right: 17px;
 }
 
 .theme-list .vue-file-agent .file-preview-wrapper .file-preview .file-delete {

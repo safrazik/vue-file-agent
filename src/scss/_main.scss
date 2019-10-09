@@ -308,7 +308,8 @@
   height: 28px;
 }
 
-.vue-file-agent.no-meta .file-progress {
+// .vue-file-agent.no-meta .file-progress {
+.vue-file-agent .file-progress {
     height: 4px;
     margin-top: 1px;
     margin-left: 1px;
@@ -317,21 +318,32 @@
 
 .vue-file-agent .file-progress.has-file-progress {
   background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 2px 10px -1px rgba(0, 0, 0, 0.75);
 }
 
 .vue-file-agent .is-deletable .file-progress {
 }
 
 .vue-file-agent .file-progress-bar {
-  background: #FFEB3B;
+  background: #fac525;
   display: block;
   height: 100%;
   transition: all 100ms;
   width: 0;
 }
 
+.vue-file-agent .file-progress.file-progress-full {
+    width: 5px !important;
+    height: 5px !important;
+    right: 0 !important;
+    left: auto !important;
+    border-radius: 50%;
+    box-shadow: -1px 1px 2px 0px rgba(0, 0, 0, 0.75);
+}
+
 .vue-file-agent .file-progress-full .file-progress-bar {
-  background: #6eef1a;
+  // background: #6eef1a;
+  background: #54d500;
 }
 
 .overall-progress {
@@ -375,10 +387,20 @@
   bottom: 25px;
   z-index: 900;
   padding: 10px;
-  background: #ea2626;
-  background: rgba(234, 38, 38, 0.85);
+  // background: #ea2626;
+  // background: rgba(234, 38, 38, 0.85);
   top: 28px;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.vue-file-agent .file-error-wrapper .file-error-message {
+  background: #ea2626;
+  width: 100%;
+  height: auto;
+  color: #FFF;
+  padding: 0 5px;
 }
 
 .vue-file-agent .file-av-wrapper .file-av-action {
