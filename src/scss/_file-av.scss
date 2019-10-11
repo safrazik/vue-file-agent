@@ -1,0 +1,63 @@
+.vue-file-agent {
+
+  .file-av-wrapper {
+    .file-av-action {
+      width: 60px;
+      height: 60px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      margin-top: -30px;
+      margin-left: -30px;
+      background: transparent;
+      border-radius: 50%;
+      z-index: 800;
+      cursor: pointer;
+    }
+    .file-av-stop,
+    .file-av-play {
+      width: 50%;
+      height: 50%;
+      position: absolute;
+      left: 25%;
+      top: 25%;
+      display: none;
+    }
+    .file-av-play {
+      height: 90%;
+      width: 90%;
+      left: 5%;
+      top: 5%;
+      display: block;
+    }
+
+    .file-av-stop svg,
+    .file-av-play svg {
+      fill: #FFF;
+      width: 100%;
+      height: 100%;
+    }
+
+    video, audio {
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 799;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+    }
+
+  }
+
+  .file-is-playing-av .file-av-wrapper {
+    .file-av-stop {
+      display: block;
+    }
+    .file-av-play {
+      display: none;
+    }
+  }
+}
