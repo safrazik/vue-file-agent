@@ -15,7 +15,7 @@ High performant Vue file **upload** component with elegant and distinguishable *
 
 - Exclusively designed for Vue with performance and simplicity in mind
 - Elegant and responsive design with two official themes: grid view and list view
-- File input with drag and drop
+- File input with drag and drop with support for folders
 - Smooth Transitions
 - Multiple File Uploads
 - Max File Size, Accepted file types validation
