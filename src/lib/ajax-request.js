@@ -132,6 +132,10 @@ class AjaxRequest {
     return this.request('DELETE', url, formData, configureFn);
   }
 
+  put(url, formData, configureFn = null){
+    return this.request('PUT', url, formData, configureFn);
+  }
+
 }
 
 export default new AjaxRequest();

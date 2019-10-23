@@ -101,6 +101,12 @@ export default {
       }
       return uploader.deleteUpload(url, headers, fileData, uploadData);
     },
+    renameUpload(url, headers, fileData, uploadData){
+      if(this.filesData.length < 1){
+        this.overallProgress = 0;
+      }
+      return uploader.renameUpload(url, headers, fileData, uploadData);
+    },
     autoUpload(filesData){
       if(!this.uploadUrl){
         return;
@@ -112,6 +118,12 @@ export default {
         return Promise.resolve(false);
       }
       return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
+    },
+    autoRenameUpload(fileData){
+      if(!this.uploadUrl){
+        return Promise.resolve(false);
+      }
+      return this.renameUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
     equalFiles(file1, file2){
       return true &&
@@ -250,6 +262,11 @@ export default {
       this.$emit('delete', FileData.toRawArray([fileData])[0]);
       this.autoDeleteUpload(fileData).then((res)=> { }, (err)=> {
         this.filesData.splice(i, 1, fileData);
+      });
+    },
+    filenameChanged(fileData){
+      this.$emit('rename', FileData.toRawArray([fileData])[0]);
+      this.autoRenameUpload(fileData).then((res)=> { }, (err)=> {
       });
     },
     checkValue(){

@@ -36,6 +36,17 @@ class UploadHelper {
     });
   }
 
+  doRenameUpload(url, headers, data, configureFn){
+    if (typeof data != 'string') {
+      data = JSON.stringify(data);
+    }
+    return ajax.put(url, data, (xhr)=> {
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      this.addHeaders(xhr, headers);
+      configureFn(xhr);
+    });
+  }
+
   doUploadAxios(axios, formData, progressCallback){
     return axios.post('/upload', formData, {
       onUploadProgress: progressCallback,
@@ -118,6 +129,27 @@ class UploadHelper {
       }
       if (uploadData) {
         this.doDeleteUpload(url, headers, uploadData, (xhr)=> {
+        }).then((result)=> {
+          resolve(result);
+        }, (err)=> {
+          this.prepareUploadError(fileData, err);
+          reject(err);
+        });
+      }
+    });
+  }
+
+  renameUpload(url, headers, fileData, uploadData){
+    return new Promise((resolve, reject)=> {
+      if (fileData.xhr) {
+        fileData.xhr.abort();
+      }
+      if(uploadData === undefined){
+        uploadData = fileData.upload;
+        uploadData.customName = fileData.customName;
+      }
+      if (uploadData) {
+        this.doRenameUpload(url, headers, uploadData, (xhr)=> {
         }).then((result)=> {
           resolve(result);
         }, (err)=> {

@@ -145,8 +145,6 @@
       },
 
       editInputBlured(){
-        var value = this.$refs.input.value;
-        this.fileData.customName = value;
         var timeout = 100;
         setTimeout(()=> {
           this.$nextTick(()=> {
@@ -160,6 +158,12 @@
 
       filenameChanged(completed){
         if(completed){
+          var newValue = this.$refs.input.value;
+          var oldValue = this.fileData.customName ? this.fileData.customName : this.fileData.name(true);
+          if (newValue !== oldValue) {
+              this.fileData.customName = newValue;
+              this.$emit('rename', this.fileData);
+          }
           this.$refs.input.blur();
         }
         if(completed === false){
