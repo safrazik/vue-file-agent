@@ -39,7 +39,10 @@
         <span class="file-progress-bar" v-bind:style="{width: fileData.progress() + '%'}"></span>
       </span>
       <span class="file-icon">
-        <VueFileIcon :ext="fileData.ext()"></VueFileIcon>
+        <a v-if="linkUrl" v-bind:href="fileData.url" target="_blank" v-bind:title="fileData.customName ? fileData.customName : fileData.name">
+          <VueFileIcon :ext="fileData.ext()"></VueFileIcon>
+        </a>
+        <VueFileIcon v-else :ext="fileData.ext()"></VueFileIcon>
       </span>
     </span>
   </div>
@@ -63,6 +66,12 @@
       }
     },
     computed: {
+      linkUrl: function () {
+        return this.fileData.url &&
+          !this.fileData.isImage() &&
+          !this.fileData.isVideo() &&
+          !this.fileData.isAudio();
+      }
     },
     methods: {
       getFileData(){
