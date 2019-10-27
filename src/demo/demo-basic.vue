@@ -49,7 +49,7 @@ export default {
         {"name":"DSC_0261.jpg","lastModified":1564648335292,"sizeText":"64 KB","size":65762,"type":"image/jpeg","ext":"jpg"},
         {"name":"Important sheet.ods","lastModified":1564392646095,"sizeText":"31 KB","size":31276,"type":"","ext":"ods"},
         videoData,
-        {"name":"Collection of something.zip","lastModified":1564392646087,"sizeText":"2 MB","size":1640378,"type":"application/x-zip-compressed","ext":"zip"},
+        {"name":"Test Files.zip","lastModified":1572147928098,"sizeText":"198 KB","size":202680,"type":"application/x-zip-compressed","ext":"zip"},
         {"name":"Document 3.doc","lastModified":1564392646097,"sizeText":"109 KB","size":111303,"type":"","ext":"doc"},
       ].forEach(function(fd){
         fd.url = filesBaseUrl + fd.name;
