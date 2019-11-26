@@ -163,6 +163,7 @@
               <button type="button" class="btn btn-outline-secondary mb-2" @click="moveIndex(-1)">&lt;&lt;</button>
               <button type="button" class="btn btn-outline-secondary mb-2" @click="moveIndex(1)">&gt;&gt;</button>
               <button type="button" class="btn btn-outline-danger mb-2" @click="remove()">Remove</button>
+              <button type="button" class="btn btn-outline-success mb-2" @click="update()">Update</button>
               <button type="button" class="btn btn-outline-primary mb-2" @click="upload()">Upload</button>
         </div>
       </div>
@@ -235,7 +236,7 @@ export default {
     filesDataInvalid: function(){
       var filesDataInvalid = [];
       for(var i = 0; i < this.filesData.length; i++){
-        if(this.filesData[i].error){
+        if(this.filesData[i].error && !this.filesData[i].error.none){
           filesDataInvalid.push(this.filesData[i]);
         }
       }
@@ -277,7 +278,7 @@ export default {
       }
       filesDataNew = [];
       for(i = 0; i < this.filesData.length; i++){
-        if(!this.filesData[i].error){
+        if(!this.filesData[i].error || this.filesData[i].error.none){
           filesDataNew.push(this.filesData[i]);
         }
       }
@@ -291,6 +292,17 @@ export default {
         return;
       }
       this.filesData.splice(i, 1);
+    },
+    update: function(){
+      var fileData = this.getSelectedFileData();
+      if(!fileData){
+        return;
+      }
+      if(!(fileData.file && fileData.file instanceof File)){
+        alert('This is not a user selected file');
+        return;
+      }
+      this.$refs.vueFileAgent.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
     upload: function(){
       console.log('let au debug');
@@ -358,7 +370,7 @@ export default {
       console.log('filesSelected', filesData);
       var validFilesData = [];
       for(var i = 0; i < filesData.length; i++){
-        if(!filesData[i].error){
+        if(!filesData[i].error || filesData[i].error.none){
           validFilesData.push(filesData[i]);
         }
       }

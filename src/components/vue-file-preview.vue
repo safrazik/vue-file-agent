@@ -1,7 +1,7 @@
 <template>
   <div :class="['file-preview-wrapper-' + fileData.ext(), fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other', 'file-category-' + fileData.icon().category, {'file-is-playing-av': fileData.isPlayingAv}, {'is-deletable': deletable === true}, {'is-editable': editable === true}, {'is-edit-input-focused': isEditInputFocused}, {'has-error': fileData.error}]">
-    <div class="file-error-wrapper" v-if="fileData.error">
-      <div class="file-error-message file-error-message-client" v-if="fileData.error">
+    <div class="file-error-wrapper" v-if="fileData.error" @click="dismissError()">
+      <div class="file-error-message file-error-message-client">
         {{ fileData.getErrorMessage(errorText) }}
       </div>
     </div>
@@ -163,6 +163,7 @@
         this.fileData.customName = value;
         var newValue = this.fileData.name(true);
         if (newValue !== oldValue) {
+          this.fileData.oldCustomName = oldValue;
           this.$emit('rename', this.fileData);
         }
         var timeout = 100;
@@ -200,6 +201,10 @@
         this.isEditCancelable = true;
         this.editInputBlured();
         return true;
+      },
+
+      dismissError(){
+        this.fileData.error = false;
       },
     },
     created(){

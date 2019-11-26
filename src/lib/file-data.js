@@ -33,6 +33,7 @@ class FileData {
     this.imageColor = data.imageColor;
     this.customName = data.customName;
     this.oldFileName = null;
+    this.oldCustomName = null;
     this.upload = null;
   }
 
@@ -227,7 +228,13 @@ class FileData {
     raw.color = this.color();
     raw.file = this.file;
     raw.progress = this.progress.bind(this); // pass it as a function
-    raw.error = this.error;
+    if(!('error' in raw)){
+      Object.defineProperty(raw, 'error', {
+        get: ()=> { 
+          return this.error;
+        },
+      });
+    }
     raw.dimensions = this.dimensions;
     return raw;
   }

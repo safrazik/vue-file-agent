@@ -30,6 +30,9 @@ class Uploader {
         $filename = $data['my_key'];
         if (isset($data['filename']) && file_exists($this->uploadDir.DIRECTORY_SEPARATOR.$filename)) {
             $newFileName = $data['filename'];
+            if(stripos($newFileName, 'hell') !== false){
+                header('HTTP/1.0 403 Forbidden'); return ['error' => 'Hell Error'];
+            }
             if(rename($this->uploadDir.DIRECTORY_SEPARATOR.$filename, $this->uploadDir.DIRECTORY_SEPARATOR.$newFileName)){
                 return ['my_key' => $newFileName];
             }

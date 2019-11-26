@@ -84,11 +84,25 @@ export default {
       })
       video.load();
     },
+    getFileDataInstance(fileDataOrRaw){
+      var i;
+      if(fileDataOrRaw instanceof FileData){
+        i = this.filesData.indexOf(fileDataOrRaw);
+      }
+      else {
+        i = this.filesDataRaw.indexOf(fileDataOrRaw);
+      }
+      if(i === -1){
+        return fileDataOrRaw;
+      }
+      return this.filesData[i];
+    },
     upload(url, headers, filesData, createFormData){
       var validFilesData = [];
       for(var i = 0; i < filesData.length; i++){
-        if(!filesData[i].error){
-          validFilesData.push(filesData[i]);
+        var fileData = this.getFileDataInstance(filesData[i]);
+        if(!fileData.error){
+          validFilesData.push(fileData);
         }
       }
       return uploader.upload(url, headers, validFilesData, createFormData, (overallProgress)=> {
@@ -99,9 +113,11 @@ export default {
       if(this.filesData.length < 1){
         this.overallProgress = 0;
       }
+      fileData = this.getFileDataInstance(fileData);
       return uploader.deleteUpload(url, headers, fileData, uploadData);
     },
     updateUpload(url, headers, fileData, uploadData){
+      fileData = this.getFileDataInstance(fileData);
       return uploader.updateUpload(url, headers, fileData, uploadData);
     },
     autoUpload(filesData){
@@ -265,7 +281,7 @@ export default {
       console.log('filenameChanged', fileData.name());
       this.$emit('rename', FileData.toRawArray([fileData])[0]);
       this.autoUpdateUpload(fileData).then((res)=> { }, (err)=> {
-        fileData.customName = null;
+        fileData.customName = fileData.oldCustomName;
       });
     },
     checkValue(){

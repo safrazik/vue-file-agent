@@ -7,6 +7,7 @@
     :editable="true"
     :linkable="true"
     :theme="theme"
+    :uploadUrl="uploadUrl"
     @select="filesSelected($event)"
     @delete="fileDeleted($event)"
   >

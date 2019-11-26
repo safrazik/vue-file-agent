@@ -74,9 +74,9 @@ class UploadHelper {
     fileData.error.upload = errorText;
     if(timeout){
       setTimeout(()=> {
-        fileData.error.upload = null;
+        fileData.error.upload = false;
         if(!fileData.error.size && !fileData.error.type){
-          fileData.error = null;
+          fileData.error = false;
         }
       }, timeout);
     }
@@ -172,7 +172,7 @@ class UploadHelper {
           fileData.upload = response.data;
           resolve(response);
         }, (err)=> {
-          this.prepareUploadError(fileData, err, 2000);
+          this.prepareUploadError(fileData, err);
           reject(err);
         });
       }
