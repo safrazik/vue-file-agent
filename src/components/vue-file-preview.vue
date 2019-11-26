@@ -39,7 +39,7 @@
         <span class="file-progress-bar" v-bind:style="{width: fileData.progress() + '%'}"></span>
       </span>
       <span class="file-icon">
-        <a v-if="linkUrl" v-bind:href="fileData.url" target="_blank" v-bind:title="fileData.customName ? fileData.customName : fileData.name">
+        <a v-if="linkUrl" v-bind:href="fileData.url" target="_blank" v-bind:title="fileData.name()">
           <VueFileIcon :ext="fileData.ext()"></VueFileIcon>
         </a>
         <VueFileIcon v-else :ext="fileData.ext()"></VueFileIcon>
@@ -54,7 +54,7 @@
   import FileData from '../lib/file-data';
 
   export default {
-    props: ['value', 'deletable', 'editable', 'errorText', 'disabled'],
+    props: ['value', 'deletable', 'editable', 'linkable', 'errorText', 'disabled'],
     components: {
       VueFileIcon
     },
@@ -67,10 +67,13 @@
     },
     computed: {
       linkUrl: function () {
+        if(!this.linkable){
+          return false;
+        }
         return this.fileData.url &&
           !this.fileData.isImage() &&
-          !this.fileData.isVideo() &&
-          !this.fileData.isAudio();
+          !this.fileData.isPlayableVideo() &&
+          !this.fileData.isPlayableAudio();
       }
     },
     methods: {

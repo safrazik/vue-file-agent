@@ -5,6 +5,7 @@
     v-model="filesData"
     :deletable="true"
     :editable="true"
+    :linkable="true"
     :theme="theme"
     @select="filesSelected($event)"
     @delete="fileDeleted($event)"
