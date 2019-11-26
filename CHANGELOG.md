@@ -1,5 +1,17 @@
 # Change Log
 
+### 1.3.4
+
+- Fixed image thumbnails with wrong orientation (rotation) #28
+
+### 1.3.3
+
+- File icons can be clicked with `linkable` property (Thanks to @codeflorist) #24
+
+### 1.3.1
+
+- Major CSS (SCSS) refactoring with modular styles.
+
 ### 1.3.0 Rock Wren
 
 - New Feature 🎉 Support dropping folders (Thanks to @kevinleedrum) #17
