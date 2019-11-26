@@ -38,19 +38,23 @@ app.put('/upload', function(req, res, next) {
       if (err) throw err;
       console.log('Rename complete!', req.body.my_key, req.body.filename);
       response.my_key = req.body.filename;
+      console.log('Rename complete!', response);
+      res.json(response);
     });
   }
-  res.json(response);
 });
 
 app.delete('/upload', function(req, res, next) {
   var response = {};
   if(req.body && req.body.my_key){
     console.log('DELETE UPLOAD ' + req.body.my_key);
-    fs.unlinkSync(path.join(uploadPath, req.body.my_key));
-    response.deleted = true;
+    fs.unlink(path.join(uploadPath, req.body.my_key), (err) => {
+      if (err) throw err;
+      console.log(req.body.my_key + ' was deleted');
+      response.deleted = true;
+      res.json(response);
+    });
   }
-  res.json(response);
 });
 
 app.listen(3000, function(){

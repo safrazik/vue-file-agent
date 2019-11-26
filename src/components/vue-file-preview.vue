@@ -157,12 +157,12 @@
       },
 
       editInputBlured(){
+        this.fileData.oldFileName = this.fileData.name();
         var oldValue = this.fileData.name(true);
         var value = this.$refs.input.value;
         this.fileData.customName = value;
         var newValue = this.fileData.name(true);
         if (newValue !== oldValue) {
-          this.fileData.oldFileName = oldValue;
           this.$emit('rename', this.fileData);
         }
         var timeout = 100;
