@@ -36,6 +36,12 @@ boolean, default  `false`
 
 Whether the file name can be edited. The (modified) name can be retrieved by `fileData.name(withoutExtension = true)`
 
+### linkable
+
+boolean, default  `false`
+
+Whether the file icon is linkable (clickable/downloadable). Only available for preloaded files with urls.
+
 ### disabled
 
 boolean, default  `undefined`
