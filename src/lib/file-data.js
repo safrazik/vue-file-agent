@@ -32,6 +32,7 @@ class FileData {
     this.videoThumbnail = data.videoThumbnail;
     this.imageColor = data.imageColor;
     this.customName = data.customName;
+    this.oldFileName = null;
     this.upload = null;
   }
 

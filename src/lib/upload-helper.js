@@ -36,6 +36,17 @@ class UploadHelper {
     });
   }
 
+  doUpdateUpload(url, headers, data, configureFn){
+    if (typeof data != 'string') {
+      data = JSON.stringify(data);
+    }
+    return ajax.put(url, data, (xhr)=> {
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      this.addHeaders(xhr, headers);
+      configureFn(xhr);
+    });
+  }
+
   doUploadAxios(axios, formData, progressCallback){
     return axios.post('/upload', formData, {
       onUploadProgress: progressCallback,
@@ -47,7 +58,7 @@ class UploadHelper {
     });
   }
 
-  prepareUploadError(fileData, err){
+  prepareUploadError(fileData, err, timeout){
     var errorText = err.message;
     if(err.response && err.response.data){
       try {
@@ -61,6 +72,14 @@ class UploadHelper {
       fileData.error = {};
     }
     fileData.error.upload = errorText;
+    if(timeout){
+      setTimeout(()=> {
+        fileData.error.upload = null;
+        if(!fileData.error.size && !fileData.error.type){
+          fileData.error = null;
+        }
+      }, timeout);
+    }
   }
 
   upload(url, headers, filesData, createFormData, progressFn, configureFn){
@@ -83,6 +102,7 @@ class UploadHelper {
       else {
         formData = new FormData();
         formData.append('file', fileData.file);
+        formData.append('filename', fileData.name());
       }
       (function(fileData){
         var promise = self.doUpload(url, headers, formData, function(progressEvent) {
@@ -99,6 +119,10 @@ class UploadHelper {
           delete fileData.xhr;
           fileData.upload = response.data;
           fileData.progress(100);
+          if(fileData.xhrQueue){
+            fileData.xhrQueue();
+            delete fileData.xhrQueue;
+          }
         } /* */ , function(err){
           self.prepareUploadError(fileData, err);
         } /* */);
@@ -122,6 +146,33 @@ class UploadHelper {
           resolve(result);
         }, (err)=> {
           this.prepareUploadError(fileData, err);
+          reject(err);
+        });
+      }
+    });
+  }
+
+  updateUpload(url, headers, fileData, uploadData){
+    return new Promise((resolve, reject)=> {
+      if (fileData.xhr) {
+        // probably updated while being uploaded.
+        fileData.xhrQueue = ()=> {
+          this.updateUpload(url, headers, fileData, uploadData);
+        };
+        return resolve();
+      }
+      if(uploadData === undefined){
+        uploadData = fileData.upload || {};
+        uploadData.old_filename = fileData.oldFileName;
+        uploadData.filename = fileData.name();
+      }
+      if (uploadData) {
+        this.doUpdateUpload(url, headers, uploadData, (xhr)=> {
+        }).then((response)=> {
+          fileData.upload = response.data;
+          resolve(response);
+        }, (err)=> {
+          this.prepareUploadError(fileData, err, 2000);
           reject(err);
         });
       }

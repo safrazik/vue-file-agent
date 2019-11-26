@@ -21,3 +21,5 @@ window.getFilesDataInitial = function(){
 
   return filesData;
 }
+
+window.uploadUrl = localStorage.getItem('uploadUrl') || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3';

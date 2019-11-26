@@ -27,14 +27,27 @@ app.use(express.json());
  
 app.post('/upload', upload.single('file'), function(req, res, next) {
   console.log('UPLOAD ' + req.file.filename);
-  res.json({my_whatever_key_from_server: req.file.filename});
+  res.json({my_key: req.file.filename});  // you can send any arbitrary data to client which will be saved in fileData.upload key in client, and will be sent back to server at update/delete request
+});
+
+app.put('/upload', function(req, res, next) {
+  var response = {};
+  if(req.body && req.body.my_key && req.body.filename){
+    console.log('UPDATE UPLOAD ' + req.body.my_key);
+    fs.rename(path.join(uploadPath, req.body.my_key), path.join(uploadPath, req.body.filename), (err) => {
+      if (err) throw err;
+      console.log('Rename complete!', req.body.my_key, req.body.filename);
+      response.my_key = req.body.filename;
+    });
+  }
+  res.json(response);
 });
 
 app.delete('/upload', function(req, res, next) {
   var response = {};
-  if(req.body && req.body.my_whatever_key_from_server){
-    console.log('DELETE UPLOAD ' + req.body.my_whatever_key_from_server);
-    fs.unlinkSync(path.join(uploadPath, req.body.my_whatever_key_from_server));
+  if(req.body && req.body.my_key){
+    console.log('DELETE UPLOAD ' + req.body.my_key);
+    fs.unlinkSync(path.join(uploadPath, req.body.my_key));
     response.deleted = true;
   }
   res.json(response);

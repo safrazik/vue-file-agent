@@ -14,6 +14,7 @@
       <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
         <VueFilePreview 
           :value="fileData" :index="index" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
+           @rename="filenameChanged($event)"
            :key="fileData.id" class="file-preview-wrapper grid-box-item grid-block"></VueFilePreview>
       </slot>
     </template>

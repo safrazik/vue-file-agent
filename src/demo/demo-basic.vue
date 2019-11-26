@@ -33,7 +33,7 @@ export default {
       theme: 'default',
       lastProgress: 0,
       filesData: this.getFilesDataInitial(),
-      uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
+      uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
     };
   },
   methods: {

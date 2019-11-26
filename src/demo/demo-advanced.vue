@@ -111,6 +111,7 @@
         :maxSize="valMaxSize"
         :maxFiles="valMaxFiles"
         :theme="theme"
+        :uploadUrl="uploadUrl"
         @select="filesSelected($event)"
         @delete="fileDeleted($event)"
         v-model="filesData"
@@ -210,7 +211,7 @@ export default {
     return {
       filesData: this.getFilesDataInitial(),
       filesDataForUpload: [],
-      uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
+      uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
       uploadHeaders: {'X-Test-Header': 'vue-file-agent'},
       meta: true,
       multiple: true,
