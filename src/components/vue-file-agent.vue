@@ -49,8 +49,7 @@
 <script>
   import mixin from './vue-file-agent-mixin';
 
-import { ContainerMixin, ElementMixin } from 'vue-slicksort';
   export default {
-    mixins: [mixin/*, ContainerMixin*/]
+    mixins: [mixin]
   };
 </script>
