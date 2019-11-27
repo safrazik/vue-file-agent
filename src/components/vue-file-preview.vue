@@ -53,7 +53,9 @@
   import VueFileIcon from './vue-file-icon.vue';
   import FileData from '../lib/file-data';
 
+import { ContainerMixin, ElementMixin } from 'vue-slicksort';
   export default {
+    mixins: [/*ElementMixin*/],
     props: ['value', 'deletable', 'editable', 'linkable', 'errorText', 'disabled'],
     components: {
       VueFileIcon

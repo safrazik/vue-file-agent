@@ -22,7 +22,7 @@
 }
 
 .grid-box-item {
-  transition: all 600ms;
+  transition-duration: 600ms;
 }
 
 .grid-box-enter, .grid-box-leave-to  {
@@ -34,3 +34,16 @@
 .grid-box-leave-active {
   position: absolute !important;
 }
+
+.is-sorting-active .file-preview-wrapper {
+  opacity: 0.75;
+}
+
+.is-sorting .file-preview-wrapper,
+.is-sorting .active-sorting-item {
+  transition-duration: 0s;
+}
+
+.is-sorting-active .active-sorting-item {
+  opacity: 1;
+} 

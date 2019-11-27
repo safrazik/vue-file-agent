@@ -4,14 +4,15 @@ import App from './App.vue'
 
 import VueFileAgentPlugin from './index';
 
-// import uploader from './lib/upload-helper';
+import { SlickList, SlickItem } from 'vue-slicksort';
+
 
 Vue.use(VueFileAgentPlugin);
 Vue.config.productionTip = false
 
-// Vue.component('vue-file-agent', VueFileAgentPlugin.VueFileAgent);
+Vue.component('vfa-sortable-list', SlickList);
+Vue.component('vfa-sortable-item', SlickItem);
 
-console.log(window.getFilesDataInitial());
 new Vue({
   render: h => h(App),
 }).$mount('#app')

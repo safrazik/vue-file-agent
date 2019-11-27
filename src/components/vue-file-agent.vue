@@ -1,5 +1,5 @@
 <template>
-  <div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="[{'is-drag-over': isDragging, 'is-disabled': disabled === true}, 'theme-' + theme]">
+  <div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="['is-sortable-' + (sortable === true ? 'enabled' : 'disabled'), {'is-sorting': isSorting, 'is-sorting-active': isSortingActive, 'is-drag-over': isDragging, 'is-disabled': disabled === true}, 'theme-' + theme]" :id="'vfa-' + uniqueId">
     <slot name="before-outer"></slot>
   <div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-bind:class="{'is-drag-overx': isDragging, 'is-compact': !!compact, 'is-single': !hasMultiple, 'has-multiple': hasMultiple, 'no-meta': meta === false}">
     <slot name="before-inner"></slot>
@@ -9,15 +9,17 @@
       <div class="overall-progress-left" v-bind:style="{width: (100 - overallProgress) + '%'}"></div>
     </div>
 
+  <component :is="sortable === true ? 'vfa-sortable-list': 'VueFileList'" v-model="filesData" :axis="theme == 'list' ? 'y' : 'xy'" :appendTo="'#vfa-' + uniqueId + ' .vue-file-agent'" :transitionDuration="transitionDuration" :pressDelay="200" @sort-start="sortStart()" @sort-end="sortEnd($event)" :helperClass="'active-sorting-item'">
   <transition-group name="grid-box" tag="div" class="">
-    <template v-for="(fileData, index) in filesData">
-      <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
-        <VueFilePreview 
-          :value="fileData" :index="index" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
-           @rename="filenameChanged($event)"
-           :key="fileData.id" class="file-preview-wrapper grid-box-item grid-block"></VueFilePreview>
-      </slot>
-    </template>
+    <!-- <template v-for="(fileData, index) in filesData"> -->
+      <component :is="sortable === true ? 'vfa-sortable-item' : 'VueFileListItem'" v-for="(fileData, index) in filesData" class="file-preview-wrapper grid-box-item grid-block" :index="index" :key="fileData.id">
+        <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
+          <VueFilePreview 
+            :value="fileData" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
+             @rename="filenameChanged($event)" class=""></VueFilePreview>
+        </slot>
+      </component>
+    <!-- </template> -->
     <template v-if="canAddMore">
       <slot name="file-preview-new">
         <div key="new" class="file-preview-wrapper grid-box-item grid-block file-preview-new">
@@ -33,6 +35,7 @@
       </slot>
     </template>
   </transition-group>
+  </component>
     <input title="" :disabled="disabled === true || (hasMultiple && !canAddMore)" ref="fileInput" type="file" v-bind:multiple="hasMultiple" class="file-input" v-on:change="filesChanged" v-bind:accept="accept || '*'">
 
     <slot name="after-inner"></slot>
@@ -46,7 +49,8 @@
 <script>
   import mixin from './vue-file-agent-mixin';
 
+import { ContainerMixin, ElementMixin } from 'vue-slicksort';
   export default {
-    mixins: [mixin]
+    mixins: [mixin/*, ContainerMixin*/]
   };
 </script>

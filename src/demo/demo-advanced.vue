@@ -76,6 +76,12 @@
         </div>
         <div class="col-6 col-md-12 px-2">
           <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-sortable" v-model="sortable">
+            <label class="custom-control-label" for="advanced-demo-sortable">:sortable</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
             <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled">
             <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
           </div>
@@ -105,6 +111,7 @@
         :deletable="deletable"
         :editable="editable"
         :linkable="linkable"
+        :sortable="sortable"
         :disabled="disabled"
         :compact="compact"
         :accept="valAccept"
@@ -113,6 +120,7 @@
         :theme="theme"
         @select="filesSelected($event)"
         @delete="fileDeleted($event)"
+        @sort="onSort($event)"
         v-model="filesData"
       ></VueFileAgent>
     </div>
@@ -218,6 +226,7 @@ export default {
       deletable: true,
       editable: true,
       linkable: true,
+      sortable: false,
       disabled: false,
       compact: false,
       theme: 'list',
@@ -385,7 +394,16 @@ export default {
         this.deleteUploadedFile(fileData);
       }
     },
+    onSort(event){
+      console.log('sorted', event.oldIndex, event.newIndex, this.filesData.map(function(fd){
+        return typeof fd.name == 'function' ? fd.name() : fd.name;
+      }));
+    }
 
+  },
+  watch: {
+    filesData(){
+    }
   }
 }
 

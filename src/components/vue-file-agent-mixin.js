@@ -1,23 +1,31 @@
 import utils from '../lib/utils';
 import VueFileIcon from './vue-file-icon.vue';
 import VueFilePreview from './vue-file-preview.vue';
+import VueFileList from './vue-file-list.vue';
+import VueFileListItem from './vue-file-list-item.vue';
 import FileData from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 
 var dragCounter = 0;
 
 export default {
-  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'editable', 'linkable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme', 'disabled'],
+  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'editable', 'linkable', 'sortable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme', 'disabled'],
   components: {
     VueFileIcon,
-    VueFilePreview
+    VueFilePreview,
+    VueFileList,
+    VueFileListItem
   },
   data(){
     return {
       filesData: [],
       filesDataRaw: [],
       isDragging: false,
+      isSorting: false,
+      isSortingActive: false,
+      transitionDuration: 300,
       overallProgress: 0,
+      uniqueId: null,
     }
   },
   computed: {
@@ -314,8 +322,35 @@ export default {
       });
 
     },
+    sortStart(){
+      if(this.sortTimeout){
+        clearTimeout(this.sortTimeout);
+      }
+      this.isSorting = true;
+      this.isSortingActive = true;
+    },
+    sortEnd(sortData){
+      this.isSortingActive = false;
+      if(this.sortTimeout){
+        clearTimeout(this.sortTimeout);
+      }
+      this.sortTimeout = setTimeout(()=> {
+        this.isSorting = false;
+      }, this.transitionDuration + 100);
+      if(sortData.oldIndex != sortData.newIndex){
+        this.filesDataRaw = utils.arrayMove(this.filesDataRaw, sortData.oldIndex, sortData.newIndex);
+        this.$nextTick(()=> {
+          this.$emit('input', this.filesDataRaw);
+          this.$emit('sort', {
+            oldIndex: sortData.oldIndex,
+            newIndex: sortData.newIndex,
+          });
+        });
+      }
+    },
   },
   created(){
+    this.uniqueId = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
     this.checkValue();
   },
   watch: {

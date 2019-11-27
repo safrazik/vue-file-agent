@@ -1,6 +1,24 @@
 <template>
 <!-- {% raw %} -->
 <div>
+
+  <div class="row">
+    <div class="col mb-3 xfloat-left">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="basic-demo-sortable-toggle" v-model="sortable">
+        <label class="custom-control-label" for="basic-demo-sortable-toggle">Drag & drop sortable</label>
+      </div>
+    </div>
+    <div class="col mb-3 text-right">
+      Switch theme to
+      <!-- <a href="#" @click.prevent="switchTheme()">Switch</a> -->
+      <button class="btn btn-sm btn-outline-warning" @click="switchTheme()">
+        <span v-if="theme != 'list'">List View</span>
+        <span v-if="theme == 'list'">Grid View</span>
+      </button>
+    </div>
+  </div>
+
   <VueFileAgent
     v-model="filesData"
     :deletable="true"
@@ -10,18 +28,12 @@
     :uploadUrl="uploadUrl"
     @select="filesSelected($event)"
     @delete="fileDeleted($event)"
+    :sortable="sortable"
   >
-    <template v-slot:before-outer>
-      <div class="mb-3 text-right">
-        Switch theme to
-        <!-- <a href="#" @click.prevent="switchTheme()">Switch</a> -->
-        <button class="btn btn-sm btn-outline-warning" @click="switchTheme()">
-          <span v-if="theme != 'list'">List View</span>
-          <span v-if="theme == 'list'">Grid View</span>
-        </button>
-      </div>
-    </template >
   </VueFileAgent>
+
+  <div ref="screenDetector" style="height: 0; width: 0;" class="d-none d-sm-block"></div>
+
 </div>
 <!-- {% endraw %} -->
 </template>
@@ -35,6 +47,7 @@ export default {
       lastProgress: 0,
       filesData: this.getFilesDataInitial(),
       uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
+      sortable: true,
     };
   },
   methods: {
@@ -66,8 +79,11 @@ export default {
     },
   },
   mounted: function(){
-    // console.log('bali this.filesData', this.filesData);
-    // this.demonstrate();
+    var style = window.getComputedStyle(this.$refs.screenDetector);
+    if(style && style.display == 'none'){
+      // propbably mobile
+      this.theme = 'list';
+    }
   }
 }
 
