@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.4.0
+
+- New Feature 🎉 Drag sortable support with `sortable` prop (courtesy of vue-slicksort by @Jexordexan) #20
+
 ### 1.3.5
 
 - Fixed removal of same file selection in single mode #29
