@@ -1,5 +1,13 @@
 # Change Log
 
+### 1.3.5
+
+- Fixed removal of same file selection in single mode #29
+- Improved progress UI with `full` (100% uploaded) and `done` (server returned a response) status.
+- Improved upload error handling.
+- Added support to dismiss error messages by clicking on them.
+- Added support for update/rename upload with `PUT` request, with updated server examples. (Thanks to @codeflorist) #23
+
 ### 1.3.4
 
 - Fixed image thumbnails with wrong orientation (rotation) #28
