@@ -31,7 +31,11 @@
       box-shadow: 0px 2px 10px -1px rgba(0, 0, 0, 0.75);
     }
 
-    &.file-progress-full {
+    &.file-progress-full .file-progress-bar {
+      background: #54d500;
+    }
+
+    &.file-progress-done {
         width: 5px !important;
         height: 5px !important;
         right: 0 !important;

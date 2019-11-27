@@ -111,7 +111,6 @@
         :maxSize="valMaxSize"
         :maxFiles="valMaxFiles"
         :theme="theme"
-        :uploadUrl="uploadUrl"
         @select="filesSelected($event)"
         @delete="fileDeleted($event)"
         v-model="filesData"
@@ -236,7 +235,7 @@ export default {
     filesDataInvalid: function(){
       var filesDataInvalid = [];
       for(var i = 0; i < this.filesData.length; i++){
-        if(this.filesData[i].error && !this.filesData[i].error.none){
+        if(this.filesData[i].error){
           filesDataInvalid.push(this.filesData[i]);
         }
       }
@@ -278,7 +277,7 @@ export default {
       }
       filesDataNew = [];
       for(i = 0; i < this.filesData.length; i++){
-        if(!this.filesData[i].error || this.filesData[i].error.none){
+        if(!this.filesData[i].error){
           filesDataNew.push(this.filesData[i]);
         }
       }
@@ -370,7 +369,7 @@ export default {
       console.log('filesSelected', filesData);
       var validFilesData = [];
       for(var i = 0; i < filesData.length; i++){
-        if(!filesData[i].error || filesData[i].error.none){
+        if(!filesData[i].error){
           validFilesData.push(filesData[i]);
         }
       }
