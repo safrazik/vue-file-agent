@@ -164,7 +164,7 @@ export default {
       var filesData = [];
       var filesFiltered = [];
       for(let i = 0; i < files.length; i++){
-        if(this.isFileAddedAlready(files[i])){
+        if(this.hasMultiple && this.isFileAddedAlready(files[i])){
           continue;
         }
         filesFiltered.push(files[i]);
