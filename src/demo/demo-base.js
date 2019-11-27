@@ -23,3 +23,8 @@ window.getFilesDataInitial = function(){
 }
 
 window.uploadUrl = localStorage.getItem('uploadUrl') || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3';
+
+if(window.VueSlicksort && window.Vue){
+  window.Vue.component('vfa-sortable-list', window.VueSlicksort.SlickList);
+  window.Vue.component('vfa-sortable-item', window.VueSlicksort.SlickItem);
+}

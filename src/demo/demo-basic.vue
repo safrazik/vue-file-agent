@@ -3,7 +3,7 @@
 <div>
 
   <div class="row">
-    <div class="col mb-3 xfloat-left">
+    <div class="col mb-3 text-left">
       <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="basic-demo-sortable-toggle" v-model="sortable">
         <label class="custom-control-label" for="basic-demo-sortable-toggle">Drag & drop sortable</label>

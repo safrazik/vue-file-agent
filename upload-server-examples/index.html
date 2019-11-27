@@ -4,9 +4,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="Full featured drag & drop enabled Vue file upload component with previews and upload progress">
     <meta name="author" content="Safraz Razik">
     <meta name="generator" content="Jekyll v3.8.6">
+
+
+    <meta name="twitter:image:src" content="https://safrazik.github.io/vue-file-agent/website/assets/cover.png" />
+    <meta name="twitter:site" content="@safrazik" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vue File Agent" />
+    <meta name="twitter:description" content="Full featured drag & drop enabled Vue file upload component with previews and upload progress" />
+
+    <meta property="og:image" content="https://safrazik.github.io/vue-file-agent/website/assets/cover.png" />
+    <meta property="og:site_name" content="GitHub" />
+    <meta property="og:type" content="object" />
+    <meta property="og:title" content="Vue File Agent" />
+    <meta property="og:url" content="https://safrazik.github.io/vue-file-agent" />
+    <meta property="og:description" content="Full featured drag &amp; drop enabled Vue file upload component with previews and upload progress - safrazik/vue-file-agent" />
 
     <title>Vue File Agent</title>
 
@@ -18,9 +32,19 @@
     
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/styles.css">
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/github-markdown.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.2.0-beta.0/dist/vue-file-agent.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.3.6/dist/vue-file-agent.css">
     
 
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146428731-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146428731-2');
+    </script>
     
 
 
@@ -29,34 +53,74 @@
 </head>
 <body class="w-100 h-100" style="padding-top: 3.5rem;">
 
-<nav class="navbar navbar-expand fixed-top navbar-dark bg-dark px-0" style="background: rgba(52, 58, 64, 0.95) !important; height: 3.5rem;">
-  <div class="container" style="padding-left: 15px;
-    padding-right: 15px;">
-    <a class="navbar-brand" href="http://safrazik.github.io/vue-file-agent/">Vue File Agent</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="http://safrazik.github.io/vue-file-agent/docs/">Docs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://github.com/safrazik/vue-file-agent">GitHub</a>
-        </li>
-      </ul>
+
+  <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark px-0" style="background: rgba(52, 58, 64, 0.95) !important; height: 3.5rem;">
+    <div class="container" style="padding-left: 15px;
+      padding-right: 15px;">
+      <a class="navbar-brand" href="http://safrazik.github.io/vue-file-agent/">
+        <img style="width: 40px; height: 40px; border-radius: 50%;" src="http://safrazik.github.io/vue-file-agent/website/assets/logo.png">
+        Vue File Agent
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="http://safrazik.github.io/vue-file-agent/docs/">Docs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/safrazik/vue-file-agent">GitHub</a>
+          </li>
+        </ul>
+      </div>
+      <!-- <small class="navbar-text">Every file deserves to be treated equally</small> -->
     </div>
-    <!-- <small class="navbar-text">Every file deserves to be treated equally</small> -->
-  </div>
-</nav>
+  </nav>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.2.0-beta.0/dist/vue-file-agent.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.3.6/dist/vue-file-agent.umd.js"></script>
   
-  <div id="app">
+
+  <script src="https://unpkg.com/vue-slicksort@latest/dist/vue-slicksort.min.js"></script>
+
+  <script type="text/javascript">
+  window.getFilesDataInitial = function(){
+  var filesBaseUrl = window.location.host == 'localhost:4000' ? '/vue-file-agent/website/assets/files/' : 'https://safrazik.github.io/vue-file-agent/website/assets/files/';
+
+  var videoData = {"name":"Cat Licking Its Paw.mp4","lastModified":1565241222998,"sizeText":"433 KB","size":443767,"type":"video/mp4","ext":"mp4", "dimensions": {"width": 640, "height": 360}};
+  videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';
+  videoData.imageColor = [66, 62, 45];
+
+  var filesData = [];
+  [
+    {"name":"sample.pdf","lastModified":1565232623243,"sizeText":"3 KB","size":3028,"type":"application/pdf","ext":"pdf"},
+    {"name":"DSC_0261.jpg","lastModified":1564648335292,"sizeText":"64 KB","size":65762,"type":"image/jpeg","ext":"jpg"},
+    {"name":"Important sheet.ods","lastModified":1564392646095,"sizeText":"31 KB","size":31276,"type":"","ext":"ods"},
+    videoData,
+    {"name":"Test Files.zip","lastModified":1572147928098,"sizeText":"198 KB","size":202680,"type":"application/x-zip-compressed","ext":"zip"},
+    {"name":"Document 3.docx","lastModified":1564392646097,"sizeText":"109 KB","size":111303,"type":"","ext":"docx"},
+  ].forEach(function(fd){
+    fd.url = filesBaseUrl + fd.name;
+    // fd.progress = 10;
+    filesData.push(fd);
+  });
+
+  return filesData;
+}
+
+window.uploadUrl = localStorage.getItem('uploadUrl') || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3';
+
+if(window.VueSlicksort && window.Vue){
+  window.Vue.component('vfa-sortable-list', window.VueSlicksort.SlickList);
+  window.Vue.component('vfa-sortable-item', window.VueSlicksort.SlickItem);
+}
+</script>
+<div id="app">
   <div class="container">
     <div id="docs" name="docs"></div>
     <div class="markdown-body" style="margin: 40px 0;">
@@ -173,6 +237,18 @@ node upload-server.js
         </div>
         <div class="col-6 col-md-12 px-2">
           <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-linkable" v-model="linkable">
+            <label class="custom-control-label" for="advanced-demo-linkable">:linkable</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-sortable" v-model="sortable">
+            <label class="custom-control-label" for="advanced-demo-sortable">:sortable (<a href="https://safrazik.github.io/vue-file-agent/docs/#sortable">Docs</a>)</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
             <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled">
             <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
           </div>
@@ -201,6 +277,8 @@ node upload-server.js
         :meta="meta"
         :deletable="deletable"
         :editable="editable"
+        :linkable="linkable"
+        :sortable="sortable"
         :disabled="disabled"
         :compact="compact"
         :accept="valAccept"
@@ -209,6 +287,7 @@ node upload-server.js
         :theme="theme"
         @select="filesSelected($event)"
         @delete="fileDeleted($event)"
+        @sort="onSort($event)"
         v-model="filesData"
       ></VueFileAgent>
     </div>
@@ -258,6 +337,7 @@ node upload-server.js
               <button type="button" class="btn btn-outline-secondary mb-2" @click="moveIndex(-1)">&lt;&lt;</button>
               <button type="button" class="btn btn-outline-secondary mb-2" @click="moveIndex(1)">&gt;&gt;</button>
               <button type="button" class="btn btn-outline-danger mb-2" @click="remove()">Remove</button>
+              <button type="button" class="btn btn-outline-success mb-2" @click="update()">Update</button>
               <button type="button" class="btn btn-outline-primary mb-2" @click="upload()">Upload</button>
         </div>
       </div>
@@ -308,12 +388,14 @@ var component = { template: '#demo_advanced-template',
     return {
       filesData: this.getFilesDataInitial(),
       filesDataForUpload: [],
-      uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
+      uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
       uploadHeaders: {'X-Test-Header': 'vue-file-agent'},
       meta: true,
       multiple: true,
       deletable: true,
       editable: true,
+      linkable: true,
+      sortable: false,
       disabled: false,
       compact: false,
       theme: 'list',
@@ -340,27 +422,7 @@ var component = { template: '#demo_advanced-template',
   },
   methods: {
     getFilesDataInitial: function(){
-      var filesBaseUrl = window.location.host == 'localhost:4000' ? '/vue-file-agent/website/assets/files/' : 'https://safrazik.github.io/vue-file-agent/website/assets/files/';
-
-      var videoData = {"name":"Cat Licking Its Paw.mp4","lastModified":1565241222998,"sizeText":"433 KB","size":443767,"type":"video/mp4","ext":"mp4", "dimensions": {"width": 640, "height": 360}};
-      videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';
-      videoData.imageColor = [66, 62, 45];
-
-      var filesData = [];
-      [
-        {"name":"sample.pdf","lastModified":1565232623243,"sizeText":"3 KB","size":3028,"type":"application/pdf","ext":"pdf"},
-        {"name":"DSC_0261.jpg","lastModified":1564648335292,"sizeText":"64 KB","size":65762,"type":"image/jpeg","ext":"jpg"},
-        {"name":"Important sheet.ods","lastModified":1564392646095,"sizeText":"31 KB","size":31276,"type":"","ext":"ods"},
-        videoData,
-        {"name":"Collection of something.zip","lastModified":1564392646087,"sizeText":"2 MB","size":1640378,"type":"application/x-zip-compressed","ext":"zip"},
-        {"name":"Document 3.doc","lastModified":1564392646097,"sizeText":"109 KB","size":111303,"type":"","ext":"doc"},
-      ].forEach(function(fd){
-        fd.url = filesBaseUrl + fd.name;
-        // fd.progress = 10;
-        filesData.push(fd);
-      });
-
-      return filesData;
+      return window.getFilesDataInitial();
     },
     getSelectedFileData: function(){
       var i = this.selectedIdx;
@@ -375,7 +437,7 @@ var component = { template: '#demo_advanced-template',
       this.filesData = [];
       this.filesDataForUpload = [];
     },
-    setProgress(){
+    setProgress: function(){
       var fileData = this.getSelectedFileData();
       if(!fileData){
         return;
@@ -407,6 +469,17 @@ var component = { template: '#demo_advanced-template',
         return;
       }
       this.filesData.splice(i, 1);
+    },
+    update: function(){
+      var fileData = this.getSelectedFileData();
+      if(!fileData){
+        return;
+      }
+      if(!(fileData.file && fileData.file instanceof File)){
+        alert('This is not a user selected file');
+        return;
+      }
+      this.$refs.vueFileAgent.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
     upload: function(){
       console.log('let au debug');
@@ -490,7 +563,16 @@ var component = { template: '#demo_advanced-template',
         this.deleteUploadedFile(fileData);
       }
     },
+    onSort(event){
+      console.log('sorted', event.oldIndex, event.newIndex, this.filesData.map(function(fd){
+        return typeof fd.name == 'function' ? fd.name() : fd.name;
+      }));
+    }
 
+  },
+  watch: {
+    filesData(){
+    }
   }
 }
 
@@ -505,24 +587,39 @@ var component = { template: '#demo_advanced-template',
 
 <style type="text/css">
   #demo_advanced-wrapper blockquote {
-    background: #BBB;
-    color: #FFF;
+    background: #EEE;
+    color: #000;
+    font-weight: bold;
     margin-bottom: 0;
+    padding: 2px 10px;
+  }
+  #demo_advanced-wrapper .codepen-link {
+    float: right;
   }
   #demo_advanced-wrapper .highlight pre {
     max-height: 300px;
   }
 </style>
     </div>
-  </div> 
+  </div>
+</div>
+
   <div class="bg-secondary text-white mt-5 py-3">
     <div class="container">
+      <div class="text-center mb-2">
+        Made with love from
+        <a class="text-white" href="https://twitter.com/safrazik" target="_blank"><strong>Safraz Razik</strong></a>
+        <br>
+      </div>
       <div class="text-center">
-        Made with love from <a class="text-white" href="https://twitter.com/safrazik" target="_blank">@safrazik</a>
+        <a href="https://twitter.com/safrazik?ref_src=vfa" class="twitter-follow-button" data-show-count="false" data-size="large">Follow on Twitter</a>
       </div>
     </div>
   </div>
-</div>
+
+
+
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 </body>
 </html>

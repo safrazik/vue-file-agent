@@ -42,6 +42,36 @@ boolean, default  `false`
 
 Whether the file icon is linkable (clickable/downloadable). Only available for preloaded files with urls.
 
+### sortable
+
+boolean, default  `false`
+
+Whether the files can be drag sorted. You need to install [vue-slicksort](https://github.com/Jexordexan/vue-slicksort) for this to work. And you have to define two components `vfa-sortable-list` and `vfa-sortable-item`.
+
+with npm:
+
+```javascript
+// npm install vue-slicksort --save
+
+import { SlickList, SlickItem } from 'vue-slicksort';
+
+Vue.component('vfa-sortable-list', SlickList);
+Vue.component('vfa-sortable-item', SlickItem);
+```
+
+with script tag:
+
+```html
+<script src="https://unpkg.com/vue-slicksort@latest/dist/vue-slicksort.min.js"></script>
+<script>
+if(window.VueSlicksort){
+  Vue.component('vfa-sortable-list', window.VueSlicksort.SlickList);
+  Vue.component('vfa-sortable-item', window.VueSlicksort.SlickItem);
+}
+</script>
+```
+
+
 ### disabled
 
 boolean, default  `undefined`

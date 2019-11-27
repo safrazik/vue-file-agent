@@ -77,7 +77,7 @@
         <div class="col-6 col-md-12 px-2">
           <div class="custom-control custom-checkbox mt-1">
             <input type="checkbox" class="custom-control-input" id="advanced-demo-sortable" v-model="sortable">
-            <label class="custom-control-label" for="advanced-demo-sortable">:sortable</label>
+            <label class="custom-control-label" for="advanced-demo-sortable">:sortable (<a href="https://safrazik.github.io/vue-file-agent/docs/#sortable">Docs</a>)</label>
           </div>
         </div>
         <div class="col-6 col-md-12 px-2">
