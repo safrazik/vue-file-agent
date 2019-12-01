@@ -1,6 +1,6 @@
 # Change Log
 
-### 1.4.0
+### 1.4.0 Spotted Pardalote
 
 - New Feature 🎉 Drag sortable support with `sortable` prop (courtesy of vue-slicksort by @Jexordexan) #20
 
