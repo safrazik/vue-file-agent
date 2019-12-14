@@ -31,11 +31,11 @@
     {% if layout.external_urls %}
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/styles.css">
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/github-markdown.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.4.0/dist/vue-file-agent.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.4.1/dist/vue-file-agent.css">
     {% else %}
     <link rel="stylesheet" href="{{ "/website/assets/styles.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/website/assets/github-markdown.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/vue-file-agent.css?v=1.4.0" | prepend: site.dist_baseurl }}">
+    <link rel="stylesheet" href="{{ "/vue-file-agent.css?v=1.4.1" | prepend: site.dist_baseurl }}">
     {% endif %}
 
     {% if site.google_analytics %}
@@ -88,9 +88,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js" integrity="sha256-qq7wfY6gQJldAy+TGLT7UF/TqnfV4XFzGF/RzrVXq24=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   {% if layout.external_urls %}
-  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.4.0/dist/vue-file-agent.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.4.1/dist/vue-file-agent.umd.js"></script>
   {% else %}
-  <script src='{{ "/vue-file-agent.umd.js?v=1.4.0" | prepend: site.dist_baseurl }}'></script>
+  <script src='{{ "/vue-file-agent.umd.js?v=1.4.1" | prepend: site.dist_baseurl }}'></script>
   {% endif %}
 
   <script src="https://unpkg.com/vue-slicksort@latest/dist/vue-slicksort.min.js"></script>
