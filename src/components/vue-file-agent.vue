@@ -13,11 +13,11 @@
   <transition-group name="grid-box" tag="div" class="">
     <!-- <template v-for="(fileData, index) in filesData"> -->
       <component :is="isSortable ? 'vfa-sortable-item' : 'VueFileListItem'" v-for="(fileData, index) in filesData" class="file-preview-wrapper grid-box-item grid-block" :index="index" :key="fileData.id">
-        <slot name="sortable-handler" v-if="sortable === 'handle'">
-          <span v-vfa-sortable-handle class="file-sortable-handle">
+        <span v-vfa-sortable-handle class="file-sortable-handle" v-if="sortable === 'handle'">
+          <slot name="sortable-handler">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-          </span>
-        </slot>
+          </slot>
+        </span>
         <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
           <VueFilePreview 
             :value="fileData" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
