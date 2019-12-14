@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.4.1
+
+- `sortable` prop improved to support `handle` and `hold` values
+
 ### 1.4.0 Spotted Pardalote
 
 - New Feature 🎉 Drag sortable support with `sortable` prop (courtesy of vue-slicksort by @Jexordexan) #20
