@@ -44,7 +44,7 @@ Whether the file icon is linkable (clickable/downloadable). Only available for p
 
 ### sortable
 
-boolean, default  `false`
+boolean or string (`true` - drag to sort, `'hold'` - hold and drag to sort, `'handle'` - drag the handle to sort), default  `false`
 
 Whether the files can be drag sorted. You need to install [vue-slicksort](https://github.com/Jexordexan/vue-slicksort) for this to work. And you have to define two components `vfa-sortable-list` and `vfa-sortable-item`.
 
@@ -298,6 +298,10 @@ Content is placed (before) inside of the file input.
 
 Content is placed (after) outside of the file input. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
 
+### sortable-handle
+
+Can be used to customize sortable handle icon
+
 ## Events, Methods and Slots Demo
 
 Demo 2. Profile Picture (<a target="_blank" href="https://codepen.io/safrazik/pen/BaBpYme">CodePen</a>)
@@ -529,6 +533,10 @@ Demo 3. Gmail Inspired Upload (<a target="_blank" href="https://codepen.io/safra
 <style>
   .vfa-demo {
     position: relative;
+  }
+
+  .vfa-demo .file-preview-wrapper::before {
+    background: transparent;
   }
 
   .vfa-demo .file-row {
