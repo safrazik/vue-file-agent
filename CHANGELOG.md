@@ -1,8 +1,8 @@
 # Change Log
 
-### 1.4.1
+### 1.4.2
 
-- `sortable` prop improved to support `handle` and `hold` values
+- Intuitive drag sort! `sortable` prop improved to support `handle` and `hold` values #30
 
 ### 1.4.0 Spotted Pardalote
 
