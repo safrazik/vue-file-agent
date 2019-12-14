@@ -47,7 +47,7 @@ export default {
       lastProgress: 0,
       filesData: this.getFilesDataInitial(),
       uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
-      sortable: true,
+      sortable: false,
     };
   },
   methods: {

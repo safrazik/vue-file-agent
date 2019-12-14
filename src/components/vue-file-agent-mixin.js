@@ -16,6 +16,15 @@ export default {
     VueFileList,
     VueFileListItem
   },
+  directives: {
+    // https://github.com/Jexordexan/vue-slicksort/blob/master/src/HandleDirective.js
+    vfaSortableHandle: {
+      bind(el){
+        console.log('el i s here', el);
+        el.sortableHandle = true;
+      }
+    }
+  },
   data(){
     return {
       filesData: [],
@@ -49,6 +58,9 @@ export default {
         return this.deletable !== 'false';
       }
       return !!this.deletable;
+    },
+    isSortable(){
+      return !!this.sortable;
     },
     hasMultiple(){
       if(typeof this.multiple == 'string'){

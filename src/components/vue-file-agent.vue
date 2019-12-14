@@ -1,5 +1,5 @@
 <template>
-  <div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="['is-sortable-' + (sortable === true ? 'enabled' : 'disabled'), {'is-sorting': isSorting, 'is-sorting-active': isSortingActive, 'is-drag-over': isDragging, 'is-disabled': disabled === true}, 'theme-' + theme]" :id="'vfa-' + uniqueId">
+  <div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="['is-sortable-' + (isSortable  ? 'enabled' : 'disabled'), {'is-sortable-hold': sortable === 'hold'}, {'is-sortable-hold': sortable === 'handle'}, {'is-sortable-immediately': sortable === true}, {'is-sorting': isSorting, 'is-sorting-active': isSortingActive, 'is-drag-over': isDragging, 'is-disabled': disabled === true}, 'theme-' + theme]" :id="'vfa-' + uniqueId">
     <slot name="before-outer"></slot>
   <div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-bind:class="{'is-drag-overx': isDragging, 'is-compact': !!compact, 'is-single': !hasMultiple, 'has-multiple': hasMultiple, 'no-meta': meta === false}">
     <slot name="before-inner"></slot>
@@ -9,10 +9,15 @@
       <div class="overall-progress-left" v-bind:style="{width: (100 - overallProgress) + '%'}"></div>
     </div>
 
-  <component :is="sortable === true ? 'vfa-sortable-list': 'VueFileList'" v-model="filesData" :axis="theme == 'list' ? 'y' : 'xy'" :appendTo="'#vfa-' + uniqueId + ' .vue-file-agent'" :transitionDuration="transitionDuration" :pressDelay="200" @sort-start="sortStart()" @sort-end="sortEnd($event)" :helperClass="'active-sorting-item'">
+  <component :is="isSortable ? 'vfa-sortable-list': 'VueFileList'" v-model="filesData" :axis="theme == 'list' ? 'y' : 'xy'" :appendTo="'#vfa-' + uniqueId + ' .vue-file-agent'" :transitionDurationx="transitionDuration" :pressDelay="sortable === 'hold' ? 200 : 0" :useDragHandle="sortable === 'handle'" @sort-start="sortStart()" @sort-end="sortEnd($event)" :helperClass="'active-sorting-item'">
   <transition-group name="grid-box" tag="div" class="">
     <!-- <template v-for="(fileData, index) in filesData"> -->
-      <component :is="sortable === true ? 'vfa-sortable-item' : 'VueFileListItem'" v-for="(fileData, index) in filesData" class="file-preview-wrapper grid-box-item grid-block" :index="index" :key="fileData.id">
+      <component :is="isSortable ? 'vfa-sortable-item' : 'VueFileListItem'" v-for="(fileData, index) in filesData" class="file-preview-wrapper grid-box-item grid-block" :index="index" :key="fileData.id">
+        <slot name="sortable-handler" v-if="sortable === 'handle'">
+          <span v-vfa-sortable-handle class="file-sortable-handle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          </span>
+        </slot>
         <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
           <VueFilePreview 
             :value="fileData" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"

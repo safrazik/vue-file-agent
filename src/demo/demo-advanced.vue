@@ -79,6 +79,14 @@
             <input type="checkbox" class="custom-control-input" id="advanced-demo-sortable" v-model="sortable">
             <label class="custom-control-label" for="advanced-demo-sortable">:sortable (<a href="https://safrazik.github.io/vue-file-agent/docs/#sortable">Docs</a>)</label>
           </div>
+
+          <select class="custom-select custom-select-sm mt-1" v-model="sortable">
+            <option selected :value="false">:sortable false</option>
+            <!-- <option :value="false">false</option> -->
+            <option :value="true">true</option>
+            <option value="hold">"hold"</option>
+            <option value="handle">"handle"</option>
+          </select>
         </div>
         <div class="col-6 col-md-12 px-2">
           <div class="custom-control custom-checkbox mt-1">
