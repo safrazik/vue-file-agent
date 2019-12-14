@@ -20,7 +20,6 @@ export default {
     // https://github.com/Jexordexan/vue-slicksort/blob/master/src/HandleDirective.js
     vfaSortableHandle: {
       bind(el){
-        console.log('el i s here', el);
         el.sortableHandle = true;
       }
     }
@@ -298,7 +297,6 @@ export default {
       });
     },
     filenameChanged(fileData){
-      console.log('filenameChanged', fileData.name());
       this.$emit('rename', FileData.toRawArray([fileData])[0]);
       this.autoUpdateUpload(fileData).then((res)=> { }, (err)=> {
         fileData.customName = fileData.oldCustomName;
