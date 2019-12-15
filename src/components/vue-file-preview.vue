@@ -39,7 +39,7 @@
         <span class="file-progress-bar" v-bind:style="{width: fileData.progress() + '%'}"></span>
       </span>
       <span class="file-icon">
-        <a v-if="linkUrl" v-bind:href="fileData.url" target="_blank" v-bind:title="fileData.name()">
+        <a v-if="hasLinkableUrl" v-bind:href="fileData.url" target="_blank" v-bind:title="fileData.name()">
           <VueFileIcon :ext="fileData.ext()"></VueFileIcon>
         </a>
         <VueFileIcon v-else :ext="fileData.ext()"></VueFileIcon>
@@ -47,52 +47,53 @@
     </span>
   </div>
 </template>
-<script>
+<script lang="ts">
 
   import utils from '../lib/utils';
   import VueFileIcon from './vue-file-icon.vue';
-  import FileData from '../lib/file-data';
+  import FileData, {RawFileData, Options} from '../lib/file-data';
+  import Vue from 'vue';
 
-  export default {
-    props: ['value', 'deletable', 'editable', 'linkable', 'errorText', 'disabled'],
+  export default Vue.extend({
+    props: ['value', 'deletable', 'editable', 'linkable', 'errorText', 'disabled', 'thumbnailSize'],
     components: {
-      VueFileIcon
+      VueFileIcon,
     },
-    data: function(){
+    data() {
       return {
         isEditInputFocused: false,
         isEditCancelable: true,
-        fileData: this.getFileData(),
-      }
+        fileData: {} as FileData,
+      };
     },
     computed: {
-      linkUrl: function () {
-        if(!this.linkable){
+      hasLinkableUrl(): boolean {
+        if (!this.linkable) {
           return false;
         }
-        return this.fileData.url &&
+        return !!this.fileData.url &&
           !this.fileData.isImage() &&
           !this.fileData.isPlayableVideo() &&
           !this.fileData.isPlayableAudio();
-      }
+      },
     },
     methods: {
-      getFileData(){
-        return null;
-        // return this.value instanceof FileData ? this.value : FileData.fromRawSync(this.value, {});
-      },
-      updateFileData(){
-        if(this.value instanceof FileData){
+      updateFileData() {
+        if (this.value instanceof FileData) {
           this.fileData = this.value;
           return;
         }
-        FileData.fromRaw(this.value, {}).then(fileData => {
+        FileData.fromRaw(this.value, {
+          thumbnailSize: this.thumbnailSize,
+        } as Options).then((fileData) => {
           this.fileData = fileData;
         });
-        this.fileData = FileData.fromRawSync(this.value, {});
+        this.fileData = FileData.fromRawSync(this.value, {
+          thumbnailSize: this.thumbnailSize,
+        } as Options);
       },
-      createThumbnail(fileData, video){
-        var canvas = document.createElement('canvas');
+      createThumbnail(fileData: FileData, video: HTMLVideoElement) {
+        const canvas = document.createElement('canvas');
         utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then((thumbnail) => {
           fileData.imageColor = thumbnail.color;
           fileData.videoThumbnail = thumbnail.url;
@@ -101,75 +102,77 @@
         });
       },
 
-      playAv(fileData){
-        if(fileData.stopAv){
+      playAv(fileData: FileData) {
+        if (fileData.stopAv) {
           fileData.stopAv();
           return;
         }
-        var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;
-        var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
+        const createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL;
+        const revokeObjectURL = (window.URL || window.webkitURL || {}).revokeObjectURL;
 
-        var wrapper = this.$refs.wrapper;
-        var player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
-        if(fileData.isPlayableVideo()){
+        const wrapper = this.$refs.wrapper as HTMLElement;
+        const player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
+        if (player instanceof HTMLVideoElement && fileData.isPlayableVideo()) {
           this.createThumbnail(fileData, player);
           player.poster = fileData.src();
         }
         player.controls = true;
         // player.style.width = this.prvWidth + 'px';
         wrapper.appendChild(player);
-        var url = fileData.url || createObjectURL(fileData.file); 
-        player.src = url; 
+        const url = fileData.url || createObjectURL(fileData.file);
+        player.src = url;
         player.play();
         fileData.isPlayingAv = true;
-        fileData.stopAv = function(){
-          player.src = null;
+        fileData.stopAv = () => {
+          // player.src = null;
+          player.src = '';
           wrapper.removeChild(player);
           revokeObjectURL(url);
           fileData.isPlayingAv = false;
           fileData.stopAv = null;
-        }
+        };
+
       },
 
-      removeFileData(fileData){
-        if(this.clearFilename()){
+      removeFileData(fileData: FileData) {
+        if (this.clearFilename()) {
           return;
         }
-        if(this.disabled === true){
+        if (this.disabled === true) {
           return;
         }
         this.$emit('remove', fileData);
       },
 
-      editFileName(){
-        if(this.editable !== true){
+      editFileName() {
+        if (this.editable !== true) {
           return;
         }
-        if(!this.$refs.input){
+        if (!this.$refs.input) {
           return;
         }
-        this.$refs.input.focus();
+        (this.$refs.input as HTMLInputElement).focus();
       },
 
-      editInputFocused(){
+      editInputFocused() {
         this.isEditInputFocused = true;
         this.isEditCancelable = true;
       },
 
-      editInputBlured(){
+      editInputBlured() {
         this.fileData.oldFileName = this.fileData.name();
-        var oldValue = this.fileData.name(true);
-        var value = this.$refs.input.value;
+        const oldValue = this.fileData.name(true);
+        const value = (this.$refs.input as HTMLInputElement).value;
         this.fileData.customName = value;
-        var newValue = this.fileData.name(true);
+        const newValue = this.fileData.name(true);
         if (newValue !== oldValue) {
           this.fileData.oldCustomName = oldValue;
           this.$emit('rename', this.fileData);
         }
-        var timeout = 100;
-        setTimeout(()=> {
-          this.$nextTick(()=> {
-            if(!this.isEditCancelable){
+        const timeout = 100;
+        setTimeout(() => {
+          this.$nextTick(() => {
+            if (!this.isEditCancelable) {
               return;
             }
             this.isEditInputFocused = false;
@@ -177,43 +180,43 @@
         }, timeout);
       },
 
-      filenameChanged(completed){
-        if(completed){
-          this.$refs.input.blur(); // @see editInputBlured method
+      filenameChanged(completed?: boolean) {
+        if (completed) {
+          (this.$refs.input as HTMLInputElement).blur(); // @see editInputBlured method
         }
-        if(completed === false){
+        if (completed === false) {
           this.clearFilename();
         }
       },
 
-      filenameClearPressed(){
-        if(!(this.editable === true && this.isEditInputFocused)){
+      filenameClearPressed() {
+        if (!(this.editable === true && this.isEditInputFocused)) {
           return;
         }
         this.isEditCancelable = false;
       },
 
-      clearFilename(){
-        if(!(this.editable === true && this.isEditInputFocused)){
+      clearFilename() {
+        if (!(this.editable === true && this.isEditInputFocused)) {
           return false;
         }
-        this.$refs.input.value = '';
+        (this.$refs.input as HTMLInputElement).value = '';
         this.isEditCancelable = true;
         this.editInputBlured();
         return true;
       },
 
-      dismissError(){
+      dismissError() {
         this.fileData.error = false;
       },
     },
-    created(){
+    created() {
       this.updateFileData();
     },
     watch: {
-      value(){
+      value() {
         this.updateFileData();
-      }
+      },
     },
-  }
+  });
 </script>

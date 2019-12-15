@@ -26,7 +26,7 @@
     color: #FFF;
   }
 </style>
-<script>
+<script lang="ts">
 
   import DemoBasic from './demo/demo-basic.vue';
   import DemoAdvanced from './demo/demo-advanced.vue';
@@ -38,8 +38,8 @@
       DemoBasic,
       DemoAdvanced,
       DemoIcons,
-      DemoPreviews
-    }
-  }
+      DemoPreviews,
+    },
+  };
 
 </script>

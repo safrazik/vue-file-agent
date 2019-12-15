@@ -3,7 +3,7 @@
     <slot></slot>
   </div>
 </template>
-<script>
+<script lang="ts">
 
 export default {
   props: ['value', 'axis', 'appendTo'],

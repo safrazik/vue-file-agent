@@ -9,7 +9,7 @@ export default {
     // 'ogg',
     // 'wav',
     'wma',
-    'wpl'
+    'wpl',
   ],
   'audio-playable': [
     'mp3',
@@ -25,14 +25,14 @@ export default {
     'rpm',
     'tar.gz',
     'z',
-    'zip'
+    'zip',
   ],
   'disc': [
     // 'bin',
     'dmg',
     'iso',
     'toast',
-    'vcd'
+    'vcd',
   ],
   'database': [
     'csv',
@@ -58,13 +58,13 @@ export default {
     'jar',
     'py',
     'wsf',
-    'ipa'
+    'ipa',
   ],
   'font': [
     'fnt',
     'fon',
     'otf',
-    'ttf'
+    'ttf',
   ],
   'image': [
     'ai',
@@ -78,7 +78,7 @@ export default {
     'psd',
     'svg',
     'tif',
-    'tiff'
+    'tiff',
   ],
   'markup': [
     'asp',
@@ -98,14 +98,14 @@ export default {
     'py',
     'rss',
     'xml',
-    'xhtml'
+    'xhtml',
   ],
   'presentation': [
     'key',
     'odp',
     'pps',
     'ppt',
-    'pptx'
+    'pptx',
   ],
   'script': [
     'c',
@@ -118,13 +118,13 @@ export default {
     'json',
     'sh',
     'swift',
-    'vb'
+    'vb',
   ],
   'sheet': [
     'ods',
     'xlr',
     'xls',
-    'xlsx'
+    'xlsx',
   ],
   'system': [
     'bak',
@@ -141,7 +141,7 @@ export default {
     'lnk',
     'msi',
     'sys',
-    'tmp'
+    'tmp',
   ],
   'video': [
     '3g2',
@@ -166,7 +166,7 @@ export default {
     'webm',
     'mov',
   ],
-  vue: [
+  'vue': [
     'vue',
   ],
   'doc': [
@@ -178,21 +178,21 @@ export default {
     // 'txt',
     'wks',
     'wps',
-    'wpd'
+    'wpd',
   ],
-  text: [
+  'text': [
     'txt',
   ],
-  ebook: [
+  'ebook': [
     'epub',
   ],
-  pdf: [
-    'pdf'
+  'pdf': [
+    'pdf',
   ],
-  folder: [
-    'folder'
+  'folder': [
+    'folder',
   ],
-  play: [
+  'play': [
     'play',
-  ]
+  ],
 };

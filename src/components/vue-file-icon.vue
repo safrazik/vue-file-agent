@@ -7,24 +7,25 @@
 </template>
 <style>
 </style>
-<script>
+<script lang="ts">
 
 import {getIconFromExt} from '../lib/icons';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   props: ['ext', 'viewBox'],
   computed: {
-    viewBoxComputed(){
-      if(!this.viewBox && this.icon && this.icon.viewBox){
+    viewBoxComputed(): string {
+      if (!this.viewBox && this.icon && this.icon.viewBox) {
         return this.icon.viewBox;
       }
       return this.viewBox ? this.viewBox : '0 0 100 100';
     },
-    icon(){
-      var svgIcon = getIconFromExt(this.ext);
+    icon() {
+      const svgIcon = getIconFromExt(this.ext);
       return svgIcon;
-    }
+    },
   },
-};
+});
 
 </script>

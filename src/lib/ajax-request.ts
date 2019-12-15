@@ -1,8 +1,25 @@
+export type ConfigureFn = (request: XMLHttpRequest) => any;
+export interface AjaxResponse {
+  data: any;
+  status: number;
+  statusText: string;
+  headers: string;
+  request: XMLHttpRequest;
+}
+export type AjaxRequestData = FormData | any;
+export interface AjaxError extends Error {
+  code: string;
+  request: XMLHttpRequest;
+  response?: AjaxResponse;
+}
+
 /* inspired by axios */
 class AjaxRequest {
 
-  createError(message, code, request, response) {
-    var error = new Error(message);
+  public createError(
+    message: string, code: string | null,
+    request: XMLHttpRequest, response?: AjaxResponse): AjaxError {
+    const error: AjaxError = new Error(message) as AjaxError;
     if (code) {
       error.code = code;
     }
@@ -11,8 +28,8 @@ class AjaxRequest {
     return error;
   }
 
-  settle(resolve, reject, response) {
-    var validateStatus = function(status){
+  public settle(resolve: any, reject: any, response: AjaxResponse) {
+    const validateStatus = (status: number) => {
       return status >= 200 && status < 300;
     };
     // Note: status is not exposed by XDomainRequest
@@ -23,22 +40,25 @@ class AjaxRequest {
         'Request failed with status code ' + response.status,
         null,
         response.request,
-        response
+        response,
       ));
     }
   }
 
-  request(method, url, formData = null, configureFn = null){
+  public request(
+    method: string, url: string, formData: AjaxRequestData | null = null,
+    configureFn?: ConfigureFn): Promise<AjaxResponse> {
 
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
 
-      var request = new XMLHttpRequest();
-      var loadEvent = 'onreadystatechange';
+      // tslint:disable-next-line
+      let request = new XMLHttpRequest();
+      const loadEvent = 'onreadystatechange';
 
       request.open(method, url, true);
 
       // Listen for ready state
-      request[loadEvent] = ()=> {
+      request[loadEvent] = () => {
         if (!request || request.readyState !== 4) {
           return;
         }
@@ -52,30 +72,30 @@ class AjaxRequest {
         }
 
         // Prepare the response
-        var responseHeaders = request.getAllResponseHeaders();
-        var responseData = request.responseText;
-        var contentType = request.getResponseHeader('Content-Type');
-        if (contentType && contentType.indexOf('application/json') != -1) {
+        const responseHeaders = request.getAllResponseHeaders();
+        let responseData: any = request.responseText;
+        const contentType = request.getResponseHeader('Content-Type');
+        if (contentType && contentType.indexOf('application/json') !== -1) {
           responseData = JSON.parse(responseData);
         }
-        var response = {
+        const response: AjaxResponse = {
           data: responseData,
           // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
           status: request.status === 1223 ? 204 : request.status,
           statusText: request.status === 1223 ? 'No Content' : request.statusText,
           headers: responseHeaders,
-          request: request
+          request,
         };
 
         this.settle(resolve, reject, response);
 
         // Clean up request
-        request = null;
+        (request as any) = null;
       };
 
 
       // Handle browser request cancellation (as opposed to a manual cancellation)
-      request.onabort = ()=> {
+      request.onabort = () => {
         if (!request) {
           return;
         }
@@ -83,25 +103,25 @@ class AjaxRequest {
         reject(this.createError('Request aborted', 'ECONNABORTED', request));
 
         // Clean up request
-        request = null;
+        (request as any) = null;
       };
 
       // Handle low level network errors
-      request.onerror = ()=> {
+      request.onerror = () => {
         // Real errors are hidden from us by the browser
         // onerror should only fire if it's a network error
         reject(this.createError('Network Error', null, request));
 
         // Clean up request
-        request = null;
+        (request as any) = null;
       };
 
       // Handle timeout
-      request.ontimeout = ()=> {
+      request.ontimeout = () => {
         reject(this.createError('timeout exceeded', 'ECONNABORTED', request));
 
         // Clean up request
-        request = null;
+        (request as any) = null;
       };
 
       // // Handle progress if needed
@@ -113,7 +133,7 @@ class AjaxRequest {
       // if (typeof progressCallback === 'function' && request.upload) {
       //   request.upload.addEventListener('progress', progressCallback);
       // }
-      
+
       if (typeof configureFn === 'function') {
         configureFn(request);
       }
@@ -124,15 +144,15 @@ class AjaxRequest {
 
   }
 
-  post(url, formData, configureFn = null){
+  public post(url: string, formData: AjaxRequestData, configureFn?: ConfigureFn) {
     return this.request('POST', url, formData, configureFn);
   }
 
-  delete(url, formData, configureFn = null){
+  public delete(url: string, formData: AjaxRequestData, configureFn?: ConfigureFn) {
     return this.request('DELETE', url, formData, configureFn);
   }
 
-  put(url, formData, configureFn = null){
+  public put(url: string, formData: AjaxRequestData, configureFn?: ConfigureFn) {
     return this.request('PUT', url, formData, configureFn);
   }
 

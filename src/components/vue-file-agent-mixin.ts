@@ -4,65 +4,69 @@ import VueFilePreview from './vue-file-preview.vue';
 import VueFileList from './vue-file-list.vue';
 import VueFileListItem from './vue-file-list-item.vue';
 import FileData from '../lib/file-data';
+import {RawFileData} from '../lib/file-data';
 import uploader from '../lib/upload-helper';
+import Vue from 'vue';
 
+// tslint:disable-next-line
 var dragCounter = 0;
 
-export default {
+export default Vue.extend({
   props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'editable', 'linkable', 'sortable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme', 'disabled'],
   components: {
     VueFileIcon,
     VueFilePreview,
     VueFileList,
-    VueFileListItem
+    VueFileListItem,
   },
   directives: {
     // https://github.com/Jexordexan/vue-slicksort/blob/master/src/HandleDirective.js
     vfaSortableHandle: {
-      bind(el){
-        el.sortableHandle = true;
-      }
-    }
+      bind(el: HTMLElement) {
+        (el as any).sortableHandle = true;
+      },
+    },
   },
-  data(){
+  data() {
     return {
-      filesData: [],
-      filesDataRaw: [],
+      filesData: [] as FileData[],
+      filesDataRaw: [] as RawFileData[],
       isDragging: false,
       isSorting: false,
       isSortingActive: false,
       transitionDuration: 300,
       overallProgress: 0,
-      uniqueId: null,
-    }
+      uniqueId: '',
+      sortTimeout: 0,
+    };
   },
   computed: {
-    canAddMore(){
-      if(!this.hasMultiple){
+    canAddMore(): boolean {
+      if (!this.hasMultiple) {
         return this.filesData.length === 0;
       }
-      if(!this.maxFiles){
+      if (!this.maxFiles) {
         return true;
       }
       return this.filesData.length < this.maxFiles;
     },
-    helpTextComputed(){
-      if(this.helpText){
+    helpTextComputed(): string {
+      if (this.helpText) {
         return this.helpText;
       }
       return 'Choose ' + (this.hasMultiple ? 'files' : 'file') + ' or drag & drop here';
     },
-    isDeletable(){
-      if(typeof this.deletable == 'string'){
+    isDeletable(): boolean {
+      if (typeof this.deletable === 'string') {
         return this.deletable !== 'false';
       }
       return !!this.deletable;
     },
-    isSortable(){
+    isSortable(): boolean {
       return !!this.sortable;
     },
-    hasMultiple(){
-      if(typeof this.multiple == 'string'){
+    hasMultiple(): boolean {
+      if (typeof this.multiple === 'string') {
         return this.multiple !== 'false';
       }
       if (this.multiple === undefined) {
@@ -70,17 +74,17 @@ export default {
       }
       return !!this.multiple;
     },
-    shouldRead(){
-      if(typeof this.read == 'string'){
+    shouldRead(): boolean {
+      if (typeof this.read === 'string') {
         return this.read === 'true';
       }
       return !!this.read;
-    }
+    },
   },
   methods: {
-    createThumbnail(fileData, video){
-      return new Promise((resolve, reject)=> {      
-        var canvas = document.createElement('canvas');
+    createThumbnail(fileData: FileData, video: HTMLVideoElement): Promise<void> {
+      return new Promise((resolve, reject) => {
+        const canvas = document.createElement('canvas');
         utils.createVideoThumbnail(video, canvas, fileData.thumbnailSize).then((thumbnail) => {
           fileData.imageColor = thumbnail.color;
           fileData.videoThumbnail = thumbnail.url;
@@ -90,74 +94,75 @@ export default {
         }, reject);
       });
     },
-    initVideo(fileData){
-      if(!fileData.isPlayableVideo()){
+    initVideo(fileData: FileData): void {
+      if (!fileData.isPlayableVideo()) {
         return;
       }
-      var createObjectURL = (window.URL || window['webkitURL'] || {}).createObjectURL;      
-      var revokeObjectURL = (window.URL || window['webkitURL'] || {}).revokeObjectURL;
-      var video = document.createElement('video');
+      const createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL;
+      const revokeObjectURL = (window.URL || window.webkitURL || {}).revokeObjectURL;
+      const video = document.createElement('video');
       video.src = createObjectURL(fileData.file);
-      this.createThumbnail(fileData, video, true).then(()=> {
+      this.createThumbnail(fileData, video).then(() => {
         revokeObjectURL(video.src);
-      })
+      });
       video.load();
     },
-    getFileDataInstance(fileDataOrRaw){
-      var i;
-      if(fileDataOrRaw instanceof FileData){
+    getFileDataInstance(fileDataOrRaw: FileData | RawFileData): FileData {
+      let i;
+      if (fileDataOrRaw instanceof FileData) {
         i = this.filesData.indexOf(fileDataOrRaw);
-      }
-      else {
+      } else {
         i = this.filesDataRaw.indexOf(fileDataOrRaw);
       }
-      if(i === -1){
-        return fileDataOrRaw;
+      if (i === -1) {
+        return fileDataOrRaw as FileData;
       }
       return this.filesData[i];
     },
-    upload(url, headers, filesData, createFormData){
-      var validFilesData = [];
-      for(var i = 0; i < filesData.length; i++){
-        var fileData = this.getFileDataInstance(filesData[i]);
-        if(!fileData.error){
+    upload(
+      url: string, headers: object, filesDataOrRaw: FileData[] | RawFileData[],
+      createFormData?: (fileData: FileData) => FormData): Promise<any> {
+      const validFilesData = [];
+      for (const fileDataOrRaw of filesDataOrRaw) {
+        const fileData = this.getFileDataInstance(fileDataOrRaw);
+        if (!fileData.error) {
           validFilesData.push(fileData);
         }
       }
-      return uploader.upload(url, headers, validFilesData, createFormData, (overallProgress)=> {
+      return uploader.upload(url, headers, validFilesData, createFormData, (overallProgress) => {
         this.overallProgress = overallProgress;
       });
     },
-    deleteUpload(url, headers, fileData, uploadData){
-      if(this.filesData.length < 1){
+    deleteUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
+      if (this.filesData.length < 1) {
         this.overallProgress = 0;
       }
       fileData = this.getFileDataInstance(fileData);
       return uploader.deleteUpload(url, headers, fileData, uploadData);
     },
-    updateUpload(url, headers, fileData, uploadData){
+    updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
       fileData = this.getFileDataInstance(fileData);
       return uploader.updateUpload(url, headers, fileData, uploadData);
     },
-    autoUpload(filesData){
-      if(!this.uploadUrl){
-        return;
+    autoUpload(filesData: FileData[] | RawFileData[]): Promise<any> {
+      if (!this.uploadUrl) {
+        return Promise.resolve(false);
       }
-      this.upload(this.uploadUrl, this.uploadHeaders, filesData);
+      return this.upload(this.uploadUrl, this.uploadHeaders, filesData);
     },
-    autoDeleteUpload(fileData){
-      if(!this.uploadUrl){
+    autoDeleteUpload(fileData: FileData | RawFileData): Promise<any> {
+      if (!this.uploadUrl) {
         return Promise.resolve(false);
       }
       return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
-    autoUpdateUpload(fileData){
-      if(!this.uploadUrl){
+    autoUpdateUpload(fileData: FileData): Promise<any> {
+      if (!this.uploadUrl) {
         return Promise.resolve(false);
       }
       return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
-    equalFiles(file1, file2){
+    equalFiles(file1: File, file2: File): boolean {
       return true &&
         file1.name === file2.name &&
         file1.size === file2.size &&
@@ -165,37 +170,38 @@ export default {
         // file1.lastModifiedDate.getTime() === file2.lastModifiedDate.getTime() &&
         file1.lastModified === file2.lastModified;
     },
-    isFileAddedAlready(file){
-      for(var i = 0; i < this.filesData.length; i++){
-        if(this.equalFiles(file, this.filesData[i].file)){
+    isFileAddedAlready(file: File): boolean {
+      for (const fileData of this.filesData) {
+        if (this.equalFiles(file, fileData.file)) {
           return true;
         }
       }
       return false;
     },
-    handleFiles(files){
-      if(this.disabled === true){
+    handleFiles(files: File[] | FileList): void {
+      if (this.disabled === true) {
         return;
       }
-      if(this.hasMultiple && !this.canAddMore){
+      if (this.hasMultiple && !this.canAddMore) {
         return;
       }
-      var filesData = [];
-      var filesFiltered = [];
-      for(let i = 0; i < files.length; i++){
-        if(this.hasMultiple && this.isFileAddedAlready(files[i])){
+      const filesData: FileData[] = [];
+      const filesFiltered: File[] = [];
+      // tslint:disable-next-line
+      for (let i = 0; i < files.length; i++) {
+        if (this.hasMultiple && this.isFileAddedAlready(files[i])) {
           continue;
         }
         filesFiltered.push(files[i]);
       }
       files = filesFiltered;
-      if(this.maxFiles && files.length > (this.maxFiles - this.filesData.length)){
+      if (this.maxFiles && files.length > (this.maxFiles - this.filesData.length)) {
         files = files.slice(0, (this.maxFiles - this.filesData.length));
       }
-      for(let i = 0; i < files.length; i++){
+      for (const file of files) {
         filesData.push(new FileData({
-          file: files[i],
-        }, {
+          file,
+        } as RawFileData, {
           read: this.shouldRead,
           maxSize: this.maxSize,
           accept: this.accept,
@@ -203,119 +209,121 @@ export default {
         }));
       }
 
-      //////////// disables list transitions
-          // var allFilesData = this.filesData.concat(filesData);
-          // this.filesData = allFilesData;
-      ////////////
-      for(let i = 0; i < filesData.length; i++){
-        // this.filesData.push(filesData[i]);
-        if(filesData[i].file.size <= 20 * 1024 * 1024){ // <= 20MB
-          this.initVideo(filesData[i]);
+      for (const fileData of filesData) {
+        if (fileData.file.size <= 20 * 1024 * 1024) { // <= 20MB
+          this.initVideo(fileData);
         }
       }
-      if(this.hasMultiple){
+      if (this.hasMultiple) {
+        // splice: for list transitions to work properly
         this.filesData.splice(this.filesData.length, 0, ...filesData);
-      }
-      else {
+      } else {
         this.filesData = filesData;
       }
 
-      FileData.readFiles(filesData).then((filesData)=> {  
-        // var filesDataRaw = FileData.toRaw(filesData);
-        var allFilesDataRaw = FileData.toRawArray(this.filesData);
+      FileData.readFiles(filesData).then((filesDataNew: FileData[]) => {
+        const allFilesDataRaw = FileData.toRawArray(this.filesData);
         this.filesDataRaw = allFilesDataRaw;
-        // filesDataRaw = self.hasMultiple ? filesDataRaw : filesDataRaw[0];
-        allFilesDataRaw = Array.isArray(this.value) ? allFilesDataRaw : allFilesDataRaw[0];
-        this.$emit('input', allFilesDataRaw); 
-        // self.$emit('select', filesData); 
-        this.$emit('select', FileData.toRawArray(filesData));
+        this.$emit('input', Array.isArray(this.value) ? allFilesDataRaw : allFilesDataRaw[0]);
+        this.$emit('select', FileData.toRawArray(filesDataNew));
       });
       this.autoUpload(filesData);
     },
-    filesChanged(event){
-      var files = event.target.files;
+    filesChanged(event: InputEvent): void {
+      const files: FileList = (event.target as HTMLInputElement).files as FileList;
       this.$emit('change', event);
-      if(!files[0]){
-        // this.imgSrc = this.lastKnownSrc;
+      if (!files[0]) {
         return;
       }
       this.handleFiles(files);
       if (this.$refs.fileInput) {
-        this.$refs.fileInput.value = null; // do not use '' because chrome won't fire change event for same file
+        (this.$refs.fileInput as any).value = null; // do not use ''
+        // because chrome won't fire change event for same file
       }
     },
-    drop(event) {
+    drop(event: DragEvent): void {
+      if (!event.dataTransfer) {
+        return;
+      }
       dragCounter = 0;
       this.isDragging = false;
       event.stopPropagation();
       event.preventDefault();
-      utils.getFilesFromDroppedItems(event.dataTransfer).then(files => {
+      utils.getFilesFromDroppedItems(event.dataTransfer).then((files) => {
         this.$emit('drop', event);
-        if(!files || !files[0]){
+        if (!files || !files[0]) {
           return;
         }
-        if(!this.hasMultiple){
+        if (!this.hasMultiple) {
           files = [files[0]];
         }
         this.handleFiles(files);
       });
     },
-    dragEnter(event) {
+    dragEnter(event: DragEvent): void {
+      if (!event.dataTransfer) {
+        return;
+      }
       this.isDragging = true;
       event.stopPropagation();
       event.preventDefault();
       dragCounter++;
       event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     },
-    dragOver(event) {
+    dragOver(event: DragEvent): void {
+      if (!event.dataTransfer) {
+        return;
+      }
       this.isDragging = true;
       event.stopPropagation();
       event.preventDefault();
       event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     },
-    dragLeave(event) {
+    dragLeave(event: DragEvent): void {
+      if (!event.dataTransfer) {
+        return;
+      }
       dragCounter--;
-      if (dragCounter === 0) { 
+      if (dragCounter === 0) {
         this.isDragging = false;
       }
     },
-    removeFileData(fileData){
-      var i;
-      if(fileData instanceof FileData){
-        i = this.filesData.indexOf(fileData);
+    removeFileData(fileDataOrRaw: FileData | RawFileData): void {
+      let i: number;
+      if (fileDataOrRaw instanceof FileData) {
+        i = this.filesData.indexOf(fileDataOrRaw);
+      } else {
+        i = this.filesDataRaw.indexOf(fileDataOrRaw);
       }
-      else {
-        i = this.filesDataRaw.indexOf(fileData);
-      }
-      this.filesData.splice(i, 1);
-      this.filesDataRaw.splice(i, 1);
+      const fileData: FileData = this.filesData.splice(i, 1)[0];
+      const fileDataRaw = this.filesDataRaw.splice(i, 1)[0];
       this.$emit('input', this.filesDataRaw);
       // this.$emit('delete', fileData);
-      this.$emit('delete', FileData.toRawArray([fileData])[0]);
-      this.autoDeleteUpload(fileData).then((res)=> { }, (err)=> {
+      this.$emit('delete', fileDataRaw);
+      this.autoDeleteUpload(fileData).then((res) => {/* no op */}, (err) => {
         this.filesData.splice(i, 1, fileData);
+        this.filesDataRaw.splice(i, 1, fileDataRaw);
       });
     },
-    filenameChanged(fileData){
+    filenameChanged(fileData: FileData): void {
       this.$emit('rename', FileData.toRawArray([fileData])[0]);
-      this.autoUpdateUpload(fileData).then((res)=> { }, (err)=> {
+      this.autoUpdateUpload(fileData).then((res) => {/* no op */}, (err) => {
         fileData.customName = fileData.oldCustomName;
       });
     },
-    checkValue(){
-      var filesDataRaw = this.value || [];
+    checkValue(): void {
+      let filesDataRaw: RawFileData[] = this.value || [];
       filesDataRaw = Array.isArray(filesDataRaw) ? filesDataRaw : [filesDataRaw];
 
-      var fdPromises = [];
-      var filesDataRawNew = [];
+      const fdPromises: Array<Promise<FileData>> = [];
+      const filesDataRawNew: RawFileData[] = [];
 
-      for(var i = 0; i < filesDataRaw.length; i++){
-        var existingIndex = this.filesDataRaw.indexOf(filesDataRaw[i]);
-        if(existingIndex !== -1){
+      for (let i = 0; i < filesDataRaw.length; i++) {
+        const existingIndex = this.filesDataRaw.indexOf(filesDataRaw[i]);
+        if (existingIndex !== -1) {
           fdPromises.push(Promise.resolve(this.filesData[existingIndex]));
           filesDataRawNew[i] = this.filesDataRaw[existingIndex];
-        }
-        else {
+        } else {
           fdPromises.push(FileData.fromRaw(filesDataRaw[i], {
             read: this.shouldRead,
             maxSize: this.maxSize,
@@ -327,29 +335,29 @@ export default {
       }
 
       this.filesDataRaw = filesDataRawNew;
-      Promise.all(fdPromises).then((filesData)=> {
+      Promise.all(fdPromises).then((filesData) => {
         this.filesData = filesData;
       });
 
     },
-    sortStart(){
-      if(this.sortTimeout){
+    sortStart(): void {
+      if (this.sortTimeout) {
         clearTimeout(this.sortTimeout);
       }
       this.isSorting = true;
       this.isSortingActive = true;
     },
-    sortEnd(sortData){
+    sortEnd(sortData: { event: Event, newIndex: number, oldIndex: number, collection: any}): void {
       this.isSortingActive = false;
-      if(this.sortTimeout){
+      if (this.sortTimeout) {
         clearTimeout(this.sortTimeout);
       }
-      this.sortTimeout = setTimeout(()=> {
+      this.sortTimeout = setTimeout(() => {
         this.isSorting = false;
       }, this.transitionDuration + 100);
-      if(sortData.oldIndex != sortData.newIndex){
+      if (sortData.oldIndex !== sortData.newIndex) {
         this.filesDataRaw = utils.arrayMove(this.filesDataRaw, sortData.oldIndex, sortData.newIndex);
-        this.$nextTick(()=> {
+        this.$nextTick(() => {
           this.$emit('input', this.filesDataRaw);
           this.$emit('sort', {
             oldIndex: sortData.oldIndex,
@@ -359,13 +367,13 @@ export default {
       }
     },
   },
-  created(){
+  created() {
     this.uniqueId = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
     this.checkValue();
   },
   watch: {
-    value(){
+    value() {
       this.checkValue();
-    }
+    },
   },
-};
+});

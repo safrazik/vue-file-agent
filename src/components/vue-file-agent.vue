@@ -20,7 +20,8 @@
         </span>
         <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
           <VueFilePreview 
-            :value="fileData" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled" @remove="removeFileData($event)"
+            :value="fileData" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled"
+            :thumbnailSize="thumbnailSize" @remove="removeFileData($event)"
              @rename="filenameChanged($event)" class=""></VueFilePreview>
         </slot>
       </component>
@@ -51,10 +52,10 @@
 <style lang="scss">
   @import "../scss/vue-file-agent.scss";
 </style>
-<script>
+<script lang="ts">
   import mixin from './vue-file-agent-mixin';
 
   export default {
-    mixins: [mixin]
+    mixins: [mixin],
   };
 </script>
