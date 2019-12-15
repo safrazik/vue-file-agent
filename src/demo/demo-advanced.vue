@@ -76,6 +76,12 @@
         </div>
         <div class="col-6 col-md-12 px-2">
           <div class="custom-control custom-checkbox mt-1">
+            <input type="checkbox" class="custom-control-input" id="advanced-demo-resumable" v-model="resumable">
+            <label class="custom-control-label" for="advanced-demo-resumable">:resumable (<a href="https://safrazik.github.io/vue-file-agent/docs/#resumable">Docs</a>)</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-12 px-2">
+          <div class="custom-control custom-checkbox mt-1">
             <input type="checkbox" class="custom-control-input" id="advanced-demo-sortable" v-model="sortable">
             <label class="custom-control-label" for="advanced-demo-sortable">:sortable (<a href="https://safrazik.github.io/vue-file-agent/docs/#sortable">Docs</a>)</label>
           </div>
@@ -120,6 +126,8 @@
         :editable="editable"
         :linkable="linkable"
         :sortable="sortable"
+        :resumable="resumable"
+        :tus="tus"
         :disabled="disabled"
         :compact="compact"
         :accept="valAccept"
@@ -228,13 +236,15 @@ export default {
       filesData: this.getFilesDataInitial(),
       filesDataForUpload: [],
       uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
-      uploadHeaders: {'X-Test-Header': 'vue-file-agent'},
+      uploadHeaders: {},
       meta: true,
       multiple: true,
       deletable: true,
       editable: true,
       linkable: true,
       sortable: false,
+      resumable: false,
+      tus: window.tus || null,
       disabled: false,
       compact: false,
       theme: 'list',
@@ -258,6 +268,12 @@ export default {
       }
       return filesDataInvalid;
     },
+    uploadEndpoint: function(){
+      if(this.resumable && this.uploadUrl.indexOf('mocky.io') !== -1){
+        return 'https://master.tus.io/files/';
+      }
+      return this.uploadUrl;
+    }
   },
   methods: {
     getFilesDataInitial: function(){
@@ -334,7 +350,7 @@ export default {
       if(i !== -1){
         this.filesDataForUpload.splice(i, 1);
       }
-      this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, [fileData]);
+      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, [fileData]);
     },
     moveIndex: function(dir){
       console.log('moveIndex', dir);
@@ -375,12 +391,12 @@ export default {
 
     uploadFiles: function(){
       // Using the default uploader. You may use another uploader instead.
-      this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.filesDataForUpload);
+      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, this.filesDataForUpload);
       this.filesDataForUpload = [];
     },
     deleteUploadedFile: function(fileData){
       // Using the default uploader. You may use another uploader instead.
-      this.$refs.vueFileAgent.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
+      this.$refs.vueFileAgent.deleteUpload(this.uploadEndpoint, this.uploadHeaders, fileData);
     },
     filesSelected: function(filesData){
       console.log('filesSelected', filesData);

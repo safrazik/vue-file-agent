@@ -35,7 +35,7 @@
       <span v-if="fileData.dimensions.width && fileData.dimensions.height" class="image-dimension">
         <span class="image-dimension-width">{{ fileData.dimensions.width }}</span><span class="image-dimension-height">{{ fileData.dimensions.height }}</span>
       </span>
-      <span class="file-progress" v-if="fileData.hasProgress()" v-bind:class="{'file-progress-full': fileData.progress() >= 99.99, 'file-progress-done': fileData.progress() >= 100, 'has-file-progress': fileData.progress() > 0}">
+      <span class="file-progress" v-if="fileData.hasProgress()" v-bind:class="{'file-progress-full': fileData.progress() >= 99.9999, 'file-progress-done': fileData.progress() >= 100, 'has-file-progress': fileData.progress() > 0}">
         <span class="file-progress-bar" v-bind:style="{width: fileData.progress() + '%'}"></span>
       </span>
       <span class="file-icon">

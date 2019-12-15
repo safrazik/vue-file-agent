@@ -124,14 +124,14 @@ class UploadHelper {
         formData = createFormData(fileData);
       } else {
         formData = new FormData();
-        formData.append('file', fileData.file);
+        formData.append('file', fileData.file as File);
         formData.append('filename', fileData.name());
       }
       // ((fileData) => {
       const promise = this.doUpload(url, headers, formData, (progressEvent) => {
           const percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
           // do not complete until promise resolved
-          fileData.progress(percentCompleted >= 100 ? 99.99 : percentCompleted);
+          fileData.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
           updateOverallProgress();
       }, (xhr) => {
         fileData.xhr = xhr;
@@ -206,6 +206,102 @@ class UploadHelper {
           reject(err);
         });
       }
+    });
+  }
+
+  public doTusUpload(tus: any, url: string, fileData: FileData, headers: object, progressCallback: ProgressFn) {
+    return new Promise((resolve, reject) => {
+      if (!tus) {
+        return reject('tus required');
+      }
+      // https://github.com/tus/tus-js-client
+      // Create a new tus upload
+      const file = fileData.file;
+      const upload = new tus.Upload(file, {
+        endpoint: url,
+        headers,
+        retryDelays: [0, 3000, 5000, 10000, 20000],
+        metadata: {
+          filename: file.name,
+          filetype: file.type,
+        },
+        onError(error: any) {
+          reject(error);
+          // console.log("Failed because: " + error)
+        },
+        onProgress(bytesUploaded: number, bytesTotal: number) {
+          const event = {loaded: bytesUploaded, total: bytesTotal} as ProgressEvent;
+          progressCallback(event);
+        },
+        onSuccess() {
+          resolve(upload);
+        },
+      });
+      fileData.tusUpload = upload;
+      // Start the upload
+      upload.start();
+    });
+  }
+
+  public tusUpload(
+    tus: any, url: string, headers: object, filesData: FileData[],
+    progressFn?: (progress: number) => void) {
+    let updateOverallProgress = () => {/* no op */ };
+    if (progressFn) {
+      updateOverallProgress = () => {
+        let prgTotal = 0;
+        for (const fileData of filesData) {
+          prgTotal += fileData.progress() as number;
+        }
+        progressFn(prgTotal / filesData.length);
+      };
+    }
+    const promises = [];
+    for (const fileData of filesData) {
+      const promise = this.doTusUpload(tus, url, fileData, headers, (progressEvent: ProgressEvent) => {
+        const percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
+        // do not complete until promise resolved
+        fileData.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
+        updateOverallProgress();
+      });
+      promise.then((response) => {
+        // delete fileData.tusUpload;
+        fileData.progress(100);
+      }, (err) => {
+        this.prepareUploadError(fileData, err);
+      });
+      promises.push(promise);
+    }
+    return Promise.all(promises);
+  }
+
+  public tusDeleteUpload(
+    tus: any, url: string, headers: object, fileData: FileData) {
+    return new Promise((resolve, reject) => {
+      if (!tus) {
+        return reject('tus required');
+      }
+      if (!fileData.tusUpload) {
+        return resolve();
+      }
+      // const shouldTerminate = true;
+      const abort = (shouldTerminate: boolean) => {
+        return new Promise((res, rej) => {
+          fileData.tusUpload.abort(shouldTerminate, (err: any) => {
+            if (err) {
+              this.prepareUploadError(fileData, err);
+              rej(err);
+              return;
+            }
+            res();
+          });
+        });
+      };
+      abort(false).then(() => {
+        setTimeout(() => {
+          abort(true).then(resolve, reject);
+        }, 1000);
+      });
     });
   }
 

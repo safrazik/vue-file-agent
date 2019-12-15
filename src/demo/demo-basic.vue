@@ -8,6 +8,10 @@
         <input type="checkbox" class="custom-control-input" id="basic-demo-sortable-toggle" v-model="sortable">
         <label class="custom-control-label" for="basic-demo-sortable-toggle">Drag & drop sortable</label>
       </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="basic-demo-resumable-toggle" v-model="resumable">
+        <label class="custom-control-label" for="basic-demo-resumable-toggle">Resumable upload</label>
+      </div>
     </div>
     <div class="col mb-3 text-right">
       Switch theme to
@@ -29,6 +33,8 @@
     @select="filesSelected($event)"
     @delete="fileDeleted($event)"
     :sortable="sortable"
+    :resumable="resumable"
+    :tus="tus"
   >
   </VueFileAgent>
 
@@ -46,9 +52,18 @@ export default {
       theme: 'default',
       lastProgress: 0,
       filesData: this.getFilesDataInitial(),
-      uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
       sortable: false,
+      resumable: true,
+      tus: window.tus || null,
     };
+  },
+  computed: {
+    uploadUrl: function(){
+      if(this.resumable){
+        return 'https://master.tus.io/files/';
+      }
+      return window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3';
+    },
   },
   methods: {
     getFilesDataInitial: function(){

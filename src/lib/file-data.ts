@@ -136,7 +136,7 @@ class FileData {
   public accept?: string;
   public dimensions: Dimensions;
   public error: false | ErrorFlags;
-  public file: File | any;
+  public file: File;
   public height: undefined | number | string;
   public width: undefined | number | string;
   public id: string;
@@ -151,6 +151,7 @@ class FileData {
   public xhr?: XMLHttpRequest;
   public xhrQueue?: () => any;
   public stopAv?: (() => any) | null;
+  public tusUpload?: any;
 
   public constructor(data: RawFileData, options: Options) {
     this.url = null;
@@ -163,7 +164,7 @@ class FileData {
     this.upload = null;
 
     this.raw = data;
-    this.file = data.file instanceof File ? data.file : this.createDummyFile(data);
+    this.file = data.file instanceof File ? data.file : this.createDummyFile(data) as any;
     this.progressInternal = !isNaN(data.progress as number) ? (data.progress as number) : 0;
     // this.width = FileData.defaultWidth;
     // this.height = FileData.defaultHeight;
@@ -216,7 +217,7 @@ class FileData {
 
   public src(): string {
     if (this.isImage()) {
-      return this.urlResized || this.url || this.file.url;
+      return this.urlResized || this.url || (this.file as any).url;
     }
     if (this.isPlayableVideo()) {
       return this.videoThumbnail || '';
@@ -233,7 +234,7 @@ class FileData {
 
   public ext(): string {
     if (this.file && this.file.name.indexOf('.') !== -1) {
-      return this.file.name.split('.').pop();
+      return (this.file.name as any).split('.').pop();
     }
     return '?';
     // return this.file.type.split('/').shift();

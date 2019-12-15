@@ -12,7 +12,8 @@ import Vue from 'vue';
 var dragCounter = 0;
 
 export default Vue.extend({
-  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'editable', 'linkable', 'sortable', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme', 'disabled'],
+  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'editable', 'linkable', 'sortable',
+    'resumable', 'tus', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme', 'disabled'],
   components: {
     VueFileIcon,
     VueFilePreview,
@@ -129,6 +130,11 @@ export default Vue.extend({
           validFilesData.push(fileData);
         }
       }
+      if (this.resumable && this.tus) {
+        return uploader.tusUpload(this.tus, url, headers, validFilesData, (overallProgress) => {
+          this.overallProgress = overallProgress;
+        });
+      }
       return uploader.upload(url, headers, validFilesData, createFormData, (overallProgress) => {
         this.overallProgress = overallProgress;
       });
@@ -138,6 +144,9 @@ export default Vue.extend({
         this.overallProgress = 0;
       }
       fileData = this.getFileDataInstance(fileData);
+      if (this.resumable && this.tus) {
+        return uploader.tusDeleteUpload(this.tus, url, headers, fileData);
+      }
       return uploader.deleteUpload(url, headers, fileData, uploadData);
     },
     updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
@@ -172,7 +181,7 @@ export default Vue.extend({
     },
     isFileAddedAlready(file: File): boolean {
       for (const fileData of this.filesData) {
-        if (this.equalFiles(file, fileData.file)) {
+        if (this.equalFiles(file, fileData.file as File)) {
           return true;
         }
       }
