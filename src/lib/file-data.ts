@@ -1,7 +1,6 @@
 import {getIconFromExt, SvgIcon} from './icons';
 import utils from './utils';
 import {RGBA, ImageThumbnail, VideoThumbnail} from './utils';
-import Vue, { PluginFunction } from 'vue';
 
 interface Dimensions {
   height: number;
@@ -22,18 +21,11 @@ interface ErrorText {
   upload?: string;
 }
 
-// interface ErrorFlags {
-//   common?: boolean;
-//   type?: boolean;
-//   size?: boolean;
-//   upload?: boolean;
-// }
 
 interface ErrorFlags {
   common?: boolean;
   type?: boolean;
   size?: boolean;
-  // upload?: boolean;
   upload?: false | string;
 }
 
@@ -67,18 +59,6 @@ interface DummyFile {
 }
 
 export { Dimensions, Options, RawFileData };
-
-// export default class VueFileAgentPlugin {
-//   static install: PluginFunction<never>;
-//   static VueFileIcon: Vue;
-//   static VueFilePreview: Vue;
-//   static VueFileAgent: Vue;
-//   static component: Vue;
-//   static mixin: Vue;
-// }
-
-// export const mixin: Vue;
-
 
 class FileData {
 
@@ -171,29 +151,6 @@ class FileData {
   public xhr?: XMLHttpRequest;
   public xhrQueue?: () => any;
   public stopAv?: (() => any) | null;
-
-  // public populate: (data: RawFileData, options: any) => void;
-  // public hasProgress: () => boolean;
-  // public progress: (value: undefined | number) => any | number;
-  // public size: () => number | '';
-  // public src: () => string;
-  // public ext: () => string;
-  // public name: (withoutName?: boolean) => string;
-  // public isDarkColor: () => boolean;
-  // public color: () => string;
-  // public isImage: () => boolean;
-  // public isVideo: () => boolean;
-  // public isPlayableVideo: () => boolean;
-  // public isAudio: () => boolean;
-  // public isPlayableAudio: () => boolean;
-  // public isText: () => boolean;
-  // public setUrl: (url: string) => Promise<any>;
-  // public imageResized: (resized: any) => void;
-  // public resizeImage: () => Promise<void>;
-  // public icon: () => any;
-  // public getErrorMessage: (errorText: string) => ErrorText;
-  // public toRaw: () => RawFileData;
-  // public validate: () => void;
 
   public constructor(data: RawFileData, options: Options) {
     this.url = null;

@@ -6,8 +6,8 @@
   "types": "src/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name vue-file-agent ./src/index.js",
-    "watch": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.js",
+    "build": "vue-cli-service build --target lib --name vue-file-agent ./src/index.ts",
+    "watch": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.ts",
     "upload-server": "node upload-server-examples/node/upload-server.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
