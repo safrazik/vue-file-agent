@@ -53,9 +53,10 @@
   @import "../scss/vue-file-agent.scss";
 </style>
 <script lang="ts">
+  import Vue from 'vue';
   import mixin from './vue-file-agent-mixin';
 
-  export default {
+  export default Vue.extend({
     mixins: [mixin],
-  };
+  });
 </script>
