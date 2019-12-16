@@ -14,7 +14,7 @@ Vue.config.productionTip = false;
 Vue.component('vfa-sortable-list', SlickList);
 Vue.component('vfa-sortable-item', SlickItem);
 
-(window as any).tus = tus;
+VueFileAgentPlugin.plugins.tus = tus;
 
 new Vue({
   render: (h) => h(App),

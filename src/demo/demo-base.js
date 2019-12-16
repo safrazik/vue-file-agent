@@ -60,3 +60,6 @@ if (window.VueSlicksort && window.Vue) {
   window.Vue.component('vfa-sortable-list', window.VueSlicksort.SlickList);
   window.Vue.component('vfa-sortable-item', window.VueSlicksort.SlickItem);
 }
+if (window.VueFileAgent && window.tus) {
+  window.VueFileAgent.plugins.tus = window.tus;
+}

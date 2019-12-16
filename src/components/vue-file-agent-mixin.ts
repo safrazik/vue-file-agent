@@ -7,6 +7,7 @@ import FileData from '../lib/file-data';
 import { RawFileData } from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 import Vue from 'vue';
+import plugins from '../lib/plugins';
 
 // tslint:disable-next-line
 var dragCounter = 0;
@@ -21,7 +22,6 @@ export default Vue.extend({
     'linkable',
     'sortable',
     'resumable',
-    'tus',
     'read',
     'accept',
     'value',
@@ -155,8 +155,8 @@ export default Vue.extend({
           validFilesData.push(fileData);
         }
       }
-      if (this.resumable && this.tus) {
-        return uploader.tusUpload(this.tus, url, headers, validFilesData, (overallProgress) => {
+      if (this.resumable) {
+        return uploader.tusUpload(plugins.tus, url, headers, validFilesData, (overallProgress) => {
           this.overallProgress = overallProgress;
         });
       }
@@ -169,8 +169,8 @@ export default Vue.extend({
         this.overallProgress = 0;
       }
       fileData = this.getFileDataInstance(fileData);
-      if (this.resumable && this.tus) {
-        return uploader.tusDeleteUpload(this.tus, url, headers, fileData);
+      if (this.resumable) {
+        return uploader.tusDeleteUpload(plugins.tus, url, headers, fileData);
       }
       return uploader.deleteUpload(url, headers, fileData, uploadData);
     },

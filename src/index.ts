@@ -6,6 +6,7 @@ import VueFileAgent from './components/vue-file-agent.vue';
 import VueFileAgentMixin from './components/vue-file-agent-mixin';
 import VueFilePreviewMixin from './components/vue-file-preview-mixin';
 import utils from './lib/utils';
+import plugins from './lib/plugins';
 import FileData from './lib/file-data';
 
 import _Vue, { PluginFunction } from 'vue';
@@ -16,6 +17,7 @@ export default class VueFileAgentPlugin {
   public static VueFileAgent = VueFileAgent;
   public static component = VueFileAgent;
   public static mixin = VueFileAgentMixin;
+  public static plugins = plugins;
 
   public static VueFileAgentMixin = VueFileAgentMixin;
   public static VueFilePreviewMixin = VueFilePreviewMixin;
@@ -42,4 +44,4 @@ export const mixin = VueFileAgentMixin;
 
 export { VueFileAgentMixin, VueFilePreviewMixin };
 
-export { utils, FileData };
+export { utils, FileData, plugins };

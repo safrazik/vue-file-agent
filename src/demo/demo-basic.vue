@@ -33,7 +33,6 @@
       @delete="fileDeleted($event)"
       :sortable="sortable"
       :resumable="resumable"
-      :tus="tus"
     >
     </VueFileAgent>
 
@@ -51,7 +50,6 @@ export default {
       filesData: this.getFilesDataInitial(),
       sortable: false,
       resumable: true,
-      tus: window.tus || null,
     };
   },
   computed: {

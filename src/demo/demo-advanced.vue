@@ -133,7 +133,6 @@
           :linkable="linkable"
           :sortable="sortable"
           :resumable="resumable"
-          :tus="tus"
           :disabled="disabled"
           :compact="compact"
           :accept="valAccept"
@@ -265,7 +264,6 @@ export default {
       linkable: true,
       sortable: false,
       resumable: false,
-      tus: window.tus || null,
       disabled: false,
       compact: false,
       theme: 'list',

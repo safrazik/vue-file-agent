@@ -242,7 +242,7 @@ class UploadHelper {
   public doTusUpload(tus: any, url: string, fileData: FileData, headers: object, progressCallback: ProgressFn) {
     return new Promise((resolve, reject) => {
       if (!tus) {
-        return reject('tus required');
+        return reject(new Error('tus required. Please install tus-js-client'));
       }
       // https://github.com/tus/tus-js-client
       // Create a new tus upload
