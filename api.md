@@ -16,11 +16,20 @@ permalink: /docs/
 
 ## Props
 
-### multiple
+### accept
 
-boolean, default auto
+string, default `""`
 
-Whether the file input allows multiple files. Default value is determined by the type of `v-model` - if an array is provided, multiple mode is enabled. Note that, when multiple is false, dragging and dropping a file results in replacing the existing file.
+e.g: `image/*,.pdf`
+
+Equivalent to HTML5 file input [accept attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept). Validated and error message is shown when selecting invalid files.
+Value can be a combination of: [Unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers)
+
+### compact
+
+boolean, default false
+
+Enables the compact mode which is useful for single file upload within a fixed size container. (See Profile Picture example below)
 
 ### deletable
 
@@ -28,11 +37,29 @@ boolean, default `false`
 
 Whether the file delete/cancel button should be showed.
 
+### disabled
+
+boolean, default `undefined`
+
+Disables all user interactions on the component
+
 ### editable
 
 boolean, default `false`
 
 Whether the file name can be edited. The (modified) name can be retrieved by `fileData.name(withoutExtension = true)`
+
+### errorText
+
+object `{ type: 'Invalid file type', size: 'Files should not exceed <maxSize> in size' }`
+
+The error text messages to be displayed when `accept` or `maxSize` validation fails.
+
+### helpText
+
+string `Choose files or drag & drop here`
+
+The text to be shown at the file input.
 
 ### linkable
 
@@ -40,34 +67,33 @@ boolean, default `false`
 
 Whether the file icon is linkable (clickable/downloadable). Only available for preloaded files with urls.
 
-### sortable
+### maxFiles
 
-boolean or string (`true` - drag to sort, `'hold'` - hold and drag to sort, `'handle'` - drag the handle to sort), default `false`
+number, default none
 
-Whether the files can be drag sorted. You need to install [vue-slicksort](https://github.com/Jexordexan/vue-slicksort) for this to work. And you have to define two components `vfa-sortable-list` and `vfa-sortable-item`.
+e.g: `12`
 
-with npm:
+Limits the maximum files allowed to be selected. Ignores the extra files.
 
-```javascript
-// npm install vue-slicksort --save
+### maxSize
 
-import { SlickList, SlickItem } from 'vue-slicksort';
+string, default none
 
-Vue.component('vfa-sortable-list', SlickList);
-Vue.component('vfa-sortable-item', SlickItem);
-```
+e.g: `2.5MB`
 
-with script tag:
+Validates each file and shows error message for invalid files.
 
-```html
-<script src="https://unpkg.com/vue-slicksort@latest/dist/vue-slicksort.min.js"></script>
-<script>
-  if (window.VueSlicksort) {
-    Vue.component('vfa-sortable-list', window.VueSlicksort.SlickList);
-    Vue.component('vfa-sortable-item', window.VueSlicksort.SlickItem);
-  }
-</script>
-```
+### meta
+
+boolean, default `true`
+
+Whether the file meta (file name, size, etc) showed.
+
+### multiple
+
+boolean, default auto
+
+Whether the file input allows multiple files. Default value is determined by the type of `v-model` - if an array is provided, multiple mode is enabled. Note that, when multiple is false, dragging and dropping a file results in replacing the existing file.
 
 ### resumable
 
@@ -98,78 +124,34 @@ with script tag:
 </script>
 ```
 
-### disabled
+### sortable
 
-boolean, default `undefined`
+boolean or string (`true` - drag to sort, `'hold'` - hold and drag to sort, `'handle'` - drag the handle to sort), default `false`
 
-Disables all user interactions on the component
+Whether the files can be drag sorted. You need to install [vue-slicksort](https://github.com/Jexordexan/vue-slicksort) for this to work. And you have to define two components `vfa-sortable-list` and `vfa-sortable-item`.
 
-### meta
+with npm:
 
-boolean, default `true`
+```javascript
+// npm install vue-slicksort --save
 
-Whether the file meta (file name, size, etc) showed.
+import { SlickList, SlickItem } from 'vue-slicksort';
 
-### accept
+Vue.component('vfa-sortable-list', SlickList);
+Vue.component('vfa-sortable-item', SlickItem);
+```
 
-string, default `""`
+with script tag:
 
-e.g: `image/*,.pdf`
-
-Equivalent to HTML5 file input [accept attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept). Validated and error message is shown when selecting invalid files.
-Value can be a combination of: [Unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers)
-
-### maxSize
-
-string, default none
-
-e.g: `2.5MB`
-
-Validates each file and shows error message for invalid files.
-
-### maxFiles
-
-number, default none
-
-e.g: `12`
-
-Limits the maximum files allowed to be selected. Ignores the extra files.
-
-### helpText
-
-string `Choose files or drag & drop here`
-
-The text to be shown at the file input.
-
-### errorText
-
-object `{ type: 'Invalid file type', size: 'Files should not exceed <maxSize> in size' }`
-
-The error text messages to be displayed when `accept` or `maxSize` validation fails.
-
-### uploadUrl
-
-string default none
-
-When this prop is provided, built in uploader is triggerred as soon as files are selected. And when delete button is clicked, built in uploader's delete function is called.
-
-### uploadHeaders
-
-object default none
-
-Headers to pass to `uploadUrl`
-
-### thumbnailSize
-
-number, default `360`
-
-Image and Video file preview thumbnails are resized to this size. Bigger numbers resut in better quality thumbnails, smaller numbers result in faster preview generation.
-
-### compact
-
-boolean, default false
-
-Enables the compact mode which is useful for single file upload within a fixed size container. (See Profile Picture example below)
+```html
+<script src="https://unpkg.com/vue-slicksort@latest/dist/vue-slicksort.min.js"></script>
+<script>
+  if (window.VueSlicksort) {
+    Vue.component('vfa-sortable-list', window.VueSlicksort.SlickList);
+    Vue.component('vfa-sortable-item', window.VueSlicksort.SlickItem);
+  }
+</script>
+```
 
 ### theme
 
@@ -177,6 +159,24 @@ string, default none
 
 When provided, a theme class is added to the container `.theme-<theme>`.
 Officially supported themes: `default` (grid view), `list` (list view)
+
+### thumbnailSize
+
+number, default `360`
+
+Image and Video file preview thumbnails are resized to this size. Bigger numbers resut in better quality thumbnails, smaller numbers result in faster preview generation.
+
+### uploadHeaders
+
+object default none
+
+Headers to pass to `uploadUrl`
+
+### uploadUrl
+
+string default none
+
+When this prop is provided, built in uploader is triggerred as soon as files are selected. And when delete button is clicked, built in uploader's delete function is called.
 
 ### value
 
@@ -287,22 +287,6 @@ Trigger the default delete upload action.
 
 ## Slots
 
-### file-preview
-
-Preview block of each FileData
-
-### file-preview-new
-
-Upload help text ("Choose files...") and icon
-
-### before-outer
-
-Content is placed (before) outside of the file input. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
-
-### before-inner
-
-Content is placed (before) inside of the file input.
-
 ### after-inner
 
 Content is placed (before) inside of the file input.
@@ -310,6 +294,22 @@ Content is placed (before) inside of the file input.
 ### after-outer
 
 Content is placed (after) outside of the file input. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
+
+### before-inner
+
+Content is placed (before) inside of the file input.
+
+### before-outer
+
+Content is placed (before) outside of the file input. Files can be dragged here. When files are over dragged over this area `is-drag-over` class is added to the parent.
+
+### file-preview
+
+Preview block of each FileData
+
+### file-preview-new
+
+Upload help text ("Choose files...") and icon
 
 ### sortable-handle
 
