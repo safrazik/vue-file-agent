@@ -35,6 +35,7 @@ export default class VueFileAgentPlugin {
 // auto install
 if (typeof window !== 'undefined' && window.Vue) {
   VueFileAgentPlugin.install(window.Vue, {});
+  (window as any).VueFileAgent = VueFileAgentPlugin;
 }
 
 export const mixin = VueFileAgentMixin;
