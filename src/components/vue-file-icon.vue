@@ -9,11 +9,11 @@
 </style>
 <script lang="ts">
 
-import {getIconFromExt} from '../lib/icons';
+import {getIconFromExt, getIconByName, SvgIcon} from '../lib/icons';
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['ext', 'viewBox'],
+  props: ['ext', 'name', 'viewBox'],
   computed: {
     viewBoxComputed(): string {
       if (!this.viewBox && this.icon && this.icon.viewBox) {
@@ -21,7 +21,10 @@ export default Vue.extend({
       }
       return this.viewBox ? this.viewBox : '0 0 100 100';
     },
-    icon() {
+    icon(): SvgIcon {
+      if (this.name) {
+        return getIconByName(this.name);
+      }
       const svgIcon = getIconFromExt(this.ext);
       return svgIcon;
     },

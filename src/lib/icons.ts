@@ -82,6 +82,24 @@ const icons = {
   'other': new SvgIcon([
     'M71 36.3L57.8 23.1c-.4-.4-.9-.6-1.4-.6h-26c-1.1 0-2 .9-2 2v51.1c0 1.1.9 2 2 2h39.3c1.1 0 2-.9 2-2V37.7c-.1-.5-.3-1-.7-1.4zm-3.9 2.3H55.5V27l11.6 11.6zm.1 34.5H32.8V26.9h18.5v13.3c0 1.4 1.2 2.6 2.6 2.6h13.3v30.3z',
   ]/* no color? */),
+  // system icons
+  'system-close': new SvgIcon([
+    'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
+  ], undefined, '0 0 24 24'),
+  'system-file-preview-new': new SvgIcon([
+    'M745,353c-5.6,0-11.3,0.2-17.2,0.7C687.4,237.3,577.8,157,451,157c-162.1,0-294,131.9-294,294c0,2.1,0,4.1,0,6.2C72.6,479,10,555.8,10,647c0,108.1,87.9,196,196,196h245V618.3l-63.4,63.4c-9.6,9.6-22.1,14.4-34.6,14.4s-25.1-4.8-34.6-14.4c-19.2-19.2-19.2-50.1,0-69.3l147-147c4.6-4.6,9.9-8.1,16-10.6c12-4.9,25.5-4.9,37.4,0c6,2.5,11.4,6.1,16,10.6l147,147c19.2,19.2,19.2,50.1,0,69.3c-9.6,9.6-22.1,14.4-34.6,14.4s-25.1-4.8-34.6-14.4L549,618.3V843h196c135.1,0,245-109.9,245-245S880.1,353,745,353z',
+  ], undefined, '0 0 1000 1000'),
+  // system icons
+  'system-sortable-handle': new SvgIcon([
+    'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z',
+  ], undefined, '0 0 24 24'),
+  'system-file-av-play': new SvgIcon([
+    'M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm-4 29V15l12 9-12 9z',
+  ], undefined, '0 0 48 48'),
+  // M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm-4 29V15l12 9-12 9z
+  'system-file-name-edit': new SvgIcon([
+    'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z',
+  ], undefined, '0 0 24 24'),
 };
 
 for (const category in icons) {
@@ -102,9 +120,13 @@ for (const cat in extensions) {
   }
 }
 
+export function getIconByName(name: string): SvgIcon {
+    const svgIcon = (icons as any)[name] || icons.other;
+    return svgIcon;
+}
+
 export function getIconFromExt(ext: string): SvgIcon {
     ext = ext.toLowerCase();
     const cat = extensionsMap[ext];
-    const svgIcon = (icons as any)[cat] || icons.other;
-    return svgIcon;
+    return getIconByName(cat);
 }
