@@ -1,6 +1,5 @@
 .vue-file-agent {
   .file-preview-new {
-
     text-align: center;
     padding: 8px;
     z-index: 1;
@@ -10,13 +9,13 @@
     }
 
     svg {
-      fill: #AAA;
+      fill: #aaa;
       margin-top: 16%;
       height: 36%;
     }
 
     .help-text {
-      color: #AAA;
+      color: #aaa;
       text-align: center;
       font-size: 16px;
       line-height: 20px;
@@ -26,7 +25,8 @@
 
     .file-preview {
       z-index: 8;
-      &::before, &::after {
+      &::before,
+      &::after {
         display: none;
       }
     }

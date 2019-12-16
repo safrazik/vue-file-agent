@@ -13,10 +13,10 @@
     top: 0;
     height: 28px;
 
-      height: 4px;
-      margin-top: 1px;
-      margin-left: 1px;
-      margin-right: 1px;
+    height: 4px;
+    margin-top: 1px;
+    margin-left: 1px;
+    margin-right: 1px;
 
     .file-progress-bar {
       background: #fac525;
@@ -36,19 +36,17 @@
     }
 
     &.file-progress-done {
-        width: 5px !important;
-        height: 5px !important;
-        right: 0 !important;
-        left: auto !important;
-        border-radius: 50%;
-        box-shadow: -1px 1px 2px 0px rgba(0, 0, 0, 0.75);
+      width: 5px !important;
+      height: 5px !important;
+      right: 0 !important;
+      left: auto !important;
+      border-radius: 50%;
+      box-shadow: -1px 1px 2px 0px rgba(0, 0, 0, 0.75);
 
       .file-progress-bar {
         // background: #6eef1a;
         background: #54d500;
       }
     }
-
   }
-
 }

@@ -8,7 +8,6 @@ import { SlickList, SlickItem } from 'vue-slicksort';
 
 import tus from 'tus-js-client';
 
-
 Vue.use(VueFileAgentPlugin);
 Vue.config.productionTip = false;
 

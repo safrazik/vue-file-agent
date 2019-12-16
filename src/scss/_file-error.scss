@@ -1,11 +1,9 @@
 .vue-file-agent {
-
   .file-error-wrapper {
-
     position: absolute;
     left: 0;
     right: 0;
-    color: #FFF;
+    color: #fff;
     bottom: 25px;
     z-index: 900;
     padding: 10px;
@@ -20,10 +18,8 @@
       background: #ea2626;
       width: 100%;
       height: auto;
-      color: #FFF;
+      color: #fff;
       padding: 0 5px;
     }
-
   }
-
 }

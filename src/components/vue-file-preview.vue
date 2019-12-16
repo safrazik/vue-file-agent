@@ -35,9 +35,6 @@
       }"
       :style="{
         'background-color': fileData.color(),
-        'background-imagex': 'url(' + fileData.src() + ')',
-        widthx: fileData.width + 'px',
-        heightx: fileData.height + 'px',
       }"
     >
       <span class="file-preview-overlay"></span>

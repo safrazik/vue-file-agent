@@ -1,7 +1,5 @@
 .vue-file-agent {
-  
   .file-preview {
-
     position: relative;
     z-index: 1;
     float: left;
@@ -10,8 +8,9 @@
     justify-content: center;
     z-index: 9;
 
-    &::before, &::after {
-      content: " ";
+    &::before,
+    &::after {
+      content: ' ';
       position: absolute;
       left: 0;
       top: 0;
@@ -41,7 +40,10 @@
 
     .file-preview-img-clone {
       position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       object-fit: cover;
       filter: blur(10px);
       height: 100%;
@@ -75,7 +77,7 @@
       height: 28px;
       width: 22px;
       display: block;
-      color: #FFF;
+      color: #fff;
       color: rgba(255, 255, 255, 0.75);
       z-index: 5;
     }
@@ -101,7 +103,7 @@
     .file-icon svg {
       width: 72px;
       height: 72px;
-      fill: #FFF;
+      fill: #fff;
     }
 
     .file-ext {
@@ -139,7 +141,7 @@
     }
 
     .image-dimension .image-dimension-width::after {
-      content: "x";
+      content: 'x';
     }
 
     .image-dimension {
@@ -160,7 +162,7 @@
     .file-size,
     .image-dimension,
     .image-dimension .image-dimension-width::after {
-      color: #FFF;
+      color: #fff;
     }
   }
 
@@ -178,10 +180,8 @@
     .file-name,
     .file-size,
     .image-dimension,
-    &::after
-    {
+    &::after {
       display: none;
     }
   }
-
 }

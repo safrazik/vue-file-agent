@@ -7,12 +7,13 @@
       height: 53px;
       padding: 0;
 
-      &::before, &::after {
+      &::before,
+      &::after {
         box-shadow: none;
       }
 
       &::before {
-        background: #DCDCDF;
+        background: #dcdcdf;
         left: 53px;
         right: 0;
         top: 0;
@@ -20,7 +21,8 @@
         height: 100%;
       }
 
-      .thumbnail, .file-icon {
+      .thumbnail,
+      .file-icon {
         width: 100%;
         left: 0;
         margin: 0;
@@ -50,14 +52,16 @@
       //   box-shadow: none;
       // }
 
-
       //// stage 2
-      .file-name, .file-ext {
+      .file-name,
+      .file-ext {
         /*background: #DCDCDF;*/
         background: transparent;
       }
 
-      .file-progress, .file-name, .file-ext {
+      .file-progress,
+      .file-name,
+      .file-ext {
         left: 53px;
         text-align: left;
         color: #333;
@@ -72,7 +76,7 @@
       }
 
       .file-delete {
-      /*  bottom: 0;
+        /*  bottom: 0;
         height: 100%;
         line-height: 53px;*/
         color: #e55353;
@@ -86,10 +90,10 @@
         margin-left: 53px;
         right: auto;
         width: auto;
-        &, .image-dimension-width::after {
+        &,
+        .image-dimension-width::after {
           color: #666;
         }
-
       }
 
       // end stage 2
@@ -121,7 +125,6 @@
       left: 10px;
       top: 10px;
     }
-
   }
 
   .file-preview-new {
@@ -148,11 +151,9 @@
       bottom: 0;
       height: 100%;
     }
-
   }
 
   .file-av-wrapper {
-
     .file-av-action {
       width: 53px;
       height: 53px;
@@ -161,21 +162,20 @@
       top: 0;
     }
 
-    .file-av-stop, .file-av-play {
+    .file-av-stop,
+    .file-av-play {
       width: 50%;
       height: 50%;
       position: absolute;
       left: 25%;
       top: 25%;
     }
-
   }
-
 }
 
 .theme-list {
-
-  .grid-box-enter, .grid-box-leave-to  {
+  .grid-box-enter,
+  .grid-box-leave-to {
     /*transform: translate3d(-20px, -20px, -20px) scale(0) !important;*/
     transform: translate3d(0px, -20px, 0px) !important;
     /*transform: translate3d(0px, -58px, 0px) !important;*/

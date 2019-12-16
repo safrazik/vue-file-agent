@@ -11,7 +11,6 @@ import FileData from './lib/file-data';
 import _Vue, { PluginFunction } from 'vue';
 
 export default class VueFileAgentPlugin {
-
   public static VueFileIcon = VueFileIcon;
   public static VueFilePreview = VueFilePreview;
   public static VueFileAgent = VueFileAgent;
@@ -31,7 +30,6 @@ export default class VueFileAgentPlugin {
       mixin: VueFileAgentMixin,
     };
   }
-
 }
 
 // auto install
@@ -41,9 +39,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export const mixin = VueFileAgentMixin;
 
-export {
-  VueFileAgentMixin,
-  VueFilePreviewMixin,
-};
+export { VueFileAgentMixin, VueFilePreviewMixin };
 
-export {utils, FileData};
+export { utils, FileData };

@@ -1,6 +1,6 @@
-import {getIconFromExt, SvgIcon} from './icons';
+import { getIconFromExt, SvgIcon } from './icons';
 import utils from './utils';
-import {RGBA, ImageThumbnail, VideoThumbnail} from './utils';
+import { RGBA, ImageThumbnail, VideoThumbnail } from './utils';
 
 interface Dimensions {
   height: number;
@@ -21,14 +21,12 @@ interface ErrorText {
   upload?: string;
 }
 
-
 interface ErrorFlags {
   common?: boolean;
   type?: boolean;
   size?: boolean;
   upload?: false | string;
 }
-
 
 interface RawFileData {
   url: string | null;
@@ -61,8 +59,6 @@ interface DummyFile {
 export { Dimensions, Options, RawFileData };
 
 class FileData {
-
-
   public static getFromRaw(fileDataRaw: RawFileData, options: Options, isSync = false): FileData | Promise<FileData> {
     const fileData = new FileData(fileDataRaw, options);
     const promise = fileData.setUrl(fileDataRaw.url);
@@ -164,7 +160,7 @@ class FileData {
     this.upload = null;
 
     this.raw = data;
-    this.file = data.file instanceof File ? data.file : this.createDummyFile(data) as any;
+    this.file = data.file instanceof File ? data.file : (this.createDummyFile(data) as any);
     this.progressInternal = !isNaN(data.progress as number) ? (data.progress as number) : 0;
     // this.width = FileData.defaultWidth;
     // this.height = FileData.defaultHeight;
@@ -177,15 +173,13 @@ class FileData {
     this.options = options;
     this.maxSize = options.maxSize;
     this.accept = options.accept;
-    this.id = Math.random() + ':' + (new Date()).getTime();
+    this.id = Math.random() + ':' + new Date().getTime();
     this.videoThumbnail = data.videoThumbnail;
     this.imageColor = data.imageColor;
     this.customName = data.customName;
 
     this.validate();
-
   }
-
 
   // populate(data, options = {}) {}
 
@@ -243,7 +237,7 @@ class FileData {
   public name(withoutExt?: boolean): string {
     const ext = this.ext();
     if (this.customName) {
-      return this.customName + (withoutExt ? '' : (ext !== '?' ? '.' + ext : ''));
+      return this.customName + (withoutExt ? '' : ext !== '?' ? '.' + ext : '');
     }
     const name = this.file && this.file.name;
     if (withoutExt) {
@@ -333,10 +327,13 @@ class FileData {
 
   public resizeImage(): Promise<this> {
     return new Promise((resolve, reject) => {
-      utils.resizeImage(this.thumbnailSize, this.file, this.url as string).then((resized) => {
-        this.imageResized(resized);
-        resolve(this);
-      }).catch(reject);
+      utils
+        .resizeImage(this.thumbnailSize, this.file, this.url as string)
+        .then((resized) => {
+          this.imageResized(resized);
+          resolve(this);
+        })
+        .catch(reject);
     });
   }
 
@@ -355,14 +352,14 @@ class FileData {
     errorText = {
       common: errorText.common || 'Invalid file.',
       type: errorText.type || 'Invalid file type.',
-      size: errorText.size || ('Files should not exceed ' + this.maxSize + ' in size'),
+      size: errorText.size || 'Files should not exceed ' + this.maxSize + ' in size',
     };
     if (error.type) {
       return errorText.type as string;
     } else if (error.size) {
       return errorText.size as string;
     } else if (error.upload) {
-      return (this.upload && this.upload.error) ? this.upload.error : error.upload;
+      return this.upload && this.upload.error ? this.upload.error : error.upload;
     }
     return errorText.common as string;
   }
@@ -404,7 +401,6 @@ class FileData {
       this.error = false;
     }
   }
-
 }
 
 export default FileData;

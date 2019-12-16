@@ -1,5 +1,4 @@
 .vue-file-agent {
-
   .file-av-wrapper {
     .file-av-action {
       width: 60px;
@@ -33,12 +32,13 @@
 
     .file-av-stop svg,
     .file-av-play svg {
-      fill: #FFF;
+      fill: #fff;
       width: 100%;
       height: 100%;
     }
 
-    video, audio {
+    video,
+    audio {
       position: absolute;
       left: 0;
       right: 0;
@@ -49,7 +49,6 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.75);
     }
-
   }
 
   .file-is-playing-av .file-av-wrapper {

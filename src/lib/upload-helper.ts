@@ -6,7 +6,6 @@ type ProgressFn = (event: ProgressEvent) => void;
 type CreateFormDataFn = (fileData: FileData) => FormData;
 
 class UploadHelper {
-
   // useAxios(axios){
   //   this.axios = axios;
   // }
@@ -24,46 +23,55 @@ class UploadHelper {
   }
 
   public doUpload(
-    url: string, headers: object, formData: FormData,
-    progressCallback: ProgressFn, configureFn?: ConfigureFn): Promise<AjaxResponse> {
-      return ajax.post(url, formData, (xhr) => {
-        this.addHeaders(xhr, headers);
-        xhr.upload.addEventListener('progress', progressCallback, false);
-        if (typeof configureFn === 'function') {
-          configureFn(xhr);
-        }
-      });
-
+    url: string,
+    headers: object,
+    formData: FormData,
+    progressCallback: ProgressFn,
+    configureFn?: ConfigureFn,
+  ): Promise<AjaxResponse> {
+    return ajax.post(url, formData, (xhr) => {
+      this.addHeaders(xhr, headers);
+      xhr.upload.addEventListener('progress', progressCallback, false);
+      if (typeof configureFn === 'function') {
+        configureFn(xhr);
+      }
+    });
   }
 
   public doDeleteUpload(
-    url: string, headers: object, uploadData: any,
-    configureFn?: ConfigureFn): Promise<AjaxResponse> {
-      if (typeof uploadData !== 'string') {
-        uploadData = JSON.stringify(uploadData);
+    url: string,
+    headers: object,
+    uploadData: any,
+    configureFn?: ConfigureFn,
+  ): Promise<AjaxResponse> {
+    if (typeof uploadData !== 'string') {
+      uploadData = JSON.stringify(uploadData);
+    }
+    return ajax.delete(url, uploadData, (xhr) => {
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      this.addHeaders(xhr, headers);
+      if (typeof configureFn === 'function') {
+        configureFn(xhr);
       }
-      return ajax.delete(url, uploadData, (xhr) => {
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        this.addHeaders(xhr, headers);
-        if (typeof configureFn === 'function') {
-          configureFn(xhr);
-        }
-      });
+    });
   }
 
   public doUpdateUpload(
-    url: string, headers: object, uploadData: any,
-    configureFn?: ConfigureFn): Promise<AjaxResponse> {
-      if (typeof uploadData !== 'string') {
-        uploadData = JSON.stringify(uploadData);
+    url: string,
+    headers: object,
+    uploadData: any,
+    configureFn?: ConfigureFn,
+  ): Promise<AjaxResponse> {
+    if (typeof uploadData !== 'string') {
+      uploadData = JSON.stringify(uploadData);
+    }
+    return ajax.put(url, uploadData, (xhr) => {
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      this.addHeaders(xhr, headers);
+      if (typeof configureFn === 'function') {
+        configureFn(xhr);
       }
-      return ajax.put(url, uploadData, (xhr) => {
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        this.addHeaders(xhr, headers);
-        if (typeof configureFn === 'function') {
-          configureFn(xhr);
-        }
-      });
+    });
   }
 
   // doUploadAxios(axios, formData, progressCallback){
@@ -105,9 +113,16 @@ class UploadHelper {
   }
 
   public upload(
-    url: string, headers: object, filesData: FileData[],
-    createFormData?: CreateFormDataFn, progressFn?: (progress: number) => void, configureFn?: ConfigureFn) {
-    let updateOverallProgress = () => {/* no op */};
+    url: string,
+    headers: object,
+    filesData: FileData[],
+    createFormData?: CreateFormDataFn,
+    progressFn?: (progress: number) => void,
+    configureFn?: ConfigureFn,
+  ) {
+    let updateOverallProgress = () => {
+      /* no op */
+    };
     if (progressFn) {
       updateOverallProgress = () => {
         let prgTotal = 0;
@@ -128,28 +143,37 @@ class UploadHelper {
         formData.append('filename', fileData.name());
       }
       // ((fileData) => {
-      const promise = this.doUpload(url, headers, formData, (progressEvent) => {
+      const promise = this.doUpload(
+        url,
+        headers,
+        formData,
+        (progressEvent) => {
           const percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
           // do not complete until promise resolved
           fileData.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
           updateOverallProgress();
-      }, (xhr) => {
-        fileData.xhr = xhr;
-        if (typeof configureFn === 'function') {
-          configureFn(xhr);
-        }
-      });
-      promise.then((response) => {
-        delete fileData.xhr;
-        fileData.upload = response.data;
-        fileData.progress(100);
-        if (fileData.xhrQueue) {
-          fileData.xhrQueue();
-          delete fileData.xhrQueue;
-        }
-      } /* */ , (err) => {
-        this.prepareUploadError(fileData, err);
-      } /* */);
+        },
+        (xhr) => {
+          fileData.xhr = xhr;
+          if (typeof configureFn === 'function') {
+            configureFn(xhr);
+          }
+        },
+      );
+      promise.then(
+        (response) => {
+          delete fileData.xhr;
+          fileData.upload = response.data;
+          fileData.progress(100);
+          if (fileData.xhrQueue) {
+            fileData.xhrQueue();
+            delete fileData.xhrQueue;
+          }
+        } /* */,
+        (err) => {
+          this.prepareUploadError(fileData, err);
+        } /* */,
+      );
       promises.push(promise);
       // })(fileData);
     }
@@ -169,12 +193,15 @@ class UploadHelper {
           if (typeof configureFn === 'function') {
             configureFn(xhr);
           }
-        }).then((result) => {
-          resolve(result);
-        }, (err) => {
-          this.prepareUploadError(fileData, err);
-          reject(err);
-        });
+        }).then(
+          (result) => {
+            resolve(result);
+          },
+          (err) => {
+            this.prepareUploadError(fileData, err);
+            reject(err);
+          },
+        );
       }
     });
   }
@@ -198,13 +225,16 @@ class UploadHelper {
           if (typeof configureFn === 'function') {
             configureFn(xhr);
           }
-        }).then((response) => {
-          fileData.upload = response.data;
-          resolve(response);
-        }, (err) => {
-          this.prepareUploadError(fileData, err);
-          reject(err);
-        });
+        }).then(
+          (response) => {
+            fileData.upload = response.data;
+            resolve(response);
+          },
+          (err) => {
+            this.prepareUploadError(fileData, err);
+            reject(err);
+          },
+        );
       }
     });
   }
@@ -230,7 +260,7 @@ class UploadHelper {
           // console.log("Failed because: " + error)
         },
         onProgress(bytesUploaded: number, bytesTotal: number) {
-          const event = {loaded: bytesUploaded, total: bytesTotal} as ProgressEvent;
+          const event = { loaded: bytesUploaded, total: bytesTotal } as ProgressEvent;
           progressCallback(event);
         },
         onSuccess() {
@@ -244,9 +274,15 @@ class UploadHelper {
   }
 
   public tusUpload(
-    tus: any, url: string, headers: object, filesData: FileData[],
-    progressFn?: (progress: number) => void) {
-    let updateOverallProgress = () => {/* no op */ };
+    tus: any,
+    url: string,
+    headers: object,
+    filesData: FileData[],
+    progressFn?: (progress: number) => void,
+  ) {
+    let updateOverallProgress = () => {
+      /* no op */
+    };
     if (progressFn) {
       updateOverallProgress = () => {
         let prgTotal = 0;
@@ -264,19 +300,21 @@ class UploadHelper {
         fileData.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
         updateOverallProgress();
       });
-      promise.then((response) => {
-        // delete fileData.tusUpload;
-        fileData.progress(100);
-      }, (err) => {
-        this.prepareUploadError(fileData, err);
-      });
+      promise.then(
+        (response) => {
+          // delete fileData.tusUpload;
+          fileData.progress(100);
+        },
+        (err) => {
+          this.prepareUploadError(fileData, err);
+        },
+      );
       promises.push(promise);
     }
     return Promise.all(promises);
   }
 
-  public tusDeleteUpload(
-    tus: any, url: string, headers: object, fileData: FileData) {
+  public tusDeleteUpload(tus: any, url: string, headers: object, fileData: FileData) {
     return new Promise((resolve, reject) => {
       if (!tus) {
         return reject('tus required');
@@ -304,7 +342,6 @@ class UploadHelper {
       });
     });
   }
-
 }
 
 export default new UploadHelper();

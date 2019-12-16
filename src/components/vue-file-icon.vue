@@ -1,15 +1,13 @@
 <template>
   <svg :viewBox="viewBoxComputed">
     <template v-for="(d, index) in icon.paths">
-        <path :d="d" v-if="d" :key="index" />
+      <path :d="d" v-if="d" :key="index" />
     </template>
   </svg>
 </template>
-<style>
-</style>
+<style></style>
 <script lang="ts">
-
-import {getIconFromExt, getIconByName, SvgIcon} from '../lib/icons';
+import { getIconFromExt, getIconByName, SvgIcon } from '../lib/icons';
 import Vue from 'vue';
 
 export default Vue.extend({
@@ -30,5 +28,4 @@ export default Vue.extend({
     },
   },
 });
-
 </script>

@@ -9,5 +9,4 @@ import Vue from 'vue';
 export default Vue.extend({
   props: ['value', 'axis', 'appendTo'],
 });
-
 </script>

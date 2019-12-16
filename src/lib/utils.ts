@@ -19,7 +19,6 @@ enum ImageOrientation {
 }
 
 class Utils {
-
   public arrayMove(arr: any[], previousIndex: number, newIndex: number): any[] {
     // https://github.com/Jexordexan/vue-slicksort/blob/master/src/utils.js
     const array = arr.slice(0);
@@ -37,10 +36,10 @@ class Utils {
     const bytesPerPixel = 4;
     const arrLength = arr.length;
     if (arrLength < bytesPerPixel) {
-        return;
+      return;
     }
     const step = 5;
-    const len = arrLength - arrLength % bytesPerPixel;
+    const len = arrLength - (arrLength % bytesPerPixel);
     const preparedStep = (step || 1) * bytesPerPixel;
 
     let redTotal = 0;
@@ -62,16 +61,21 @@ class Utils {
       count++;
     }
 
-    return alphaTotal ? [
-        Math.round(redTotal / alphaTotal),
-        Math.round(greenTotal / alphaTotal),
-        Math.round(blueTotal / alphaTotal),
-        Math.round(alphaTotal / count),
-    ] : [0, 0, 0, 0];
+    return alphaTotal
+      ? [
+          Math.round(redTotal / alphaTotal),
+          Math.round(greenTotal / alphaTotal),
+          Math.round(blueTotal / alphaTotal),
+          Math.round(alphaTotal / count),
+        ]
+      : [0, 0, 0, 0];
   }
 
   public createVideoThumbnail(
-    video: HTMLVideoElement, canvas: HTMLCanvasElement, thumbnailSize: number): Promise<VideoThumbnail> {
+    video: HTMLVideoElement,
+    canvas: HTMLCanvasElement,
+    thumbnailSize: number,
+  ): Promise<VideoThumbnail> {
     video.setAttribute('crossOrigin', 'anonymous'); // fix cross origin issue
     return new Promise((resolve, reject) => {
       let loadedmetadata = false;
@@ -125,8 +129,8 @@ class Utils {
     // -2: not jpeg
     // -1: not defined
     const view = new DataView(buffer);
-    if (view.getUint16(0, false) !== 0xFFD8) {
-        return -2;
+    if (view.getUint16(0, false) !== 0xffd8) {
+      return -2;
     }
     const length = view.byteLength;
     let offset = 2;
@@ -136,24 +140,24 @@ class Utils {
       }
       const marker = view.getUint16(offset, false);
       offset += 2;
-      if (marker === 0xFFE1) {
-          if (view.getUint32(offset += 2, false) !== 0x45786966) {
-              return -1;
+      if (marker === 0xffe1) {
+        if (view.getUint32((offset += 2), false) !== 0x45786966) {
+          return -1;
+        }
+        const little = view.getUint16((offset += 6), false) === 0x4949;
+        offset += view.getUint32(offset + 4, little);
+        const tags = view.getUint16(offset, little);
+        offset += 2;
+        for (let i = 0; i < tags; i++) {
+          if (view.getUint16(offset + i * 12, little) === 0x0112) {
+            return view.getUint16(offset + i * 12 + 8, little);
           }
-          const little = view.getUint16(offset += 6, false) === 0x4949;
-          offset += view.getUint32(offset + 4, little);
-          const tags = view.getUint16(offset, little);
-          offset += 2;
-          for (let i = 0; i < tags; i++) {
-            if (view.getUint16(offset + (i * 12), little) === 0x0112) {
-                return view.getUint16(offset + (i * 12) + 8, little);
-            }
-          }
-      // tslint:disable-next-line
-      } else if ((marker & 0xFF00) !== 0xFF00) {
-          break;
+        }
+        // tslint:disable-next-line
+      } else if ((marker & 0xff00) !== 0xff00) {
+        break;
       } else {
-          offset += view.getUint16(offset, false);
+        offset += view.getUint16(offset, false);
       }
     }
     return -1;
@@ -179,7 +183,12 @@ class Utils {
   }
 
   public rotateCanvas(
-    srcOrientation: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, width: number, height: number) {
+    srcOrientation: number,
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+    width: number,
+    height: number,
+  ) {
     // set proper canvas dimensions before transform & export
     if (4 < srcOrientation && srcOrientation < 9) {
       canvas.width = height;
@@ -191,20 +200,38 @@ class Utils {
 
     // transform context before drawing image
     switch (srcOrientation) {
-      case 2: ctx.transform(-1, 0, 0, 1, width, 0); break;
-      case 3: ctx.transform(-1, 0, 0, -1, width, height); break;
-      case 4: ctx.transform(1, 0, 0, -1, 0, height); break;
-      case 5: ctx.transform(0, 1, 1, 0, 0, 0); break;
-      case 6: ctx.transform(0, 1, -1, 0, height, 0); break;
-      case 7: ctx.transform(0, -1, -1, 0, height, width); break;
-      case 8: ctx.transform(0, -1, 1, 0, 0, width); break;
-      default: break;
+      case 2:
+        ctx.transform(-1, 0, 0, 1, width, 0);
+        break;
+      case 3:
+        ctx.transform(-1, 0, 0, -1, width, height);
+        break;
+      case 4:
+        ctx.transform(1, 0, 0, -1, 0, height);
+        break;
+      case 5:
+        ctx.transform(0, 1, 1, 0, 0, 0);
+        break;
+      case 6:
+        ctx.transform(0, 1, -1, 0, height, 0);
+        break;
+      case 7:
+        ctx.transform(0, -1, -1, 0, height, width);
+        break;
+      case 8:
+        ctx.transform(0, -1, 1, 0, 0, width);
+        break;
+      default:
+        break;
     }
-
   }
 
   public getImageResized(
-    image: HTMLImageElement, widthLimit: number, heightLimit?: number, orientation?: number): ImageThumbnail | null {
+    image: HTMLImageElement,
+    widthLimit: number,
+    heightLimit?: number,
+    orientation?: number,
+  ): ImageThumbnail | null {
     let width = image.width;
     let height = image.height;
     const thumbnailSize = widthLimit;
@@ -213,15 +240,15 @@ class Utils {
       height = heightLimit;
     } else {
       if (width > height) {
-          if (width > thumbnailSize) {
-              height *= thumbnailSize / width;
-              width = thumbnailSize;
-          }
+        if (width > thumbnailSize) {
+          height *= thumbnailSize / width;
+          width = thumbnailSize;
+        }
       } else {
-          if (height > thumbnailSize) {
-              width *= thumbnailSize / height;
-              height = thumbnailSize;
-          }
+        if (height > thumbnailSize) {
+          width *= thumbnailSize / height;
+          height = thumbnailSize;
+        }
       }
     }
 
@@ -244,13 +271,13 @@ class Utils {
     context.drawImage(image, 0, 0, width, height);
     let avgColor = null;
     try {
-        const imageData = context.getImageData(0, 0, width, height);
-        const rgba = this.getAverageColor(imageData.data);
-        if (rgba) {
-          avgColor = rgba;
-        }
+      const imageData = context.getImageData(0, 0, width, height);
+      const rgba = this.getAverageColor(imageData.data);
+      if (rgba) {
+        avgColor = rgba;
+      }
     } catch (e) {
-        /* security error, img on diff domain */
+      /* security error, img on diff domain */
     }
     return {
       image,
@@ -305,18 +332,19 @@ class Utils {
   public resizeImage(thumbnailSize: number, file?: File, url?: string): Promise<ImageThumbnail | null> {
     const image = new Image();
     image.setAttribute('crossOrigin', 'anonymous');
-    return url ? this.resizeImageUrl(image, url, thumbnailSize)
+    return url
+      ? this.resizeImageUrl(image, url, thumbnailSize)
       : this.resizeImageFile(image, file as File, thumbnailSize);
   }
 
   public getSizeFormatted(bytes: number) {
-     const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-     if (bytes === 0) {
-       return '0 B';
-     }
-     let i = Math.floor(Math.log(bytes) / Math.log(1024));
-     i = parseInt('' + i, 10);
-     return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i];
+    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) {
+      return '0 B';
+    }
+    let i = Math.floor(Math.log(bytes) / Math.log(1024));
+    i = parseInt('' + i, 10);
+    return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i];
   }
 
   public getSizeParsed(size: string): number {
@@ -335,23 +363,23 @@ class Utils {
 
   public getColorForText(text: string): string {
     const getHashCode = (value: string) => {
-        let hash = 0;
-        if (value.length === 0) {
-          return hash;
-        }
-        for (let i = 0; i < value.length; i++) {
-          // tslint:disable-next-line
-          hash = value.charCodeAt(i) + ((hash << 5) - hash);
-          // tslint:disable-next-line
-          hash = hash & hash; // Convert to 32bit integer
-        }
+      let hash = 0;
+      if (value.length === 0) {
         return hash;
+      }
+      for (let i = 0; i < value.length; i++) {
+        // tslint:disable-next-line
+        hash = value.charCodeAt(i) + ((hash << 5) - hash);
+        // tslint:disable-next-line
+        hash = hash & hash; // Convert to 32bit integer
+      }
+      return hash;
     };
     const intToHSL = (value: number) => {
-        const h = value % 360;
-        const s = value % 100;
-        const l = 50;
-        return 'hsl(' + h + ',' + s + '%,' + l + '%, 0.75)';
+      const h = value % 360;
+      const s = value % 100;
+      const l = 50;
+      return 'hsl(' + h + ',' + s + '%,' + l + '%, 0.75)';
     };
     return intToHSL(getHashCode(text.toLowerCase()));
   }
@@ -369,7 +397,8 @@ class Utils {
 
     for (let validType of acceptedFiles) {
       validType = validType.trim();
-      if (validType.charAt(0) === '.') { // extension
+      if (validType.charAt(0) === '.') {
+        // extension
         if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
           return true;
         }
@@ -399,7 +428,6 @@ class Utils {
   public getFilesFromDroppedItems(dataTransfer: DataTransfer) {
     return getFilesFromDroppedItems(dataTransfer);
   }
-
 }
 
 export default new Utils();

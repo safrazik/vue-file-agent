@@ -78,7 +78,7 @@ function includesFolder(files: FileList): boolean {
   if (!files.length) {
     return true; // if dropping only folders, no files will exist
   }
-    // tslint:disable-next-line
+  // tslint:disable-next-line
   for (var i = 0; i < files.length; i++) {
     // A folder has no type and has a size that is a multiple of 4096
     if (!files[i].type && files[i].size % 4096 === 0) {

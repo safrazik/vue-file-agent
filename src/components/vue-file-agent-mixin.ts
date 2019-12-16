@@ -4,7 +4,7 @@ import VueFilePreview from './vue-file-preview.vue';
 import VueFileList from './vue-file-list.vue';
 import VueFileListItem from './vue-file-list-item.vue';
 import FileData from '../lib/file-data';
-import {RawFileData} from '../lib/file-data';
+import { RawFileData } from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 import Vue from 'vue';
 
@@ -12,8 +12,30 @@ import Vue from 'vue';
 var dragCounter = 0;
 
 export default Vue.extend({
-  props: ['uploadUrl', 'uploadHeaders', 'multiple', 'deletable', 'editable', 'linkable', 'sortable',
-    'resumable', 'tus', 'read', 'accept', 'value', 'progress', 'helpText', 'maxSize', 'maxFiles', 'errorText', 'meta', 'compact', 'thumbnailSize', 'theme', 'disabled'],
+  props: [
+    'uploadUrl',
+    'uploadHeaders',
+    'multiple',
+    'deletable',
+    'editable',
+    'linkable',
+    'sortable',
+    'resumable',
+    'tus',
+    'read',
+    'accept',
+    'value',
+    'progress',
+    'helpText',
+    'maxSize',
+    'maxFiles',
+    'errorText',
+    'meta',
+    'compact',
+    'thumbnailSize',
+    'theme',
+    'disabled',
+  ],
   components: {
     VueFileIcon,
     VueFilePreview,
@@ -121,8 +143,11 @@ export default Vue.extend({
       return this.filesData[i];
     },
     upload(
-      url: string, headers: object, filesDataOrRaw: FileData[] | RawFileData[],
-      createFormData?: (fileData: FileData) => FormData): Promise<any> {
+      url: string,
+      headers: object,
+      filesDataOrRaw: FileData[] | RawFileData[],
+      createFormData?: (fileData: FileData) => FormData,
+    ): Promise<any> {
       const validFilesData = [];
       for (const fileDataOrRaw of filesDataOrRaw) {
         const fileData = this.getFileDataInstance(fileDataOrRaw);
@@ -172,12 +197,14 @@ export default Vue.extend({
       return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
     equalFiles(file1: File, file2: File): boolean {
-      return true &&
+      return (
+        true &&
         file1.name === file2.name &&
         file1.size === file2.size &&
         file1.type === file2.type &&
         // file1.lastModifiedDate.getTime() === file2.lastModifiedDate.getTime() &&
-        file1.lastModified === file2.lastModified;
+        file1.lastModified === file2.lastModified
+      );
     },
     isFileAddedAlready(file: File): boolean {
       for (const fileData of this.filesData) {
@@ -204,22 +231,28 @@ export default Vue.extend({
         filesFiltered.push(files[i]);
       }
       files = filesFiltered;
-      if (this.maxFiles && files.length > (this.maxFiles - this.filesData.length)) {
-        files = files.slice(0, (this.maxFiles - this.filesData.length));
+      if (this.maxFiles && files.length > this.maxFiles - this.filesData.length) {
+        files = files.slice(0, this.maxFiles - this.filesData.length);
       }
       for (const file of files) {
-        filesData.push(new FileData({
-          file,
-        } as RawFileData, {
-          read: this.shouldRead,
-          maxSize: this.maxSize,
-          accept: this.accept,
-          thumbnailSize: this.thumbnailSize,
-        }));
+        filesData.push(
+          new FileData(
+            {
+              file,
+            } as RawFileData,
+            {
+              read: this.shouldRead,
+              maxSize: this.maxSize,
+              accept: this.accept,
+              thumbnailSize: this.thumbnailSize,
+            },
+          ),
+        );
       }
 
       for (const fileData of filesData) {
-        if (fileData.file.size <= 20 * 1024 * 1024) { // <= 20MB
+        if (fileData.file.size <= 20 * 1024 * 1024) {
+          // <= 20MB
           this.initVideo(fileData);
         }
       }
@@ -309,16 +342,26 @@ export default Vue.extend({
       this.$emit('input', this.filesDataRaw);
       // this.$emit('delete', fileData);
       this.$emit('delete', fileDataRaw);
-      this.autoDeleteUpload(fileData).then((res) => {/* no op */}, (err) => {
-        this.filesData.splice(i, 1, fileData);
-        this.filesDataRaw.splice(i, 1, fileDataRaw);
-      });
+      this.autoDeleteUpload(fileData).then(
+        (res) => {
+          /* no op */
+        },
+        (err) => {
+          this.filesData.splice(i, 1, fileData);
+          this.filesDataRaw.splice(i, 1, fileDataRaw);
+        },
+      );
     },
     filenameChanged(fileData: FileData): void {
       this.$emit('rename', FileData.toRawArray([fileData])[0]);
-      this.autoUpdateUpload(fileData).then((res) => {/* no op */}, (err) => {
-        fileData.customName = fileData.oldCustomName;
-      });
+      this.autoUpdateUpload(fileData).then(
+        (res) => {
+          /* no op */
+        },
+        (err) => {
+          fileData.customName = fileData.oldCustomName;
+        },
+      );
     },
     checkValue(): void {
       let filesDataRaw: RawFileData[] = this.value || [];
@@ -333,12 +376,14 @@ export default Vue.extend({
           fdPromises.push(Promise.resolve(this.filesData[existingIndex]));
           filesDataRawNew[i] = this.filesDataRaw[existingIndex];
         } else {
-          fdPromises.push(FileData.fromRaw(filesDataRaw[i], {
-            read: this.shouldRead,
-            maxSize: this.maxSize,
-            accept: this.accept,
-            thumbnailSize: this.thumbnailSize,
-          }));
+          fdPromises.push(
+            FileData.fromRaw(filesDataRaw[i], {
+              read: this.shouldRead,
+              maxSize: this.maxSize,
+              accept: this.accept,
+              thumbnailSize: this.thumbnailSize,
+            }),
+          );
           filesDataRawNew.push(filesDataRaw[i]);
         }
       }
@@ -347,7 +392,6 @@ export default Vue.extend({
       Promise.all(fdPromises).then((filesData) => {
         this.filesData = filesData;
       });
-
     },
     sortStart(): void {
       if (this.sortTimeout) {
@@ -356,7 +400,7 @@ export default Vue.extend({
       this.isSorting = true;
       this.isSortingActive = true;
     },
-    sortEnd(sortData: { event: Event, newIndex: number, oldIndex: number, collection: any}): void {
+    sortEnd(sortData: { event: Event; newIndex: number; oldIndex: number; collection: any }): void {
       this.isSortingActive = false;
       if (this.sortTimeout) {
         clearTimeout(this.sortTimeout);
@@ -377,7 +421,11 @@ export default Vue.extend({
     },
   },
   created() {
-    this.uniqueId = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+    this.uniqueId =
+      new Date().getTime().toString(36) +
+      Math.random()
+        .toString(36)
+        .slice(2);
     this.checkValue();
   },
   watch: {

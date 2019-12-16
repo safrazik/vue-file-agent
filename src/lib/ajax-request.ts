@@ -15,10 +15,12 @@ export interface AjaxError extends Error {
 
 /* inspired by axios */
 class AjaxRequest {
-
   public createError(
-    message: string, code: string | null,
-    request: XMLHttpRequest, response?: AjaxResponse): AjaxError {
+    message: string,
+    code: string | null,
+    request: XMLHttpRequest,
+    response?: AjaxResponse,
+  ): AjaxError {
     const error: AjaxError = new Error(message) as AjaxError;
     if (code) {
       error.code = code;
@@ -36,21 +38,17 @@ class AjaxRequest {
     if (!response.status || !validateStatus || validateStatus(response.status)) {
       resolve(response);
     } else {
-      reject(this.createError(
-        'Request failed with status code ' + response.status,
-        null,
-        response.request,
-        response,
-      ));
+      reject(this.createError('Request failed with status code ' + response.status, null, response.request, response));
     }
   }
 
   public request(
-    method: string, url: string, formData: AjaxRequestData | null = null,
-    configureFn?: ConfigureFn): Promise<AjaxResponse> {
-
+    method: string,
+    url: string,
+    formData: AjaxRequestData | null = null,
+    configureFn?: ConfigureFn,
+  ): Promise<AjaxResponse> {
     return new Promise((resolve, reject) => {
-
       // tslint:disable-next-line
       let request = new XMLHttpRequest();
       const loadEvent = 'onreadystatechange';
@@ -92,7 +90,6 @@ class AjaxRequest {
         // Clean up request
         (request as any) = null;
       };
-
 
       // Handle browser request cancellation (as opposed to a manual cancellation)
       request.onabort = () => {
@@ -139,9 +136,7 @@ class AjaxRequest {
       }
 
       request.send(formData);
-
     });
-
   }
 
   public post(url: string, formData: AjaxRequestData, configureFn?: ConfigureFn) {
@@ -155,7 +150,6 @@ class AjaxRequest {
   public put(url: string, formData: AjaxRequestData, configureFn?: ConfigureFn) {
     return this.request('PUT', url, formData, configureFn);
   }
-
 }
 
 export default new AjaxRequest();

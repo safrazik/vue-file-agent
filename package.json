@@ -47,6 +47,7 @@
     "@vue/cli-service": "^4.1.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "node-sass": "^4.12.0",
+    "prettier": "1.19.1",
     "sass-loader": "^8.0.0",
     "tus-js-client": "^1.8.0",
     "typescript": "^3.7.3",
