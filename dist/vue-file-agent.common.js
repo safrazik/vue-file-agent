@@ -2175,7 +2175,7 @@ var upload_helper_UploadHelper = /** @class */ (function () {
     UploadHelper.prototype.doTusUpload = function (tus, url, fileData, headers, progressCallback) {
         return new Promise(function (resolve, reject) {
             if (!tus) {
-                return reject('tus required');
+                return reject(new Error('tus required. Please install tus-js-client'));
             }
             // https://github.com/tus/tus-js-client
             // Create a new tus upload
@@ -2276,7 +2276,13 @@ var upload_helper_UploadHelper = /** @class */ (function () {
 }());
 /* harmony default export */ var upload_helper = (new upload_helper_UploadHelper());
 
+// CONCATENATED MODULE: ./src/lib/plugins.ts
+/* harmony default export */ var plugins = ({
+    tus: null,
+});
+
 // CONCATENATED MODULE: ./src/components/vue-file-agent-mixin.ts
+
 
 
 
@@ -2298,7 +2304,6 @@ var dragCounter = 0;
         'linkable',
         'sortable',
         'resumable',
-        'tus',
         'read',
         'accept',
         'value',
@@ -2430,8 +2435,8 @@ var dragCounter = 0;
                     validFilesData.push(fileData);
                 }
             }
-            if (this.resumable && this.tus) {
-                return upload_helper.tusUpload(this.tus, url, headers, validFilesData, function (overallProgress) {
+            if (this.resumable) {
+                return upload_helper.tusUpload(plugins.tus, url, headers, validFilesData, function (overallProgress) {
                     _this.overallProgress = overallProgress;
                 });
             }
@@ -2444,8 +2449,8 @@ var dragCounter = 0;
                 this.overallProgress = 0;
             }
             fileData = this.getFileDataInstance(fileData);
-            if (this.resumable && this.tus) {
-                return upload_helper.tusDeleteUpload(this.tus, url, headers, fileData);
+            if (this.resumable) {
+                return upload_helper.tusDeleteUpload(plugins.tus, url, headers, fileData);
             }
             return upload_helper.deleteUpload(url, headers, fileData, uploadData);
         },
@@ -2745,6 +2750,7 @@ var vue_file_agent_component = normalizeComponent(
 
 
 
+
 var src_VueFileAgentPlugin = /** @class */ (function () {
     function VueFileAgentPlugin() {
     }
@@ -2763,6 +2769,7 @@ var src_VueFileAgentPlugin = /** @class */ (function () {
     VueFileAgentPlugin.VueFileAgent = vue_file_agent;
     VueFileAgentPlugin.component = vue_file_agent;
     VueFileAgentPlugin.mixin = vue_file_agent_mixin;
+    VueFileAgentPlugin.plugins = plugins;
     VueFileAgentPlugin.VueFileAgentMixin = vue_file_agent_mixin;
     VueFileAgentPlugin.VueFilePreviewMixin = vue_file_preview_mixin;
     return VueFileAgentPlugin;
@@ -2783,6 +2790,7 @@ var mixin = vue_file_agent_mixin;
 /* concated harmony reexport VueFilePreviewMixin */__webpack_require__.d(__webpack_exports__, "VueFilePreviewMixin", function() { return vue_file_preview_mixin; });
 /* concated harmony reexport utils */__webpack_require__.d(__webpack_exports__, "utils", function() { return utils; });
 /* concated harmony reexport FileData */__webpack_require__.d(__webpack_exports__, "FileData", function() { return file_data; });
+/* concated harmony reexport plugins */__webpack_require__.d(__webpack_exports__, "plugins", function() { return plugins; });
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (src);
