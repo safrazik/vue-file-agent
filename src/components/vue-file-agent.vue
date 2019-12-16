@@ -1,12 +1,12 @@
 <template>
-  <div v-on:dragover="dragOver" v-on:dragenter="dragEnter" v-on:dragleave="dragLeave" v-on:drop="drop" v-bind:class="['is-sortable-' + (isSortable  ? 'enabled' : 'disabled'), {'is-sortable-hold': sortable === 'hold'}, {'is-sortable-hold': sortable === 'handle'}, {'is-sortable-immediately': sortable === true}, {'is-sorting': isSorting, 'is-sorting-active': isSortingActive, 'is-drag-over': isDragging, 'is-disabled': disabled === true}, 'theme-' + theme]" :id="'vfa-' + uniqueId">
+  <div @dragover="dragOver" @dragenter="dragEnter" @dragleave="dragLeave" @drop="drop" :class="['is-sortable-' + (isSortable  ? 'enabled' : 'disabled'), {'is-sortable-hold': sortable === 'hold'}, {'is-sortable-hold': sortable === 'handle'}, {'is-sortable-immediately': sortable === true}, {'is-sorting': isSorting, 'is-sorting-active': isSortingActive, 'is-drag-over': isDragging, 'is-disabled': disabled === true}, 'theme-' + theme]" :id="'vfa-' + uniqueId">
     <slot name="before-outer"></slot>
-  <div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" v-bind:class="{'is-drag-overx': isDragging, 'is-compact': !!compact, 'is-single': !hasMultiple, 'has-multiple': hasMultiple, 'no-meta': meta === false}">
+  <div class="grid-block-wrapper vue-file-agent vue-file-agent-light file-input-wrapper drop_zone" :class="{'is-compact': !!compact, 'is-single': !hasMultiple, 'has-multiple': hasMultiple, 'no-meta': meta === false}">
     <slot name="before-inner"></slot>
     <canvas ref="thumbnailCanvas" style="position: fixed; visibility: hidden; z-index: -3;"></canvas>
-    <div class="overall-progress" v-if="overallProgress" v-bind:class="{'overall-progress-full': overallProgress >= 100}">
-      <div class="overall-progress-bar" v-bind:style="{width: overallProgress + '%'}"></div>
-      <div class="overall-progress-left" v-bind:style="{width: (100 - overallProgress) + '%'}"></div>
+    <div class="overall-progress" v-if="overallProgress" :class="{'overall-progress-full': overallProgress >= 100}">
+      <div class="overall-progress-bar" :style="{width: overallProgress + '%'}"></div>
+      <div class="overall-progress-left" :style="{width: (100 - overallProgress) + '%'}"></div>
     </div>
 
   <component :is="isSortable ? 'vfa-sortable-list': 'VueFileList'" v-model="filesData" :axis="theme == 'list' ? 'y' : 'xy'" :appendTo="'#vfa-' + uniqueId + ' .vue-file-agent'" :transitionDurationx="transitionDuration" :pressDelay="sortable === 'hold' ? 200 : 0" :useDragHandle="sortable === 'handle'" @sort-start="sortStart()" @sort-end="sortEnd($event)" :helperClass="'active-sorting-item'">
@@ -18,7 +18,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
           </slot>
         </span>
-        <slot name="file-preview" v-bind:fileData="fileData" v-bind:index="index">
+        <slot name="file-preview" :fileData="fileData" :index="index">
           <VueFilePreview 
             :value="fileData" :deletable="isDeletable" :editable="editable === true" :linkable="linkable === true" :errorText="errorText" :disabled="disabled"
             :thumbnailSize="thumbnailSize" @remove="removeFileData($event)"
@@ -42,7 +42,7 @@
     </template>
   </transition-group>
   </component>
-    <input title="" :disabled="disabled === true || (hasMultiple && !canAddMore)" ref="fileInput" type="file" v-bind:multiple="hasMultiple" class="file-input" v-on:change="filesChanged" v-bind:accept="accept || '*'">
+    <input title="" :disabled="disabled === true || (hasMultiple && !canAddMore)" ref="fileInput" type="file" :multiple="hasMultiple" class="file-input" @change="filesChanged" :accept="accept || '*'">
 
     <slot name="after-inner"></slot>
   </div>

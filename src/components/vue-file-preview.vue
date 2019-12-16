@@ -15,10 +15,10 @@
           </span>
         </div>
     </div>
-    <span class="file-preview" v-bind:class="{'image-preview': fileData.isImage(), 'other-preview': !fileData.isImage(), 'dark-content': fileData.isImage() && fileData.isDarkColor()}" v-bind:style="{'background-color': fileData.color(), 'background-imagex': 'url(' + fileData.src() + ')', widthx: fileData.width + 'px', heightx: fileData.height + 'px'}">
+    <span class="file-preview" :class="{'image-preview': fileData.isImage(), 'other-preview': !fileData.isImage(), 'dark-content': fileData.isImage() && fileData.isDarkColor()}" :style="{'background-color': fileData.color(), 'background-imagex': 'url(' + fileData.src() + ')', widthx: fileData.width + 'px', heightx: fileData.height + 'px'}">
       <span class="file-preview-overlay"></span>
       <span class="thumbnail" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;">
-        <img v-if="fileData.isImage() || fileData.isPlayableVideo()" class="file-preview-img" v-bind:src="fileData.src()">
+        <img v-if="fileData.isImage() || fileData.isPlayableVideo()" class="file-preview-img" :src="fileData.src()">
       </span>
       <span class="file-ext">{{ fileData.ext() }}</span>
       <span class="file-size">{{ fileData.size() }}</span>
@@ -35,11 +35,11 @@
       <span v-if="fileData.dimensions.width && fileData.dimensions.height" class="image-dimension">
         <span class="image-dimension-width">{{ fileData.dimensions.width }}</span><span class="image-dimension-height">{{ fileData.dimensions.height }}</span>
       </span>
-      <span class="file-progress" v-if="fileData.hasProgress()" v-bind:class="{'file-progress-full': fileData.progress() >= 99.9999, 'file-progress-done': fileData.progress() >= 100, 'has-file-progress': fileData.progress() > 0}">
-        <span class="file-progress-bar" v-bind:style="{width: fileData.progress() + '%'}"></span>
+      <span class="file-progress" v-if="fileData.hasProgress()" :class="{'file-progress-full': fileData.progress() >= 99.9999, 'file-progress-done': fileData.progress() >= 100, 'has-file-progress': fileData.progress() > 0}">
+        <span class="file-progress-bar" :style="{width: fileData.progress() + '%'}"></span>
       </span>
       <span class="file-icon">
-        <a v-if="hasLinkableUrl" v-bind:href="fileData.url" target="_blank" v-bind:title="fileData.name()">
+        <a v-if="hasLinkableUrl" :href="fileData.url" target="_blank" :title="fileData.name()">
           <VueFileIcon :ext="fileData.ext()"></VueFileIcon>
         </a>
         <VueFileIcon v-else :ext="fileData.ext()"></VueFileIcon>
