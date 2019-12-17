@@ -1,5 +1,12 @@
 # Change Log
 
+### 1.5.0 Superb Fairy-Wren
+
+- Majar Refactor: Transformation from _Legacy JS_ to **TypeScript** 3.7.3 with `noImplicitAny`
+- 55% file size reduction in built files: **17KB** minified, gzipped
+- New Feature 🎉 Resumable Uploads with `resumable` prop: Official Itergration of tus.io protocol #15
+- [Prettier](https://prettier.io/) code!
+
 ### 1.4.2
 
 - Intuitive drag sort! `sortable` prop improved to support `handle` and `hold` values #30
@@ -66,7 +73,7 @@
 
 ### 1.0.5
 
-- Fixed a CSS issue that prevented the file input button to be triggered  #1
+- Fixed a CSS issue that prevented the file input button to be triggered #1
 
 ### 1.0.4 Zebra Finch
 
