@@ -25,16 +25,14 @@
 
     <link rel="canonical" href="https://safrazik.github.io/vue-file-agent">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 
     {% if layout.external_urls %}
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/styles.css">
-    <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/github-markdown.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.5.0-beta.4/dist/vue-file-agent.css">
     {% else %}
     <link rel="stylesheet" href="{{ "/website/assets/styles.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/website/assets/github-markdown.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/vue-file-agent.css?v=1.5.0-beta.4" | prepend: site.dist_baseurl }}">
     {% endif %}
 

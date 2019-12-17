@@ -228,13 +228,13 @@ Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/s
             "ext":"exe",
           },
           {
-            "name":"DSC_0261.jpg",
-            "lastModified":1564648335292,
-            "sizeText":"64 KB",
-            "size":65762,
+            "name":"Superb Fairy-wren.jpg",
+            "lastModified":1576522061394,
+            "sizeText":"37 KB",
+            "size":38093,
             "type":"image/jpeg",
             "ext":"jpg",
-            "url": "https://safrazik.github.io/vue-file-agent/website/assets/files/DSC_0261.jpg"
+            "url": "https://safrazik.github.io/vue-file-agent/website/assets/files/Superb Fairy-wren.jpg"
           },
           {
             "name":"Some Large File.zip",

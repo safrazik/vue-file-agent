@@ -21,29 +21,33 @@ var component = { template: '#{{ include.name }}-template',
 
 
 {% if include.result_only %}
-  <div id="{{ include.name }}-wrapper">
+  <div id="{{ include.name }}-wrapper" class="vue-code-wrapper vue-code-result-only">
     {{ processed_code }}
   </div>
 {% else %}
-  <div id="{{ include.name }}-wrapper">
+  <div id="{{ include.name }}-wrapper" class="vue-code-wrapper">
     <div class="row">
-      <div class="col-md-6">
-        <blockquote>
+      <div class="col-md-6 vue-code-code">
+        <blockquote class="header">
           Code
           {% if include.codepen %}
             <a target="_blank" class="codepen-link" href="{{ include.codepen }}">Edit CodePen</a>
           {% endif %}
         </blockquote>
-        {% highlight html %}{{ include.code | strip }}{% endhighlight %}
+        <div class="content">
+          {% highlight html %}{{ include.code | strip }}{% endhighlight %}
+        </div>
       </div>
-      <div class="col-md-6">
-        <blockquote>
+      <div class="col-md-6 vue-code-result">
+        <blockquote class="header">
           Result
           {% if include.codepen %}
             <a target="_blank" class="codepen-link" href="{{ include.codepen }}">Edit CodePen</a>
           {% endif %}
         </blockquote>
-        {{ processed_code }}
+        <div class="content">
+          {{ processed_code }}
+        </div>
       </div>
     </div>
   </div>

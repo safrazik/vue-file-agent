@@ -1,0 +1,49 @@
+body {
+    background-color: #f6f6fa !important;
+}
+
+// .single-file-demo {
+//     background-color: #f6f6f6 !important;
+// }
+
+
+.readme-wrapper {
+    background-color: #FFF !important;
+    padding-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.readme-wrapper .markdown-body {
+    margin: 0 !important;
+}
+
+.advanced-demo-wrapper .bg-light,
+.advanced-demo-wrapper .vue-file-agent {
+    background-color: #FFF !important;
+}
+
+.advanced-demo-wrapper .vue-file-agent {
+    padding: 0.5rem;
+}
+
+.advanced-demo-wrapper .theme-list .vue-file-agent .file-preview-wrapper .file-preview:before {
+    background: #f2f2f2;
+    // background: #E5E5E5;
+    background: #EAEAEA;
+    // border: 1px solid #bbb;
+    // border-left: 0;
+}
+
+.vue-code-wrapper .vue-code-result .content,
+.vue-code-wrapper .vue-code-code .highlight pre,
+.vue-code-wrapper .vue-code-result .bg-light {
+    background-color: #FFF !important;
+}
+
+.markdown-body .highlight pre, .markdown-body pre {
+    background-color: #fff !important;
+}
+
+.readme-wrapper .markdown-body .highlight pre, .readme-wrapper .markdown-body pre {
+    background-color: #f6f8fa !important;
+}
