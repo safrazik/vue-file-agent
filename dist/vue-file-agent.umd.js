@@ -1427,12 +1427,17 @@ var file_data_FileData = /** @class */ (function () {
             });
         },
         createThumbnail: function (fileData, video) {
+            if (fileData.videoThumbnail) {
+                video.poster = fileData.src();
+                return;
+            }
             var canvas = document.createElement('canvas');
             utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then(function (thumbnail) {
                 fileData.imageColor = thumbnail.color;
                 fileData.videoThumbnail = thumbnail.url;
                 fileData.dimensions.width = thumbnail.width;
                 fileData.dimensions.height = thumbnail.height;
+                video.poster = fileData.src();
             });
         },
         playAv: function (fileData) {
@@ -1446,7 +1451,6 @@ var file_data_FileData = /** @class */ (function () {
             var player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
             if (player instanceof HTMLVideoElement && fileData.isPlayableVideo()) {
                 this.createThumbnail(fileData, player);
-                player.poster = fileData.src();
             }
             player.controls = true;
             // player.style.width = this.prvWidth + 'px';
@@ -2305,27 +2309,27 @@ var upload_helper_UploadHelper = /** @class */ (function () {
 var dragCounter = 0;
 /* harmony default export */ var vue_file_agent_mixin = (external_commonjs_vue_commonjs2_vue_root_Vue_default.a.extend({
     props: [
-        'uploadUrl',
-        'uploadHeaders',
-        'multiple',
-        'deletable',
-        'editable',
-        'linkable',
-        'sortable',
-        'resumable',
-        'read',
         'accept',
-        'value',
-        'progress',
-        'helpText',
-        'maxSize',
-        'maxFiles',
-        'errorText',
-        'meta',
         'compact',
-        'thumbnailSize',
-        'theme',
+        'deletable',
         'disabled',
+        'editable',
+        'errorText',
+        'helpText',
+        'linkable',
+        'maxFiles',
+        'maxSize',
+        'meta',
+        'multiple',
+        'progress',
+        'read',
+        'resumable',
+        'sortable',
+        'theme',
+        'thumbnailSize',
+        'uploadHeaders',
+        'uploadUrl',
+        'value',
     ],
     components: {
         VueFileIcon: vue_file_icon,
