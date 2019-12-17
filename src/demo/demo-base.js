@@ -1,19 +1,19 @@
 window.getFilesDataInitial = function() {
   var filesBaseUrl =
-    window.location.host == 'localhost:4000'
+    window.location.port == '4000'
       ? '/vue-file-agent/website/assets/files/'
       : 'https://safrazik.github.io/vue-file-agent/website/assets/files/';
 
   var videoData = {
-    name: 'Cat Licking Its Paw.mp4',
-    lastModified: 1565241222998,
-    sizeText: '433 KB',
-    size: 443767,
+    name: 'Golf.mp4',
+    lastModified: 1576563996233,
+    sizeText: '549 KB',
+    size: 561813,
     type: 'video/mp4',
     ext: 'mp4',
     dimensions: { width: 640, height: 360 },
   };
-  videoData.videoThumbnail = filesBaseUrl + '/Cat Licking Its Paw-thumb.png';
+  videoData.videoThumbnail = filesBaseUrl + 'Golf-thumb.jpg';
   videoData.imageColor = [66, 62, 45];
 
   var filesData = [];
@@ -27,10 +27,10 @@ window.getFilesDataInitial = function() {
       ext: 'pdf',
     },
     {
-      name: 'DSC_0261.jpg',
-      lastModified: 1564648335292,
-      sizeText: '64 KB',
-      size: 65762,
+      name: 'Superb Fairy-wren.jpg',
+      lastModified: 1576522061394,
+      sizeText: '37 KB',
+      size: 38093,
       type: 'image/jpeg',
       ext: 'jpg',
     },
