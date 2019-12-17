@@ -14,6 +14,7 @@ High performant Vue file **upload** component with elegant and distinguishable *
 ## Features
 
 - Exclusively designed for Vue with performance and simplicity in mind
+- No dependency but small footprint - **17KB** minified, gzipped
 - Elegant and responsive design with two official themes: grid view and list view
 - File input with drag and drop with support for folders
 - Smooth Transitions
@@ -25,6 +26,10 @@ High performant Vue file **upload** component with elegant and distinguishable *
 - Externally controllable via Vue bindings and methods
 - Built in support for server side validation and error handling
 - Official [Upload Server Examples](upload-server-examples) for **PHP** and **Node Js**
+- File names can be edited with `:editable` prop
+- Intuitive drag & drop sortable with `:sortable` prop
+- Resumable uploads with `:resumable` prop through [tus.io](https://tus.io) protocol
+- Can be used with any css/component framework, including but not limited to: Bootstrap, Bulma, Tailwind, Vuetify, etc.
 
 
 ## Basic Usage
