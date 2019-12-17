@@ -20,12 +20,7 @@ export default Vue.extend({
       if (!this.linkable) {
         return false;
       }
-      return (
-        !!this.fileData.url &&
-        !this.fileData.isImage() &&
-        !this.fileData.isPlayableVideo() &&
-        !this.fileData.isPlayableAudio()
-      );
+      return !!this.fileData.url && !this.fileData.isPlayableVideo() && !this.fileData.isPlayableAudio();
     },
   },
   methods: {
