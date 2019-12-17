@@ -3,11 +3,11 @@
   <div>
     <div class="row">
       <div class="col mb-3 text-left">
-        <div class="custom-control custom-checkbox">
+        <div class="custom-control custom-checkbox custom-control-inline">
           <input type="checkbox" class="custom-control-input" id="basic-demo-sortable-toggle" v-model="sortable" />
           <label class="custom-control-label" for="basic-demo-sortable-toggle">Drag & drop sortable</label>
         </div>
-        <div class="custom-control custom-checkbox">
+        <div class="custom-control custom-checkbox custom-control-inline">
           <input type="checkbox" class="custom-control-input" id="basic-demo-resumable-toggle" v-model="resumable" />
           <label class="custom-control-label" for="basic-demo-resumable-toggle">Resumable upload</label>
         </div>
