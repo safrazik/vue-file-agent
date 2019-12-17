@@ -44,12 +44,17 @@ export default Vue.extend({
       } as Options);
     },
     createThumbnail(fileData: FileData, video: HTMLVideoElement) {
+      if (fileData.videoThumbnail) {
+        video.poster = fileData.src();
+        return;
+      }
       const canvas = document.createElement('canvas');
       utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then((thumbnail) => {
         fileData.imageColor = thumbnail.color;
         fileData.videoThumbnail = thumbnail.url;
         fileData.dimensions.width = thumbnail.width;
         fileData.dimensions.height = thumbnail.height;
+        video.poster = fileData.src();
       });
     },
 
@@ -65,7 +70,6 @@ export default Vue.extend({
       const player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
       if (player instanceof HTMLVideoElement && fileData.isPlayableVideo()) {
         this.createThumbnail(fileData, player);
-        player.poster = fileData.src();
       }
       player.controls = true;
       // player.style.width = this.prvWidth + 'px';
