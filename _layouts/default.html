@@ -30,10 +30,10 @@
 
     {% if layout.external_urls %}
     <link rel="stylesheet" href="https://safrazik.github.io/vue-file-agent/website/assets/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.5.0-beta.4/dist/vue-file-agent.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-file-agent@1.5.0-beta.5/dist/vue-file-agent.css">
     {% else %}
     <link rel="stylesheet" href="{{ "/website/assets/styles.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/vue-file-agent.css?v=1.5.0-beta.4" | prepend: site.dist_baseurl }}">
+    <link rel="stylesheet" href="{{ "/vue-file-agent.css?v=1.5.0-beta.5" | prepend: site.dist_baseurl }}">
     {% endif %}
 
     {% if site.google_analytics %}
@@ -87,9 +87,9 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tus-js-client@1.8.0/dist/tus.js"></script>
   {% if layout.external_urls %}
-  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.5.0-beta.4/dist/vue-file-agent.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-file-agent@1.5.0-beta.5/dist/vue-file-agent.umd.js"></script>
   {% else %}
-  <script src='{{ "/vue-file-agent.umd.js?v=1.5.0-beta.4" | prepend: site.dist_baseurl }}'></script>
+  <script src='{{ "/vue-file-agent.umd.js?v=1.5.0-beta.5" | prepend: site.dist_baseurl }}'></script>
   {% endif %}
 
   <script src="https://unpkg.com/vue-slicksort@latest/dist/vue-slicksort.min.js"></script>
