@@ -64,7 +64,7 @@ npm run build
 Build and watch the library under `dist_dev` for documentation consumption
 
 ```
-npm run build:watch
+npm run build:dev
 ```
 
 Serve the documentation consuming built files from `dist_dev`

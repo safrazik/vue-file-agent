@@ -11,7 +11,7 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:watch": "vue-cli-service test:unit --watch",
-    "build:watch": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.ts",
+    "build:dev": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.ts",
     "docs:serve:dev": "jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0",
     "docs:serve": "jekyll serve --host 0.0.0.0"
   },
