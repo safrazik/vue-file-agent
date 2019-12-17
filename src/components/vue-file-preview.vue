@@ -38,8 +38,15 @@
       }"
     >
       <span class="file-preview-overlay"></span>
-      <span class="thumbnail" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;">
-        <img v-if="fileData.isImage() || fileData.isPlayableVideo()" class="file-preview-img" :src="fileData.src()" />
+      <span
+        class="thumbnail"
+        style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
+        v-if="fileData.isImage() || fileData.isPlayableVideo()"
+      >
+        <a v-if="hasLinkableUrl" :href="fileData.url" target="_blank" :title="fileData.name()">
+          <img class="file-preview-img" :src="fileData.src()" />
+        </a>
+        <img v-else class="file-preview-img" :src="fileData.src()" />
       </span>
       <span class="file-ext">{{ fileData.ext() }}</span>
       <span class="file-size">{{ fileData.size() }}</span>
