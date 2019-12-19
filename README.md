@@ -6,6 +6,11 @@ High performant Vue file **upload** component with elegant and distinguishable *
 
 <div class="clearfix"></div>
 
+## Sponsors
+
+[Become a Sponsor/Supporter](https://www.patreon.com/safrazik)
+
+
 ## [Live Demo][] · [CodePen Playground](https://codepen.io/safrazik/pen/BaBpYme)
 
 ![Demo](website/assets/demo.gif?v=1.5)
