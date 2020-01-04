@@ -2763,8 +2763,16 @@ var vue_file_agent_component = normalizeComponent(
 
 var src_VueFileAgentPlugin = /** @class */ (function () {
     function VueFileAgentPlugin() {
+        this.VueFileIcon = vue_file_icon;
+        this.VueFilePreview = vue_file_preview;
+        this.VueFileAgent = vue_file_agent;
+        this.component = vue_file_agent;
+        this.mixin = vue_file_agent_mixin;
+        this.plugins = plugins;
+        this.VueFileAgentMixin = vue_file_agent_mixin;
+        this.VueFilePreviewMixin = vue_file_preview_mixin;
     }
-    VueFileAgentPlugin.install = function (Vue, options) {
+    VueFileAgentPlugin.prototype.install = function (Vue, options) {
         Vue.component('VueFileIcon', vue_file_icon);
         Vue.component('VueFilePreview', vue_file_preview);
         Vue.component('VueFileList', vue_file_list);
@@ -2774,27 +2782,22 @@ var src_VueFileAgentPlugin = /** @class */ (function () {
             mixin: vue_file_agent_mixin,
         };
     };
-    VueFileAgentPlugin.VueFileIcon = vue_file_icon;
-    VueFileAgentPlugin.VueFilePreview = vue_file_preview;
-    VueFileAgentPlugin.VueFileAgent = vue_file_agent;
-    VueFileAgentPlugin.component = vue_file_agent;
-    VueFileAgentPlugin.mixin = vue_file_agent_mixin;
-    VueFileAgentPlugin.plugins = plugins;
-    VueFileAgentPlugin.VueFileAgentMixin = vue_file_agent_mixin;
-    VueFileAgentPlugin.VueFilePreviewMixin = vue_file_preview_mixin;
     return VueFileAgentPlugin;
 }());
-/* harmony default export */ var src = (src_VueFileAgentPlugin);
+
+var vfaPlugin = new src_VueFileAgentPlugin();
 // auto install
 if (typeof window !== 'undefined' && window.Vue) {
-    src_VueFileAgentPlugin.install(window.Vue, {});
-    window.VueFileAgent = src_VueFileAgentPlugin;
+    vfaPlugin.install(window.Vue, {});
+    window.VueFileAgent = vfaPlugin;
 }
 var mixin = vue_file_agent_mixin;
 
 
+/* harmony default export */ var src = (vfaPlugin);
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
+/* concated harmony reexport VueFileAgentPlugin */__webpack_require__.d(__webpack_exports__, "VueFileAgentPlugin", function() { return src_VueFileAgentPlugin; });
 /* concated harmony reexport mixin */__webpack_require__.d(__webpack_exports__, "mixin", function() { return mixin; });
 /* concated harmony reexport VueFileAgentMixin */__webpack_require__.d(__webpack_exports__, "VueFileAgentMixin", function() { return vue_file_agent_mixin; });
 /* concated harmony reexport VueFilePreviewMixin */__webpack_require__.d(__webpack_exports__, "VueFilePreviewMixin", function() { return vue_file_preview_mixin; });

@@ -3,16 +3,16 @@ import VueFilePreviewMixin from './components/vue-file-preview-mixin';
 import utils from './lib/utils';
 import plugins from './lib/plugins';
 import FileData from './lib/file-data';
-import _Vue from 'vue';
-export default class VueFileAgentPlugin {
-    static VueFileIcon: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, {
+import _Vue, { PluginObject } from 'vue';
+export declare class VueFileAgentPlugin implements PluginObject<any> {
+    VueFileIcon: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, {
         viewBoxComputed: string;
         icon: import("./lib/icons").SvgIcon;
     }, Record<"ext" | "name" | "viewBox", any>>;
-    static VueFilePreview: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
-    static VueFileAgent: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
-    static component: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
-    static mixin: import("vue/types/vue").ExtendedVue<_Vue, {
+    VueFilePreview: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
+    VueFileAgent: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
+    component: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
+    mixin: import("vue/types/vue").ExtendedVue<_Vue, {
         filesData: FileData[];
         filesDataRaw: import("./lib/file-data").RawFileData[];
         isDragging: boolean;
@@ -58,10 +58,10 @@ export default class VueFileAgentPlugin {
         hasMultiple: boolean;
         shouldRead: boolean;
     }, Record<"accept" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
-    static plugins: {
+    plugins: {
         tus: any;
     };
-    static VueFileAgentMixin: import("vue/types/vue").ExtendedVue<_Vue, {
+    VueFileAgentMixin: import("vue/types/vue").ExtendedVue<_Vue, {
         filesData: FileData[];
         filesDataRaw: import("./lib/file-data").RawFileData[];
         isDragging: boolean;
@@ -107,7 +107,7 @@ export default class VueFileAgentPlugin {
         hasMultiple: boolean;
         shouldRead: boolean;
     }, Record<"accept" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
-    static VueFilePreviewMixin: import("vue/types/vue").ExtendedVue<_Vue, {
+    VueFilePreviewMixin: import("vue/types/vue").ExtendedVue<_Vue, {
         isEditInputFocused: boolean;
         isEditCancelable: boolean;
         fileData: FileData;
@@ -126,8 +126,9 @@ export default class VueFileAgentPlugin {
     }, {
         hasLinkableUrl: boolean;
     }, Record<"deletable" | "disabled" | "editable" | "errorText" | "linkable" | "thumbnailSize" | "value", any>>;
-    static install(Vue: typeof _Vue, options: any): void;
+    install(Vue: typeof _Vue, options: any): void;
 }
+declare const vfaPlugin: VueFileAgentPlugin;
 export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
     filesData: FileData[];
     filesDataRaw: import("./lib/file-data").RawFileData[];
@@ -176,3 +177,4 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
 }, Record<"accept" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
 export { VueFileAgentMixin, VueFilePreviewMixin };
 export { utils, FileData, plugins };
+export default vfaPlugin;
