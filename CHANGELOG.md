@@ -1,5 +1,10 @@
 # Change Log
 
+
+### 1.5.2
+
+- Type definitions (`d.ts` files) have been exported
+
 ### 1.5.0 Superb Fairy-Wren
 
 - Majar Refactor: Transformation from _Legacy JS_ to **TypeScript** 3.7.3 with `noImplicitAny`
