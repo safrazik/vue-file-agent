@@ -3,7 +3,7 @@
   "version": "1.5.1",
   "description": "High performant Vue file upload component with elegant and distinguishable previews for every file type and support for drag and drop, validations, default uploader with progress support and externally customizable in the \"vue way\"",
   "main": "dist/vue-file-agent.umd.js",
-  "types": "src/index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-file-agent ./src/index.ts",
