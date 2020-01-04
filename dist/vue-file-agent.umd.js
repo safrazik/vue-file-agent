@@ -2771,17 +2771,17 @@ var src_VueFileAgentPlugin = /** @class */ (function () {
         this.plugins = plugins;
         this.VueFileAgentMixin = vue_file_agent_mixin;
         this.VueFilePreviewMixin = vue_file_preview_mixin;
-    }
-    VueFileAgentPlugin.prototype.install = function (Vue, options) {
-        Vue.component('VueFileIcon', vue_file_icon);
-        Vue.component('VueFilePreview', vue_file_preview);
-        Vue.component('VueFileList', vue_file_list);
-        Vue.component('VueFileListItem', vue_file_list_item);
-        Vue.component('VueFileAgent', vue_file_agent);
-        Vue.prototype.$vueFileAgent = {
-            mixin: vue_file_agent_mixin,
+        this.install = function (Vue, options) {
+            Vue.component('VueFileIcon', vue_file_icon);
+            Vue.component('VueFilePreview', vue_file_preview);
+            Vue.component('VueFileList', vue_file_list);
+            Vue.component('VueFileListItem', vue_file_list_item);
+            Vue.component('VueFileAgent', vue_file_agent);
+            Vue.prototype.$vueFileAgent = {
+                mixin: vue_file_agent_mixin,
+            };
         };
-    };
+    }
     return VueFileAgentPlugin;
 }());
 

@@ -3,8 +3,8 @@ import VueFilePreviewMixin from './components/vue-file-preview-mixin';
 import utils from './lib/utils';
 import plugins from './lib/plugins';
 import FileData from './lib/file-data';
-import _Vue, { PluginObject } from 'vue';
-export declare class VueFileAgentPlugin implements PluginObject<any> {
+import _Vue from 'vue';
+export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
     VueFileIcon: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, {
         viewBoxComputed: string;
         icon: import("./lib/icons").SvgIcon;
@@ -126,7 +126,7 @@ export declare class VueFileAgentPlugin implements PluginObject<any> {
     }, {
         hasLinkableUrl: boolean;
     }, Record<"deletable" | "disabled" | "editable" | "errorText" | "linkable" | "thumbnailSize" | "value", any>>;
-    install(Vue: typeof _Vue, options: any): void;
+    install: Vue.PluginFunction<any>;
 }
 declare const vfaPlugin: VueFileAgentPlugin;
 export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
