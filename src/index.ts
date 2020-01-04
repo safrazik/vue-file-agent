@@ -9,9 +9,9 @@ import utils from './lib/utils';
 import plugins from './lib/plugins';
 import FileData from './lib/file-data';
 
-import _Vue, { PluginObject } from 'vue';
+import _Vue from 'vue';
 
-export class VueFileAgentPlugin implements PluginObject<any> {
+export class VueFileAgentPlugin implements Vue.PluginObject<any> {
   public VueFileIcon = VueFileIcon;
   public VueFilePreview = VueFilePreview;
   public VueFileAgent = VueFileAgent;
@@ -22,7 +22,7 @@ export class VueFileAgentPlugin implements PluginObject<any> {
   public VueFileAgentMixin = VueFileAgentMixin;
   public VueFilePreviewMixin = VueFilePreviewMixin;
 
-  public install(Vue: typeof _Vue, options: any) {
+  public install: Vue.PluginFunction<any> = (Vue: typeof _Vue, options: any) => {
     Vue.component('VueFileIcon', VueFileIcon);
     Vue.component('VueFilePreview', VueFilePreview);
     Vue.component('VueFileList', VueFileList);
