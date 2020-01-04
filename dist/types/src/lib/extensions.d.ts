@@ -1,0 +1,25 @@
+declare const _default: {
+    'audio': string[];
+    'audio-playable': string[];
+    'archive': string[];
+    'disc': string[];
+    'database': string[];
+    'executable': string[];
+    'font': string[];
+    'image': string[];
+    'markup': string[];
+    'presentation': string[];
+    'script': string[];
+    'sheet': string[];
+    'system': string[];
+    'video': string[];
+    'video-playable': string[];
+    'vue': string[];
+    'doc': string[];
+    'text': string[];
+    'ebook': string[];
+    'pdf': string[];
+    'folder': string[];
+    'play': string[];
+};
+export default _default;

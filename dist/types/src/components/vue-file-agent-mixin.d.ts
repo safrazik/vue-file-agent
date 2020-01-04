@@ -1,0 +1,50 @@
+import FileData from '../lib/file-data';
+import { RawFileData } from '../lib/file-data';
+import Vue from 'vue';
+declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
+    filesData: FileData[];
+    filesDataRaw: RawFileData[];
+    isDragging: boolean;
+    isSorting: boolean;
+    isSortingActive: boolean;
+    transitionDuration: number;
+    overallProgress: number;
+    uniqueId: string;
+    sortTimeout: number;
+}, {
+    createThumbnail(fileData: FileData, video: HTMLVideoElement): Promise<void>;
+    initVideo(fileData: FileData): void;
+    getFileDataInstance(fileDataOrRaw: FileData | RawFileData): FileData;
+    upload(url: string, headers: object, filesDataOrRaw: FileData[] | RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined): Promise<any>;
+    deleteUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any>;
+    updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any>;
+    autoUpload(filesData: FileData[] | RawFileData[]): Promise<any>;
+    autoDeleteUpload(fileData: FileData | RawFileData): Promise<any>;
+    autoUpdateUpload(fileData: FileData): Promise<any>;
+    equalFiles(file1: File, file2: File): boolean;
+    isFileAddedAlready(file: File): boolean;
+    handleFiles(files: FileList | File[]): void;
+    filesChanged(event: InputEvent): void;
+    drop(event: DragEvent): void;
+    dragEnter(event: DragEvent): void;
+    dragOver(event: DragEvent): void;
+    dragLeave(event: DragEvent): void;
+    removeFileData(fileDataOrRaw: FileData | RawFileData): void;
+    filenameChanged(fileData: FileData): void;
+    checkValue(): void;
+    sortStart(): void;
+    sortEnd(sortData: {
+        event: Event;
+        newIndex: number;
+        oldIndex: number;
+        collection: any;
+    }): void;
+}, {
+    canAddMore: boolean;
+    helpTextComputed: string;
+    isDeletable: boolean;
+    isSortable: boolean;
+    hasMultiple: boolean;
+    shouldRead: boolean;
+}, Record<"accept" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+export default _default;

@@ -1,0 +1,40 @@
+export declare class SvgIcon {
+    paths: string[];
+    color?: string | undefined;
+    viewBox?: string | undefined;
+    category: string;
+    constructor(paths: string[], color?: string | undefined, viewBox?: string | undefined);
+}
+declare const icons: {
+    'folder': SvgIcon;
+    'audio': SvgIcon;
+    'video': SvgIcon;
+    'audio-playable': SvgIcon;
+    'video-playable': SvgIcon;
+    'archive': SvgIcon;
+    'system': SvgIcon;
+    'image': SvgIcon;
+    'doc': SvgIcon;
+    'executable': SvgIcon;
+    'ebook': SvgIcon;
+    'markup': SvgIcon;
+    'script': SvgIcon;
+    'disc': SvgIcon;
+    'text': SvgIcon;
+    'database': SvgIcon;
+    'pdf': SvgIcon;
+    'sheet': SvgIcon;
+    'presentation': SvgIcon;
+    'font': SvgIcon;
+    'vue': SvgIcon;
+    'other': SvgIcon;
+    'system-close': SvgIcon;
+    'system-file-preview-new': SvgIcon;
+    'system-sortable-handle': SvgIcon;
+    'system-file-av-play': SvgIcon;
+    'system-file-name-edit': SvgIcon;
+};
+export default icons;
+export declare const extensionsMap: any;
+export declare function getIconByName(name: string): SvgIcon;
+export declare function getIconFromExt(ext: string): SvgIcon;
