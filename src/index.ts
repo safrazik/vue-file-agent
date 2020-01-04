@@ -9,20 +9,20 @@ import utils from './lib/utils';
 import plugins from './lib/plugins';
 import FileData from './lib/file-data';
 
-import _Vue, { PluginFunction } from 'vue';
+import _Vue, { PluginObject } from 'vue';
 
-export default class VueFileAgentPlugin {
-  public static VueFileIcon = VueFileIcon;
-  public static VueFilePreview = VueFilePreview;
-  public static VueFileAgent = VueFileAgent;
-  public static component = VueFileAgent;
-  public static mixin = VueFileAgentMixin;
-  public static plugins = plugins;
+export class VueFileAgentPlugin implements PluginObject<any> {
+  public VueFileIcon = VueFileIcon;
+  public VueFilePreview = VueFilePreview;
+  public VueFileAgent = VueFileAgent;
+  public component = VueFileAgent;
+  public mixin = VueFileAgentMixin;
+  public plugins = plugins;
 
-  public static VueFileAgentMixin = VueFileAgentMixin;
-  public static VueFilePreviewMixin = VueFilePreviewMixin;
+  public VueFileAgentMixin = VueFileAgentMixin;
+  public VueFilePreviewMixin = VueFilePreviewMixin;
 
-  public static install(Vue: typeof _Vue, options: any) {
+  public install(Vue: typeof _Vue, options: any) {
     Vue.component('VueFileIcon', VueFileIcon);
     Vue.component('VueFilePreview', VueFilePreview);
     Vue.component('VueFileList', VueFileList);
@@ -34,10 +34,12 @@ export default class VueFileAgentPlugin {
   }
 }
 
+const vfaPlugin = new VueFileAgentPlugin();
+
 // auto install
 if (typeof window !== 'undefined' && window.Vue) {
-  VueFileAgentPlugin.install(window.Vue, {});
-  (window as any).VueFileAgent = VueFileAgentPlugin;
+  vfaPlugin.install(window.Vue, {});
+  (window as any).VueFileAgent = vfaPlugin;
 }
 
 export const mixin = VueFileAgentMixin;
@@ -45,3 +47,5 @@ export const mixin = VueFileAgentMixin;
 export { VueFileAgentMixin, VueFilePreviewMixin };
 
 export { utils, FileData, plugins };
+
+export default vfaPlugin;
