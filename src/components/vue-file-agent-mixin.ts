@@ -161,9 +161,19 @@ export default Vue.extend({
           this.overallProgress = overallProgress;
         });
       }
-      return uploader.upload(url, headers, validFilesData, createFormData, (overallProgress) => {
-        this.overallProgress = overallProgress;
-      });
+      return uploader
+        .upload(url, headers, validFilesData, createFormData, (overallProgress) => {
+          this.overallProgress = overallProgress;
+        })
+        .then(
+          (res) => {
+            this.$emit('upload', res);
+            return res;
+          },
+          (err) => {
+            this.$emit('upload:error', err);
+          },
+        );
     },
     deleteUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
       if (this.filesData.length < 1) {
@@ -173,26 +183,42 @@ export default Vue.extend({
       if (this.resumable) {
         return uploader.tusDeleteUpload(plugins.tus, url, headers, fileData);
       }
-      return uploader.deleteUpload(url, headers, fileData, uploadData);
+      return uploader.deleteUpload(url, headers, fileData, uploadData).then(
+        (res) => {
+          this.$emit('upload:delete', res);
+          return res;
+        },
+        (err) => {
+          this.$emit('upload:delete:error', err);
+        },
+      );
     },
     updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
       fileData = this.getFileDataInstance(fileData);
-      return uploader.updateUpload(url, headers, fileData, uploadData);
+      return uploader.updateUpload(url, headers, fileData, uploadData).then(
+        (res) => {
+          this.$emit('upload:update', res);
+          return res;
+        },
+        (err) => {
+          this.$emit('upload:update:error', err);
+        },
+      );
     },
     autoUpload(filesData: FileData[] | RawFileData[]): Promise<any> {
-      if (!this.uploadUrl && this.auto !== false) {
+      if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
       return this.upload(this.uploadUrl, this.uploadHeaders, filesData);
     },
     autoDeleteUpload(fileData: FileData | RawFileData): Promise<any> {
-      if (!this.uploadUrl && this.auto !== false) {
+      if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
       return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
     autoUpdateUpload(fileData: FileData): Promise<any> {
-      if (!this.uploadUrl && this.auto !== false) {
+      if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
       return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);

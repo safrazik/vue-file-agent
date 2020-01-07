@@ -49,6 +49,12 @@
           </div>
           <div class="col-6 col-md-12 px-2">
             <div class="custom-control custom-checkbox mt-1">
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-auto" v-model="auto" />
+              <label class="custom-control-label" for="advanced-demo-auto">:auto</label>
+            </div>
+          </div>
+          <div class="col-6 col-md-12 px-2">
+            <div class="custom-control custom-checkbox mt-1">
               <input type="checkbox" class="custom-control-input" id="advanced-demo-meta" v-model="meta" />
               <label class="custom-control-label" for="advanced-demo-meta">:meta</label>
             </div>
@@ -126,6 +132,9 @@
       <div class="mx-auto" :style="compact ? { width: '200px' } : {}">
         <VueFileAgent
           ref="vueFileAgent"
+          :auto="auto"
+          :uploadUrl="uploadUrl"
+          :uploadHeaders="uploadHeaders"
           :multiple="multiple"
           :meta="meta"
           :deletable="deletable"
@@ -142,6 +151,12 @@
           @select="filesSelected($event)"
           @delete="fileDeleted($event)"
           @sort="onSort($event)"
+          @upload="uploadEvent('upload', $event)"
+          @upload:error="uploadEvent('upload:error', $event)"
+          @upload:delete="uploadEvent('upload:delete', $event)"
+          @upload:delete:error="uploadEvent('upload:delete:error', $event)"
+          @upload:update="uploadEvent('upload:update', $event)"
+          @upload:update:error="uploadEvent('upload:update:error', $event)"
           v-model="filesData"
         ></VueFileAgent>
       </div>
@@ -255,6 +270,7 @@ export default {
     return {
       filesData: this.getFilesDataInitial(),
       filesDataForUpload: [],
+      auto: false,
       uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
       uploadHeaders: {},
       meta: true,
@@ -295,6 +311,9 @@ export default {
     },
   },
   methods: {
+    uploadEvent(eventName, data) {
+      console.log('UPLOAD EVENT ', eventName, data);
+    },
     getFilesDataInitial: function() {
       return window.getFilesDataInitial();
     },
@@ -369,7 +388,13 @@ export default {
       if (i !== -1) {
         this.filesDataForUpload.splice(i, 1);
       }
-      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, [fileData]);
+      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, [fileData]).then(
+        function(result) {
+          console.log('uploded: ', result);
+          console.log('after upload: ', fileData);
+          console.log('after upload all: ', this.filesData);
+        }.bind(this),
+      );
     },
     moveIndex: function(dir) {
       console.log('moveIndex', dir);
