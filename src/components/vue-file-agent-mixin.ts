@@ -15,6 +15,7 @@ var dragCounter = 0;
 export default Vue.extend({
   props: [
     'accept',
+    'auto',
     'compact',
     'deletable',
     'disabled',
@@ -179,19 +180,19 @@ export default Vue.extend({
       return uploader.updateUpload(url, headers, fileData, uploadData);
     },
     autoUpload(filesData: FileData[] | RawFileData[]): Promise<any> {
-      if (!this.uploadUrl) {
+      if (!this.uploadUrl && this.auto !== false) {
         return Promise.resolve(false);
       }
       return this.upload(this.uploadUrl, this.uploadHeaders, filesData);
     },
     autoDeleteUpload(fileData: FileData | RawFileData): Promise<any> {
-      if (!this.uploadUrl) {
+      if (!this.uploadUrl && this.auto !== false) {
         return Promise.resolve(false);
       }
       return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
     },
     autoUpdateUpload(fileData: FileData): Promise<any> {
-      if (!this.uploadUrl) {
+      if (!this.uploadUrl && this.auto !== false) {
         return Promise.resolve(false);
       }
       return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
