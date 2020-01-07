@@ -131,7 +131,7 @@ export default Vue.extend({
       });
       video.load();
     },
-    getFileDataInstance(fileDataOrRaw: FileData | RawFileData): FileData {
+    getFileDataOrRawInstance(fileDataOrRaw: FileData | RawFileData, raw: boolean): FileData | RawFileData {
       let i;
       if (fileDataOrRaw instanceof FileData) {
         i = this.filesData.indexOf(fileDataOrRaw);
@@ -139,9 +139,15 @@ export default Vue.extend({
         i = this.filesDataRaw.indexOf(fileDataOrRaw);
       }
       if (i === -1) {
-        return fileDataOrRaw as FileData;
+        return fileDataOrRaw;
       }
-      return this.filesData[i];
+      return raw ? this.filesDataRaw[i] : this.filesData[i];
+    },
+    getFileDataRawInstance(fileDataOrRaw: FileData | RawFileData): RawFileData {
+      return this.getFileDataOrRawInstance(fileDataOrRaw, true) as RawFileData;
+    },
+    getFileDataInstance(fileDataOrRaw: FileData | RawFileData): FileData {
+      return this.getFileDataOrRawInstance(fileDataOrRaw, false) as FileData;
     },
     upload(
       url: string,
@@ -149,11 +155,13 @@ export default Vue.extend({
       filesDataOrRaw: FileData[] | RawFileData[],
       createFormData?: (fileData: FileData) => FormData,
     ): Promise<any> {
-      const validFilesData = [];
+      const validFilesData: FileData[] = [];
+      const validFilesRawData: RawFileData[] = [];
       for (const fileDataOrRaw of filesDataOrRaw) {
         const fileData = this.getFileDataInstance(fileDataOrRaw);
         if (!fileData.error) {
           validFilesData.push(fileData);
+          validFilesRawData.push(this.getFileDataRawInstance(fileData));
         }
       }
       if (this.resumable) {
@@ -167,7 +175,7 @@ export default Vue.extend({
         })
         .then(
           (res) => {
-            this.$emit('upload', res);
+            this.$emit('upload', validFilesRawData);
             return res;
           },
           (err) => {
@@ -180,12 +188,13 @@ export default Vue.extend({
         this.overallProgress = 0;
       }
       fileData = this.getFileDataInstance(fileData);
+      const fileDataRaw = this.getFileDataRawInstance(fileData);
       if (this.resumable) {
         return uploader.tusDeleteUpload(plugins.tus, url, headers, fileData);
       }
       return uploader.deleteUpload(url, headers, fileData, uploadData).then(
         (res) => {
-          this.$emit('upload:delete', res);
+          this.$emit('upload:delete', fileDataRaw);
           return res;
         },
         (err) => {
@@ -195,9 +204,10 @@ export default Vue.extend({
     },
     updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
       fileData = this.getFileDataInstance(fileData);
+      const fileDataRaw = this.getFileDataRawInstance(fileData);
       return uploader.updateUpload(url, headers, fileData, uploadData).then(
         (res) => {
-          this.$emit('upload:update', res);
+          this.$emit('upload:update', fileDataRaw);
           return res;
         },
         (err) => {
