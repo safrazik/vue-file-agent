@@ -40,6 +40,7 @@ interface RawFileData {
     videoThumbnail: string;
     imageColor: RGBA;
     customName: string;
+    upload: UploadData;
 }
 interface DummyFile {
     name: string;
@@ -47,6 +48,10 @@ interface DummyFile {
     type: string;
     lastModified: number;
     lastModifiedDate: Date;
+}
+interface UploadData {
+    data: any;
+    error: string | false;
 }
 export { Dimensions, Options, RawFileData };
 declare class FileData {
@@ -63,7 +68,7 @@ declare class FileData {
     isPlayingAv: boolean;
     oldFileName: string | null;
     oldCustomName: string | null;
-    upload: any;
+    upload: UploadData;
     raw: RawFileData;
     progressInternal: number;
     accept?: string;

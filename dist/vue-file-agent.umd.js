@@ -1089,7 +1089,7 @@ var file_data_FileData = /** @class */ (function () {
         this.isPlayingAv = false;
         this.oldFileName = null;
         this.oldCustomName = null;
-        this.upload = null;
+        this.upload = { data: null, error: false };
         this.url = null;
         this.urlResized = null;
         this.lastKnownSrc = null;
@@ -1097,7 +1097,6 @@ var file_data_FileData = /** @class */ (function () {
         this.isPlayingAv = false;
         this.oldFileName = null;
         this.oldCustomName = null;
-        this.upload = null;
         this.raw = data;
         this.file = data.file instanceof File ? data.file : this.createDummyFile(data);
         this.progressInternal = !isNaN(data.progress) ? data.progress : 0;
@@ -1336,7 +1335,7 @@ var file_data_FileData = /** @class */ (function () {
             return errorText.size;
         }
         else if (error.upload) {
-            return this.upload && this.upload.error ? this.upload.error : error.upload;
+            return this.upload.error ? this.upload.error : error.upload;
         }
         return errorText.common;
     };
@@ -1355,6 +1354,7 @@ var file_data_FileData = /** @class */ (function () {
         raw.color = this.color();
         raw.file = this.file;
         raw.progress = this.progress.bind(this); // pass it as a function
+        raw.upload = this.upload;
         if (!('error' in raw)) {
             Object.defineProperty(raw, 'error', {
                 get: function () {
@@ -1918,6 +1918,14 @@ var AjaxRequest = /** @class */ (function () {
                 if (contentType && contentType.indexOf('application/json') !== -1) {
                     responseData = JSON.parse(responseData);
                 }
+                else {
+                    try {
+                        responseData = JSON.parse(responseData);
+                    }
+                    catch (e) {
+                        /* ignore, possibly non json response */
+                    }
+                }
                 var response = {
                     data: responseData,
                     // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
@@ -2059,6 +2067,8 @@ var upload_helper_UploadHelper = /** @class */ (function () {
             fileData.error = {};
         }
         fileData.error.upload = errorText;
+        fileData.upload.data = undefined;
+        fileData.upload.error = errorText;
         if (timeout) {
             setTimeout(function () {
                 if (!fileData.error) {
@@ -2109,18 +2119,21 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                     configureFn(xhr);
                 }
             });
-            promise.then(function (response) {
-                delete fileData.xhr;
-                fileData.upload = response.data;
-                fileData.progress(100);
-                if (fileData.xhrQueue) {
-                    fileData.xhrQueue();
-                    delete fileData.xhrQueue;
-                }
-            } /* */, function (err) {
-                _this.prepareUploadError(fileData, err);
-            } /* */);
-            promises.push(promise);
+            promises.push(new Promise(function (resolve, reject) {
+                promise.then(function (response) {
+                    delete fileData.xhr;
+                    fileData.upload.data = response.data;
+                    fileData.upload.error = false;
+                    fileData.progress(100);
+                    if (fileData.xhrQueue) {
+                        fileData.xhrQueue();
+                        delete fileData.xhrQueue;
+                    }
+                    resolve(response.data);
+                } /* */, function (err) {
+                    _this.prepareUploadError(fileData, err);
+                } /* */);
+            }));
         };
         var this_1 = this;
         for (var _i = 0, filesData_1 = filesData; _i < filesData_1.length; _i++) {
@@ -2136,7 +2149,7 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                 fileData.xhr.abort();
             }
             if (uploadData === undefined) {
-                uploadData = fileData.upload;
+                uploadData = fileData.upload.data;
             }
             if (uploadData) {
                 _this.doDeleteUpload(url, headers, uploadData, function (xhr) {
@@ -2163,7 +2176,7 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                 return resolve();
             }
             if (uploadData === undefined) {
-                uploadData = fileData.upload || {};
+                uploadData = fileData.upload.data || {};
                 uploadData.old_filename = fileData.oldFileName;
                 uploadData.filename = fileData.name();
             }
@@ -2173,7 +2186,8 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                         configureFn(xhr);
                     }
                 }).then(function (response) {
-                    fileData.upload = response.data;
+                    fileData.upload.data = response.data;
+                    fileData.upload.error = false;
                     resolve(response);
                 }, function (err) {
                     _this.prepareUploadError(fileData, err);
@@ -2307,6 +2321,7 @@ var dragCounter = 0;
 /* harmony default export */ var vue_file_agent_mixin = (external_commonjs_vue_commonjs2_vue_root_Vue_default.a.extend({
     props: [
         'accept',
+        'auto',
         'compact',
         'deletable',
         'disabled',
@@ -2450,11 +2465,19 @@ var dragCounter = 0;
                     _this.overallProgress = overallProgress;
                 });
             }
-            return upload_helper.upload(url, headers, validFilesData, createFormData, function (overallProgress) {
+            return upload_helper
+                .upload(url, headers, validFilesData, createFormData, function (overallProgress) {
                 _this.overallProgress = overallProgress;
+            })
+                .then(function (res) {
+                _this.$emit('upload', res);
+                return res;
+            }, function (err) {
+                _this.$emit('upload:error', err);
             });
         },
         deleteUpload: function (url, headers, fileData, uploadData) {
+            var _this = this;
             if (this.filesData.length < 1) {
                 this.overallProgress = 0;
             }
@@ -2462,26 +2485,37 @@ var dragCounter = 0;
             if (this.resumable) {
                 return upload_helper.tusDeleteUpload(plugins.tus, url, headers, fileData);
             }
-            return upload_helper.deleteUpload(url, headers, fileData, uploadData);
+            return upload_helper.deleteUpload(url, headers, fileData, uploadData).then(function (res) {
+                _this.$emit('upload:delete', res);
+                return res;
+            }, function (err) {
+                _this.$emit('upload:delete:error', err);
+            });
         },
         updateUpload: function (url, headers, fileData, uploadData) {
+            var _this = this;
             fileData = this.getFileDataInstance(fileData);
-            return upload_helper.updateUpload(url, headers, fileData, uploadData);
+            return upload_helper.updateUpload(url, headers, fileData, uploadData).then(function (res) {
+                _this.$emit('upload:update', res);
+                return res;
+            }, function (err) {
+                _this.$emit('upload:update:error', err);
+            });
         },
         autoUpload: function (filesData) {
-            if (!this.uploadUrl) {
+            if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
             return this.upload(this.uploadUrl, this.uploadHeaders, filesData);
         },
         autoDeleteUpload: function (fileData) {
-            if (!this.uploadUrl) {
+            if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
             return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
         },
         autoUpdateUpload: function (fileData) {
-            if (!this.uploadUrl) {
+            if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
             return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);

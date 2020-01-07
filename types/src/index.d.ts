@@ -57,7 +57,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+    }, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
     plugins: {
         tus: any;
     };
@@ -106,7 +106,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+    }, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
     VueFilePreviewMixin: import("vue/types/vue").ExtendedVue<_Vue, {
         isEditInputFocused: boolean;
         isEditCancelable: boolean;
@@ -174,7 +174,7 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+}, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
 export { VueFileAgentMixin, VueFilePreviewMixin };
 export { utils, FileData, plugins };
 export default vfaPlugin;
