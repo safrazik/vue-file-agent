@@ -75,6 +75,12 @@ class AjaxRequest {
         const contentType = request.getResponseHeader('Content-Type');
         if (contentType && contentType.indexOf('application/json') !== -1) {
           responseData = JSON.parse(responseData);
+        } else {
+          try {
+            responseData = JSON.parse(responseData);
+          } catch (e) {
+            /* ignore, possibly non json response */
+          }
         }
         const response: AjaxResponse = {
           data: responseData,

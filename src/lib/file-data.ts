@@ -46,6 +46,7 @@ interface RawFileData {
   videoThumbnail: string;
   imageColor: RGBA;
   customName: string;
+  upload: UploadData;
 }
 
 interface DummyFile {
@@ -54,6 +55,11 @@ interface DummyFile {
   type: string;
   lastModified: number;
   lastModifiedDate: Date;
+}
+
+interface UploadData {
+  data: any;
+  error: string | false;
 }
 
 export { Dimensions, Options, RawFileData };
@@ -125,7 +131,7 @@ class FileData {
 
   public oldFileName: string | null = null;
   public oldCustomName: string | null = null;
-  public upload: any = null;
+  public upload: UploadData = { data: null, error: false };
 
   public raw: RawFileData;
   public progressInternal: number;
@@ -157,7 +163,6 @@ class FileData {
     this.isPlayingAv = false;
     this.oldFileName = null;
     this.oldCustomName = null;
-    this.upload = null;
 
     this.raw = data;
     this.file = data.file instanceof File ? data.file : (this.createDummyFile(data) as any);
@@ -359,7 +364,7 @@ class FileData {
     } else if (error.size) {
       return errorText.size as string;
     } else if (error.upload) {
-      return this.upload && this.upload.error ? this.upload.error : error.upload;
+      return this.upload.error ? this.upload.error : error.upload;
     }
     return errorText.common as string;
   }
@@ -378,6 +383,7 @@ class FileData {
     raw.color = this.color();
     raw.file = this.file;
     raw.progress = this.progress.bind(this); // pass it as a function
+    raw.upload = this.upload;
     if (!('error' in raw)) {
       Object.defineProperty(raw, 'error', {
         get: () => {

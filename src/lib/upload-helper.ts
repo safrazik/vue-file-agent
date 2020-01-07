@@ -99,6 +99,8 @@ class UploadHelper {
       fileData.error = {};
     }
     fileData.error.upload = errorText;
+    fileData.upload.data = undefined;
+    fileData.upload.error = errorText;
     if (timeout) {
       setTimeout(() => {
         if (!fileData.error) {
@@ -160,21 +162,27 @@ class UploadHelper {
           }
         },
       );
-      promise.then(
-        (response) => {
-          delete fileData.xhr;
-          fileData.upload = response.data;
-          fileData.progress(100);
-          if (fileData.xhrQueue) {
-            fileData.xhrQueue();
-            delete fileData.xhrQueue;
-          }
-        } /* */,
-        (err) => {
-          this.prepareUploadError(fileData, err);
-        } /* */,
+      promises.push(
+        new Promise((resolve, reject) => {
+          promise.then(
+            (response) => {
+              delete fileData.xhr;
+              fileData.upload.data = response.data;
+              fileData.upload.error = false;
+              fileData.progress(100);
+              if (fileData.xhrQueue) {
+                fileData.xhrQueue();
+                delete fileData.xhrQueue;
+              }
+              resolve(response.data);
+            } /* */,
+            (err) => {
+              this.prepareUploadError(fileData, err);
+            } /* */,
+          );
+        }),
       );
-      promises.push(promise);
+      // promises.push(promise);
       // })(fileData);
     }
     return Promise.all(promises);
@@ -186,7 +194,7 @@ class UploadHelper {
         fileData.xhr.abort();
       }
       if (uploadData === undefined) {
-        uploadData = fileData.upload;
+        uploadData = fileData.upload.data;
       }
       if (uploadData) {
         this.doDeleteUpload(url, headers, uploadData, (xhr) => {
@@ -216,7 +224,7 @@ class UploadHelper {
         return resolve();
       }
       if (uploadData === undefined) {
-        uploadData = fileData.upload || {};
+        uploadData = fileData.upload.data || {};
         uploadData.old_filename = fileData.oldFileName;
         uploadData.filename = fileData.name();
       }
@@ -227,7 +235,8 @@ class UploadHelper {
           }
         }).then(
           (response) => {
-            fileData.upload = response.data;
+            fileData.upload.data = response.data;
+            fileData.upload.error = false;
             resolve(response);
           },
           (err) => {
