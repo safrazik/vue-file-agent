@@ -8,6 +8,7 @@ import { RawFileData } from '../lib/file-data';
 import uploader from '../lib/upload-helper';
 import Vue from 'vue';
 import plugins from '../lib/plugins';
+import { ConfigureFn } from '../lib/ajax-request';
 
 // tslint:disable-next-line
 var dragCounter = 0;
@@ -33,8 +34,10 @@ export default Vue.extend({
     'sortable',
     'theme',
     'thumbnailSize',
+    'uploadConfig',
     'uploadHeaders',
     'uploadUrl',
+    'uploadWithCredentials',
     'value',
   ],
   components: {
@@ -149,11 +152,24 @@ export default Vue.extend({
     getFileDataInstance(fileDataOrRaw: FileData | RawFileData): FileData {
       return this.getFileDataOrRawInstance(fileDataOrRaw, false) as FileData;
     },
+    prepareConfigureFn(configureXhr?: ConfigureFn) {
+      const uploadWithCredentials = this.uploadWithCredentials;
+      if (uploadWithCredentials !== true && uploadWithCredentials !== false) {
+        return configureXhr;
+      }
+      return (request: XMLHttpRequest) => {
+        request.withCredentials = uploadWithCredentials;
+        if (typeof configureXhr === 'function') {
+          configureXhr(request);
+        }
+      };
+    },
     upload(
       url: string,
       headers: object,
       filesDataOrRaw: FileData[] | RawFileData[],
       createFormData?: (fileData: FileData) => FormData,
+      configureXhr?: ConfigureFn,
     ): Promise<any> {
       const validFilesData: FileData[] = [];
       const validFilesRawData: RawFileData[] = [];
@@ -170,9 +186,16 @@ export default Vue.extend({
         });
       }
       return uploader
-        .upload(url, headers, validFilesData, createFormData, (overallProgress) => {
-          this.overallProgress = overallProgress;
-        })
+        .upload(
+          url,
+          headers,
+          validFilesData,
+          createFormData,
+          (overallProgress) => {
+            this.overallProgress = overallProgress;
+          },
+          this.prepareConfigureFn(configureXhr),
+        )
         .then(
           (res) => {
             this.$emit('upload', validFilesRawData);
@@ -183,7 +206,13 @@ export default Vue.extend({
           },
         );
     },
-    deleteUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
+    deleteUpload(
+      url: string,
+      headers: object,
+      fileData: FileData | RawFileData,
+      uploadData?: any,
+      configureXhr?: ConfigureFn,
+    ): Promise<any> {
       if (this.filesData.length < 1) {
         this.overallProgress = 0;
       }
@@ -192,7 +221,7 @@ export default Vue.extend({
       if (this.resumable) {
         return uploader.tusDeleteUpload(plugins.tus, url, headers, fileData);
       }
-      return uploader.deleteUpload(url, headers, fileData, uploadData).then(
+      return uploader.deleteUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(
         (res) => {
           this.$emit('upload:delete', fileDataRaw);
           return res;
@@ -202,10 +231,16 @@ export default Vue.extend({
         },
       );
     },
-    updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any> {
+    updateUpload(
+      url: string,
+      headers: object,
+      fileData: FileData | RawFileData,
+      uploadData?: any,
+      configureXhr?: ConfigureFn,
+    ): Promise<any> {
       fileData = this.getFileDataInstance(fileData);
       const fileDataRaw = this.getFileDataRawInstance(fileData);
-      return uploader.updateUpload(url, headers, fileData, uploadData).then(
+      return uploader.updateUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(
         (res) => {
           this.$emit('upload:update', fileDataRaw);
           return res;
@@ -219,19 +254,19 @@ export default Vue.extend({
       if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
-      return this.upload(this.uploadUrl, this.uploadHeaders, filesData);
+      return this.upload(this.uploadUrl, this.uploadHeaders, filesData, this.uploadConfig);
     },
     autoDeleteUpload(fileData: FileData | RawFileData): Promise<any> {
       if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
-      return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
+      return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
     },
     autoUpdateUpload(fileData: FileData): Promise<any> {
       if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
-      return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
+      return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
     },
     equalFiles(file1: File, file2: File): boolean {
       return (

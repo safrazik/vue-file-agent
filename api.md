@@ -166,6 +166,25 @@ number, default `360`
 
 Image and Video file preview thumbnails are resized to this size. Bigger numbers resut in better quality thumbnails, smaller numbers result in faster preview generation.
 
+### uploadConfig
+
+function default none
+
+Configure the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) instance to be sent to server
+
+e.g
+
+```vue
+<VueFileAgent
+  :uploadConfig="
+    (xhr) => {
+      xhr.timeout = 25000;
+    }
+  "
+>
+</VueFileAgent>
+```
+
 ### uploadHeaders
 
 object default none
@@ -177,6 +196,12 @@ Headers to pass to `uploadUrl`
 string default none
 
 When this prop is provided, built in uploader is triggerred as soon as files are selected. And when delete button is clicked, built in uploader's delete function is called.
+
+### uploadWithCredentials
+
+boolean default undefined
+
+Set [XMLHttpRequest.withCredentials](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)
 
 ### value
 
@@ -269,19 +294,23 @@ Fired whenever files are selected. Passes the (newly selected) files data.
 
 ## Methods
 
-### upload(`uploadUrl`, `uploadHeaders`, `filesData`): Promise
+### upload(`uploadUrl` : string, `uploadHeaders` : object, `filesData` : FileData[] | RawFileData[], `createFormData` ?: (fileData: FileData) => FormData, `uploadConfig` ?: (request: XMLHttpRequest) => any): Promise
 
 - `uploadUrl`: the url where a `POST` request will be sent
 - `uploadHeaders`: a key value pair of custom headers. e.g: `{'Authorization': 'MyCustomAuthorizationHeader'}`
 - `filesData`: array of files data to upload
+- `createFormData`: [Optional] create a custom FormData instance for upload [See Example](https://github.com/safrazik/vue-file-agent/issues/12)
+- `uploadConfig`: [Optional] configure the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) object to be sent to server
 
 Trigger the default upload action.
 
-### deleteUpload(`uploadUrl`, `uploadHeaders`, `fileData`): Promise
+### deleteUpload(`uploadUrl` : string, `uploadHeaders` : object, `fileData` : FileData | RawFileData, `uploadData` ?: any, `uploadConfig` ?: (request: XMLHttpRequest) => any): Promise
 
 - `uploadUrl`: the url where a `DELETE` request will be sent
 - `uploadHeaders`: an key value pair of custom headers. e.g: `{'Authorization': 'MyCustomAuthorizationHeader'}`
 - `fileData`: file data to be deleted
+- `uploadData`: [Optional] the data returned in `upload` operation
+- `uploadConfig`: [Optional] configure the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) object to be sent to server
 
 Trigger the default delete upload action.
 
