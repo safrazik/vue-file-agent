@@ -1,6 +1,7 @@
 import FileData from '../lib/file-data';
 import { RawFileData } from '../lib/file-data';
 import Vue from 'vue';
+import { ConfigureFn } from '../lib/ajax-request';
 declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     filesData: FileData[];
     filesDataRaw: RawFileData[];
@@ -14,10 +15,13 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
 }, {
     createThumbnail(fileData: FileData, video: HTMLVideoElement): Promise<void>;
     initVideo(fileData: FileData): void;
+    getFileDataOrRawInstance(fileDataOrRaw: FileData | RawFileData, raw: boolean): FileData | RawFileData;
+    getFileDataRawInstance(fileDataOrRaw: FileData | RawFileData): RawFileData;
     getFileDataInstance(fileDataOrRaw: FileData | RawFileData): FileData;
-    upload(url: string, headers: object, filesDataOrRaw: FileData[] | RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined): Promise<any>;
-    deleteUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any>;
-    updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any): Promise<any>;
+    prepareConfigureFn(configureXhr?: ConfigureFn | undefined): ConfigureFn | undefined;
+    upload(url: string, headers: object, filesDataOrRaw: FileData[] | RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined, configureXhr?: ConfigureFn | undefined): Promise<any>;
+    deleteUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
+    updateUpload(url: string, headers: object, fileData: FileData | RawFileData, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
     autoUpload(filesData: FileData[] | RawFileData[]): Promise<any>;
     autoDeleteUpload(fileData: FileData | RawFileData): Promise<any>;
     autoUpdateUpload(fileData: FileData): Promise<any>;
@@ -46,5 +50,5 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+}, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
 export default _default;

@@ -25,10 +25,13 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
     }, {
         createThumbnail(fileData: FileData, video: HTMLVideoElement): Promise<void>;
         initVideo(fileData: FileData): void;
+        getFileDataOrRawInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData, raw: boolean): FileData | import("./lib/file-data").RawFileData;
+        getFileDataRawInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData): import("./lib/file-data").RawFileData;
         getFileDataInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData): FileData;
-        upload(url: string, headers: object, filesDataOrRaw: FileData[] | import("./lib/file-data").RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined): Promise<any>;
-        deleteUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any): Promise<any>;
-        updateUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any): Promise<any>;
+        prepareConfigureFn(configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): import("./lib/ajax-request").ConfigureFn | undefined;
+        upload(url: string, headers: object, filesDataOrRaw: FileData[] | import("./lib/file-data").RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
+        deleteUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
+        updateUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
         autoUpload(filesData: FileData[] | import("./lib/file-data").RawFileData[]): Promise<any>;
         autoDeleteUpload(fileData: FileData | import("./lib/file-data").RawFileData): Promise<any>;
         autoUpdateUpload(fileData: FileData): Promise<any>;
@@ -57,7 +60,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+    }, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
     plugins: {
         tus: any;
     };
@@ -74,10 +77,13 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
     }, {
         createThumbnail(fileData: FileData, video: HTMLVideoElement): Promise<void>;
         initVideo(fileData: FileData): void;
+        getFileDataOrRawInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData, raw: boolean): FileData | import("./lib/file-data").RawFileData;
+        getFileDataRawInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData): import("./lib/file-data").RawFileData;
         getFileDataInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData): FileData;
-        upload(url: string, headers: object, filesDataOrRaw: FileData[] | import("./lib/file-data").RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined): Promise<any>;
-        deleteUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any): Promise<any>;
-        updateUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any): Promise<any>;
+        prepareConfigureFn(configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): import("./lib/ajax-request").ConfigureFn | undefined;
+        upload(url: string, headers: object, filesDataOrRaw: FileData[] | import("./lib/file-data").RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
+        deleteUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
+        updateUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
         autoUpload(filesData: FileData[] | import("./lib/file-data").RawFileData[]): Promise<any>;
         autoDeleteUpload(fileData: FileData | import("./lib/file-data").RawFileData): Promise<any>;
         autoUpdateUpload(fileData: FileData): Promise<any>;
@@ -106,7 +112,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+    }, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
     VueFilePreviewMixin: import("vue/types/vue").ExtendedVue<_Vue, {
         isEditInputFocused: boolean;
         isEditCancelable: boolean;
@@ -142,10 +148,13 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
 }, {
     createThumbnail(fileData: FileData, video: HTMLVideoElement): Promise<void>;
     initVideo(fileData: FileData): void;
+    getFileDataOrRawInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData, raw: boolean): FileData | import("./lib/file-data").RawFileData;
+    getFileDataRawInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData): import("./lib/file-data").RawFileData;
     getFileDataInstance(fileDataOrRaw: FileData | import("./lib/file-data").RawFileData): FileData;
-    upload(url: string, headers: object, filesDataOrRaw: FileData[] | import("./lib/file-data").RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined): Promise<any>;
-    deleteUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any): Promise<any>;
-    updateUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any): Promise<any>;
+    prepareConfigureFn(configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): import("./lib/ajax-request").ConfigureFn | undefined;
+    upload(url: string, headers: object, filesDataOrRaw: FileData[] | import("./lib/file-data").RawFileData[], createFormData?: ((fileData: FileData) => FormData) | undefined, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
+    deleteUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
+    updateUpload(url: string, headers: object, fileData: FileData | import("./lib/file-data").RawFileData, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
     autoUpload(filesData: FileData[] | import("./lib/file-data").RawFileData[]): Promise<any>;
     autoDeleteUpload(fileData: FileData | import("./lib/file-data").RawFileData): Promise<any>;
     autoUpdateUpload(fileData: FileData): Promise<any>;
@@ -174,7 +183,7 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadHeaders" | "uploadUrl" | "value", any>>;
+}, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
 export { VueFileAgentMixin, VueFilePreviewMixin };
 export { utils, FileData, plugins };
 export default vfaPlugin;

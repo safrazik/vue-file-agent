@@ -2339,8 +2339,10 @@ var dragCounter = 0;
         'sortable',
         'theme',
         'thumbnailSize',
+        'uploadConfig',
         'uploadHeaders',
         'uploadUrl',
+        'uploadWithCredentials',
         'value',
     ],
     components: {
@@ -2437,7 +2439,7 @@ var dragCounter = 0;
             });
             video.load();
         },
-        getFileDataInstance: function (fileDataOrRaw) {
+        getFileDataOrRawInstance: function (fileDataOrRaw, raw) {
             var i;
             if (fileDataOrRaw instanceof file_data) {
                 i = this.filesData.indexOf(fileDataOrRaw);
@@ -2448,16 +2450,36 @@ var dragCounter = 0;
             if (i === -1) {
                 return fileDataOrRaw;
             }
-            return this.filesData[i];
+            return raw ? this.filesDataRaw[i] : this.filesData[i];
         },
-        upload: function (url, headers, filesDataOrRaw, createFormData) {
+        getFileDataRawInstance: function (fileDataOrRaw) {
+            return this.getFileDataOrRawInstance(fileDataOrRaw, true);
+        },
+        getFileDataInstance: function (fileDataOrRaw) {
+            return this.getFileDataOrRawInstance(fileDataOrRaw, false);
+        },
+        prepareConfigureFn: function (configureXhr) {
+            var uploadWithCredentials = this.uploadWithCredentials;
+            if (uploadWithCredentials !== true && uploadWithCredentials !== false) {
+                return configureXhr;
+            }
+            return function (request) {
+                request.withCredentials = uploadWithCredentials;
+                if (typeof configureXhr === 'function') {
+                    configureXhr(request);
+                }
+            };
+        },
+        upload: function (url, headers, filesDataOrRaw, createFormData, configureXhr) {
             var _this = this;
             var validFilesData = [];
+            var validFilesRawData = [];
             for (var _i = 0, filesDataOrRaw_1 = filesDataOrRaw; _i < filesDataOrRaw_1.length; _i++) {
                 var fileDataOrRaw = filesDataOrRaw_1[_i];
                 var fileData = this.getFileDataInstance(fileDataOrRaw);
                 if (!fileData.error) {
                     validFilesData.push(fileData);
+                    validFilesRawData.push(this.getFileDataRawInstance(fileData));
                 }
             }
             if (this.resumable) {
@@ -2468,35 +2490,37 @@ var dragCounter = 0;
             return upload_helper
                 .upload(url, headers, validFilesData, createFormData, function (overallProgress) {
                 _this.overallProgress = overallProgress;
-            })
+            }, this.prepareConfigureFn(configureXhr))
                 .then(function (res) {
-                _this.$emit('upload', res);
+                _this.$emit('upload', validFilesRawData);
                 return res;
             }, function (err) {
                 _this.$emit('upload:error', err);
             });
         },
-        deleteUpload: function (url, headers, fileData, uploadData) {
+        deleteUpload: function (url, headers, fileData, uploadData, configureXhr) {
             var _this = this;
             if (this.filesData.length < 1) {
                 this.overallProgress = 0;
             }
             fileData = this.getFileDataInstance(fileData);
+            var fileDataRaw = this.getFileDataRawInstance(fileData);
             if (this.resumable) {
                 return upload_helper.tusDeleteUpload(plugins.tus, url, headers, fileData);
             }
-            return upload_helper.deleteUpload(url, headers, fileData, uploadData).then(function (res) {
-                _this.$emit('upload:delete', res);
+            return upload_helper.deleteUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(function (res) {
+                _this.$emit('upload:delete', fileDataRaw);
                 return res;
             }, function (err) {
                 _this.$emit('upload:delete:error', err);
             });
         },
-        updateUpload: function (url, headers, fileData, uploadData) {
+        updateUpload: function (url, headers, fileData, uploadData, configureXhr) {
             var _this = this;
             fileData = this.getFileDataInstance(fileData);
-            return upload_helper.updateUpload(url, headers, fileData, uploadData).then(function (res) {
-                _this.$emit('upload:update', res);
+            var fileDataRaw = this.getFileDataRawInstance(fileData);
+            return upload_helper.updateUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(function (res) {
+                _this.$emit('upload:update', fileDataRaw);
                 return res;
             }, function (err) {
                 _this.$emit('upload:update:error', err);
@@ -2506,19 +2530,19 @@ var dragCounter = 0;
             if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
-            return this.upload(this.uploadUrl, this.uploadHeaders, filesData);
+            return this.upload(this.uploadUrl, this.uploadHeaders, filesData, this.uploadConfig);
         },
         autoDeleteUpload: function (fileData) {
             if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
-            return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
+            return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
         },
         autoUpdateUpload: function (fileData) {
             if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
-            return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
+            return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
         },
         equalFiles: function (file1, file2) {
             return ( true &&
