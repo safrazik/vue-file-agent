@@ -13,6 +13,7 @@
     "baseUrl": ".",
     "declaration": true,
     "declarationDir": "types",
+    "downlevelIteration": true,
     "types": [
       "webpack-env",
       "jest"
