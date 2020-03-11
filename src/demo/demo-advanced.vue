@@ -85,10 +85,12 @@
           </div>
           <div class="col-6 col-md-12 px-2">
             <div class="custom-control custom-checkbox mt-1">
-              <input type="checkbox" class="custom-control-input" id="advanced-demo-resumable" v-model="resumable" />
-              <label class="custom-control-label" for="advanced-demo-resumable"
-                >:resumable (<a href="https://safrazik.github.io/vue-file-agent/docs/#resumable">Docs</a>)</label
-              >
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-readonly" v-model="readonly" />
+              <label class="custom-control-label" for="advanced-demo-readonly">:readonly</label>
+            </div>
+            <div class="custom-control custom-checkbox mt-1">
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled" />
+              <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
             </div>
           </div>
           <div class="col-6 col-md-12 px-2">
@@ -109,8 +111,10 @@
           </div>
           <div class="col-6 col-md-12 px-2">
             <div class="custom-control custom-checkbox mt-1">
-              <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled" />
-              <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-resumable" v-model="resumable" />
+              <label class="custom-control-label" for="advanced-demo-resumable"
+                >:resumable (<a href="https://safrazik.github.io/vue-file-agent/docs/#resumable">Docs</a>)</label
+              >
             </div>
           </div>
           <div class="col-6 col-md-12 px-2">
@@ -141,6 +145,7 @@
           :editable="editable"
           :linkable="linkable"
           :sortable="sortable"
+          :readonly="readonly"
           :resumable="resumable"
           :disabled="disabled"
           :compact="compact"
@@ -279,6 +284,7 @@ export default {
       editable: true,
       linkable: true,
       sortable: false,
+      readonly: false,
       resumable: false,
       disabled: false,
       compact: false,
