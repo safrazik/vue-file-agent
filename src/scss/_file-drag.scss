@@ -11,4 +11,10 @@
     border-color: #f61a1a;
     box-shadow: inset 0px 0px 20px 1px #f61a1a;
   }
+
+  &.file-input-wrapper.is-drag-valid.is-drag-over,
+  .is-drag-valid.is-drag-over &.file-input-wrapper {
+    border-color: #54d500;
+    box-shadow: inset 0px 0px 20px 1px #54d500;
+  }
 }

@@ -15,6 +15,7 @@
         'is-drag-over': isDragging,
         'is-disabled': disabled === true,
         'is-readonly': readonly === true,
+        'is-drag-valid': !(disabled === true || readonly === true || (hasMultiple && !canAddMore)),
       },
       'theme-' + theme,
     ]"

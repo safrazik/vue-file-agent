@@ -293,7 +293,7 @@ export default Vue.extend({
       return false;
     },
     handleFiles(files: File[] | FileList): void {
-      if (this.disabled === true) {
+      if (this.disabled === true || this.readonly === true) {
         return;
       }
       if (this.hasMultiple && !this.canAddMore) {
@@ -362,13 +362,16 @@ export default Vue.extend({
       }
     },
     drop(event: DragEvent): void {
+      event.stopPropagation();
+      event.preventDefault();
+      dragCounter = 0;
+      this.isDragging = false;
+      if (this.disabled === true || this.readonly === true) {
+        return;
+      }
       if (!event.dataTransfer) {
         return;
       }
-      dragCounter = 0;
-      this.isDragging = false;
-      event.stopPropagation();
-      event.preventDefault();
       utils.getFilesFromDroppedItems(event.dataTransfer).then((files) => {
         this.$emit('drop', event);
         if (!files || !files[0]) {
