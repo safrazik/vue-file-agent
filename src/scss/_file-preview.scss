@@ -167,7 +167,7 @@
   }
 
   &.has-multiple .file-preview,
-  &.is-single .file-preview-wrapper.is-deletable .file-preview {
+  &.is-single .is-deletable .file-preview {
     z-index: 11;
   }
 
