@@ -6,14 +6,15 @@
     @drop="drop"
     :class="[
       'is-sortable-' + (isSortable ? 'enabled' : 'disabled'),
-      { 'is-sortable-hold': sortable === 'hold' },
-      { 'is-sortable-hold': sortable === 'handle' },
-      { 'is-sortable-immediately': sortable === true },
       {
+        'is-sortable-hold': sortable === 'hold',
+        'is-sortable-handle': sortable === 'handle',
+        'is-sortable-immediately': sortable === true,
         'is-sorting': isSorting,
         'is-sorting-active': isSortingActive,
         'is-drag-over': isDragging,
         'is-disabled': disabled === true,
+        'is-readonly': readonly === true,
       },
       'theme-' + theme,
     ]"
@@ -78,7 +79,7 @@
             </slot>
           </component>
           <!-- </template> -->
-          <template v-if="canAddMore">
+          <template v-if="canAddMore && readonly !== true">
             <slot name="file-preview-new">
               <div key="new" class="file-preview-wrapper grid-box-item grid-block file-preview-new">
                 <span class="file-preview">
@@ -101,8 +102,8 @@
         class="file-input"
         @change="filesChanged"
         :accept="accept || '*'"
+        v-if="this.readonly !== true"
       />
-
       <slot name="after-inner"></slot>
     </div>
     <slot name="after-outer"></slot>

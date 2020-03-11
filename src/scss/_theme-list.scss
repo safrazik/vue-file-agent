@@ -1,7 +1,6 @@
 .theme-list .vue-file-agent {
   .file-preview-wrapper {
     width: 100%;
-    border-width: 2px;
 
     .file-preview {
       height: 53px;
@@ -190,5 +189,14 @@
   .grid-box-leave-active {
     position: absolute !important;
     left: 0 !important;
+  }
+
+  .grid-block-wrapper .grid-block {
+    border-width: 2px;
+  }
+
+  &.is-readonly .grid-block-wrapper {
+    padding: 0;
+    margin: -2px; // border width of .grid-block-wrapper .grid-block
   }
 }

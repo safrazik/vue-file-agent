@@ -33,3 +33,7 @@
 .grid-box-leave-active {
   position: absolute !important;
 }
+
+.is-readonly .vue-file-agent.file-input-wrapper {
+  border: 0;
+}

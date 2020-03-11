@@ -30,6 +30,7 @@ export default Vue.extend({
     'multiple',
     'progress',
     'read',
+    'readonly',
     'resumable',
     'sortable',
     'theme',
