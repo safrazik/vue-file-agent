@@ -134,7 +134,8 @@ class UploadHelper {
         progressFn(prgTotal / filesData.length);
       };
     }
-    const promises = [];
+    const promises: Array<Promise<AjaxResponse | { error: AjaxError }>> = [];
+    let failedUploadsCount = 0;
     for (const fileData of filesData) {
       let formData;
       if (typeof createFormData === 'function') {
@@ -174,10 +175,12 @@ class UploadHelper {
                 fileData.xhrQueue();
                 delete fileData.xhrQueue;
               }
-              resolve(response.data);
+              resolve(response);
             } /* */,
             (err) => {
               this.prepareUploadError(fileData, err);
+              resolve({ error: err });
+              failedUploadsCount++;
             } /* */,
           );
         }),
@@ -185,7 +188,17 @@ class UploadHelper {
       // promises.push(promise);
       // })(fileData);
     }
-    return Promise.all(promises);
+    // return Promise.all(promises);
+    return new Promise((resolve, reject) => {
+      Promise.all(promises).then((responses) => {
+        if (failedUploadsCount === promises.length) {
+          // all uploads failed
+          reject((responses as Array<{ error: AjaxError }>).map((res) => res.error));
+          return;
+        }
+        resolve(responses);
+      }, reject);
+    });
   }
 
   public deleteUpload(url: string, headers: object, fileData: FileData, uploadData?: any, configureFn?: ConfigureFn) {
