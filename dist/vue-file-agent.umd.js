@@ -187,12 +187,210 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"31dfa902-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-icon.vue?vue&type=template&id=61d49b70&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"70a7de40-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-icon.vue?vue&type=template&id=2aa77553&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{attrs:{"viewBox":_vm.viewBoxComputed}},[_vm._l((_vm.icon.paths),function(d,index){return [(d)?_c('path',{key:index,attrs:{"d":d}}):_vm._e()]})],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-file-icon.vue?vue&type=template&id=61d49b70&
+// CONCATENATED MODULE: ./src/components/vue-file-icon.vue?vue&type=template&id=2aa77553&
+
+// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.js
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+function __exportStar(m, exports) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+
+function __values(o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result.default = mod;
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
 
 // CONCATENATED MODULE: ./src/lib/extensions.ts
 /* harmony default export */ var extensions = ({
@@ -310,6 +508,8 @@ var staticRenderFns = []
 });
 
 // CONCATENATED MODULE: ./src/lib/icons.ts
+var icons_e_1, icons_a;
+
 
 var SvgIcon = /** @class */ (function () {
     function SvgIcon(paths, color, viewBox) {
@@ -413,9 +613,18 @@ for (var category in icons) {
 var extensionsMap = {};
 for (var cat in extensions) {
     if (extensions.hasOwnProperty(cat)) {
-        for (var icons_i = 0, icons_a = extensions[cat]; icons_i < icons_a.length; icons_i++) {
-            var icons_ext = icons_a[icons_i];
-            extensionsMap[icons_ext] = cat;
+        try {
+            for (var icons_b = (icons_e_1 = void 0, __values(extensions[cat])), icons_c = icons_b.next(); !icons_c.done; icons_c = icons_b.next()) {
+                var icons_ext = icons_c.value;
+                extensionsMap[icons_ext] = cat;
+            }
+        }
+        catch (e_1_1) { icons_e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (icons_c && !icons_c.done && (icons_a = icons_b.return)) icons_a.call(icons_b);
+            }
+            finally { if (icons_e_1) throw icons_e_1.error; }
         }
     }
 }
@@ -531,7 +740,7 @@ function normalizeComponent (
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
-      // register for functioal component in vue file
+      // register for functional component in vue file
       var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
@@ -572,8 +781,8 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var vue_file_icon = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"31dfa902-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-preview.vue?vue&type=template&id=1f00ad11&
-var vue_file_previewvue_type_template_id_1f00ad11_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"70a7de40-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-preview.vue?vue&type=template&id=0209dc38&
+var vue_file_previewvue_type_template_id_0209dc38_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
     'file-preview-wrapper-' + _vm.fileData.ext(),
     _vm.fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other',
     'file-category-' + _vm.fileData.icon().category,
@@ -592,15 +801,16 @@ var vue_file_previewvue_type_template_id_1f00ad11_render = function () {var _vm=
         'file-progress-done': _vm.fileData.progress() >= 100,
         'has-file-progress': _vm.fileData.progress() > 0,
       }},[_c('span',{staticClass:"file-progress-bar",style:({ width: _vm.fileData.progress() + '%' })})]):_vm._e(),_c('span',{staticClass:"file-icon"},[(_vm.hasLinkableUrl)?_c('a',{attrs:{"href":_vm.fileData.url,"target":"_blank","title":_vm.fileData.name()}},[_c('VueFileIcon',{attrs:{"ext":_vm.fileData.ext()}})],1):_c('VueFileIcon',{attrs:{"ext":_vm.fileData.ext()}})],1)])])}
-var vue_file_previewvue_type_template_id_1f00ad11_staticRenderFns = []
+var vue_file_previewvue_type_template_id_0209dc38_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-file-preview.vue?vue&type=template&id=1f00ad11&
+// CONCATENATED MODULE: ./src/components/vue-file-preview.vue?vue&type=template&id=0209dc38&
 
 // CONCATENATED MODULE: ./src/lib/drop-handler.ts
+
 function getFilesFromDroppedItems(dataTransfer) {
     return new Promise(function (resolve) {
-        if (!includesFolder(dataTransfer.files)) {
+        if (!includesFolder(dataTransfer)) {
             return resolve(dataTransfer.files);
         }
         var files = [];
@@ -623,7 +833,7 @@ function getFilesFromDroppedItems(dataTransfer) {
             }
         }
         Promise.all(folderReadQueue).then(function (filesInFolders) {
-            resolve(files.concat.apply(files, filesInFolders));
+            resolve(files.concat.apply(files, __spread(filesInFolders)));
         });
     });
 }
@@ -659,7 +869,7 @@ function getEntries(entry) {
                             return readEntries_1();
                         }
                         getEntries(entries[i]).then(function (entryFiles) {
-                            files_1.push.apply(files_1, entryFiles);
+                            files_1.push.apply(files_1, __spread(entryFiles));
                             iterateEntry(i + 1);
                         });
                     };
@@ -673,10 +883,31 @@ function getEntries(entry) {
         }
     });
 }
-function includesFolder(files) {
-    if (!files.length) {
+function includesFolder(transfer) {
+    var e_1, _a;
+    if (!transfer.files.length) {
         return true; // if dropping only folders, no files will exist
     }
+    try {
+        // Loop through the dropped items and log their data
+        for (var _b = __values(transfer.items), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var item = _c.value;
+            if (item.webkitGetAsEntry != null) {
+                var entry = item.webkitGetAsEntry();
+                if (entry && entry.isDirectory) {
+                    return true;
+                }
+            }
+        }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    var files = transfer.files;
     // tslint:disable-next-line
     for (var i = 0; i < files.length; i++) {
         // A folder has no type and has a size that is a multiple of 4096
@@ -688,6 +919,7 @@ function includesFolder(files) {
 }
 
 // CONCATENATED MODULE: ./src/lib/utils.ts
+
 
 var ImageOrientation;
 (function (ImageOrientation) {
@@ -1033,6 +1265,7 @@ var utils_Utils = /** @class */ (function () {
         return intToHSL(getHashCode(text.toLowerCase()));
     };
     Utils.prototype.validateType = function (file, accept) {
+        var e_1, _a;
         // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
         // https://gitlab.com/meno/dropzone/blob/master/src/dropzone.js#L2511
         if (!accept) {
@@ -1041,26 +1274,35 @@ var utils_Utils = /** @class */ (function () {
         var acceptedFiles = accept.split(',');
         var mimeType = file.type;
         var baseMimeType = mimeType.replace(/\/.*$/, '');
-        for (var _i = 0, acceptedFiles_1 = acceptedFiles; _i < acceptedFiles_1.length; _i++) {
-            var validType = acceptedFiles_1[_i];
-            validType = validType.trim();
-            if (validType.charAt(0) === '.') {
-                // extension
-                if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
-                    return true;
+        try {
+            for (var acceptedFiles_1 = __values(acceptedFiles), acceptedFiles_1_1 = acceptedFiles_1.next(); !acceptedFiles_1_1.done; acceptedFiles_1_1 = acceptedFiles_1.next()) {
+                var validType = acceptedFiles_1_1.value;
+                validType = validType.trim();
+                if (validType.charAt(0) === '.') {
+                    // extension
+                    if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
+                        return true;
+                    }
+                }
+                else if (/\/\*$/.test(validType)) {
+                    // This is something like a image/* mime type
+                    if (baseMimeType === validType.replace(/\/.*$/, '')) {
+                        return true;
+                    }
+                }
+                else {
+                    if (mimeType === validType) {
+                        return true;
+                    }
                 }
             }
-            else if (/\/\*$/.test(validType)) {
-                // This is something like a image/* mime type
-                if (baseMimeType === validType.replace(/\/.*$/, '')) {
-                    return true;
-                }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (acceptedFiles_1_1 && !acceptedFiles_1_1.done && (_a = acceptedFiles_1.return)) _a.call(acceptedFiles_1);
             }
-            else {
-                if (mimeType === validType) {
-                    return true;
-                }
-            }
+            finally { if (e_1) throw e_1.error; }
         }
         return false;
     };
@@ -1079,6 +1321,7 @@ var utils_Utils = /** @class */ (function () {
 /* harmony default export */ var utils = (new utils_Utils());
 
 // CONCATENATED MODULE: ./src/lib/file-data.ts
+
 
 
 var file_data_FileData = /** @class */ (function () {
@@ -1136,18 +1379,38 @@ var file_data_FileData = /** @class */ (function () {
         return FileData.getFromRaw(fileDataRaw, options, true);
     };
     FileData.fromRawArray = function (filesDataRaw, options) {
+        var e_1, _a;
         var promises = [];
-        for (var _i = 0, filesDataRaw_1 = filesDataRaw; _i < filesDataRaw_1.length; _i++) {
-            var fileDataRaw = filesDataRaw_1[_i];
-            promises.push(FileData.fromRaw(fileDataRaw, options));
+        try {
+            for (var filesDataRaw_1 = __values(filesDataRaw), filesDataRaw_1_1 = filesDataRaw_1.next(); !filesDataRaw_1_1.done; filesDataRaw_1_1 = filesDataRaw_1.next()) {
+                var fileDataRaw = filesDataRaw_1_1.value;
+                promises.push(FileData.fromRaw(fileDataRaw, options));
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (filesDataRaw_1_1 && !filesDataRaw_1_1.done && (_a = filesDataRaw_1.return)) _a.call(filesDataRaw_1);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         return Promise.all(promises);
     };
     FileData.toRawArray = function (filesData) {
+        var e_2, _a;
         var filesDataRaw = [];
-        for (var _i = 0, filesData_1 = filesData; _i < filesData_1.length; _i++) {
-            var fileData = filesData_1[_i];
-            filesDataRaw.push(fileData.toRaw());
+        try {
+            for (var filesData_1 = __values(filesData), filesData_1_1 = filesData_1.next(); !filesData_1_1.done; filesData_1_1 = filesData_1.next()) {
+                var fileData = filesData_1_1.value;
+                filesDataRaw.push(fileData.toRaw());
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (filesData_1_1 && !filesData_1_1.done && (_a = filesData_1.return)) _a.call(filesData_1);
+            }
+            finally { if (e_2) throw e_2.error; }
         }
         return filesDataRaw;
     };
@@ -1166,10 +1429,20 @@ var file_data_FileData = /** @class */ (function () {
         });
     };
     FileData.readFiles = function (filesData) {
+        var e_3, _a;
         var promises = [];
-        for (var _i = 0, filesData_2 = filesData; _i < filesData_2.length; _i++) {
-            var fileData = filesData_2[_i];
-            promises.push(FileData.readFile(fileData));
+        try {
+            for (var filesData_2 = __values(filesData), filesData_2_1 = filesData_2.next(); !filesData_2_1.done; filesData_2_1 = filesData_2.next()) {
+                var fileData = filesData_2_1.value;
+                promises.push(FileData.readFile(fileData));
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (filesData_2_1 && !filesData_2_1.done && (_a = filesData_2.return)) _a.call(filesData_2);
+            }
+            finally { if (e_3) throw e_3.error; }
         }
         return Promise.all(promises);
     };
@@ -1564,8 +1837,8 @@ var file_data_FileData = /** @class */ (function () {
 
 var vue_file_preview_component = normalizeComponent(
   components_vue_file_previewvue_type_script_lang_ts_,
-  vue_file_previewvue_type_template_id_1f00ad11_render,
-  vue_file_previewvue_type_template_id_1f00ad11_staticRenderFns,
+  vue_file_previewvue_type_template_id_0209dc38_render,
+  vue_file_previewvue_type_template_id_0209dc38_staticRenderFns,
   false,
   null,
   null,
@@ -1574,12 +1847,12 @@ var vue_file_preview_component = normalizeComponent(
 )
 
 /* harmony default export */ var vue_file_preview = (vue_file_preview_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"31dfa902-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-list.vue?vue&type=template&id=5ef04e06&
-var vue_file_listvue_type_template_id_5ef04e06_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)}
-var vue_file_listvue_type_template_id_5ef04e06_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"70a7de40-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-list.vue?vue&type=template&id=0ab83eb6&
+var vue_file_listvue_type_template_id_0ab83eb6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)}
+var vue_file_listvue_type_template_id_0ab83eb6_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-file-list.vue?vue&type=template&id=5ef04e06&
+// CONCATENATED MODULE: ./src/components/vue-file-list.vue?vue&type=template&id=0ab83eb6&
 
 // CONCATENATED MODULE: ./node_modules/ts-loader??ref--12-0!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-list.vue?vue&type=script&lang=ts&
 
@@ -1599,8 +1872,8 @@ var vue_file_listvue_type_template_id_5ef04e06_staticRenderFns = []
 
 var vue_file_list_component = normalizeComponent(
   components_vue_file_listvue_type_script_lang_ts_,
-  vue_file_listvue_type_template_id_5ef04e06_render,
-  vue_file_listvue_type_template_id_5ef04e06_staticRenderFns,
+  vue_file_listvue_type_template_id_0ab83eb6_render,
+  vue_file_listvue_type_template_id_0ab83eb6_staticRenderFns,
   false,
   null,
   null,
@@ -1609,12 +1882,12 @@ var vue_file_list_component = normalizeComponent(
 )
 
 /* harmony default export */ var vue_file_list = (vue_file_list_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"31dfa902-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-list-item.vue?vue&type=template&id=00f7ef53&
-var vue_file_list_itemvue_type_template_id_00f7ef53_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)}
-var vue_file_list_itemvue_type_template_id_00f7ef53_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"70a7de40-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-list-item.vue?vue&type=template&id=aa83b36e&
+var vue_file_list_itemvue_type_template_id_aa83b36e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)}
+var vue_file_list_itemvue_type_template_id_aa83b36e_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-file-list-item.vue?vue&type=template&id=00f7ef53&
+// CONCATENATED MODULE: ./src/components/vue-file-list-item.vue?vue&type=template&id=aa83b36e&
 
 // CONCATENATED MODULE: ./node_modules/ts-loader??ref--12-0!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-list-item.vue?vue&type=script&lang=ts&
 
@@ -1634,8 +1907,8 @@ var vue_file_list_itemvue_type_template_id_00f7ef53_staticRenderFns = []
 
 var vue_file_list_item_component = normalizeComponent(
   components_vue_file_list_itemvue_type_script_lang_ts_,
-  vue_file_list_itemvue_type_template_id_00f7ef53_render,
-  vue_file_list_itemvue_type_template_id_00f7ef53_staticRenderFns,
+  vue_file_list_itemvue_type_template_id_aa83b36e_render,
+  vue_file_list_itemvue_type_template_id_aa83b36e_staticRenderFns,
   false,
   null,
   null,
@@ -1644,8 +1917,8 @@ var vue_file_list_item_component = normalizeComponent(
 )
 
 /* harmony default export */ var vue_file_list_item = (vue_file_list_item_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"31dfa902-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-agent.vue?vue&type=template&id=1410c648&
-var vue_file_agentvue_type_template_id_1410c648_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"70a7de40-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-agent.vue?vue&type=template&id=55d4707f&
+var vue_file_agentvue_type_template_id_55d4707f_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
     'is-sortable-' + (_vm.isSortable ? 'enabled' : 'disabled'),
     { 'is-sortable-hold': _vm.sortable === 'hold' },
     { 'is-sortable-hold': _vm.sortable === 'handle' },
@@ -1662,208 +1935,10 @@ var vue_file_agentvue_type_template_id_1410c648_render = function () {var _vm=th
       'has-multiple': _vm.hasMultiple,
       'no-meta': _vm.meta === false,
     }},[_vm._t("before-inner"),_c('canvas',{ref:"thumbnailCanvas",staticStyle:{"position":"fixed","visibility":"hidden","z-index":"-3"}}),(_vm.overallProgress)?_c('div',{staticClass:"overall-progress",class:{ 'overall-progress-full': _vm.overallProgress >= 100 }},[_c('div',{staticClass:"overall-progress-bar",style:({ width: _vm.overallProgress + '%' })}),_c('div',{staticClass:"overall-progress-left",style:({ width: 100 - _vm.overallProgress + '%' })})]):_vm._e(),_c(_vm.isSortable ? 'vfa-sortable-list' : 'VueFileList',{tag:"component",attrs:{"axis":_vm.theme == 'list' ? 'y' : 'xy',"appendTo":'#vfa-' + _vm.uniqueId + ' .vue-file-agent',"transitionDuration":_vm.transitionDuration,"pressDelay":_vm.sortable === 'hold' ? 200 : 0,"useDragHandle":_vm.sortable === 'handle',"helperClass":'active-sorting-item'},on:{"sort-start":function($event){return _vm.sortStart()},"sort-end":function($event){return _vm.sortEnd($event)}},model:{value:(_vm.filesData),callback:function ($$v) {_vm.filesData=$$v},expression:"filesData"}},[_c('transition-group',{attrs:{"name":"grid-box","tag":"div"}},[_vm._l((_vm.filesData),function(fileData,index){return _c(_vm.isSortable ? 'vfa-sortable-item' : 'VueFileListItem',{key:fileData.id,tag:"component",staticClass:"file-preview-wrapper grid-box-item grid-block",attrs:{"index":index}},[(_vm.sortable === 'handle')?_c('span',{directives:[{name:"vfa-sortable-handle",rawName:"v-vfa-sortable-handle"}],staticClass:"file-sortable-handle"},[_vm._t("sortable-handle",[_c('VueFileIcon',{attrs:{"name":"system-sortable-handle"}})])],2):_vm._e(),_vm._t("file-preview",[_c('VueFilePreview',{attrs:{"value":fileData,"deletable":_vm.isDeletable,"editable":_vm.editable === true,"linkable":_vm.linkable === true,"errorText":_vm.errorText,"disabled":_vm.disabled,"thumbnailSize":_vm.thumbnailSize},on:{"remove":function($event){return _vm.removeFileData($event)},"rename":function($event){return _vm.filenameChanged($event)}}})],{"fileData":fileData,"index":index})],2)}),(_vm.canAddMore)?[_vm._t("file-preview-new",[_c('div',{key:"new",staticClass:"file-preview-wrapper grid-box-item grid-block file-preview-new"},[_c('span',{staticClass:"file-preview"},[_c('span',{staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0"}},[_c('VueFileIcon',{attrs:{"name":"system-file-preview-new"}}),_c('span',{staticClass:"help-text"},[_vm._v(_vm._s(_vm.helpTextComputed))])],1)])])])]:_vm._e()],2)],1),_c('input',{ref:"fileInput",staticClass:"file-input",attrs:{"title":"","disabled":_vm.disabled === true || (_vm.hasMultiple && !_vm.canAddMore),"type":"file","multiple":_vm.hasMultiple,"accept":_vm.accept || '*'},on:{"change":_vm.filesChanged}}),_vm._t("after-inner")],2),_vm._t("after-outer")],2)}
-var vue_file_agentvue_type_template_id_1410c648_staticRenderFns = []
+var vue_file_agentvue_type_template_id_55d4707f_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-file-agent.vue?vue&type=template&id=1410c648&
-
-// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.js
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-/* global Reflect, Promise */
-
-var extendStatics = function(d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    }
-    return __assign.apply(this, arguments);
-}
-
-function __rest(s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-}
-
-function __decorate(decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-}
-
-function __param(paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-}
-
-function __metadata(metadataKey, metadataValue) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-}
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-}
-
-function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-}
-
-function __exportStar(m, exports) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-
-function __values(o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-    if (m) return m.call(o);
-    return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-}
-
-function __read(o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-}
-
-function __spread() {
-    for (var ar = [], i = 0; i < arguments.length; i++)
-        ar = ar.concat(__read(arguments[i]));
-    return ar;
-}
-
-function __spreadArrays() {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-
-function __await(v) {
-    return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var g = generator.apply(thisArg, _arguments || []), i, q = [];
-    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
-    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
-    function fulfill(value) { resume("next", value); }
-    function reject(value) { resume("throw", value); }
-    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-}
-
-function __asyncDelegator(o) {
-    var i, p;
-    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
-}
-
-function __asyncValues(o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-}
-
-function __makeTemplateObject(cooked, raw) {
-    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-    return cooked;
-};
-
-function __importStar(mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result.default = mod;
-    return result;
-}
-
-function __importDefault(mod) {
-    return (mod && mod.__esModule) ? mod : { default: mod };
-}
+// CONCATENATED MODULE: ./src/components/vue-file-agent.vue?vue&type=template&id=55d4707f&
 
 // CONCATENATED MODULE: ./src/lib/ajax-request.ts
 /* inspired by axios */
@@ -1990,6 +2065,7 @@ var AjaxRequest = /** @class */ (function () {
 
 // CONCATENATED MODULE: ./src/lib/upload-helper.ts
 
+
 var upload_helper_UploadHelper = /** @class */ (function () {
     function UploadHelper() {
     }
@@ -2082,16 +2158,27 @@ var upload_helper_UploadHelper = /** @class */ (function () {
         }
     };
     UploadHelper.prototype.upload = function (url, headers, filesData, createFormData, progressFn, configureFn) {
+        var e_1, _a;
         var _this = this;
         var updateOverallProgress = function () {
             /* no op */
         };
         if (progressFn) {
             updateOverallProgress = function () {
+                var e_2, _a;
                 var prgTotal = 0;
-                for (var _i = 0, filesData_2 = filesData; _i < filesData_2.length; _i++) {
-                    var fileData = filesData_2[_i];
-                    prgTotal += fileData.progress();
+                try {
+                    for (var filesData_2 = __values(filesData), filesData_2_1 = filesData_2.next(); !filesData_2_1.done; filesData_2_1 = filesData_2.next()) {
+                        var fileData = filesData_2_1.value;
+                        prgTotal += fileData.progress();
+                    }
+                }
+                catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                finally {
+                    try {
+                        if (filesData_2_1 && !filesData_2_1.done && (_a = filesData_2.return)) _a.call(filesData_2);
+                    }
+                    finally { if (e_2) throw e_2.error; }
                 }
                 progressFn(prgTotal / filesData.length);
             };
@@ -2136,9 +2223,18 @@ var upload_helper_UploadHelper = /** @class */ (function () {
             }));
         };
         var this_1 = this;
-        for (var _i = 0, filesData_1 = filesData; _i < filesData_1.length; _i++) {
-            var fileData = filesData_1[_i];
-            _loop_1(fileData);
+        try {
+            for (var filesData_1 = __values(filesData), filesData_1_1 = filesData_1.next(); !filesData_1_1.done; filesData_1_1 = filesData_1.next()) {
+                var fileData = filesData_1_1.value;
+                _loop_1(fileData);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (filesData_1_1 && !filesData_1_1.done && (_a = filesData_1.return)) _a.call(filesData_1);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         return Promise.all(promises);
     };
@@ -2230,16 +2326,27 @@ var upload_helper_UploadHelper = /** @class */ (function () {
         });
     };
     UploadHelper.prototype.tusUpload = function (tus, url, headers, filesData, progressFn) {
+        var e_3, _a;
         var _this = this;
         var updateOverallProgress = function () {
             /* no op */
         };
         if (progressFn) {
             updateOverallProgress = function () {
+                var e_4, _a;
                 var prgTotal = 0;
-                for (var _i = 0, filesData_4 = filesData; _i < filesData_4.length; _i++) {
-                    var fileData = filesData_4[_i];
-                    prgTotal += fileData.progress();
+                try {
+                    for (var filesData_4 = __values(filesData), filesData_4_1 = filesData_4.next(); !filesData_4_1.done; filesData_4_1 = filesData_4.next()) {
+                        var fileData = filesData_4_1.value;
+                        prgTotal += fileData.progress();
+                    }
+                }
+                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                finally {
+                    try {
+                        if (filesData_4_1 && !filesData_4_1.done && (_a = filesData_4.return)) _a.call(filesData_4);
+                    }
+                    finally { if (e_4) throw e_4.error; }
                 }
                 progressFn(prgTotal / filesData.length);
             };
@@ -2261,9 +2368,18 @@ var upload_helper_UploadHelper = /** @class */ (function () {
             promises.push(promise);
         };
         var this_2 = this;
-        for (var _i = 0, filesData_3 = filesData; _i < filesData_3.length; _i++) {
-            var fileData = filesData_3[_i];
-            _loop_2(fileData);
+        try {
+            for (var filesData_3 = __values(filesData), filesData_3_1 = filesData_3.next(); !filesData_3_1.done; filesData_3_1 = filesData_3.next()) {
+                var fileData = filesData_3_1.value;
+                _loop_2(fileData);
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (filesData_3_1 && !filesData_3_1.done && (_a = filesData_3.return)) _a.call(filesData_3);
+            }
+            finally { if (e_3) throw e_3.error; }
         }
         return Promise.all(promises);
     };
@@ -2471,16 +2587,26 @@ var dragCounter = 0;
             };
         },
         upload: function (url, headers, filesDataOrRaw, createFormData, configureXhr) {
+            var e_1, _a;
             var _this = this;
             var validFilesData = [];
             var validFilesRawData = [];
-            for (var _i = 0, filesDataOrRaw_1 = filesDataOrRaw; _i < filesDataOrRaw_1.length; _i++) {
-                var fileDataOrRaw = filesDataOrRaw_1[_i];
-                var fileData = this.getFileDataInstance(fileDataOrRaw);
-                if (!fileData.error) {
-                    validFilesData.push(fileData);
-                    validFilesRawData.push(this.getFileDataRawInstance(fileData));
+            try {
+                for (var filesDataOrRaw_1 = __values(filesDataOrRaw), filesDataOrRaw_1_1 = filesDataOrRaw_1.next(); !filesDataOrRaw_1_1.done; filesDataOrRaw_1_1 = filesDataOrRaw_1.next()) {
+                    var fileDataOrRaw = filesDataOrRaw_1_1.value;
+                    var fileData = this.getFileDataInstance(fileDataOrRaw);
+                    if (!fileData.error) {
+                        validFilesData.push(fileData);
+                        validFilesRawData.push(this.getFileDataRawInstance(fileData));
+                    }
                 }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (filesDataOrRaw_1_1 && !filesDataOrRaw_1_1.done && (_a = filesDataOrRaw_1.return)) _a.call(filesDataOrRaw_1);
+                }
+                finally { if (e_1) throw e_1.error; }
             }
             if (this.resumable) {
                 return upload_helper.tusUpload(plugins.tus, url, headers, validFilesData, function (overallProgress) {
@@ -2553,16 +2679,26 @@ var dragCounter = 0;
                 file1.lastModified === file2.lastModified);
         },
         isFileAddedAlready: function (file) {
-            for (var _i = 0, _a = this.filesData; _i < _a.length; _i++) {
-                var fileData = _a[_i];
-                if (this.equalFiles(file, fileData.file)) {
-                    return true;
+            var e_2, _a;
+            try {
+                for (var _b = __values(this.filesData), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var fileData = _c.value;
+                    if (this.equalFiles(file, fileData.file)) {
+                        return true;
+                    }
                 }
+            }
+            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_2) throw e_2.error; }
             }
             return false;
         },
         handleFiles: function (files) {
-            var _a;
+            var e_3, _a, e_4, _b, _c;
             var _this = this;
             if (this.disabled === true) {
                 return;
@@ -2583,27 +2719,45 @@ var dragCounter = 0;
             if (this.maxFiles && files.length > this.maxFiles - this.filesData.length) {
                 files = files.slice(0, this.maxFiles - this.filesData.length);
             }
-            for (var _i = 0, files_1 = files; _i < files_1.length; _i++) {
-                var file = files_1[_i];
-                filesData.push(new file_data({
-                    file: file,
-                }, {
-                    read: this.shouldRead,
-                    maxSize: this.maxSize,
-                    accept: this.accept,
-                    thumbnailSize: this.thumbnailSize,
-                }));
-            }
-            for (var _b = 0, filesData_1 = filesData; _b < filesData_1.length; _b++) {
-                var fileData = filesData_1[_b];
-                if (fileData.file.size <= 20 * 1024 * 1024) {
-                    // <= 20MB
-                    this.initVideo(fileData);
+            try {
+                for (var files_1 = __values(files), files_1_1 = files_1.next(); !files_1_1.done; files_1_1 = files_1.next()) {
+                    var file = files_1_1.value;
+                    filesData.push(new file_data({
+                        file: file,
+                    }, {
+                        read: this.shouldRead,
+                        maxSize: this.maxSize,
+                        accept: this.accept,
+                        thumbnailSize: this.thumbnailSize,
+                    }));
                 }
+            }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+            finally {
+                try {
+                    if (files_1_1 && !files_1_1.done && (_a = files_1.return)) _a.call(files_1);
+                }
+                finally { if (e_3) throw e_3.error; }
+            }
+            try {
+                for (var filesData_1 = __values(filesData), filesData_1_1 = filesData_1.next(); !filesData_1_1.done; filesData_1_1 = filesData_1.next()) {
+                    var fileData = filesData_1_1.value;
+                    if (fileData.file.size <= 20 * 1024 * 1024) {
+                        // <= 20MB
+                        this.initVideo(fileData);
+                    }
+                }
+            }
+            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+            finally {
+                try {
+                    if (filesData_1_1 && !filesData_1_1.done && (_b = filesData_1.return)) _b.call(filesData_1);
+                }
+                finally { if (e_4) throw e_4.error; }
             }
             if (this.hasMultiple) {
                 // splice: for list transitions to work properly
-                (_a = this.filesData).splice.apply(_a, __spreadArrays([this.filesData.length, 0], filesData));
+                (_c = this.filesData).splice.apply(_c, __spread([this.filesData.length, 0], filesData));
             }
             else {
                 this.filesData = filesData;
@@ -2798,8 +2952,8 @@ var vue_file_agentvue_type_style_index_0_lang_scss_ = __webpack_require__("6816"
 
 var vue_file_agent_component = normalizeComponent(
   components_vue_file_agentvue_type_script_lang_ts_,
-  vue_file_agentvue_type_template_id_1410c648_render,
-  vue_file_agentvue_type_template_id_1410c648_staticRenderFns,
+  vue_file_agentvue_type_template_id_55d4707f_render,
+  vue_file_agentvue_type_template_id_55d4707f_staticRenderFns,
   false,
   null,
   null,

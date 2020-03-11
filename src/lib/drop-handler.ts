@@ -1,6 +1,6 @@
 export function getFilesFromDroppedItems(dataTransfer: DataTransfer): Promise<File[] | FileList> {
   return new Promise((resolve) => {
-    if (!includesFolder(dataTransfer.files)) {
+    if (!includesFolder(dataTransfer)) {
       return resolve(dataTransfer.files);
     }
     const files: File[] = [];
@@ -74,12 +74,26 @@ function getEntries(entry: any): Promise<File[]> | undefined {
   });
 }
 
-function includesFolder(files: FileList): boolean {
-  if (!files.length) {
+function includesFolder(transfer: DataTransfer): boolean {
+  if (!transfer.files.length) {
     return true; // if dropping only folders, no files will exist
   }
+
+  // Loop through the dropped items and log their data
+  for (const item of transfer.items) {
+    if (item.webkitGetAsEntry != null) {
+      const entry = item.webkitGetAsEntry();
+
+      if (entry && entry.isDirectory) {
+        return true;
+      }
+    }
+  }
+
+  const files: FileList = transfer.files;
+
   // tslint:disable-next-line
-  for (var i = 0; i < files.length; i++) {
+  for (let i = 0; i < files.length; i++) {
     // A folder has no type and has a size that is a multiple of 4096
     if (!files[i].type && files[i].size % 4096 === 0) {
       return true;
