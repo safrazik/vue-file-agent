@@ -27,7 +27,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     autoUpdateUpload(fileData: FileData): Promise<any>;
     equalFiles(file1: File, file2: File): boolean;
     isFileAddedAlready(file: File): boolean;
-    handleFiles(files: FileList | File[]): void;
+    handleFiles(files: File[] | FileList): void;
     filesChanged(event: InputEvent): void;
     drop(event: DragEvent): void;
     dragEnter(event: DragEvent): void;
@@ -50,5 +50,5 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+}, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize" | "accept" | "auto" | "compact" | "helpText" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials", any>>;
 export default _default;

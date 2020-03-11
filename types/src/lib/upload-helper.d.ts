@@ -8,7 +8,7 @@ declare class UploadHelper {
     doDeleteUpload(url: string, headers: object, uploadData: any, configureFn?: ConfigureFn): Promise<AjaxResponse>;
     doUpdateUpload(url: string, headers: object, uploadData: any, configureFn?: ConfigureFn): Promise<AjaxResponse>;
     prepareUploadError(fileData: FileData, err: AjaxError, timeout?: number): void;
-    upload(url: string, headers: object, filesData: FileData[], createFormData?: CreateFormDataFn, progressFn?: (progress: number) => void, configureFn?: ConfigureFn): Promise<unknown[]>;
+    upload(url: string, headers: object, filesData: FileData[], createFormData?: CreateFormDataFn, progressFn?: (progress: number) => void, configureFn?: ConfigureFn): Promise<unknown>;
     deleteUpload(url: string, headers: object, fileData: FileData, uploadData?: any, configureFn?: ConfigureFn): Promise<unknown>;
     updateUpload(url: string, headers: object, fileData: FileData, uploadData: any, configureFn?: ConfigureFn): Promise<unknown>;
     doTusUpload(tus: any, url: string, fileData: FileData, headers: object, progressCallback: ProgressFn): Promise<unknown>;

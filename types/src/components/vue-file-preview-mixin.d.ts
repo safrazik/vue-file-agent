@@ -18,5 +18,5 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     dismissError(): void;
 }, {
     hasLinkableUrl: boolean;
-}, Record<"deletable" | "disabled" | "editable" | "errorText" | "linkable" | "thumbnailSize" | "value", any>>;
+}, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize", any>>;
 export default _default;
