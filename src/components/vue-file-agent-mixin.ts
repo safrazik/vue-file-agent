@@ -197,11 +197,14 @@ export default Vue.extend({
           this.prepareConfigureFn(configureXhr),
         )
         .then(
-          (res) => {
-            this.$emit('upload', validFilesRawData);
+          (res: any) => {
+            for (let i = 0; i < res.length; i++) {
+              res[i].fileData = validFilesRawData[i];
+            }
+            this.$emit('upload', res);
             return res;
           },
-          (err) => {
+          (err: any) => {
             this.$emit('upload:error', err);
           },
         );
@@ -222,8 +225,9 @@ export default Vue.extend({
         return uploader.tusDeleteUpload(plugins.tus, url, headers, fileData);
       }
       return uploader.deleteUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(
-        (res) => {
-          this.$emit('upload:delete', fileDataRaw);
+        (res: any) => {
+          res.fileData = fileDataRaw;
+          this.$emit('upload:delete', res);
           return res;
         },
         (err) => {
@@ -241,8 +245,9 @@ export default Vue.extend({
       fileData = this.getFileDataInstance(fileData);
       const fileDataRaw = this.getFileDataRawInstance(fileData);
       return uploader.updateUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(
-        (res) => {
-          this.$emit('upload:update', fileDataRaw);
+        (res: any) => {
+          res.filesData = fileDataRaw;
+          this.$emit('upload:update', res);
           return res;
         },
         (err) => {
