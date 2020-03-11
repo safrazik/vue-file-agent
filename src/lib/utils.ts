@@ -292,6 +292,9 @@ class Utils {
         const resized = this.getImageResized(image, thumbnailSize);
         resolve(resized);
       };
+      image.onerror = () => {
+        reject('Image loading failed: ' + url);
+      };
       image.src = url;
     });
   }

@@ -307,9 +307,14 @@ class FileData {
     this.url = url;
     return new Promise((resolve, reject) => {
       if (this.isImage()) {
-        this.resizeImage().then(() => {
-          resolve(this);
-        }, reject);
+        this.resizeImage().then(
+          () => {
+            resolve(this);
+          },
+          (err) => {
+            resolve(this);
+          },
+        );
         return;
       }
       resolve(this);
