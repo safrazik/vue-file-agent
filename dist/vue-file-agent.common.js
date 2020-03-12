@@ -772,30 +772,30 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var vue_file_icon = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e1d1ff30-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-preview.vue?vue&type=template&id=1f00ad11&
-var vue_file_previewvue_type_template_id_1f00ad11_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
-    'file-preview-wrapper-' + _vm.fileData.ext(),
-    _vm.fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other',
-    'file-category-' + _vm.fileData.icon().category,
-    { 'file-is-playing-av': _vm.fileData.isPlayingAv },
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e1d1ff30-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-preview.vue?vue&type=template&id=48ab2a8e&
+var vue_file_previewvue_type_template_id_48ab2a8e_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
+    'file-preview-wrapper-' + _vm.fileRecord.ext(),
+    _vm.fileRecord.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other',
+    'file-category-' + _vm.fileRecord.icon().category,
+    { 'file-is-playing-av': _vm.fileRecord.isPlayingAv },
     { 'is-deletable': _vm.deletable === true },
     { 'is-editable': _vm.editable === true },
     { 'is-edit-input-focused': _vm.isEditInputFocused },
-    { 'has-error': _vm.fileData.error } ]},[(_vm.fileData.error)?_c('div',{staticClass:"file-error-wrapper",on:{"click":function($event){return _vm.dismissError()}}},[_c('div',{staticClass:"file-error-message file-error-message-client"},[_vm._v(" "+_vm._s(_vm.fileData.getErrorMessage(_vm.errorText))+" ")])]):_vm._e(),(_vm.fileData.isPlayableAudio() || _vm.fileData.isPlayableVideo())?_c('div',{ref:"wrapper",staticClass:"file-av-wrapper"},[_c('div',{staticClass:"file-av-action",on:{"click":function($event){return _vm.playAv(_vm.fileData)}}},[_c('span',{staticClass:"file-av-stop"},[_c('VueFileIcon',{attrs:{"name":"system-close"}})],1),_c('span',{staticClass:"file-av-play"},[_c('VueFileIcon',{attrs:{"name":"system-file-av-play"}})],1)])]):_vm._e(),_c('span',{staticClass:"file-preview",class:{
-      'image-preview': _vm.fileData.isImage(),
-      'other-preview': !_vm.fileData.isImage(),
-      'dark-content': _vm.fileData.isImage() && _vm.fileData.isDarkColor(),
+    { 'has-error': _vm.fileRecord.error } ]},[(_vm.fileRecord.error)?_c('div',{staticClass:"file-error-wrapper",on:{"click":function($event){return _vm.dismissError()}}},[_c('div',{staticClass:"file-error-message file-error-message-client"},[_vm._v(" "+_vm._s(_vm.fileRecord.getErrorMessage(_vm.errorText))+" ")])]):_vm._e(),(_vm.fileRecord.isPlayableAudio() || _vm.fileRecord.isPlayableVideo())?_c('div',{ref:"wrapper",staticClass:"file-av-wrapper"},[_c('div',{staticClass:"file-av-action",on:{"click":function($event){return _vm.playAv(_vm.fileRecord)}}},[_c('span',{staticClass:"file-av-stop"},[_c('VueFileIcon',{attrs:{"name":"system-close"}})],1),_c('span',{staticClass:"file-av-play"},[_c('VueFileIcon',{attrs:{"name":"system-file-av-play"}})],1)])]):_vm._e(),_c('span',{staticClass:"file-preview",class:{
+      'image-preview': _vm.fileRecord.isImage(),
+      'other-preview': !_vm.fileRecord.isImage(),
+      'dark-content': _vm.fileRecord.isImage() && _vm.fileRecord.isDarkColor(),
     },style:({
-      'background-color': _vm.fileData.color(),
-    })},[_c('span',{staticClass:"file-preview-overlay"}),(_vm.fileData.isImage() || _vm.fileData.isPlayableVideo())?_c('span',{staticClass:"thumbnail",staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0","overflow":"hidden"}},[(_vm.hasLinkableUrl)?_c('a',{attrs:{"href":_vm.fileData.url,"target":"_blank","title":_vm.fileData.name()}},[_c('img',{staticClass:"file-preview-img",attrs:{"src":_vm.fileData.src()}})]):_c('img',{staticClass:"file-preview-img",attrs:{"src":_vm.fileData.src()}})]):_vm._e(),_c('span',{staticClass:"file-ext"},[_vm._v(_vm._s(_vm.fileData.ext()))]),_c('span',{staticClass:"file-size"},[_vm._v(_vm._s(_vm.fileData.size()))]),(_vm.deletable)?_c('span',{staticClass:"file-delete",on:{"click":function($event){return _vm.removeFileData(_vm.fileData)},"touchstart":function($event){return _vm.filenameClearPressed()},"mousedown":function($event){return _vm.filenameClearPressed()}}},[_c('VueFileIcon',{attrs:{"name":"system-close"}})],1):_vm._e(),_c('span',{staticClass:"file-name",on:{"click":function($event){return _vm.editFileName()}}},[(_vm.editable === true)?_c('input',{ref:"input",staticClass:"file-name-input",attrs:{"disabled":_vm.disabled === true,"type":"text"},domProps:{"value":_vm.fileData.name(true)},on:{"focus":function($event){return _vm.editInputFocused()},"blur":function($event){return _vm.editInputBlured()},"change":function($event){return _vm.filenameChanged()},"input":function($event){return _vm.filenameChanged()},"keyup":[function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.filenameChanged(true)},function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"esc",27,$event.key,["Esc","Escape"])){ return null; }return _vm.filenameChanged(false)}]}}):_vm._e(),(_vm.editable === true)?_c('span',{staticClass:"file-name-edit-icon"},[_c('VueFileIcon',{attrs:{"name":"system-file-name-edit"}})],1):_vm._e(),_c('span',{staticClass:"file-name-text"},[_vm._v(_vm._s(_vm.fileData.name(true)))])]),(_vm.fileData.dimensions.width && _vm.fileData.dimensions.height)?_c('span',{staticClass:"image-dimension"},[_c('span',{staticClass:"image-dimension-width"},[_vm._v(_vm._s(_vm.fileData.dimensions.width))]),_c('span',{staticClass:"image-dimension-height"},[_vm._v(_vm._s(_vm.fileData.dimensions.height))])]):_vm._e(),(_vm.fileData.hasProgress())?_c('span',{staticClass:"file-progress",class:{
-        'file-progress-full': _vm.fileData.progress() >= 99.9999,
-        'file-progress-done': _vm.fileData.progress() >= 100,
-        'has-file-progress': _vm.fileData.progress() > 0,
-      }},[_c('span',{staticClass:"file-progress-bar",style:({ width: _vm.fileData.progress() + '%' })})]):_vm._e(),_c('span',{staticClass:"file-icon"},[(_vm.hasLinkableUrl)?_c('a',{attrs:{"href":_vm.fileData.url,"target":"_blank","title":_vm.fileData.name()}},[_c('VueFileIcon',{attrs:{"ext":_vm.fileData.ext()}})],1):_c('VueFileIcon',{attrs:{"ext":_vm.fileData.ext()}})],1)])])}
-var vue_file_previewvue_type_template_id_1f00ad11_staticRenderFns = []
+      'background-color': _vm.fileRecord.color(),
+    })},[_c('span',{staticClass:"file-preview-overlay"}),(_vm.fileRecord.isImage() || _vm.fileRecord.isPlayableVideo())?_c('span',{staticClass:"thumbnail",staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0","overflow":"hidden"}},[(_vm.hasLinkableUrl)?_c('a',{attrs:{"href":_vm.fileRecord.url,"target":"_blank","title":_vm.fileRecord.name()}},[_c('img',{staticClass:"file-preview-img",attrs:{"src":_vm.fileRecord.src()}})]):_c('img',{staticClass:"file-preview-img",attrs:{"src":_vm.fileRecord.src()}})]):_vm._e(),_c('span',{staticClass:"file-ext"},[_vm._v(_vm._s(_vm.fileRecord.ext()))]),_c('span',{staticClass:"file-size"},[_vm._v(_vm._s(_vm.fileRecord.size()))]),(_vm.deletable)?_c('span',{staticClass:"file-delete",on:{"click":function($event){return _vm.removeFileData(_vm.fileRecord)},"touchstart":function($event){return _vm.filenameClearPressed()},"mousedown":function($event){return _vm.filenameClearPressed()}}},[_c('VueFileIcon',{attrs:{"name":"system-close"}})],1):_vm._e(),_c('span',{staticClass:"file-name",on:{"click":function($event){return _vm.editFileName()}}},[(_vm.editable === true)?_c('input',{ref:"input",staticClass:"file-name-input",attrs:{"disabled":_vm.disabled === true,"type":"text"},domProps:{"value":_vm.fileRecord.name(true)},on:{"focus":function($event){return _vm.editInputFocused()},"blur":function($event){return _vm.editInputBlured()},"change":function($event){return _vm.filenameChanged()},"input":function($event){return _vm.filenameChanged()},"keyup":[function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.filenameChanged(true)},function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"esc",27,$event.key,["Esc","Escape"])){ return null; }return _vm.filenameChanged(false)}]}}):_vm._e(),(_vm.editable === true)?_c('span',{staticClass:"file-name-edit-icon"},[_c('VueFileIcon',{attrs:{"name":"system-file-name-edit"}})],1):_vm._e(),_c('span',{staticClass:"file-name-text"},[_vm._v(_vm._s(_vm.fileRecord.name(true)))])]),(_vm.fileRecord.dimensions.width && _vm.fileRecord.dimensions.height)?_c('span',{staticClass:"image-dimension"},[_c('span',{staticClass:"image-dimension-width"},[_vm._v(_vm._s(_vm.fileRecord.dimensions.width))]),_c('span',{staticClass:"image-dimension-height"},[_vm._v(_vm._s(_vm.fileRecord.dimensions.height))])]):_vm._e(),(_vm.fileRecord.hasProgress())?_c('span',{staticClass:"file-progress",class:{
+        'file-progress-full': _vm.fileRecord.progress() >= 99.9999,
+        'file-progress-done': _vm.fileRecord.progress() >= 100,
+        'has-file-progress': _vm.fileRecord.progress() > 0,
+      }},[_c('span',{staticClass:"file-progress-bar",style:({ width: _vm.fileRecord.progress() + '%' })})]):_vm._e(),_c('span',{staticClass:"file-icon"},[(_vm.hasLinkableUrl)?_c('a',{attrs:{"href":_vm.fileRecord.url,"target":"_blank","title":_vm.fileRecord.name()}},[_c('VueFileIcon',{attrs:{"ext":_vm.fileRecord.ext()}})],1):_c('VueFileIcon',{attrs:{"ext":_vm.fileRecord.ext()}})],1)])])}
+var vue_file_previewvue_type_template_id_48ab2a8e_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-file-preview.vue?vue&type=template&id=1f00ad11&
+// CONCATENATED MODULE: ./src/components/vue-file-preview.vue?vue&type=template&id=48ab2a8e&
 
 // CONCATENATED MODULE: ./src/lib/drop-handler.ts
 
@@ -1314,12 +1314,12 @@ var utils_Utils = /** @class */ (function () {
 }());
 /* harmony default export */ var utils = (new utils_Utils());
 
-// CONCATENATED MODULE: ./src/lib/file-data.ts
+// CONCATENATED MODULE: ./src/lib/file-record.ts
 
 
 
-var file_data_FileData = /** @class */ (function () {
-    function FileData(data, options) {
+var file_record_FileRecord = /** @class */ (function () {
+    function FileRecord(data, options) {
         this.url = null;
         this.urlResized = null;
         this.image = {};
@@ -1354,94 +1354,94 @@ var file_data_FileData = /** @class */ (function () {
         this.customName = data.customName;
         this.validate();
     }
-    FileData.getFromRaw = function (fileDataRaw, options, isSync) {
+    FileRecord.getFromRaw = function (rawFileRecord, options, isSync) {
         if (isSync === void 0) { isSync = false; }
-        var fileData = new FileData(fileDataRaw, options);
-        var promise = fileData.setUrl(fileDataRaw.url);
-        fileDataRaw.progress = fileData.progress.bind(fileData); // convert it as a function
-        fileDataRaw.src = fileData.src.bind(fileData);
-        fileDataRaw.name = fileData.name.bind(fileData); // convert it as a function
+        var fileRecord = new FileRecord(rawFileRecord, options);
+        var promise = fileRecord.setUrl(rawFileRecord.url);
+        rawFileRecord.progress = fileRecord.progress.bind(fileRecord); // convert it as a function
+        rawFileRecord.src = fileRecord.src.bind(fileRecord);
+        rawFileRecord.name = fileRecord.name.bind(fileRecord); // convert it as a function
         if (isSync) {
-            return fileData;
+            return fileRecord;
         }
         return promise;
     };
-    FileData.fromRaw = function (fileDataRaw, options) {
-        return FileData.getFromRaw(fileDataRaw, options, false);
+    FileRecord.fromRaw = function (rawFileRecord, options) {
+        return FileRecord.getFromRaw(rawFileRecord, options, false);
     };
-    FileData.fromRawSync = function (fileDataRaw, options) {
-        return FileData.getFromRaw(fileDataRaw, options, true);
+    FileRecord.fromRawSync = function (rawFileRecord, options) {
+        return FileRecord.getFromRaw(rawFileRecord, options, true);
     };
-    FileData.fromRawArray = function (filesDataRaw, options) {
+    FileRecord.fromRawArray = function (rawFileRecords, options) {
         var e_1, _a;
         var promises = [];
         try {
-            for (var filesDataRaw_1 = __values(filesDataRaw), filesDataRaw_1_1 = filesDataRaw_1.next(); !filesDataRaw_1_1.done; filesDataRaw_1_1 = filesDataRaw_1.next()) {
-                var fileDataRaw = filesDataRaw_1_1.value;
-                promises.push(FileData.fromRaw(fileDataRaw, options));
+            for (var rawFileRecords_1 = __values(rawFileRecords), rawFileRecords_1_1 = rawFileRecords_1.next(); !rawFileRecords_1_1.done; rawFileRecords_1_1 = rawFileRecords_1.next()) {
+                var rawFileRecord = rawFileRecords_1_1.value;
+                promises.push(FileRecord.fromRaw(rawFileRecord, options));
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (filesDataRaw_1_1 && !filesDataRaw_1_1.done && (_a = filesDataRaw_1.return)) _a.call(filesDataRaw_1);
+                if (rawFileRecords_1_1 && !rawFileRecords_1_1.done && (_a = rawFileRecords_1.return)) _a.call(rawFileRecords_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
         return Promise.all(promises);
     };
-    FileData.toRawArray = function (filesData) {
+    FileRecord.toRawArray = function (fileRecords) {
         var e_2, _a;
-        var filesDataRaw = [];
+        var rawFileRecords = [];
         try {
-            for (var filesData_1 = __values(filesData), filesData_1_1 = filesData_1.next(); !filesData_1_1.done; filesData_1_1 = filesData_1.next()) {
-                var fileData = filesData_1_1.value;
-                filesDataRaw.push(fileData.toRaw());
+            for (var fileRecords_1 = __values(fileRecords), fileRecords_1_1 = fileRecords_1.next(); !fileRecords_1_1.done; fileRecords_1_1 = fileRecords_1.next()) {
+                var fileRecord = fileRecords_1_1.value;
+                rawFileRecords.push(fileRecord.toRaw());
             }
         }
         catch (e_2_1) { e_2 = { error: e_2_1 }; }
         finally {
             try {
-                if (filesData_1_1 && !filesData_1_1.done && (_a = filesData_1.return)) _a.call(filesData_1);
+                if (fileRecords_1_1 && !fileRecords_1_1.done && (_a = fileRecords_1.return)) _a.call(fileRecords_1);
             }
             finally { if (e_2) throw e_2.error; }
         }
-        return filesDataRaw;
+        return rawFileRecords;
     };
-    FileData.readFile = function (fileData) {
+    FileRecord.readFile = function (fileRecord) {
         return new Promise(function (resolve, reject) {
-            if (!fileData.read) {
-                fileData.setUrl(null);
-                resolve(fileData);
+            if (!fileRecord.read) {
+                fileRecord.setUrl(null);
+                resolve(fileRecord);
                 return;
             }
-            utils.getDataURL(fileData.file).then(function (dataUrl) {
-                fileData.setUrl(dataUrl).then(function () {
-                    resolve(fileData);
+            utils.getDataURL(fileRecord.file).then(function (dataUrl) {
+                fileRecord.setUrl(dataUrl).then(function () {
+                    resolve(fileRecord);
                 }, reject);
             }, reject);
         });
     };
-    FileData.readFiles = function (filesData) {
+    FileRecord.readFiles = function (fileRecords) {
         var e_3, _a;
         var promises = [];
         try {
-            for (var filesData_2 = __values(filesData), filesData_2_1 = filesData_2.next(); !filesData_2_1.done; filesData_2_1 = filesData_2.next()) {
-                var fileData = filesData_2_1.value;
-                promises.push(FileData.readFile(fileData));
+            for (var fileRecords_2 = __values(fileRecords), fileRecords_2_1 = fileRecords_2.next(); !fileRecords_2_1.done; fileRecords_2_1 = fileRecords_2.next()) {
+                var fileRecord = fileRecords_2_1.value;
+                promises.push(FileRecord.readFile(fileRecord));
             }
         }
         catch (e_3_1) { e_3 = { error: e_3_1 }; }
         finally {
             try {
-                if (filesData_2_1 && !filesData_2_1.done && (_a = filesData_2.return)) _a.call(filesData_2);
+                if (fileRecords_2_1 && !fileRecords_2_1.done && (_a = fileRecords_2.return)) _a.call(fileRecords_2);
             }
             finally { if (e_3) throw e_3.error; }
         }
         return Promise.all(promises);
     };
     // populate(data, options = {}) {}
-    FileData.prototype.createDummyFile = function (data) {
+    FileRecord.prototype.createDummyFile = function (data) {
         var file = {};
         file.lastModified = data.lastModified;
         var d = new Date();
@@ -1454,17 +1454,17 @@ var file_data_FileData = /** @class */ (function () {
         file.type = data.type;
         return file;
     };
-    FileData.prototype.hasProgress = function () {
+    FileRecord.prototype.hasProgress = function () {
         return !isNaN(this.progressInternal); // && this._progress <= 100;
     };
-    FileData.prototype.progress = function (value) {
+    FileRecord.prototype.progress = function (value) {
         if (value !== undefined) {
             this.progressInternal = value;
             return;
         }
         return this.progressInternal || 0;
     };
-    FileData.prototype.src = function () {
+    FileRecord.prototype.src = function () {
         if (this.isImage()) {
             return this.urlResized || this.url || this.file.url;
         }
@@ -1473,20 +1473,20 @@ var file_data_FileData = /** @class */ (function () {
         }
         return '';
     };
-    FileData.prototype.size = function () {
+    FileRecord.prototype.size = function () {
         if (!this.file) {
             return '';
         }
         return utils.getSizeFormatted(this.file.size);
     };
-    FileData.prototype.ext = function () {
+    FileRecord.prototype.ext = function () {
         if (this.file && this.file.name.indexOf('.') !== -1) {
             return this.file.name.split('.').pop();
         }
         return '?';
         // return this.file.type.split('/').shift();
     };
-    FileData.prototype.name = function (withoutExt) {
+    FileRecord.prototype.name = function (withoutExt) {
         var ext = this.ext();
         if (this.customName) {
             return this.customName + (withoutExt ? '' : ext !== '?' ? '.' + ext : '');
@@ -1499,7 +1499,7 @@ var file_data_FileData = /** @class */ (function () {
         }
         return name;
     };
-    FileData.prototype.isDarkColor = function () {
+    FileRecord.prototype.isDarkColor = function () {
         if (this.imageColor) {
             var rgb = this.imageColor;
             var darkPoint = 20;
@@ -1507,7 +1507,7 @@ var file_data_FileData = /** @class */ (function () {
         }
         return false;
     };
-    FileData.prototype.color = function () {
+    FileRecord.prototype.color = function () {
         if (this.imageColor) {
             var rgb = this.imageColor;
             return 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
@@ -1523,25 +1523,25 @@ var file_data_FileData = /** @class */ (function () {
         }
         return utils.getColorForText(ext);
     };
-    FileData.prototype.isImage = function () {
+    FileRecord.prototype.isImage = function () {
         return this.file && this.file.type.indexOf('image') !== -1;
     };
-    FileData.prototype.isVideo = function () {
+    FileRecord.prototype.isVideo = function () {
         return this.file && this.file.type.indexOf('video') !== -1;
     };
-    FileData.prototype.isPlayableVideo = function () {
+    FileRecord.prototype.isPlayableVideo = function () {
         return this.icon().category === 'video-playable';
     };
-    FileData.prototype.isAudio = function () {
+    FileRecord.prototype.isAudio = function () {
         return this.file && this.file.type.indexOf('audio') !== -1;
     };
-    FileData.prototype.isPlayableAudio = function () {
+    FileRecord.prototype.isPlayableAudio = function () {
         return this.icon().category === 'audio-playable';
     };
-    FileData.prototype.isText = function () {
+    FileRecord.prototype.isText = function () {
         return this.file && this.file.type.indexOf('text') !== -1;
     };
-    FileData.prototype.setUrl = function (url) {
+    FileRecord.prototype.setUrl = function (url) {
         var _this = this;
         this.url = url;
         return new Promise(function (resolve, reject) {
@@ -1556,7 +1556,7 @@ var file_data_FileData = /** @class */ (function () {
             resolve(_this);
         });
     };
-    FileData.prototype.imageResized = function (resized) {
+    FileRecord.prototype.imageResized = function (resized) {
         if (!resized) {
             return;
         }
@@ -1569,7 +1569,7 @@ var file_data_FileData = /** @class */ (function () {
         this.lastKnownSrc = this.urlResized;
         this.imageColor = resized.color;
     };
-    FileData.prototype.resizeImage = function () {
+    FileRecord.prototype.resizeImage = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             utils
@@ -1581,12 +1581,12 @@ var file_data_FileData = /** @class */ (function () {
                 .catch(reject);
         });
     };
-    FileData.prototype.icon = function () {
+    FileRecord.prototype.icon = function () {
         var ext = this.ext();
         var svgIcon = getIconFromExt(ext);
         return svgIcon;
     };
-    FileData.prototype.getErrorMessage = function (errorText) {
+    FileRecord.prototype.getErrorMessage = function (errorText) {
         var error = this.error;
         if (!error) {
             return '';
@@ -1608,7 +1608,7 @@ var file_data_FileData = /** @class */ (function () {
         }
         return errorText.common;
     };
-    FileData.prototype.toRaw = function () {
+    FileRecord.prototype.toRaw = function () {
         var _this = this;
         var raw = this.raw || {};
         raw.url = this.url;
@@ -1634,7 +1634,7 @@ var file_data_FileData = /** @class */ (function () {
         raw.dimensions = this.dimensions;
         return raw;
     };
-    FileData.prototype.validate = function () {
+    FileRecord.prototype.validate = function () {
         var validType = utils.validateType(this.file, this.accept);
         var validSize = utils.validateSize(this.file, this.maxSize);
         if (!validType || !validSize) {
@@ -1647,9 +1647,9 @@ var file_data_FileData = /** @class */ (function () {
             this.error = false;
         }
     };
-    return FileData;
+    return FileRecord;
 }());
-/* harmony default export */ var file_data = (file_data_FileData);
+/* harmony default export */ var file_record = (file_record_FileRecord);
 
 // CONCATENATED MODULE: ./src/components/vue-file-preview-mixin.ts
 
@@ -1665,7 +1665,7 @@ var file_data_FileData = /** @class */ (function () {
         return {
             isEditInputFocused: false,
             isEditCancelable: true,
-            fileData: {},
+            fileRecord: {},
         };
     },
     computed: {
@@ -1673,75 +1673,75 @@ var file_data_FileData = /** @class */ (function () {
             if (!this.linkable) {
                 return false;
             }
-            return !!this.fileData.url && !this.fileData.isPlayableVideo() && !this.fileData.isPlayableAudio();
+            return !!this.fileRecord.url && !this.fileRecord.isPlayableVideo() && !this.fileRecord.isPlayableAudio();
         },
     },
     methods: {
         updateFileData: function () {
             var _this = this;
-            if (this.value instanceof file_data) {
-                this.fileData = this.value;
+            if (this.value instanceof file_record) {
+                this.fileRecord = this.value;
                 return;
             }
-            file_data.fromRaw(this.value, {
+            file_record.fromRaw(this.value, {
                 thumbnailSize: this.thumbnailSize,
-            }).then(function (fileData) {
-                _this.fileData = fileData;
+            }).then(function (fileRecord) {
+                _this.fileRecord = fileRecord;
             });
-            this.fileData = file_data.fromRawSync(this.value, {
+            this.fileRecord = file_record.fromRawSync(this.value, {
                 thumbnailSize: this.thumbnailSize,
             });
         },
-        createThumbnail: function (fileData, video) {
-            if (fileData.videoThumbnail) {
-                video.poster = fileData.src();
+        createThumbnail: function (fileRecord, video) {
+            if (fileRecord.videoThumbnail) {
+                video.poster = fileRecord.src();
                 return;
             }
             var canvas = document.createElement('canvas');
-            utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then(function (thumbnail) {
-                fileData.imageColor = thumbnail.color;
-                fileData.videoThumbnail = thumbnail.url;
-                fileData.dimensions.width = thumbnail.width;
-                fileData.dimensions.height = thumbnail.height;
-                video.poster = fileData.src();
+            utils.createVideoThumbnail(video, canvas, this.fileRecord.thumbnailSize).then(function (thumbnail) {
+                fileRecord.imageColor = thumbnail.color;
+                fileRecord.videoThumbnail = thumbnail.url;
+                fileRecord.dimensions.width = thumbnail.width;
+                fileRecord.dimensions.height = thumbnail.height;
+                video.poster = fileRecord.src();
             });
         },
-        playAv: function (fileData) {
-            if (fileData.stopAv) {
-                fileData.stopAv();
+        playAv: function (fileRecord) {
+            if (fileRecord.stopAv) {
+                fileRecord.stopAv();
                 return;
             }
             var createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL;
             var revokeObjectURL = (window.URL || window.webkitURL || {}).revokeObjectURL;
             var wrapper = this.$refs.wrapper;
-            var player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
-            if (player instanceof HTMLVideoElement && fileData.isPlayableVideo()) {
-                this.createThumbnail(fileData, player);
+            var player = document.createElement(fileRecord.isAudio() ? 'audio' : 'video');
+            if (player instanceof HTMLVideoElement && fileRecord.isPlayableVideo()) {
+                this.createThumbnail(fileRecord, player);
             }
             player.controls = true;
             // player.style.width = this.prvWidth + 'px';
             wrapper.appendChild(player);
-            var url = fileData.url || createObjectURL(fileData.file);
+            var url = fileRecord.url || createObjectURL(fileRecord.file);
             player.src = url;
             player.play();
-            fileData.isPlayingAv = true;
-            fileData.stopAv = function () {
+            fileRecord.isPlayingAv = true;
+            fileRecord.stopAv = function () {
                 // player.src = null;
                 player.src = '';
                 wrapper.removeChild(player);
                 revokeObjectURL(url);
-                fileData.isPlayingAv = false;
-                fileData.stopAv = null;
+                fileRecord.isPlayingAv = false;
+                fileRecord.stopAv = null;
             };
         },
-        removeFileData: function (fileData) {
+        removeFileData: function (fileRecord) {
             if (this.clearFilename()) {
                 return;
             }
             if (this.disabled === true) {
                 return;
             }
-            this.$emit('remove', fileData);
+            this.$emit('remove', fileRecord);
         },
         editFileName: function () {
             if (this.editable !== true) {
@@ -1758,14 +1758,14 @@ var file_data_FileData = /** @class */ (function () {
         },
         editInputBlured: function () {
             var _this = this;
-            this.fileData.oldFileName = this.fileData.name();
-            var oldValue = this.fileData.name(true);
+            this.fileRecord.oldFileName = this.fileRecord.name();
+            var oldValue = this.fileRecord.name(true);
             var value = this.$refs.input.value;
-            this.fileData.customName = value;
-            var newValue = this.fileData.name(true);
+            this.fileRecord.customName = value;
+            var newValue = this.fileRecord.name(true);
             if (newValue !== oldValue) {
-                this.fileData.oldCustomName = oldValue;
-                this.$emit('rename', this.fileData);
+                this.fileRecord.oldCustomName = oldValue;
+                this.$emit('rename', this.fileRecord);
             }
             var timeout = 100;
             setTimeout(function () {
@@ -1801,7 +1801,7 @@ var file_data_FileData = /** @class */ (function () {
             return true;
         },
         dismissError: function () {
-            this.fileData.error = false;
+            this.fileRecord.error = false;
         },
     },
     created: function () {
@@ -1833,8 +1833,8 @@ var file_data_FileData = /** @class */ (function () {
 
 var vue_file_preview_component = normalizeComponent(
   components_vue_file_previewvue_type_script_lang_ts_,
-  vue_file_previewvue_type_template_id_1f00ad11_render,
-  vue_file_previewvue_type_template_id_1f00ad11_staticRenderFns,
+  vue_file_previewvue_type_template_id_48ab2a8e_render,
+  vue_file_previewvue_type_template_id_48ab2a8e_staticRenderFns,
   false,
   null,
   null,
@@ -1913,8 +1913,8 @@ var vue_file_list_item_component = normalizeComponent(
 )
 
 /* harmony default export */ var vue_file_list_item = (vue_file_list_item_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e1d1ff30-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-agent.vue?vue&type=template&id=29ade43c&
-var vue_file_agentvue_type_template_id_29ade43c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e1d1ff30-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-file-agent.vue?vue&type=template&id=5cb0fc01&
+var vue_file_agentvue_type_template_id_5cb0fc01_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
     'is-sortable-' + (_vm.isSortable ? 'enabled' : 'disabled'),
     {
       'is-sortable-hold': _vm.sortable === 'hold',
@@ -1932,11 +1932,11 @@ var vue_file_agentvue_type_template_id_29ade43c_render = function () {var _vm=th
       'is-single': !_vm.hasMultiple,
       'has-multiple': _vm.hasMultiple,
       'no-meta': _vm.meta === false,
-    }},[_vm._t("before-inner"),_c('canvas',{ref:"thumbnailCanvas",staticStyle:{"position":"fixed","visibility":"hidden","z-index":"-3"}}),(_vm.overallProgress)?_c('div',{staticClass:"overall-progress",class:{ 'overall-progress-full': _vm.overallProgress >= 100 }},[_c('div',{staticClass:"overall-progress-bar",style:({ width: _vm.overallProgress + '%' })}),_c('div',{staticClass:"overall-progress-left",style:({ width: 100 - _vm.overallProgress + '%' })})]):_vm._e(),_c(_vm.isSortable ? 'vfa-sortable-list' : 'VueFileList',{tag:"component",attrs:{"axis":_vm.theme == 'list' ? 'y' : 'xy',"appendTo":'#vfa-' + _vm.uniqueId + ' .vue-file-agent',"transitionDuration":_vm.transitionDuration,"pressDelay":_vm.sortable === 'hold' ? 200 : 0,"useDragHandle":_vm.sortable === 'handle',"helperClass":'active-sorting-item'},on:{"sort-start":function($event){return _vm.sortStart()},"sort-end":function($event){return _vm.sortEnd($event)}},model:{value:(_vm.filesData),callback:function ($$v) {_vm.filesData=$$v},expression:"filesData"}},[_c('transition-group',{attrs:{"name":"grid-box","tag":"div"}},[_vm._l((_vm.filesData),function(fileData,index){return _c(_vm.isSortable ? 'vfa-sortable-item' : 'VueFileListItem',{key:fileData.id,tag:"component",staticClass:"file-preview-wrapper grid-box-item grid-block",attrs:{"index":index}},[(_vm.sortable === 'handle')?_c('span',{directives:[{name:"vfa-sortable-handle",rawName:"v-vfa-sortable-handle"}],staticClass:"file-sortable-handle"},[_vm._t("sortable-handle",[_c('VueFileIcon',{attrs:{"name":"system-sortable-handle"}})])],2):_vm._e(),_vm._t("file-preview",[_c('VueFilePreview',{attrs:{"value":fileData,"deletable":_vm.isDeletable,"editable":_vm.editable === true,"linkable":_vm.linkable === true,"errorText":_vm.errorText,"disabled":_vm.disabled,"thumbnailSize":_vm.thumbnailSize},on:{"remove":function($event){return _vm.removeFileData($event)},"rename":function($event){return _vm.filenameChanged($event)}}})],{"fileData":fileData,"index":index})],2)}),(_vm.canAddMore && _vm.readonly !== true)?[_vm._t("file-preview-new",[_c('div',{key:"new",staticClass:"file-preview-wrapper grid-box-item grid-block file-preview-new"},[_c('span',{staticClass:"file-preview"},[_c('span',{staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0"}},[_c('VueFileIcon',{attrs:{"name":"system-file-preview-new"}}),_c('span',{staticClass:"help-text"},[_vm._v(_vm._s(_vm.helpTextComputed))])],1)])])])]:_vm._e()],2)],1),(this.readonly !== true)?_c('input',{ref:"fileInput",staticClass:"file-input",attrs:{"title":"","disabled":_vm.disabled === true || (_vm.hasMultiple && !_vm.canAddMore),"type":"file","multiple":_vm.hasMultiple,"accept":_vm.accept || '*'},on:{"change":_vm.filesChanged}}):_vm._e(),_vm._t("after-inner")],2),_vm._t("after-outer")],2)}
-var vue_file_agentvue_type_template_id_29ade43c_staticRenderFns = []
+    }},[_vm._t("before-inner"),_c('canvas',{ref:"thumbnailCanvas",staticStyle:{"position":"fixed","visibility":"hidden","z-index":"-3"}}),(_vm.overallProgress)?_c('div',{staticClass:"overall-progress",class:{ 'overall-progress-full': _vm.overallProgress >= 100 }},[_c('div',{staticClass:"overall-progress-bar",style:({ width: _vm.overallProgress + '%' })}),_c('div',{staticClass:"overall-progress-left",style:({ width: 100 - _vm.overallProgress + '%' })})]):_vm._e(),_c(_vm.isSortable ? 'vfa-sortable-list' : 'VueFileList',{tag:"component",attrs:{"axis":_vm.theme == 'list' ? 'y' : 'xy',"appendTo":'#vfa-' + _vm.uniqueId + ' .vue-file-agent',"transitionDuration":_vm.transitionDuration,"pressDelay":_vm.sortable === 'hold' ? 200 : 0,"useDragHandle":_vm.sortable === 'handle',"helperClass":'active-sorting-item'},on:{"sort-start":function($event){return _vm.sortStart()},"sort-end":function($event){return _vm.sortEnd($event)}},model:{value:(_vm.fileRecords),callback:function ($$v) {_vm.fileRecords=$$v},expression:"fileRecords"}},[_c('transition-group',{attrs:{"name":"grid-box","tag":"div"}},[_vm._l((_vm.fileRecords),function(fileRecord,index){return _c(_vm.isSortable ? 'vfa-sortable-item' : 'VueFileListItem',{key:fileRecord.id,tag:"component",staticClass:"file-preview-wrapper grid-box-item grid-block",attrs:{"index":index}},[(_vm.sortable === 'handle')?_c('span',{directives:[{name:"vfa-sortable-handle",rawName:"v-vfa-sortable-handle"}],staticClass:"file-sortable-handle"},[_vm._t("sortable-handle",[_c('VueFileIcon',{attrs:{"name":"system-sortable-handle"}})])],2):_vm._e(),_vm._t("file-preview",[_c('VueFilePreview',{attrs:{"value":fileRecord,"deletable":_vm.isDeletable,"editable":_vm.editable === true,"linkable":_vm.linkable === true,"errorText":_vm.errorText,"disabled":_vm.disabled,"thumbnailSize":_vm.thumbnailSize},on:{"remove":function($event){return _vm.removeFileData($event)},"rename":function($event){return _vm.filenameChanged($event)}}})],{"fileRecord":fileRecord,"index":index})],2)}),(_vm.canAddMore && _vm.readonly !== true)?[_vm._t("file-preview-new",[_c('div',{key:"new",staticClass:"file-preview-wrapper grid-box-item grid-block file-preview-new"},[_c('span',{staticClass:"file-preview"},[_c('span',{staticStyle:{"position":"absolute","top":"0","right":"0","bottom":"0","left":"0"}},[_c('VueFileIcon',{attrs:{"name":"system-file-preview-new"}}),_c('span',{staticClass:"help-text"},[_vm._v(_vm._s(_vm.helpTextComputed))])],1)])])])]:_vm._e()],2)],1),(this.readonly !== true)?_c('input',{ref:"fileInput",staticClass:"file-input",attrs:{"title":"","disabled":_vm.disabled === true || (_vm.hasMultiple && !_vm.canAddMore),"type":"file","multiple":_vm.hasMultiple,"accept":_vm.accept || '*'},on:{"change":_vm.filesChanged}}):_vm._e(),_vm._t("after-inner")],2),_vm._t("after-outer")],2)}
+var vue_file_agentvue_type_template_id_5cb0fc01_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-file-agent.vue?vue&type=template&id=29ade43c&
+// CONCATENATED MODULE: ./src/components/vue-file-agent.vue?vue&type=template&id=5cb0fc01&
 
 // CONCATENATED MODULE: ./src/lib/ajax-request.ts
 /* inspired by axios */
@@ -2127,7 +2127,7 @@ var upload_helper_UploadHelper = /** @class */ (function () {
     //   return axios.delete('/upload', data, {
     //   });
     // }
-    UploadHelper.prototype.prepareUploadError = function (fileData, err, timeout) {
+    UploadHelper.prototype.prepareUploadError = function (fileRecord, err, timeout) {
         var errorText = err.message;
         if (err.response && err.response.data) {
             try {
@@ -2138,25 +2138,25 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                 // ignore
             }
         }
-        if (!fileData.error) {
-            fileData.error = {};
+        if (!fileRecord.error) {
+            fileRecord.error = {};
         }
-        fileData.error.upload = errorText;
-        fileData.upload.data = undefined;
-        fileData.upload.error = errorText;
+        fileRecord.error.upload = errorText;
+        fileRecord.upload.data = undefined;
+        fileRecord.upload.error = errorText;
         if (timeout) {
             setTimeout(function () {
-                if (!fileData.error) {
-                    fileData.error = {};
+                if (!fileRecord.error) {
+                    fileRecord.error = {};
                 }
-                fileData.error.upload = false;
-                if (!fileData.error.size && !fileData.error.type) {
-                    fileData.error = false;
+                fileRecord.error.upload = false;
+                if (!fileRecord.error.size && !fileRecord.error.type) {
+                    fileRecord.error = false;
                 }
             }, timeout);
         }
     };
-    UploadHelper.prototype.upload = function (url, headers, filesData, createFormData, progressFn, configureFn) {
+    UploadHelper.prototype.upload = function (url, headers, fileRecords, createFormData, progressFn, configureFn) {
         var e_1, _a;
         var _this = this;
         var updateOverallProgress = function () {
@@ -2167,58 +2167,58 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                 var e_2, _a;
                 var prgTotal = 0;
                 try {
-                    for (var filesData_2 = __values(filesData), filesData_2_1 = filesData_2.next(); !filesData_2_1.done; filesData_2_1 = filesData_2.next()) {
-                        var fileData = filesData_2_1.value;
-                        prgTotal += fileData.progress();
+                    for (var fileRecords_2 = __values(fileRecords), fileRecords_2_1 = fileRecords_2.next(); !fileRecords_2_1.done; fileRecords_2_1 = fileRecords_2.next()) {
+                        var fileRecord = fileRecords_2_1.value;
+                        prgTotal += fileRecord.progress();
                     }
                 }
                 catch (e_2_1) { e_2 = { error: e_2_1 }; }
                 finally {
                     try {
-                        if (filesData_2_1 && !filesData_2_1.done && (_a = filesData_2.return)) _a.call(filesData_2);
+                        if (fileRecords_2_1 && !fileRecords_2_1.done && (_a = fileRecords_2.return)) _a.call(fileRecords_2);
                     }
                     finally { if (e_2) throw e_2.error; }
                 }
-                progressFn(prgTotal / filesData.length);
+                progressFn(prgTotal / fileRecords.length);
             };
         }
         var promises = [];
         var failedUploadsCount = 0;
-        var _loop_1 = function (fileData) {
+        var _loop_1 = function (fileRecord) {
             var formData = void 0;
             if (typeof createFormData === 'function') {
-                formData = createFormData(fileData);
+                formData = createFormData(fileRecord);
             }
             else {
                 formData = new FormData();
-                formData.append('file', fileData.file);
-                formData.append('filename', fileData.name());
+                formData.append('file', fileRecord.file);
+                formData.append('filename', fileRecord.name());
             }
-            // ((fileData) => {
+            // ((fileRecord) => {
             var promise = this_1.doUpload(url, headers, formData, function (progressEvent) {
                 var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
                 // do not complete until promise resolved
-                fileData.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
+                fileRecord.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
                 updateOverallProgress();
             }, function (xhr) {
-                fileData.xhr = xhr;
+                fileRecord.xhr = xhr;
                 if (typeof configureFn === 'function') {
                     configureFn(xhr);
                 }
             });
             promises.push(new Promise(function (resolve, reject) {
                 promise.then(function (response) {
-                    delete fileData.xhr;
-                    fileData.upload.data = response.data;
-                    fileData.upload.error = false;
-                    fileData.progress(100);
-                    if (fileData.xhrQueue) {
-                        fileData.xhrQueue();
-                        delete fileData.xhrQueue;
+                    delete fileRecord.xhr;
+                    fileRecord.upload.data = response.data;
+                    fileRecord.upload.error = false;
+                    fileRecord.progress(100);
+                    if (fileRecord.xhrQueue) {
+                        fileRecord.xhrQueue();
+                        delete fileRecord.xhrQueue;
                     }
                     resolve(response);
                 } /* */, function (err) {
-                    _this.prepareUploadError(fileData, err);
+                    _this.prepareUploadError(fileRecord, err);
                     resolve(err);
                     failedUploadsCount++;
                 } /* */);
@@ -2226,15 +2226,15 @@ var upload_helper_UploadHelper = /** @class */ (function () {
         };
         var this_1 = this;
         try {
-            for (var filesData_1 = __values(filesData), filesData_1_1 = filesData_1.next(); !filesData_1_1.done; filesData_1_1 = filesData_1.next()) {
-                var fileData = filesData_1_1.value;
-                _loop_1(fileData);
+            for (var fileRecords_1 = __values(fileRecords), fileRecords_1_1 = fileRecords_1.next(); !fileRecords_1_1.done; fileRecords_1_1 = fileRecords_1.next()) {
+                var fileRecord = fileRecords_1_1.value;
+                _loop_1(fileRecord);
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (filesData_1_1 && !filesData_1_1.done && (_a = filesData_1.return)) _a.call(filesData_1);
+                if (fileRecords_1_1 && !fileRecords_1_1.done && (_a = fileRecords_1.return)) _a.call(fileRecords_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -2250,14 +2250,14 @@ var upload_helper_UploadHelper = /** @class */ (function () {
             }, reject);
         });
     };
-    UploadHelper.prototype.deleteUpload = function (url, headers, fileData, uploadData, configureFn) {
+    UploadHelper.prototype.deleteUpload = function (url, headers, fileRecord, uploadData, configureFn) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            if (fileData.xhr) {
-                fileData.xhr.abort();
+            if (fileRecord.xhr) {
+                fileRecord.xhr.abort();
             }
             if (uploadData === undefined) {
-                uploadData = fileData.upload.data;
+                uploadData = fileRecord.upload.data;
             }
             if (uploadData) {
                 _this.doDeleteUpload(url, headers, uploadData, function (xhr) {
@@ -2267,26 +2267,26 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                 }).then(function (result) {
                     resolve(result);
                 }, function (err) {
-                    _this.prepareUploadError(fileData, err);
+                    _this.prepareUploadError(fileRecord, err);
                     reject(err);
                 });
             }
         });
     };
-    UploadHelper.prototype.updateUpload = function (url, headers, fileData, uploadData, configureFn) {
+    UploadHelper.prototype.updateUpload = function (url, headers, fileRecord, uploadData, configureFn) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            if (fileData.xhr) {
+            if (fileRecord.xhr) {
                 // probably updated while being uploaded.
-                fileData.xhrQueue = function () {
-                    _this.updateUpload(url, headers, fileData, uploadData);
+                fileRecord.xhrQueue = function () {
+                    _this.updateUpload(url, headers, fileRecord, uploadData);
                 };
                 return resolve();
             }
             if (uploadData === undefined) {
-                uploadData = fileData.upload.data || {};
-                uploadData.old_filename = fileData.oldFileName;
-                uploadData.filename = fileData.name();
+                uploadData = fileRecord.upload.data || {};
+                uploadData.old_filename = fileRecord.oldFileName;
+                uploadData.filename = fileRecord.name();
             }
             if (uploadData) {
                 _this.doUpdateUpload(url, headers, uploadData, function (xhr) {
@@ -2294,24 +2294,24 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                         configureFn(xhr);
                     }
                 }).then(function (response) {
-                    fileData.upload.data = response.data;
-                    fileData.upload.error = false;
+                    fileRecord.upload.data = response.data;
+                    fileRecord.upload.error = false;
                     resolve(response);
                 }, function (err) {
-                    _this.prepareUploadError(fileData, err);
+                    _this.prepareUploadError(fileRecord, err);
                     reject(err);
                 });
             }
         });
     };
-    UploadHelper.prototype.doTusUpload = function (tus, url, fileData, headers, progressCallback) {
+    UploadHelper.prototype.doTusUpload = function (tus, url, fileRecord, headers, progressCallback) {
         return new Promise(function (resolve, reject) {
             if (!tus) {
                 return reject(new Error('tus required. Please install tus-js-client'));
             }
             // https://github.com/tus/tus-js-client
             // Create a new tus upload
-            var file = fileData.file;
+            var file = fileRecord.file;
             var upload = new tus.Upload(file, {
                 endpoint: url,
                 headers: headers,
@@ -2332,12 +2332,12 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                     resolve(upload);
                 },
             });
-            fileData.tusUpload = upload;
+            fileRecord.tusUpload = upload;
             // Start the upload
             upload.start();
         });
     };
-    UploadHelper.prototype.tusUpload = function (tus, url, headers, filesData, progressFn) {
+    UploadHelper.prototype.tusUpload = function (tus, url, headers, fileRecords, progressFn) {
         var e_3, _a;
         var _this = this;
         var updateOverallProgress = function () {
@@ -2348,68 +2348,68 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                 var e_4, _a;
                 var prgTotal = 0;
                 try {
-                    for (var filesData_4 = __values(filesData), filesData_4_1 = filesData_4.next(); !filesData_4_1.done; filesData_4_1 = filesData_4.next()) {
-                        var fileData = filesData_4_1.value;
-                        prgTotal += fileData.progress();
+                    for (var fileRecords_4 = __values(fileRecords), fileRecords_4_1 = fileRecords_4.next(); !fileRecords_4_1.done; fileRecords_4_1 = fileRecords_4.next()) {
+                        var fileRecord = fileRecords_4_1.value;
+                        prgTotal += fileRecord.progress();
                     }
                 }
                 catch (e_4_1) { e_4 = { error: e_4_1 }; }
                 finally {
                     try {
-                        if (filesData_4_1 && !filesData_4_1.done && (_a = filesData_4.return)) _a.call(filesData_4);
+                        if (fileRecords_4_1 && !fileRecords_4_1.done && (_a = fileRecords_4.return)) _a.call(fileRecords_4);
                     }
                     finally { if (e_4) throw e_4.error; }
                 }
-                progressFn(prgTotal / filesData.length);
+                progressFn(prgTotal / fileRecords.length);
             };
         }
         var promises = [];
-        var _loop_2 = function (fileData) {
-            var promise = this_2.doTusUpload(tus, url, fileData, headers, function (progressEvent) {
+        var _loop_2 = function (fileRecord) {
+            var promise = this_2.doTusUpload(tus, url, fileRecord, headers, function (progressEvent) {
                 var percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
                 // do not complete until promise resolved
-                fileData.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
+                fileRecord.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
                 updateOverallProgress();
             });
             promise.then(function (response) {
-                // delete fileData.tusUpload;
-                fileData.progress(100);
+                // delete fileRecord.tusUpload;
+                fileRecord.progress(100);
             }, function (err) {
-                _this.prepareUploadError(fileData, err);
+                _this.prepareUploadError(fileRecord, err);
             });
             promises.push(promise);
         };
         var this_2 = this;
         try {
-            for (var filesData_3 = __values(filesData), filesData_3_1 = filesData_3.next(); !filesData_3_1.done; filesData_3_1 = filesData_3.next()) {
-                var fileData = filesData_3_1.value;
-                _loop_2(fileData);
+            for (var fileRecords_3 = __values(fileRecords), fileRecords_3_1 = fileRecords_3.next(); !fileRecords_3_1.done; fileRecords_3_1 = fileRecords_3.next()) {
+                var fileRecord = fileRecords_3_1.value;
+                _loop_2(fileRecord);
             }
         }
         catch (e_3_1) { e_3 = { error: e_3_1 }; }
         finally {
             try {
-                if (filesData_3_1 && !filesData_3_1.done && (_a = filesData_3.return)) _a.call(filesData_3);
+                if (fileRecords_3_1 && !fileRecords_3_1.done && (_a = fileRecords_3.return)) _a.call(fileRecords_3);
             }
             finally { if (e_3) throw e_3.error; }
         }
         return Promise.all(promises);
     };
-    UploadHelper.prototype.tusDeleteUpload = function (tus, url, headers, fileData) {
+    UploadHelper.prototype.tusDeleteUpload = function (tus, url, headers, fileRecord) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             if (!tus) {
                 return reject('tus required');
             }
-            if (!fileData.tusUpload) {
+            if (!fileRecord.tusUpload) {
                 return resolve();
             }
             // const shouldTerminate = true;
             var abort = function (shouldTerminate) {
                 return new Promise(function (res, rej) {
-                    fileData.tusUpload.abort(shouldTerminate, function (err) {
+                    fileRecord.tusUpload.abort(shouldTerminate, function (err) {
                         if (err) {
-                            _this.prepareUploadError(fileData, err);
+                            _this.prepareUploadError(fileRecord, err);
                             rej(err);
                             return;
                         }
@@ -2490,8 +2490,8 @@ var dragCounter = 0;
     },
     data: function () {
         return {
-            filesData: [],
-            filesDataRaw: [],
+            fileRecords: [],
+            rawFileRecords: [],
             isDragging: false,
             isSorting: false,
             isSortingActive: false,
@@ -2504,12 +2504,12 @@ var dragCounter = 0;
     computed: {
         canAddMore: function () {
             if (!this.hasMultiple) {
-                return this.filesData.length === 0;
+                return this.fileRecords.length === 0;
             }
             if (!this.maxFiles) {
                 return true;
             }
-            return this.filesData.length < this.maxFiles;
+            return this.fileRecords.length < this.maxFiles;
         },
         helpTextComputed: function () {
             if (this.helpText) {
@@ -2543,49 +2543,49 @@ var dragCounter = 0;
         },
     },
     methods: {
-        createThumbnail: function (fileData, video) {
+        createThumbnail: function (fileRecord, video) {
             return new Promise(function (resolve, reject) {
                 var canvas = document.createElement('canvas');
-                utils.createVideoThumbnail(video, canvas, fileData.thumbnailSize).then(function (thumbnail) {
-                    fileData.imageColor = thumbnail.color;
-                    fileData.videoThumbnail = thumbnail.url;
-                    fileData.dimensions.width = thumbnail.width;
-                    fileData.dimensions.height = thumbnail.height;
+                utils.createVideoThumbnail(video, canvas, fileRecord.thumbnailSize).then(function (thumbnail) {
+                    fileRecord.imageColor = thumbnail.color;
+                    fileRecord.videoThumbnail = thumbnail.url;
+                    fileRecord.dimensions.width = thumbnail.width;
+                    fileRecord.dimensions.height = thumbnail.height;
                     resolve();
                 }, reject);
             });
         },
-        initVideo: function (fileData) {
-            if (!fileData.isPlayableVideo()) {
+        initVideo: function (fileRecord) {
+            if (!fileRecord.isPlayableVideo()) {
                 return;
             }
             var createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL;
             var revokeObjectURL = (window.URL || window.webkitURL || {}).revokeObjectURL;
             var video = document.createElement('video');
-            video.src = createObjectURL(fileData.file);
-            this.createThumbnail(fileData, video).then(function () {
+            video.src = createObjectURL(fileRecord.file);
+            this.createThumbnail(fileRecord, video).then(function () {
                 revokeObjectURL(video.src);
             });
             video.load();
         },
-        getFileDataOrRawInstance: function (fileDataOrRaw, raw) {
+        getFileDataOrRawInstance: function (fileRecordOrRaw, raw) {
             var i;
-            if (fileDataOrRaw instanceof file_data) {
-                i = this.filesData.indexOf(fileDataOrRaw);
+            if (fileRecordOrRaw instanceof file_record) {
+                i = this.fileRecords.indexOf(fileRecordOrRaw);
             }
             else {
-                i = this.filesDataRaw.indexOf(fileDataOrRaw);
+                i = this.rawFileRecords.indexOf(fileRecordOrRaw);
             }
             if (i === -1) {
-                return fileDataOrRaw;
+                return fileRecordOrRaw;
             }
-            return raw ? this.filesDataRaw[i] : this.filesData[i];
+            return raw ? this.rawFileRecords[i] : this.fileRecords[i];
         },
-        getFileDataRawInstance: function (fileDataOrRaw) {
-            return this.getFileDataOrRawInstance(fileDataOrRaw, true);
+        getFileDataRawInstance: function (fileRecordOrRaw) {
+            return this.getFileDataOrRawInstance(fileRecordOrRaw, true);
         },
-        getFileDataInstance: function (fileDataOrRaw) {
-            return this.getFileDataOrRawInstance(fileDataOrRaw, false);
+        getFileDataInstance: function (fileRecordOrRaw) {
+            return this.getFileDataOrRawInstance(fileRecordOrRaw, false);
         },
         prepareConfigureFn: function (configureXhr) {
             var uploadWithCredentials = this.uploadWithCredentials;
@@ -2599,25 +2599,25 @@ var dragCounter = 0;
                 }
             };
         },
-        upload: function (url, headers, filesDataOrRaw, createFormData, configureXhr) {
+        upload: function (url, headers, fileRecordsOrRaw, createFormData, configureXhr) {
             var e_1, _a;
             var _this = this;
             var validFilesData = [];
             var validFilesRawData = [];
             try {
-                for (var filesDataOrRaw_1 = __values(filesDataOrRaw), filesDataOrRaw_1_1 = filesDataOrRaw_1.next(); !filesDataOrRaw_1_1.done; filesDataOrRaw_1_1 = filesDataOrRaw_1.next()) {
-                    var fileDataOrRaw = filesDataOrRaw_1_1.value;
-                    var fileData = this.getFileDataInstance(fileDataOrRaw);
-                    if (!fileData.error) {
-                        validFilesData.push(fileData);
-                        validFilesRawData.push(this.getFileDataRawInstance(fileData));
+                for (var fileRecordsOrRaw_1 = __values(fileRecordsOrRaw), fileRecordsOrRaw_1_1 = fileRecordsOrRaw_1.next(); !fileRecordsOrRaw_1_1.done; fileRecordsOrRaw_1_1 = fileRecordsOrRaw_1.next()) {
+                    var fileRecordOrRaw = fileRecordsOrRaw_1_1.value;
+                    var fileRecord = this.getFileDataInstance(fileRecordOrRaw);
+                    if (!fileRecord.error) {
+                        validFilesData.push(fileRecord);
+                        validFilesRawData.push(this.getFileDataRawInstance(fileRecord));
                     }
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (filesDataOrRaw_1_1 && !filesDataOrRaw_1_1.done && (_a = filesDataOrRaw_1.return)) _a.call(filesDataOrRaw_1);
+                    if (fileRecordsOrRaw_1_1 && !fileRecordsOrRaw_1_1.done && (_a = fileRecordsOrRaw_1.return)) _a.call(fileRecordsOrRaw_1);
                 }
                 finally { if (e_1) throw e_1.error; }
             }
@@ -2633,78 +2633,78 @@ var dragCounter = 0;
                 }, _this.prepareConfigureFn(configureXhr))
                     .then(function (res) {
                     for (var i = 0; i < res.length; i++) {
-                        res[i].fileData = validFilesRawData[i];
+                        res[i].fileRecord = validFilesRawData[i];
                     }
                     _this.$emit('upload', res);
                     resolve(res);
                 }, function (err) {
                     for (var i = 0; i < err.length; i++) {
-                        err[i].fileData = validFilesRawData[i];
+                        err[i].fileRecord = validFilesRawData[i];
                     }
                     _this.$emit('upload:error', err);
                     reject(err);
                 });
             });
         },
-        deleteUpload: function (url, headers, fileData, uploadData, configureXhr) {
+        deleteUpload: function (url, headers, fileRecord, uploadData, configureXhr) {
             var _this = this;
-            if (this.filesData.length < 1) {
+            if (this.fileRecords.length < 1) {
                 this.overallProgress = 0;
             }
-            fileData = this.getFileDataInstance(fileData);
-            var fileDataRaw = this.getFileDataRawInstance(fileData);
+            fileRecord = this.getFileDataInstance(fileRecord);
+            var rawFileRecord = this.getFileDataRawInstance(fileRecord);
             if (this.resumable) {
-                return upload_helper.tusDeleteUpload(plugins.tus, url, headers, fileData);
+                return upload_helper.tusDeleteUpload(plugins.tus, url, headers, fileRecord);
             }
             return new Promise(function (resolve, reject) {
                 upload_helper
-                    .deleteUpload(url, headers, fileData, uploadData, _this.prepareConfigureFn(configureXhr))
+                    .deleteUpload(url, headers, fileRecord, uploadData, _this.prepareConfigureFn(configureXhr))
                     .then(function (res) {
-                    res.fileData = fileDataRaw;
+                    res.fileRecord = rawFileRecord;
                     _this.$emit('upload:delete', res);
                     resolve(res);
                 }, function (err) {
-                    err.fileData = fileDataRaw;
+                    err.fileRecord = rawFileRecord;
                     _this.$emit('upload:delete:error', err);
                     reject(err);
                 });
             });
         },
-        updateUpload: function (url, headers, fileData, uploadData, configureXhr) {
+        updateUpload: function (url, headers, fileRecord, uploadData, configureXhr) {
             var _this = this;
-            fileData = this.getFileDataInstance(fileData);
-            var fileDataRaw = this.getFileDataRawInstance(fileData);
+            fileRecord = this.getFileDataInstance(fileRecord);
+            var rawFileRecord = this.getFileDataRawInstance(fileRecord);
             return new Promise(function (resolve, reject) {
                 upload_helper
-                    .updateUpload(url, headers, fileData, uploadData, _this.prepareConfigureFn(configureXhr))
+                    .updateUpload(url, headers, fileRecord, uploadData, _this.prepareConfigureFn(configureXhr))
                     .then(function (res) {
-                    res.filesData = fileDataRaw;
+                    res.fileRecords = rawFileRecord;
                     _this.$emit('upload:update', res);
                     resolve(res);
                 }, function (err) {
-                    err.filesData = fileDataRaw;
+                    err.fileRecords = rawFileRecord;
                     _this.$emit('upload:update:error', err);
                     reject(err);
                 });
             });
         },
-        autoUpload: function (filesData) {
+        autoUpload: function (fileRecords) {
             if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
-            return this.upload(this.uploadUrl, this.uploadHeaders, filesData, this.uploadConfig);
+            return this.upload(this.uploadUrl, this.uploadHeaders, fileRecords, this.uploadConfig);
         },
-        autoDeleteUpload: function (fileData) {
+        autoDeleteUpload: function (fileRecord) {
             if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
-            return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
+            return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileRecord, this.uploadConfig);
         },
-        autoUpdateUpload: function (fileData) {
+        autoUpdateUpload: function (fileRecord) {
             if (!this.uploadUrl || this.auto === false) {
                 return Promise.resolve(false);
             }
-            return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
+            return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileRecord, this.uploadConfig);
         },
         equalFiles: function (file1, file2) {
             return ( true &&
@@ -2717,9 +2717,9 @@ var dragCounter = 0;
         isFileAddedAlready: function (file) {
             var e_2, _a;
             try {
-                for (var _b = __values(this.filesData), _c = _b.next(); !_c.done; _c = _b.next()) {
-                    var fileData = _c.value;
-                    if (this.equalFiles(file, fileData.file)) {
+                for (var _b = __values(this.fileRecords), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var fileRecord = _c.value;
+                    if (this.equalFiles(file, fileRecord.file)) {
                         return true;
                     }
                 }
@@ -2742,7 +2742,7 @@ var dragCounter = 0;
             if (this.hasMultiple && !this.canAddMore) {
                 return;
             }
-            var filesData = [];
+            var fileRecords = [];
             var filesFiltered = [];
             // tslint:disable-next-line
             for (var i = 0; i < files.length; i++) {
@@ -2752,13 +2752,13 @@ var dragCounter = 0;
                 filesFiltered.push(files[i]);
             }
             files = filesFiltered;
-            if (this.maxFiles && files.length > this.maxFiles - this.filesData.length) {
-                files = files.slice(0, this.maxFiles - this.filesData.length);
+            if (this.maxFiles && files.length > this.maxFiles - this.fileRecords.length) {
+                files = files.slice(0, this.maxFiles - this.fileRecords.length);
             }
             try {
                 for (var files_1 = __values(files), files_1_1 = files_1.next(); !files_1_1.done; files_1_1 = files_1.next()) {
                     var file = files_1_1.value;
-                    filesData.push(new file_data({
+                    fileRecords.push(new file_record({
                         file: file,
                     }, {
                         read: this.shouldRead,
@@ -2776,35 +2776,35 @@ var dragCounter = 0;
                 finally { if (e_3) throw e_3.error; }
             }
             try {
-                for (var filesData_1 = __values(filesData), filesData_1_1 = filesData_1.next(); !filesData_1_1.done; filesData_1_1 = filesData_1.next()) {
-                    var fileData = filesData_1_1.value;
-                    if (fileData.file.size <= 20 * 1024 * 1024) {
+                for (var fileRecords_1 = __values(fileRecords), fileRecords_1_1 = fileRecords_1.next(); !fileRecords_1_1.done; fileRecords_1_1 = fileRecords_1.next()) {
+                    var fileRecord = fileRecords_1_1.value;
+                    if (fileRecord.file.size <= 20 * 1024 * 1024) {
                         // <= 20MB
-                        this.initVideo(fileData);
+                        this.initVideo(fileRecord);
                     }
                 }
             }
             catch (e_4_1) { e_4 = { error: e_4_1 }; }
             finally {
                 try {
-                    if (filesData_1_1 && !filesData_1_1.done && (_b = filesData_1.return)) _b.call(filesData_1);
+                    if (fileRecords_1_1 && !fileRecords_1_1.done && (_b = fileRecords_1.return)) _b.call(fileRecords_1);
                 }
                 finally { if (e_4) throw e_4.error; }
             }
             if (this.hasMultiple) {
                 // splice: for list transitions to work properly
-                (_c = this.filesData).splice.apply(_c, __spread([this.filesData.length, 0], filesData));
+                (_c = this.fileRecords).splice.apply(_c, __spread([this.fileRecords.length, 0], fileRecords));
             }
             else {
-                this.filesData = filesData;
+                this.fileRecords = fileRecords;
             }
-            file_data.readFiles(filesData).then(function (filesDataNew) {
-                var allFilesDataRaw = file_data.toRawArray(_this.filesData);
-                _this.filesDataRaw = allFilesDataRaw;
+            file_record.readFiles(fileRecords).then(function (fileRecordsNew) {
+                var allFilesDataRaw = file_record.toRawArray(_this.fileRecords);
+                _this.rawFileRecords = allFilesDataRaw;
                 _this.$emit('input', Array.isArray(_this.value) ? allFilesDataRaw : allFilesDataRaw[0]);
-                _this.$emit('select', file_data.toRawArray(filesDataNew));
+                _this.$emit('select', file_record.toRawArray(fileRecordsNew));
             });
-            this.autoUpload(filesData);
+            this.autoUpload(fileRecords);
         },
         filesChanged: function (event) {
             var files = event.target.files;
@@ -2869,61 +2869,61 @@ var dragCounter = 0;
                 this.isDragging = false;
             }
         },
-        removeFileData: function (fileDataOrRaw) {
+        removeFileData: function (fileRecordOrRaw) {
             var _this = this;
             var i;
-            if (fileDataOrRaw instanceof file_data) {
-                i = this.filesData.indexOf(fileDataOrRaw);
+            if (fileRecordOrRaw instanceof file_record) {
+                i = this.fileRecords.indexOf(fileRecordOrRaw);
             }
             else {
-                i = this.filesDataRaw.indexOf(fileDataOrRaw);
+                i = this.rawFileRecords.indexOf(fileRecordOrRaw);
             }
-            var fileData = this.filesData[i];
-            var fileDataRaw = this.filesDataRaw[i];
-            this.$emit('input', this.filesDataRaw);
-            this.$emit('delete', fileDataRaw);
-            fileData = this.filesData.splice(i, 1)[0];
-            fileDataRaw = this.filesDataRaw.splice(i, 1)[0];
-            this.autoDeleteUpload(fileData).then(function (res) {
+            var fileRecord = this.fileRecords[i];
+            var rawFileRecord = this.rawFileRecords[i];
+            this.$emit('input', this.rawFileRecords);
+            this.$emit('delete', rawFileRecord);
+            fileRecord = this.fileRecords.splice(i, 1)[0];
+            rawFileRecord = this.rawFileRecords.splice(i, 1)[0];
+            this.autoDeleteUpload(fileRecord).then(function (res) {
                 /* no op */
             }, function (err) {
-                _this.filesData.splice(i, 1, fileData);
-                _this.filesDataRaw.splice(i, 1, fileDataRaw);
+                _this.fileRecords.splice(i, 1, fileRecord);
+                _this.rawFileRecords.splice(i, 1, rawFileRecord);
             });
         },
-        filenameChanged: function (fileData) {
-            this.$emit('rename', file_data.toRawArray([fileData])[0]);
-            this.autoUpdateUpload(fileData).then(function (res) {
+        filenameChanged: function (fileRecord) {
+            this.$emit('rename', file_record.toRawArray([fileRecord])[0]);
+            this.autoUpdateUpload(fileRecord).then(function (res) {
                 /* no op */
             }, function (err) {
-                fileData.customName = fileData.oldCustomName;
+                fileRecord.customName = fileRecord.oldCustomName;
             });
         },
         checkValue: function () {
             var _this = this;
-            var filesDataRaw = this.value || [];
-            filesDataRaw = Array.isArray(filesDataRaw) ? filesDataRaw : [filesDataRaw];
+            var rawFileRecords = this.value || [];
+            rawFileRecords = Array.isArray(rawFileRecords) ? rawFileRecords : [rawFileRecords];
             var fdPromises = [];
-            var filesDataRawNew = [];
-            for (var i = 0; i < filesDataRaw.length; i++) {
-                var existingIndex = this.filesDataRaw.indexOf(filesDataRaw[i]);
+            var rawFileRecordsNew = [];
+            for (var i = 0; i < rawFileRecords.length; i++) {
+                var existingIndex = this.rawFileRecords.indexOf(rawFileRecords[i]);
                 if (existingIndex !== -1) {
-                    fdPromises.push(Promise.resolve(this.filesData[existingIndex]));
-                    filesDataRawNew[i] = this.filesDataRaw[existingIndex];
+                    fdPromises.push(Promise.resolve(this.fileRecords[existingIndex]));
+                    rawFileRecordsNew[i] = this.rawFileRecords[existingIndex];
                 }
                 else {
-                    fdPromises.push(file_data.fromRaw(filesDataRaw[i], {
+                    fdPromises.push(file_record.fromRaw(rawFileRecords[i], {
                         read: this.shouldRead,
                         maxSize: this.maxSize,
                         accept: this.accept,
                         thumbnailSize: this.thumbnailSize,
                     }));
-                    filesDataRawNew.push(filesDataRaw[i]);
+                    rawFileRecordsNew.push(rawFileRecords[i]);
                 }
             }
-            this.filesDataRaw = filesDataRawNew;
-            Promise.all(fdPromises).then(function (filesData) {
-                _this.filesData = filesData;
+            this.rawFileRecords = rawFileRecordsNew;
+            Promise.all(fdPromises).then(function (fileRecords) {
+                _this.fileRecords = fileRecords;
             });
         },
         sortStart: function () {
@@ -2943,9 +2943,9 @@ var dragCounter = 0;
                 _this.isSorting = false;
             }, this.transitionDuration + 100);
             if (sortData.oldIndex !== sortData.newIndex) {
-                this.filesDataRaw = utils.arrayMove(this.filesDataRaw, sortData.oldIndex, sortData.newIndex);
+                this.rawFileRecords = utils.arrayMove(this.rawFileRecords, sortData.oldIndex, sortData.newIndex);
                 this.$nextTick(function () {
-                    _this.$emit('input', _this.filesDataRaw);
+                    _this.$emit('input', _this.rawFileRecords);
                     _this.$emit('sort', {
                         oldIndex: sortData.oldIndex,
                         newIndex: sortData.newIndex,
@@ -2992,8 +2992,8 @@ var vue_file_agentvue_type_style_index_0_lang_scss_ = __webpack_require__("6816"
 
 var vue_file_agent_component = normalizeComponent(
   components_vue_file_agentvue_type_script_lang_ts_,
-  vue_file_agentvue_type_template_id_29ade43c_render,
-  vue_file_agentvue_type_template_id_29ade43c_staticRenderFns,
+  vue_file_agentvue_type_template_id_5cb0fc01_render,
+  vue_file_agentvue_type_template_id_5cb0fc01_staticRenderFns,
   false,
   null,
   null,
@@ -3054,7 +3054,7 @@ var mixin = vue_file_agent_mixin;
 /* concated harmony reexport VueFileAgentMixin */__webpack_require__.d(__webpack_exports__, "VueFileAgentMixin", function() { return vue_file_agent_mixin; });
 /* concated harmony reexport VueFilePreviewMixin */__webpack_require__.d(__webpack_exports__, "VueFilePreviewMixin", function() { return vue_file_preview_mixin; });
 /* concated harmony reexport utils */__webpack_require__.d(__webpack_exports__, "utils", function() { return utils; });
-/* concated harmony reexport FileData */__webpack_require__.d(__webpack_exports__, "FileData", function() { return file_data; });
+/* concated harmony reexport FileRecord */__webpack_require__.d(__webpack_exports__, "FileRecord", function() { return file_record; });
 /* concated harmony reexport plugins */__webpack_require__.d(__webpack_exports__, "plugins", function() { return plugins; });
 
 

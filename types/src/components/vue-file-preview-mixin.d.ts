@@ -1,14 +1,14 @@
-import FileData from '../lib/file-data';
+import FileRecord from '../lib/file-record';
 import Vue from 'vue';
 declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     isEditInputFocused: boolean;
     isEditCancelable: boolean;
-    fileData: FileData;
+    fileRecord: FileRecord;
 }, {
     updateFileData(): void;
-    createThumbnail(fileData: FileData, video: HTMLVideoElement): void;
-    playAv(fileData: FileData): void;
-    removeFileData(fileData: FileData): void;
+    createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): void;
+    playAv(fileRecord: FileRecord): void;
+    removeFileData(fileRecord: FileRecord): void;
     editFileName(): void;
     editInputFocused(): void;
     editInputBlured(): void;
@@ -18,5 +18,5 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     dismissError(): void;
 }, {
     hasLinkableUrl: boolean;
-}, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize", any>>;
+}, Record<"deletable" | "disabled" | "editable" | "errorText" | "linkable" | "thumbnailSize" | "value", any>>;
 export default _default;

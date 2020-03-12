@@ -1,5 +1,5 @@
 import VueFilePreview from '@/components/vue-file-preview.vue';
-import FileData, { RawFileData, Options } from '@/lib/file-data';
+import FileRecord, { RawFileRecord, Options } from '@/lib/file-record';
 import helper from './helper';
 
 describe('vue-file-preview.vue', () => {
@@ -13,7 +13,7 @@ describe('vue-file-preview.vue', () => {
   };
 
   it('renders FileData when passed', () => {
-    const fileData = new FileData(rawFileData as RawFileData, {} as Options);
+    const fileData = new FileRecord(rawFileData as RawFileRecord, {} as Options);
     const wrapper = helper.getWrapper(
       VueFilePreview,
       {
