@@ -10,7 +10,6 @@ High performant Vue file **upload** component with elegant and distinguishable *
 
 [Become a Sponsor/Supporter](https://www.patreon.com/safrazik)
 
-
 ## [Live Demo][] · [CodePen Playground](https://codepen.io/safrazik/pen/BaBpYme)
 
 ![Demo](website/assets/demo.gif?v=1.5)
@@ -43,7 +42,7 @@ High performant Vue file **upload** component with elegant and distinguishable *
 
 ```html
 <template>
-  <VueFileAgent :uploadUrl="uploadUrl" v-model="filesData"></VueFileAgent>
+  <VueFileAgent :uploadUrl="uploadUrl" v-model="fileRecords"></VueFileAgent>
 </template>
 ```
 
@@ -61,7 +60,7 @@ High performant Vue file **upload** component with elegant and distinguishable *
     data() {
       return {
         // ...
-        filesData: [],
+        fileRecords: [],
         uploadUrl: 'https://example.com',
         // ...
       };
@@ -126,10 +125,10 @@ or with script tag
     }"
     @select="filesSelected($event)"
     @delete="fileDeleted($event)"
-    v-model="filesData"
+    v-model="fileRecords"
   ></VueFileAgent>
-  <button :disabled="!filesDataForUpload.length" @click="uploadFiles()">
-    Upload {{ filesDataForUpload.length }} files
+  <button :disabled="!fileRecordsForUpload.length" @click="uploadFiles()">
+    Upload {{ fileRecordsForUpload.length }} files
   </button>
 </template>
 ```
@@ -144,32 +143,32 @@ or with script tag
   export default {
     data: function() {
       return {
-        filesData: [],
+        fileRecords: [],
         uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
         uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
-        filesDataForUpload: [],
+        fileRecordsForUpload: [],
       };
     },
     methods: {
       uploadFiles: function() {
         // Using the default uploader. You may use another uploader instead.
-        this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.filesDataForUpload);
-        this.filesDataForUpload = [];
+        this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForUpload);
+        this.fileRecordsForUpload = [];
       },
-      deleteUploadedFile: function(fileData) {
+      deleteUploadedFile: function(fileRecord) {
         // Using the default uploader. You may use another uploader instead.
-        this.$refs.vueFileAgent.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData);
+        this.$refs.vueFileAgent.deleteUpload(this.uploadUrl, this.uploadHeaders, fileRecord);
       },
-      filesSelected: function(filesDataNewlySelected) {
-        var validFilesData = filesDataNewlySelected.filter((fileData) => !fileData.error);
-        this.filesDataForUpload = this.filesDataForUpload.concat(validFilesData);
+      filesSelected: function(fileRecordsNewlySelected) {
+        var validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
+        this.fileRecordsForUpload = this.fileRecordsForUpload.concat(validFileRecords);
       },
-      fileDeleted: function(fileData) {
-        var i = this.filesDataForUpload.indexOf(fileData);
+      fileDeleted: function(fileRecord) {
+        var i = this.fileRecordsForUpload.indexOf(fileRecord);
         if (i !== -1) {
-          this.filesDataForUpload.splice(i, 1);
+          this.fileRecordsForUpload.splice(i, 1);
         } else {
-          this.deleteUploadedFile(fileData);
+          this.deleteUploadedFile(fileRecord);
         }
       },
     },

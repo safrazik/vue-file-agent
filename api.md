@@ -47,7 +47,7 @@ Disables all user interactions on the component
 
 boolean, default `false`
 
-Whether the file name can be edited. The (modified) name can be retrieved by `fileData.name(withoutExtension = true)`
+Whether the file name can be edited. The (modified) name can be retrieved by `fileRecord.name(withoutExtension = true)`
 
 ### errorText
 
@@ -211,7 +211,7 @@ See `v-model` below
 
 ### v-model
 
-Accepts an object for single file upload and an array of serialized FileData objects for multiple file upload.
+Accepts an object for single file upload and an array of serialized FileRecord objects for multiple file upload.
 
 ## Props Demo
 
@@ -238,7 +238,7 @@ Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/s
       }"
       :thumbnailSize="120"
       :theme="'list'"
-      v-model="filesData"
+      v-model="fileRecords"
     ></VueFileAgent>
   </div>
 </template>
@@ -247,7 +247,7 @@ Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/s
     // ...
     data: function(){
       return {
-        filesData: [
+        fileRecords: [
           {
             "name":"Some Invalid.exe",
             "size": 8165824,
@@ -284,13 +284,13 @@ Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/s
 
 ### input
 
-`$event`: array of serialized FileData
+`$event`: array of serialized FileRecord
 
 Fired whenever files are selected. Passes all selected files data (including previously selected). You shouldn't use this event directly. Instead, use v-model for two way binding, and use `select` event for other purposes
 
 ### select
 
-`$event`: array of serialized FileData
+`$event`: array of serialized FileRecord
 
 Fired whenever files are selected. Passes the (newly selected) files data.
 
@@ -345,21 +345,21 @@ Fired after file is deleted. If the file fails to be deleted, `upload:delete:err
 
 ## Methods
 
-### upload(`uploadUrl` : string, `uploadHeaders` : object, `filesData` : FileData[] | RawFileData[], `createFormData` ?: (fileData: FileData) => FormData, `uploadConfig` ?: (request: XMLHttpRequest) => any): Promise
+### upload(`uploadUrl` : string, `uploadHeaders` : object, `fileRecords` : FileRecord[] | RawFileRecord[], `createFormData` ?: (fileRecord: FileRecord) => FormData, `uploadConfig` ?: (request: XMLHttpRequest) => any): Promise
 
 - `uploadUrl`: the url where a `POST` request will be sent
 - `uploadHeaders`: a key value pair of custom headers. e.g: `{'Authorization': 'MyCustomAuthorizationHeader'}`
-- `filesData`: array of files data to upload
+- `fileRecords`: array of files data to upload
 - `createFormData`: [Optional] create a custom FormData instance for upload [See Example](https://github.com/safrazik/vue-file-agent/issues/12)
 - `uploadConfig`: [Optional] configure the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) object to be sent to server
 
 Trigger the default upload action.
 
-### deleteUpload(`uploadUrl` : string, `uploadHeaders` : object, `fileData` : FileData | RawFileData, `uploadData` ?: any, `uploadConfig` ?: (request: XMLHttpRequest) => any): Promise
+### deleteUpload(`uploadUrl` : string, `uploadHeaders` : object, `fileRecord` : FileRecord | RawFileRecord, `uploadData` ?: any, `uploadConfig` ?: (request: XMLHttpRequest) => any): Promise
 
 - `uploadUrl`: the url where a `DELETE` request will be sent
 - `uploadHeaders`: an key value pair of custom headers. e.g: `{'Authorization': 'MyCustomAuthorizationHeader'}`
-- `fileData`: file data to be deleted
+- `fileRecord`: file record to be deleted
 - `uploadData`: [Optional] the data returned in `upload` operation
 - `uploadConfig`: [Optional] configure the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) object to be sent to server
 
@@ -385,7 +385,7 @@ Content is placed (before) outside of the file input. Files can be dragged here.
 
 ### file-preview
 
-Preview block of each FileData
+Preview block of each FileRecord
 
 ### file-preview-new
 
@@ -463,7 +463,7 @@ Demo 2. Profile Picture (<a target="_blank" href="https://codepen.io/safrazik/pe
           }, 500);
         });
       },
-      onSelect: function(filesData){
+      onSelect: function(fileRecords){
         this.uploaded = false;
       }
     }
@@ -509,8 +509,8 @@ If you still can't make it with the built in customizations, (1) you can create 
 <template>
   <div class="my-vue-file-agent">
     <ul>
-      <li v-for="fileData in filesData">
-        {{ fileData.name() }}
+      <li v-for="fileRecord in fileRecords">
+        {{ fileRecord.name() }}
       </li>
     </ul>
     <button @click="myCustomMethod()">Custom Button</button>
@@ -536,7 +536,7 @@ export default {
 
 Demo 3. Gmail Inspired Upload (<a target="_blank" href="https://codepen.io/safrazik/pen/OJLgvya">CodePen</a>)
 
-`NOTE` In an ES6 environment, instead of using `<template v-slot:file-preview="slotProps">` you can use `<template v-slot:file-preview="{ fileData, index }">`
+`NOTE` In an ES6 environment, instead of using `<template v-slot:file-preview="slotProps">` you can use `<template v-slot:file-preview="{ fileRecord, index }">`
 
 {% capture gmail_inspired_demo %}
 {% raw %}
@@ -555,7 +555,7 @@ Demo 3. Gmail Inspired Upload (<a target="_blank" href="https://codepen.io/safra
       :errorText="{
         size: 'This file is too large to be attached',
       }"
-      v-model="filesData"
+      v-model="fileRecords"
     >
       <template v-slot:before-outer>
         <p>Email Attachment example with drag & drop support and <span class="badge">attachment</span> keyword basic detection.</p>
@@ -571,13 +571,13 @@ Demo 3. Gmail Inspired Upload (<a target="_blank" href="https://codepen.io/safra
       </template >
       <template v-slot:file-preview="slotProps">
         <div :key="slotProps.index" class="grid-box-item file-row">
-          <button type="button" class="close remove" aria-label="Remove" @click="removeFileData(slotProps.fileData)">
+          <button type="button" class="close remove" aria-label="Remove" @click="removeFileRecord(slotProps.fileRecord)">
             <span aria-hidden="true">&times;</span>
           </button>
-          <div class="progress" :class="{'completed': slotProps.fileData.progress() == 100}">
-            <div class="progress-bar" role="progressbar" :style="{width: slotProps.fileData.progress() + '%'}"></div>
+          <div class="progress" :class="{'completed': slotProps.fileRecord.progress() == 100}">
+            <div class="progress-bar" role="progressbar" :style="{width: slotProps.fileRecord.progress() + '%'}"></div>
           </div>
-          <strong>{{ slotProps.fileData.name() }}</strong> <span class="text-muted">({{ slotProps.fileData.size() }})</span>
+          <strong>{{ slotProps.fileRecord.name() }}</strong> <span class="text-muted">({{ slotProps.fileRecord.size() }})</span>
         </div>
       </template >
       <template v-slot:file-preview-new>
@@ -605,16 +605,16 @@ Demo 3. Gmail Inspired Upload (<a target="_blank" href="https://codepen.io/safra
   export default {
     data: function(){
       return {
-        filesData: [],
+        fileRecords: [],
         message: 'I am sending you the attachments',
       }
     },
     methods: {
-      removeFileData: function(fileData){
-        return this.$refs.vfaDemoRef.removeFileData(fileData);
+      removeFileRecord: function(fileRecord){
+        return this.$refs.vfaDemoRef.removeFileRecord(fileRecord);
       },
       send: function(){
-        if(this.message.indexOf('attachment') !== -1 && this.filesData.length < 1){
+        if(this.message.indexOf('attachment') !== -1 && this.fileRecords.length < 1){
           if(!confirm('You have mentioned about attachments in your message. Are you sure to send without attachments?')){
             return;
           }
