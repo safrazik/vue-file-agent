@@ -255,13 +255,19 @@ Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/s
             "ext":"exe",
           },
           {
-            "name":"Superb Fairy-wren.jpg",
-            "lastModified":1576522061394,
-            "sizeText":"37 KB",
-            "size":38093,
-            "type":"image/jpeg",
-            "ext":"jpg",
-            "url": "https://safrazik.com/vue-file-agent/website/assets/files/Superb Fairy-wren.jpg"
+            "name": "Golf.mp4",
+            "lastModified": 1576563996233,
+            "sizeText": "549 KB",
+            "size": 561813,
+            "type": "video/mp4",
+            "ext": "mp4",
+            "dimensions": {
+              "width": 640,
+              "height": 360
+            },
+            "url": "https://safrazik.com/vue-file-agent/website/assets/files/Golf.mp4",
+            "videoThumbnail": "https://safrazik.com/vue-file-agent/website/assets/files/Golf-thumb.jpg",
+            "imageColor": [66, 62, 45]
           },
           {
             "name":"Some Large File.zip",

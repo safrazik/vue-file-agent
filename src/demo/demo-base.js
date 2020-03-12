@@ -28,9 +28,9 @@ window.getFileRecordsInitial = function() {
     },
     {
       name: 'House Sparrow.jpg',
-      lastModified: 1576522061394,
-      sizeText: '37 KB',
-      size: 38093,
+      lastModified: 1583992794341,
+      sizeText: '14 KB',
+      size: 14403,
       type: 'image/jpeg',
       ext: 'jpg',
     },
