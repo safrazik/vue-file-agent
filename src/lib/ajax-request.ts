@@ -8,6 +8,7 @@ export interface AjaxResponse {
 }
 export type AjaxRequestData = FormData | any;
 export interface AjaxError extends Error {
+  error: true;
   code: string;
   request: XMLHttpRequest;
   response?: AjaxResponse;
@@ -22,6 +23,7 @@ class AjaxRequest {
     response?: AjaxResponse,
   ): AjaxError {
     const error: AjaxError = new Error(message) as AjaxError;
+    error.error = true;
     if (code) {
       error.code = code;
     }

@@ -134,7 +134,7 @@ class UploadHelper {
         progressFn(prgTotal / filesData.length);
       };
     }
-    const promises: Array<Promise<AjaxResponse | { error: AjaxError }>> = [];
+    const promises: Array<Promise<AjaxResponse | AjaxError>> = [];
     let failedUploadsCount = 0;
     for (const fileData of filesData) {
       let formData;
@@ -179,7 +179,7 @@ class UploadHelper {
             } /* */,
             (err) => {
               this.prepareUploadError(fileData, err);
-              resolve({ error: err });
+              resolve(err);
               failedUploadsCount++;
             } /* */,
           );
@@ -193,7 +193,7 @@ class UploadHelper {
       Promise.all(promises).then((responses) => {
         if (failedUploadsCount === promises.length) {
           // all uploads failed
-          reject((responses as Array<{ error: AjaxError }>).map((res) => res.error));
+          reject(responses);
           return;
         }
         resolve(responses);

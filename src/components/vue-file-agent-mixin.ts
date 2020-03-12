@@ -186,29 +186,35 @@ export default Vue.extend({
           this.overallProgress = overallProgress;
         });
       }
-      return uploader
-        .upload(
-          url,
-          headers,
-          validFilesData,
-          createFormData,
-          (overallProgress) => {
-            this.overallProgress = overallProgress;
-          },
-          this.prepareConfigureFn(configureXhr),
-        )
-        .then(
-          (res: any) => {
-            for (let i = 0; i < res.length; i++) {
-              res[i].fileData = validFilesRawData[i];
-            }
-            this.$emit('upload', res);
-            return res;
-          },
-          (err: any) => {
-            this.$emit('upload:error', err);
-          },
-        );
+      return new Promise((resolve, reject) => {
+        uploader
+          .upload(
+            url,
+            headers,
+            validFilesData,
+            createFormData,
+            (overallProgress) => {
+              this.overallProgress = overallProgress;
+            },
+            this.prepareConfigureFn(configureXhr),
+          )
+          .then(
+            (res: any) => {
+              for (let i = 0; i < res.length; i++) {
+                res[i].fileData = validFilesRawData[i];
+              }
+              this.$emit('upload', res);
+              resolve(res);
+            },
+            (err: any) => {
+              for (let i = 0; i < err.length; i++) {
+                err[i].fileData = validFilesRawData[i];
+              }
+              this.$emit('upload:error', err);
+              reject(err);
+            },
+          );
+      });
     },
     deleteUpload(
       url: string,
@@ -225,16 +231,22 @@ export default Vue.extend({
       if (this.resumable) {
         return uploader.tusDeleteUpload(plugins.tus, url, headers, fileData);
       }
-      return uploader.deleteUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(
-        (res: any) => {
-          res.fileData = fileDataRaw;
-          this.$emit('upload:delete', res);
-          return res;
-        },
-        (err) => {
-          this.$emit('upload:delete:error', err);
-        },
-      );
+      return new Promise((resolve, reject) => {
+        uploader
+          .deleteUpload(url, headers, fileData as FileData, uploadData, this.prepareConfigureFn(configureXhr))
+          .then(
+            (res: any) => {
+              res.fileData = fileDataRaw;
+              this.$emit('upload:delete', res);
+              resolve(res);
+            },
+            (err: any) => {
+              err.fileData = fileDataRaw;
+              this.$emit('upload:delete:error', err);
+              reject(err);
+            },
+          );
+      });
     },
     updateUpload(
       url: string,
@@ -245,16 +257,22 @@ export default Vue.extend({
     ): Promise<any> {
       fileData = this.getFileDataInstance(fileData);
       const fileDataRaw = this.getFileDataRawInstance(fileData);
-      return uploader.updateUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(
-        (res: any) => {
-          res.filesData = fileDataRaw;
-          this.$emit('upload:update', res);
-          return res;
-        },
-        (err) => {
-          this.$emit('upload:update:error', err);
-        },
-      );
+      return new Promise((resolve, reject) => {
+        uploader
+          .updateUpload(url, headers, fileData as FileData, uploadData, this.prepareConfigureFn(configureXhr))
+          .then(
+            (res: any) => {
+              res.filesData = fileDataRaw;
+              this.$emit('upload:update', res);
+              resolve(res);
+            },
+            (err) => {
+              err.filesData = fileDataRaw;
+              this.$emit('upload:update:error', err);
+              reject(err);
+            },
+          );
+      });
     },
     autoUpload(filesData: FileData[] | RawFileData[]): Promise<any> {
       if (!this.uploadUrl || this.auto === false) {
@@ -418,11 +436,12 @@ export default Vue.extend({
       } else {
         i = this.filesDataRaw.indexOf(fileDataOrRaw);
       }
-      const fileData: FileData = this.filesData.splice(i, 1)[0];
-      const fileDataRaw = this.filesDataRaw.splice(i, 1)[0];
+      let fileData = this.filesData[i];
+      let fileDataRaw = this.filesDataRaw[i];
       this.$emit('input', this.filesDataRaw);
-      // this.$emit('delete', fileData);
       this.$emit('delete', fileDataRaw);
+      fileData = this.filesData.splice(i, 1)[0];
+      fileDataRaw = this.filesDataRaw.splice(i, 1)[0];
       this.autoDeleteUpload(fileData).then(
         (res) => {
           /* no op */
