@@ -44,7 +44,7 @@ class Uploader {
         // $filename = md5(microtime().$uploadedFile['name'].$uploadedFile['tmp_name']); // create a unique name
         $filename = $uploadedFile['name']; // or use the file name from client
         move_uploaded_file($uploadedFile['tmp_name'], $this->uploadDir.DIRECTORY_SEPARATOR.$filename);
-        return ['my_key' => $filename]; // you can send any arbitrary data to client which will be saved in fileData.upload key in client, and will be sent back to server at update/delete request
+        return ['my_key' => $filename]; // you can send any arbitrary data to client which will be saved in fileRecord.upload key in client, and will be sent back to server at update/delete request
     }
 
     public function handleRequest(){

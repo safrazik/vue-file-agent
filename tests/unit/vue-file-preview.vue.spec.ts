@@ -3,7 +3,7 @@ import FileRecord, { RawFileRecord, Options } from '@/lib/file-record';
 import helper from './helper';
 
 describe('vue-file-preview.vue', () => {
-  const rawFileData = {
+  const rawFileRecord = {
     name: 'sample.pdf',
     lastModified: 1565232623243,
     // "sizeText":"3 KB",
@@ -12,12 +12,12 @@ describe('vue-file-preview.vue', () => {
     ext: 'pdf',
   };
 
-  it('renders FileData when passed', () => {
-    const fileData = new FileRecord(rawFileData as RawFileRecord, {} as Options);
+  it('renders FileRecord when passed', () => {
+    const fileRecord = new FileRecord(rawFileRecord as RawFileRecord, {} as Options);
     const wrapper = helper.getWrapper(
       VueFilePreview,
       {
-        value: fileData,
+        value: fileRecord,
       },
       {},
     );
@@ -26,12 +26,12 @@ describe('vue-file-preview.vue', () => {
     expect(helper.getText(wrapper, '.file-size')).toBe('3 KB');
   });
 
-  it('renders raw FileData when passed', () => {
-    const fileData = rawFileData;
+  it('renders raw FileRecord when passed', () => {
+    const fileRecord = rawFileRecord;
     const wrapper = helper.getWrapper(
       VueFilePreview,
       {
-        value: fileData,
+        value: fileRecord,
       },
       {},
     );
