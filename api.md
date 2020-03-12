@@ -175,14 +175,16 @@ Configure the [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/AP
 e.g
 
 ```vue
-<VueFileAgent
-  :uploadConfig="
-    (xhr) => {
-      xhr.timeout = 25000;
-    }
-  "
->
-</VueFileAgent>
+<template>
+  <VueFileAgent
+    :uploadConfig="
+      (xhr) => {
+        xhr.timeout = 25000;
+      }
+    "
+  >
+  </VueFileAgent>
+</template>
 ```
 
 ### uploadHeaders
@@ -291,6 +293,55 @@ Fired whenever files are selected. Passes all selected files data (including pre
 `$event`: array of serialized FileData
 
 Fired whenever files are selected. Passes the (newly selected) files data.
+
+### upload, upload:error
+
+`$event`: array of upload ajax response/error for each file
+
+Fired after files are uploaded. If any file fails to be uploaded, representing `response.error` becomes truthy. If all files fail to be uploaded, `upload:error` is trigged instead.
+
+```vue
+<template>
+  <VueFileAgent
+    @upload="onUpload($event)"
+    @upload:error="onUploadError($event)"
+  </VueFileAgent>
+</template>
+<script>
+  export default {
+    // ...
+    methods: {
+      // ...
+      onUpload(responses) {
+        for (response of responses) {
+          if (response.error) {
+            // handle error
+            continue;
+          }
+          // handle success
+        }
+      },
+      onUploadError(failedResponses) {
+        // handle error
+      }
+      // ...
+    }
+    // ...
+  }
+</script>
+```
+
+### upload:update, upload:update:error
+
+`$event`: upload update response
+
+Fired after file is updated (renamed). If the file fails to be uploaded, `upload:update:error` is triggered instead.
+
+### upload:delete, upload:delete:error
+
+`$event`: upload delete response
+
+Fired after file is deleted. If the file fails to be deleted, `upload:delete:error` is triggered instead.
 
 ## Methods
 
@@ -453,7 +504,7 @@ If you still can't make it with the built in customizations, (1) you can create 
 
 {% raw %}
 
-```html
+```vue
 <!-- my-vue-file-agent.vue (component) -->
 <template>
   <div class="my-vue-file-agent">
@@ -466,16 +517,16 @@ If you still can't make it with the built in customizations, (1) you can create 
   </div>
 </template>
 <script>
-  import { mixin } from 'vue-file-agent';
+import { mixin } from 'vue-file-agent';
 
-  export default {
-    mixins: [mixin],
-    methods: {
-      myCustomMethod() {
-        // bla bla
-      },
+export default {
+  mixins: [mixin],
+  methods: {
+    myCustomMethod() {
+      // bla bla
     },
-  };
+  },
+};
 </script>
 ```
 
