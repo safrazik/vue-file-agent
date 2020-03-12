@@ -25,9 +25,9 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
     }, {
         createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): Promise<void>;
         initVideo(fileRecord: FileRecord): void;
-        getFileDataOrRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord, raw: boolean): FileRecord | import("./lib/file-record").RawFileRecord;
-        getFileDataRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): import("./lib/file-record").RawFileRecord;
-        getFileDataInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): FileRecord;
+        getFileRecordOrRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord, raw: boolean): FileRecord | import("./lib/file-record").RawFileRecord;
+        getFileRecordRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): import("./lib/file-record").RawFileRecord;
+        getFileRecordInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): FileRecord;
         prepareConfigureFn(configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): import("./lib/ajax-request").ConfigureFn | undefined;
         upload(url: string, headers: object, fileRecordsOrRaw: FileRecord[] | import("./lib/file-record").RawFileRecord[], createFormData?: ((fileRecord: FileRecord) => FormData) | undefined, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
         deleteUpload(url: string, headers: object, fileRecord: FileRecord | import("./lib/file-record").RawFileRecord, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
@@ -43,7 +43,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         dragEnter(event: DragEvent): void;
         dragOver(event: DragEvent): void;
         dragLeave(event: DragEvent): void;
-        removeFileData(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
+        removeFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
         filenameChanged(fileRecord: FileRecord): void;
         checkValue(): void;
         sortStart(): void;
@@ -77,9 +77,9 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
     }, {
         createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): Promise<void>;
         initVideo(fileRecord: FileRecord): void;
-        getFileDataOrRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord, raw: boolean): FileRecord | import("./lib/file-record").RawFileRecord;
-        getFileDataRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): import("./lib/file-record").RawFileRecord;
-        getFileDataInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): FileRecord;
+        getFileRecordOrRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord, raw: boolean): FileRecord | import("./lib/file-record").RawFileRecord;
+        getFileRecordRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): import("./lib/file-record").RawFileRecord;
+        getFileRecordInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): FileRecord;
         prepareConfigureFn(configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): import("./lib/ajax-request").ConfigureFn | undefined;
         upload(url: string, headers: object, fileRecordsOrRaw: FileRecord[] | import("./lib/file-record").RawFileRecord[], createFormData?: ((fileRecord: FileRecord) => FormData) | undefined, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
         deleteUpload(url: string, headers: object, fileRecord: FileRecord | import("./lib/file-record").RawFileRecord, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
@@ -95,7 +95,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         dragEnter(event: DragEvent): void;
         dragOver(event: DragEvent): void;
         dragLeave(event: DragEvent): void;
-        removeFileData(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
+        removeFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
         filenameChanged(fileRecord: FileRecord): void;
         checkValue(): void;
         sortStart(): void;
@@ -118,10 +118,10 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         isEditCancelable: boolean;
         fileRecord: FileRecord;
     }, {
-        updateFileData(): void;
+        updateFileRecord(): void;
         createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): void;
         playAv(fileRecord: FileRecord): void;
-        removeFileData(fileRecord: FileRecord): void;
+        removeFileRecord(fileRecord: FileRecord): void;
         editFileName(): void;
         editInputFocused(): void;
         editInputBlured(): void;
@@ -148,9 +148,9 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
 }, {
     createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): Promise<void>;
     initVideo(fileRecord: FileRecord): void;
-    getFileDataOrRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord, raw: boolean): FileRecord | import("./lib/file-record").RawFileRecord;
-    getFileDataRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): import("./lib/file-record").RawFileRecord;
-    getFileDataInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): FileRecord;
+    getFileRecordOrRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord, raw: boolean): FileRecord | import("./lib/file-record").RawFileRecord;
+    getFileRecordRawInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): import("./lib/file-record").RawFileRecord;
+    getFileRecordInstance(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): FileRecord;
     prepareConfigureFn(configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): import("./lib/ajax-request").ConfigureFn | undefined;
     upload(url: string, headers: object, fileRecordsOrRaw: FileRecord[] | import("./lib/file-record").RawFileRecord[], createFormData?: ((fileRecord: FileRecord) => FormData) | undefined, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
     deleteUpload(url: string, headers: object, fileRecord: FileRecord | import("./lib/file-record").RawFileRecord, uploadData?: any, configureXhr?: import("./lib/ajax-request").ConfigureFn | undefined): Promise<any>;
@@ -166,7 +166,7 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
     dragEnter(event: DragEvent): void;
     dragOver(event: DragEvent): void;
     dragLeave(event: DragEvent): void;
-    removeFileData(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
+    removeFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
     filenameChanged(fileRecord: FileRecord): void;
     checkValue(): void;
     sortStart(): void;

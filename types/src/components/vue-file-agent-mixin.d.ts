@@ -15,9 +15,9 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
 }, {
     createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): Promise<void>;
     initVideo(fileRecord: FileRecord): void;
-    getFileDataOrRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord, raw: boolean): FileRecord | RawFileRecord;
-    getFileDataRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord): RawFileRecord;
-    getFileDataInstance(fileRecordOrRaw: FileRecord | RawFileRecord): FileRecord;
+    getFileRecordOrRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord, raw: boolean): FileRecord | RawFileRecord;
+    getFileRecordRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord): RawFileRecord;
+    getFileRecordInstance(fileRecordOrRaw: FileRecord | RawFileRecord): FileRecord;
     prepareConfigureFn(configureXhr?: ConfigureFn | undefined): ConfigureFn | undefined;
     upload(url: string, headers: object, fileRecordsOrRaw: FileRecord[] | RawFileRecord[], createFormData?: ((fileRecord: FileRecord) => FormData) | undefined, configureXhr?: ConfigureFn | undefined): Promise<any>;
     deleteUpload(url: string, headers: object, fileRecord: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
@@ -33,7 +33,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     dragEnter(event: DragEvent): void;
     dragOver(event: DragEvent): void;
     dragLeave(event: DragEvent): void;
-    removeFileData(fileRecordOrRaw: FileRecord | RawFileRecord): void;
+    removeFileRecord(fileRecordOrRaw: FileRecord | RawFileRecord): void;
     filenameChanged(fileRecord: FileRecord): void;
     checkValue(): void;
     sortStart(): void;

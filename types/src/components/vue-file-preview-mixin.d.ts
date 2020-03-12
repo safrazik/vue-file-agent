@@ -5,10 +5,10 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     isEditCancelable: boolean;
     fileRecord: FileRecord;
 }, {
-    updateFileData(): void;
+    updateFileRecord(): void;
     createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): void;
     playAv(fileRecord: FileRecord): void;
-    removeFileData(fileRecord: FileRecord): void;
+    removeFileRecord(fileRecord: FileRecord): void;
     editFileName(): void;
     editInputFocused(): void;
     editInputBlured(): void;
