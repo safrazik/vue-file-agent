@@ -48,4 +48,6 @@ export { VueFileAgentMixin, VueFilePreviewMixin };
 
 export { utils, FileRecord, plugins };
 
+export const FileData = FileRecord; // for backward compatibility
+
 export default vfaPlugin;

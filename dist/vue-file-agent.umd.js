@@ -3055,6 +3055,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 var mixin = vue_file_agent_mixin;
 
 
+var FileData = file_record; // for backward compatibility
 /* harmony default export */ var src = (vfaPlugin);
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
@@ -3065,6 +3066,7 @@ var mixin = vue_file_agent_mixin;
 /* concated harmony reexport utils */__webpack_require__.d(__webpack_exports__, "utils", function() { return utils; });
 /* concated harmony reexport FileRecord */__webpack_require__.d(__webpack_exports__, "FileRecord", function() { return file_record; });
 /* concated harmony reexport plugins */__webpack_require__.d(__webpack_exports__, "plugins", function() { return plugins; });
+/* concated harmony reexport FileData */__webpack_require__.d(__webpack_exports__, "FileData", function() { return FileData; });
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (src);

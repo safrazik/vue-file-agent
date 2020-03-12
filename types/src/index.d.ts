@@ -186,4 +186,5 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
 }, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
 export { VueFileAgentMixin, VueFilePreviewMixin };
 export { utils, FileRecord, plugins };
+export declare const FileData: typeof FileRecord;
 export default vfaPlugin;
