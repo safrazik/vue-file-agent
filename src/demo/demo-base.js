@@ -27,7 +27,7 @@ window.getFilesDataInitial = function() {
       ext: 'pdf',
     },
     {
-      name: 'Superb Fairy-wren.jpg',
+      name: 'House Sparrow.jpg',
       lastModified: 1576522061394,
       sizeText: '37 KB',
       size: 38093,
