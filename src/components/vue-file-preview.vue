@@ -1,23 +1,23 @@
 <template>
   <div
     :class="[
-      'file-preview-wrapper-' + fileData.ext(),
-      fileData.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other',
-      'file-category-' + fileData.icon().category,
-      { 'file-is-playing-av': fileData.isPlayingAv },
+      'file-preview-wrapper-' + fileRecord.ext(),
+      fileRecord.isImage() ? 'file-preview-wrapper-image' : 'file-preview-wrapper-other',
+      'file-category-' + fileRecord.icon().category,
+      { 'file-is-playing-av': fileRecord.isPlayingAv },
       { 'is-deletable': deletable === true },
       { 'is-editable': editable === true },
       { 'is-edit-input-focused': isEditInputFocused },
-      { 'has-error': fileData.error },
+      { 'has-error': fileRecord.error },
     ]"
   >
-    <div class="file-error-wrapper" v-if="fileData.error" @click="dismissError()">
+    <div class="file-error-wrapper" v-if="fileRecord.error" @click="dismissError()">
       <div class="file-error-message file-error-message-client">
-        {{ fileData.getErrorMessage(errorText) }}
+        {{ fileRecord.getErrorMessage(errorText) }}
       </div>
     </div>
-    <div ref="wrapper" class="file-av-wrapper" v-if="fileData.isPlayableAudio() || fileData.isPlayableVideo()">
-      <div class="file-av-action" @click="playAv(fileData)">
+    <div ref="wrapper" class="file-av-wrapper" v-if="fileRecord.isPlayableAudio() || fileRecord.isPlayableVideo()">
+      <div class="file-av-action" @click="playAv(fileRecord)">
         <span class="file-av-stop">
           <VueFileIcon name="system-close"></VueFileIcon>
         </span>
@@ -29,31 +29,31 @@
     <span
       class="file-preview"
       :class="{
-        'image-preview': fileData.isImage(),
-        'other-preview': !fileData.isImage(),
-        'dark-content': fileData.isImage() && fileData.isDarkColor(),
+        'image-preview': fileRecord.isImage(),
+        'other-preview': !fileRecord.isImage(),
+        'dark-content': fileRecord.isImage() && fileRecord.isDarkColor(),
       }"
       :style="{
-        'background-color': fileData.color(),
+        'background-color': fileRecord.color(),
       }"
     >
       <span class="file-preview-overlay"></span>
       <span
         class="thumbnail"
         style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
-        v-if="fileData.isImage() || fileData.isPlayableVideo()"
+        v-if="fileRecord.isImage() || fileRecord.isPlayableVideo()"
       >
-        <a v-if="hasLinkableUrl" :href="fileData.url" target="_blank" :title="fileData.name()">
-          <img class="file-preview-img" :src="fileData.src()" />
+        <a v-if="hasLinkableUrl" :href="fileRecord.url" target="_blank" :title="fileRecord.name()">
+          <img class="file-preview-img" :src="fileRecord.src()" />
         </a>
-        <img v-else class="file-preview-img" :src="fileData.src()" />
+        <img v-else class="file-preview-img" :src="fileRecord.src()" />
       </span>
-      <span class="file-ext">{{ fileData.ext() }}</span>
-      <span class="file-size">{{ fileData.size() }}</span>
+      <span class="file-ext">{{ fileRecord.ext() }}</span>
+      <span class="file-size">{{ fileRecord.size() }}</span>
       <span
         v-if="deletable"
         class="file-delete"
-        @click="removeFileData(fileData)"
+        @click="removeFileRecord(fileRecord)"
         @touchstart="filenameClearPressed()"
         @mousedown="filenameClearPressed()"
       >
@@ -66,7 +66,7 @@
           v-if="editable === true"
           :disabled="disabled === true"
           type="text"
-          :value="fileData.name(true)"
+          :value="fileRecord.name(true)"
           @focus="editInputFocused()"
           @blur="editInputBlured()"
           @change="filenameChanged()"
@@ -77,28 +77,28 @@
         <span class="file-name-edit-icon" v-if="editable === true">
           <VueFileIcon name="system-file-name-edit"></VueFileIcon>
         </span>
-        <span class="file-name-text">{{ fileData.name(true) }}</span>
+        <span class="file-name-text">{{ fileRecord.name(true) }}</span>
       </span>
-      <span v-if="fileData.dimensions.width && fileData.dimensions.height" class="image-dimension">
-        <span class="image-dimension-width">{{ fileData.dimensions.width }}</span
-        ><span class="image-dimension-height">{{ fileData.dimensions.height }}</span>
+      <span v-if="fileRecord.dimensions.width && fileRecord.dimensions.height" class="image-dimension">
+        <span class="image-dimension-width">{{ fileRecord.dimensions.width }}</span
+        ><span class="image-dimension-height">{{ fileRecord.dimensions.height }}</span>
       </span>
       <span
         class="file-progress"
-        v-if="fileData.hasProgress()"
+        v-if="fileRecord.hasProgress()"
         :class="{
-          'file-progress-full': fileData.progress() >= 99.9999,
-          'file-progress-done': fileData.progress() >= 100,
-          'has-file-progress': fileData.progress() > 0,
+          'file-progress-full': fileRecord.progress() >= 99.9999,
+          'file-progress-done': fileRecord.progress() >= 100,
+          'has-file-progress': fileRecord.progress() > 0,
         }"
       >
-        <span class="file-progress-bar" :style="{ width: fileData.progress() + '%' }"></span>
+        <span class="file-progress-bar" :style="{ width: fileRecord.progress() + '%' }"></span>
       </span>
       <span class="file-icon">
-        <a v-if="hasLinkableUrl" :href="fileData.url" target="_blank" :title="fileData.name()">
-          <VueFileIcon :ext="fileData.ext()"></VueFileIcon>
+        <a v-if="hasLinkableUrl" :href="fileRecord.url" target="_blank" :title="fileRecord.name()">
+          <VueFileIcon :ext="fileRecord.ext()"></VueFileIcon>
         </a>
-        <VueFileIcon v-else :ext="fileData.ext()"></VueFileIcon>
+        <VueFileIcon v-else :ext="fileRecord.ext()"></VueFileIcon>
       </span>
     </span>
   </div>

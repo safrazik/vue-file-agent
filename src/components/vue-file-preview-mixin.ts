@@ -1,6 +1,6 @@
 import utils from '../lib/utils';
 import VueFileIcon from './vue-file-icon.vue';
-import FileData, { RawFileData, Options } from '../lib/file-data';
+import FileRecord, { RawFileRecord, Options } from '../lib/file-record';
 import Vue from 'vue';
 
 export default Vue.extend({
@@ -12,7 +12,7 @@ export default Vue.extend({
     return {
       isEditInputFocused: false,
       isEditCancelable: true,
-      fileData: {} as FileData,
+      fileRecord: {} as FileRecord,
     };
   },
   computed: {
@@ -20,77 +20,77 @@ export default Vue.extend({
       if (!this.linkable) {
         return false;
       }
-      return !!this.fileData.url && !this.fileData.isPlayableVideo() && !this.fileData.isPlayableAudio();
+      return !!this.fileRecord.url && !this.fileRecord.isPlayableVideo() && !this.fileRecord.isPlayableAudio();
     },
   },
   methods: {
-    updateFileData() {
-      if (this.value instanceof FileData) {
-        this.fileData = this.value;
+    updateFileRecord() {
+      if (this.value instanceof FileRecord) {
+        this.fileRecord = this.value;
         return;
       }
-      FileData.fromRaw(this.value, {
+      FileRecord.fromRaw(this.value, {
         thumbnailSize: this.thumbnailSize,
-      } as Options).then((fileData) => {
-        this.fileData = fileData;
+      } as Options).then((fileRecord) => {
+        this.fileRecord = fileRecord;
       });
-      this.fileData = FileData.fromRawSync(this.value, {
+      this.fileRecord = FileRecord.fromRawSync(this.value, {
         thumbnailSize: this.thumbnailSize,
       } as Options);
     },
-    createThumbnail(fileData: FileData, video: HTMLVideoElement) {
-      if (fileData.videoThumbnail) {
-        video.poster = fileData.src();
+    createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement) {
+      if (fileRecord.videoThumbnail) {
+        video.poster = fileRecord.src();
         return;
       }
       const canvas = document.createElement('canvas');
-      utils.createVideoThumbnail(video, canvas, this.fileData.thumbnailSize).then((thumbnail) => {
-        fileData.imageColor = thumbnail.color;
-        fileData.videoThumbnail = thumbnail.url;
-        fileData.dimensions.width = thumbnail.width;
-        fileData.dimensions.height = thumbnail.height;
-        video.poster = fileData.src();
+      utils.createVideoThumbnail(video, canvas, this.fileRecord.thumbnailSize).then((thumbnail) => {
+        fileRecord.imageColor = thumbnail.color;
+        fileRecord.videoThumbnail = thumbnail.url;
+        fileRecord.dimensions.width = thumbnail.width;
+        fileRecord.dimensions.height = thumbnail.height;
+        video.poster = fileRecord.src();
       });
     },
 
-    playAv(fileData: FileData) {
-      if (fileData.stopAv) {
-        fileData.stopAv();
+    playAv(fileRecord: FileRecord) {
+      if (fileRecord.stopAv) {
+        fileRecord.stopAv();
         return;
       }
       const createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL;
       const revokeObjectURL = (window.URL || window.webkitURL || {}).revokeObjectURL;
 
       const wrapper = this.$refs.wrapper as HTMLElement;
-      const player = document.createElement(fileData.isAudio() ? 'audio' : 'video');
-      if (player instanceof HTMLVideoElement && fileData.isPlayableVideo()) {
-        this.createThumbnail(fileData, player);
+      const player = document.createElement(fileRecord.isAudio() ? 'audio' : 'video');
+      if (player instanceof HTMLVideoElement && fileRecord.isPlayableVideo()) {
+        this.createThumbnail(fileRecord, player);
       }
       player.controls = true;
       // player.style.width = this.prvWidth + 'px';
       wrapper.appendChild(player);
-      const url = fileData.url || createObjectURL(fileData.file);
+      const url = fileRecord.url || createObjectURL(fileRecord.file);
       player.src = url;
       player.play();
-      fileData.isPlayingAv = true;
-      fileData.stopAv = () => {
+      fileRecord.isPlayingAv = true;
+      fileRecord.stopAv = () => {
         // player.src = null;
         player.src = '';
         wrapper.removeChild(player);
         revokeObjectURL(url);
-        fileData.isPlayingAv = false;
-        fileData.stopAv = null;
+        fileRecord.isPlayingAv = false;
+        fileRecord.stopAv = null;
       };
     },
 
-    removeFileData(fileData: FileData) {
+    removeFileRecord(fileRecord: FileRecord) {
       if (this.clearFilename()) {
         return;
       }
       if (this.disabled === true) {
         return;
       }
-      this.$emit('remove', fileData);
+      this.$emit('remove', fileRecord);
     },
 
     editFileName() {
@@ -109,14 +109,14 @@ export default Vue.extend({
     },
 
     editInputBlured() {
-      this.fileData.oldFileName = this.fileData.name();
-      const oldValue = this.fileData.name(true);
+      this.fileRecord.oldFileName = this.fileRecord.name();
+      const oldValue = this.fileRecord.name(true);
       const value = (this.$refs.input as HTMLInputElement).value;
-      this.fileData.customName = value;
-      const newValue = this.fileData.name(true);
+      this.fileRecord.customName = value;
+      const newValue = this.fileRecord.name(true);
       if (newValue !== oldValue) {
-        this.fileData.oldCustomName = oldValue;
-        this.$emit('rename', this.fileData);
+        this.fileRecord.oldCustomName = oldValue;
+        this.$emit('rename', this.fileRecord);
       }
       const timeout = 100;
       setTimeout(() => {
@@ -156,15 +156,15 @@ export default Vue.extend({
     },
 
     dismissError() {
-      this.fileData.error = false;
+      this.fileRecord.error = false;
     },
   },
   created() {
-    this.updateFileData();
+    this.updateFileRecord();
   },
   watch: {
     value() {
-      this.updateFileData();
+      this.updateFileRecord();
     },
   },
 });

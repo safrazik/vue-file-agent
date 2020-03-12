@@ -7,7 +7,7 @@ import VueFileAgentMixin from './components/vue-file-agent-mixin';
 import VueFilePreviewMixin from './components/vue-file-preview-mixin';
 import utils from './lib/utils';
 import plugins from './lib/plugins';
-import FileData from './lib/file-data';
+import FileRecord from './lib/file-record';
 
 import _Vue from 'vue';
 
@@ -46,6 +46,6 @@ export const mixin = VueFileAgentMixin;
 
 export { VueFileAgentMixin, VueFilePreviewMixin };
 
-export { utils, FileData, plugins };
+export { utils, FileRecord, plugins };
 
 export default vfaPlugin;

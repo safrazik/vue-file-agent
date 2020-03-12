@@ -162,7 +162,7 @@
           @upload:delete:error="uploadEvent('upload:delete:error', $event)"
           @upload:update="uploadEvent('upload:update', $event)"
           @upload:update:error="uploadEvent('upload:update:error', $event)"
-          v-model="filesData"
+          v-model="fileRecords"
         ></VueFileAgent>
       </div>
     </div>
@@ -172,24 +172,24 @@
         <div class="form-inlinex">
           <div class="row">
             <div class="col-md-12">
-              <div v-if="!filesData.length">
+              <div v-if="!fileRecords.length">
                 No files selected
               </div>
-              <div class="form-inline" v-if="filesData.length">
+              <div class="form-inline" v-if="fileRecords.length">
                 <label class="my-1 mr-2" for="file-select-index">With File:</label>
                 <!--       <select ref="fileIdx" class="custom-select my-1 mr-sm-2" id="file-select-index" v-model="selectedIdx">
-              <option v-for="i in filesData.length" :value="i">{{ i }}</option>
+              <option v-for="i in fileRecords.length" :value="i">{{ i }}</option>
             </select> -->
                 <!-- </div><div> -->
                 <button
                   type="button"
                   class="btn mr-1 mb-1"
                   :key="i"
-                  v-for="(fileData, i) in filesData"
+                  v-for="(fileRecord, i) in fileRecords"
                   :class="{ 'btn-secondary': selectedIdx == i + 1, 'btn-light': selectedIdx != i + 1 }"
                   @click="selectedIdx = i + 1"
                 >
-                  <!-- <span class="badge badge-secondary" :style="{'background-color': fileData.color}"> -->
+                  <!-- <span class="badge badge-secondary" :style="{'background-color': fileRecord.color}"> -->
                   {{ i + 1 }}
                   <!-- </span> -->
                 </button>
@@ -227,23 +227,23 @@
           <div class="mb-2">
             <button
               class="btn btn-outline-secondary mb-2"
-              :disabled="!filesDataForUpload.length"
+              :disabled="!fileRecordsForUpload.length"
               @click="uploadFiles()"
             >
-              Upload Queue ({{ filesDataForUpload.length }})
+              Upload Queue ({{ fileRecordsForUpload.length }})
             </button>
 
-            <button class="btn btn-danger mb-2" :disabled="!filesDataInvalid.length" @click="removeInvalid()">
-              Remove Invalid ({{ filesDataInvalid.length }})
+            <button class="btn btn-danger mb-2" :disabled="!fileRecordsInvalid.length" @click="removeInvalid()">
+              Remove Invalid ({{ fileRecordsInvalid.length }})
             </button>
 
             <button
               type="button"
               class="btn btn-outline-danger mb-2"
               @click="removeAll()"
-              :disabled="!filesData.length"
+              :disabled="!fileRecords.length"
             >
-              Remove All ({{ filesData.length }})
+              Remove All ({{ fileRecords.length }})
             </button>
           </div>
           <div>
@@ -273,8 +273,8 @@
 export default {
   data: function() {
     return {
-      filesData: this.getFilesDataInitial(),
-      filesDataForUpload: [],
+      fileRecords: this.getFileRecordsInitial(),
+      fileRecordsForUpload: [],
       auto: false,
       uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
       uploadHeaders: {},
@@ -300,14 +300,14 @@ export default {
     };
   },
   computed: {
-    filesDataInvalid: function() {
-      var filesDataInvalid = [];
-      for (var i = 0; i < this.filesData.length; i++) {
-        if (this.filesData[i].error) {
-          filesDataInvalid.push(this.filesData[i]);
+    fileRecordsInvalid: function() {
+      var fileRecordsInvalid = [];
+      for (var i = 0; i < this.fileRecords.length; i++) {
+        if (this.fileRecords[i].error) {
+          fileRecordsInvalid.push(this.fileRecords[i]);
         }
       }
-      return filesDataInvalid;
+      return fileRecordsInvalid;
     },
     uploadEndpoint: function() {
       if (this.resumable && this.uploadUrl.indexOf('mocky.io') !== -1) {
@@ -320,85 +320,85 @@ export default {
     uploadEvent(eventName, data) {
       console.log('UPLOAD EVENT ', eventName, data);
     },
-    getFilesDataInitial: function() {
-      return window.getFilesDataInitial();
+    getFileRecordsInitial: function() {
+      return window.getFileRecordsInitial();
     },
-    getSelectedFileData: function() {
+    getSelectedFileRecord: function() {
       var i = this.selectedIdx;
       i = i - 1;
-      if (!this.filesData[i]) {
+      if (!this.fileRecords[i]) {
         return;
       }
-      return this.filesData[i];
+      return this.fileRecords[i];
     },
     removeAll: function() {
-      console.log(this.filesData);
-      this.filesData = [];
-      this.filesDataForUpload = [];
+      console.log(this.fileRecords);
+      this.fileRecords = [];
+      this.fileRecordsForUpload = [];
     },
     setProgress: function() {
-      var fileData = this.getSelectedFileData();
-      if (!fileData) {
+      var fileRecord = this.getSelectedFileRecord();
+      if (!fileRecord) {
         return;
       }
       var prg = this.$refs.prgInput.value;
-      fileData.progress(prg);
+      fileRecord.progress(prg);
     },
     removeInvalid: function() {
-      var filesDataNew = this.filesData.concat([]);
-      for (var i = 0; i < this.filesDataInvalid.length; i++) {
-        var idx = filesDataNew.indexOf(this.filesDataInvalid[i]);
+      var fileRecordsNew = this.fileRecords.concat([]);
+      for (var i = 0; i < this.fileRecordsInvalid.length; i++) {
+        var idx = fileRecordsNew.indexOf(this.fileRecordsInvalid[i]);
         if (idx !== -1) {
-          filesDataNew.splice(idx, 1);
+          fileRecordsNew.splice(idx, 1);
         }
       }
-      filesDataNew = [];
-      for (i = 0; i < this.filesData.length; i++) {
-        if (!this.filesData[i].error) {
-          filesDataNew.push(this.filesData[i]);
+      fileRecordsNew = [];
+      for (i = 0; i < this.fileRecords.length; i++) {
+        if (!this.fileRecords[i].error) {
+          fileRecordsNew.push(this.fileRecords[i]);
         }
       }
-      this.filesData = filesDataNew; // mutate at once, do not splice each
+      this.fileRecords = fileRecordsNew; // mutate at once, do not splice each
     },
     remove: function() {
       console.log('removing...');
       var i = this.selectedIdx;
       i = i - 1;
-      if (!this.filesData[i]) {
+      if (!this.fileRecords[i]) {
         return;
       }
-      this.filesData.splice(i, 1);
+      this.fileRecords.splice(i, 1);
     },
     update: function() {
-      var fileData = this.getSelectedFileData();
-      if (!fileData) {
+      var fileRecord = this.getSelectedFileRecord();
+      if (!fileRecord) {
         return;
       }
-      if (!(fileData.file && fileData.file instanceof File)) {
+      if (!(fileRecord.file && fileRecord.file instanceof File)) {
         alert('This is not a user selected file');
         return;
       }
-      this.$refs.vueFileAgent.updateUpload(this.uploadUrl, this.uploadHeaders, fileData);
+      this.$refs.vueFileAgent.updateUpload(this.uploadUrl, this.uploadHeaders, fileRecord);
     },
     upload: function() {
       console.log('let au debug');
-      var fileData = this.getSelectedFileData();
-      if (!fileData) {
+      var fileRecord = this.getSelectedFileRecord();
+      if (!fileRecord) {
         return;
       }
-      if (!(fileData.file && fileData.file instanceof File)) {
+      if (!(fileRecord.file && fileRecord.file instanceof File)) {
         alert('This is not a user selected file');
         return;
       }
-      var i = this.filesDataForUpload.indexOf(fileData);
+      var i = this.fileRecordsForUpload.indexOf(fileRecord);
       if (i !== -1) {
-        this.filesDataForUpload.splice(i, 1);
+        this.fileRecordsForUpload.splice(i, 1);
       }
-      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, [fileData]).then(
+      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, [fileRecord]).then(
         function(result) {
           console.log('uploded: ', result);
-          console.log('after upload: ', fileData);
-          console.log('after upload all: ', this.filesData);
+          console.log('after upload: ', fileRecord);
+          console.log('after upload all: ', this.fileRecords);
         }.bind(this),
       );
     },
@@ -407,62 +407,62 @@ export default {
       var index = parseInt(this.selectedIdx) - 1;
       var newIndex = index + dir;
       if (newIndex < 0) {
-        newIndex = this.filesData.length - 1;
+        newIndex = this.fileRecords.length - 1;
       }
-      if (newIndex >= this.filesData.length) {
+      if (newIndex >= this.fileRecords.length) {
         newIndex = 0;
       }
-      var existing = this.filesData[index];
-      var adjacent = this.filesData[newIndex];
+      var existing = this.fileRecords[index];
+      var adjacent = this.fileRecords[newIndex];
       this.selectedIdx = newIndex + 1;
       if (!existing || !adjacent) {
         return;
       }
-      var filesData = this.filesData;
-      filesData[newIndex] = existing;
-      filesData[index] = adjacent;
-      this.filesData = filesData.concat([]); // cause Vue array mutation
+      var fileRecords = this.fileRecords;
+      fileRecords[newIndex] = existing;
+      fileRecords[index] = adjacent;
+      this.fileRecords = fileRecords.concat([]); // cause Vue array mutation
     },
     sortBy: function(prop) {
       // var asc = this['_is_sorted_desc_' + prop] = !this['_is_sorted_desc_' + prop];
       var direction = this.sortDirection[prop];
       this.sortDirection[prop] = direction == 'DESC' ? 'ASC' : 'DESC';
-      // console.log('sortBy', prop, this.filesData);
+      // console.log('sortBy', prop, this.fileRecords);
       var ret = direction == 'DESC' ? -1 : 1;
-      this.filesData = this.filesData.sort(function(fd1, fd2) {
+      this.fileRecords = this.fileRecords.sort(function(fd1, fd2) {
         var f1 = fd1.file || fd1;
         var f2 = fd2.file || fd2;
         return f1[prop] > f2[prop] ? 1 * ret : -1 * ret;
       });
-      // console.log('sortBy after', prop, this.filesData);
+      // console.log('sortBy after', prop, this.fileRecords);
     },
 
     uploadFiles: function() {
       // Using the default uploader. You may use another uploader instead.
-      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, this.filesDataForUpload);
-      this.filesDataForUpload = [];
+      this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, this.fileRecordsForUpload);
+      this.fileRecordsForUpload = [];
     },
-    deleteUploadedFile: function(fileData) {
+    deleteUploadedFile: function(fileRecord) {
       // Using the default uploader. You may use another uploader instead.
-      this.$refs.vueFileAgent.deleteUpload(this.uploadEndpoint, this.uploadHeaders, fileData);
+      this.$refs.vueFileAgent.deleteUpload(this.uploadEndpoint, this.uploadHeaders, fileRecord);
     },
-    filesSelected: function(filesData) {
-      console.log('filesSelected', filesData);
-      var validFilesData = [];
-      for (var i = 0; i < filesData.length; i++) {
-        if (!filesData[i].error) {
-          validFilesData.push(filesData[i]);
+    filesSelected: function(fileRecords) {
+      console.log('filesSelected', fileRecords);
+      var validFileRecords = [];
+      for (var i = 0; i < fileRecords.length; i++) {
+        if (!fileRecords[i].error) {
+          validFileRecords.push(fileRecords[i]);
         }
       }
-      console.log('filesSelected', filesData, validFilesData);
-      this.filesDataForUpload = this.filesDataForUpload.concat(validFilesData);
+      console.log('filesSelected', fileRecords, validFileRecords);
+      this.fileRecordsForUpload = this.fileRecordsForUpload.concat(validFileRecords);
     },
-    fileDeleted: function(fileData) {
-      var i = this.filesDataForUpload.indexOf(fileData);
+    fileDeleted: function(fileRecord) {
+      var i = this.fileRecordsForUpload.indexOf(fileRecord);
       if (i !== -1) {
-        this.filesDataForUpload.splice(i, 1);
+        this.fileRecordsForUpload.splice(i, 1);
       } else {
-        this.deleteUploadedFile(fileData);
+        this.deleteUploadedFile(fileRecord);
       }
     },
     onSort(event) {
@@ -470,14 +470,14 @@ export default {
         'sorted',
         event.oldIndex,
         event.newIndex,
-        this.filesData.map(function(fd) {
+        this.fileRecords.map(function(fd) {
           return typeof fd.name == 'function' ? fd.name() : fd.name;
         }),
       );
     },
   },
   watch: {
-    filesData() {},
+    fileRecords() {},
   },
 };
 </script>

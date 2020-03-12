@@ -3,8 +3,8 @@ import VueFileIcon from './vue-file-icon.vue';
 import VueFilePreview from './vue-file-preview.vue';
 import VueFileList from './vue-file-list.vue';
 import VueFileListItem from './vue-file-list-item.vue';
-import FileData from '../lib/file-data';
-import { RawFileData } from '../lib/file-data';
+import FileRecord from '../lib/file-record';
+import { RawFileRecord } from '../lib/file-record';
 import uploader from '../lib/upload-helper';
 import Vue from 'vue';
 import plugins from '../lib/plugins';
@@ -57,8 +57,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      filesData: [] as FileData[],
-      filesDataRaw: [] as RawFileData[],
+      fileRecords: [] as FileRecord[],
+      rawFileRecords: [] as RawFileRecord[],
       isDragging: false,
       isSorting: false,
       isSortingActive: false,
@@ -71,12 +71,12 @@ export default Vue.extend({
   computed: {
     canAddMore(): boolean {
       if (!this.hasMultiple) {
-        return this.filesData.length === 0;
+        return this.fileRecords.length === 0;
       }
       if (!this.maxFiles) {
         return true;
       }
-      return this.filesData.length < this.maxFiles;
+      return this.fileRecords.length < this.maxFiles;
     },
     helpTextComputed(): string {
       if (this.helpText) {
@@ -110,48 +110,48 @@ export default Vue.extend({
     },
   },
   methods: {
-    createThumbnail(fileData: FileData, video: HTMLVideoElement): Promise<void> {
+    createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): Promise<void> {
       return new Promise((resolve, reject) => {
         const canvas = document.createElement('canvas');
-        utils.createVideoThumbnail(video, canvas, fileData.thumbnailSize).then((thumbnail) => {
-          fileData.imageColor = thumbnail.color;
-          fileData.videoThumbnail = thumbnail.url;
-          fileData.dimensions.width = thumbnail.width;
-          fileData.dimensions.height = thumbnail.height;
+        utils.createVideoThumbnail(video, canvas, fileRecord.thumbnailSize).then((thumbnail) => {
+          fileRecord.imageColor = thumbnail.color;
+          fileRecord.videoThumbnail = thumbnail.url;
+          fileRecord.dimensions.width = thumbnail.width;
+          fileRecord.dimensions.height = thumbnail.height;
           resolve();
         }, reject);
       });
     },
-    initVideo(fileData: FileData): void {
-      if (!fileData.isPlayableVideo()) {
+    initVideo(fileRecord: FileRecord): void {
+      if (!fileRecord.isPlayableVideo()) {
         return;
       }
       const createObjectURL = (window.URL || window.webkitURL || {}).createObjectURL;
       const revokeObjectURL = (window.URL || window.webkitURL || {}).revokeObjectURL;
       const video = document.createElement('video');
-      video.src = createObjectURL(fileData.file);
-      this.createThumbnail(fileData, video).then(() => {
+      video.src = createObjectURL(fileRecord.file);
+      this.createThumbnail(fileRecord, video).then(() => {
         revokeObjectURL(video.src);
       });
       video.load();
     },
-    getFileDataOrRawInstance(fileDataOrRaw: FileData | RawFileData, raw: boolean): FileData | RawFileData {
+    getFileRecordOrRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord, raw: boolean): FileRecord | RawFileRecord {
       let i;
-      if (fileDataOrRaw instanceof FileData) {
-        i = this.filesData.indexOf(fileDataOrRaw);
+      if (fileRecordOrRaw instanceof FileRecord) {
+        i = this.fileRecords.indexOf(fileRecordOrRaw);
       } else {
-        i = this.filesDataRaw.indexOf(fileDataOrRaw);
+        i = this.rawFileRecords.indexOf(fileRecordOrRaw);
       }
       if (i === -1) {
-        return fileDataOrRaw;
+        return fileRecordOrRaw;
       }
-      return raw ? this.filesDataRaw[i] : this.filesData[i];
+      return raw ? this.rawFileRecords[i] : this.fileRecords[i];
     },
-    getFileDataRawInstance(fileDataOrRaw: FileData | RawFileData): RawFileData {
-      return this.getFileDataOrRawInstance(fileDataOrRaw, true) as RawFileData;
+    getFileRecordRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord): RawFileRecord {
+      return this.getFileRecordOrRawInstance(fileRecordOrRaw, true) as RawFileRecord;
     },
-    getFileDataInstance(fileDataOrRaw: FileData | RawFileData): FileData {
-      return this.getFileDataOrRawInstance(fileDataOrRaw, false) as FileData;
+    getFileRecordInstance(fileRecordOrRaw: FileRecord | RawFileRecord): FileRecord {
+      return this.getFileRecordOrRawInstance(fileRecordOrRaw, false) as FileRecord;
     },
     prepareConfigureFn(configureXhr?: ConfigureFn) {
       const uploadWithCredentials = this.uploadWithCredentials;
@@ -168,21 +168,21 @@ export default Vue.extend({
     upload(
       url: string,
       headers: object,
-      filesDataOrRaw: FileData[] | RawFileData[],
-      createFormData?: (fileData: FileData) => FormData,
+      fileRecordsOrRaw: FileRecord[] | RawFileRecord[],
+      createFormData?: (fileRecord: FileRecord) => FormData,
       configureXhr?: ConfigureFn,
     ): Promise<any> {
-      const validFilesData: FileData[] = [];
-      const validFilesRawData: RawFileData[] = [];
-      for (const fileDataOrRaw of filesDataOrRaw) {
-        const fileData = this.getFileDataInstance(fileDataOrRaw);
-        if (!fileData.error) {
-          validFilesData.push(fileData);
-          validFilesRawData.push(this.getFileDataRawInstance(fileData));
+      const validFileRecords: FileRecord[] = [];
+      const validFilesRawData: RawFileRecord[] = [];
+      for (const fileRecordOrRaw of fileRecordsOrRaw) {
+        const fileRecord = this.getFileRecordInstance(fileRecordOrRaw);
+        if (!fileRecord.error) {
+          validFileRecords.push(fileRecord);
+          validFilesRawData.push(this.getFileRecordRawInstance(fileRecord));
         }
       }
       if (this.resumable) {
-        return uploader.tusUpload(plugins.tus, url, headers, validFilesData, (overallProgress) => {
+        return uploader.tusUpload(plugins.tus, url, headers, validFileRecords, (overallProgress) => {
           this.overallProgress = overallProgress;
         });
       }
@@ -191,7 +191,7 @@ export default Vue.extend({
           .upload(
             url,
             headers,
-            validFilesData,
+            validFileRecords,
             createFormData,
             (overallProgress) => {
               this.overallProgress = overallProgress;
@@ -201,14 +201,14 @@ export default Vue.extend({
           .then(
             (res: any) => {
               for (let i = 0; i < res.length; i++) {
-                res[i].fileData = validFilesRawData[i];
+                res[i].fileRecord = validFilesRawData[i];
               }
               this.$emit('upload', res);
               resolve(res);
             },
             (err: any) => {
               for (let i = 0; i < err.length; i++) {
-                err[i].fileData = validFilesRawData[i];
+                err[i].fileRecord = validFilesRawData[i];
               }
               this.$emit('upload:error', err);
               reject(err);
@@ -219,29 +219,29 @@ export default Vue.extend({
     deleteUpload(
       url: string,
       headers: object,
-      fileData: FileData | RawFileData,
+      fileRecord: FileRecord | RawFileRecord,
       uploadData?: any,
       configureXhr?: ConfigureFn,
     ): Promise<any> {
-      if (this.filesData.length < 1) {
+      if (this.fileRecords.length < 1) {
         this.overallProgress = 0;
       }
-      fileData = this.getFileDataInstance(fileData);
-      const fileDataRaw = this.getFileDataRawInstance(fileData);
+      fileRecord = this.getFileRecordInstance(fileRecord);
+      const rawFileRecord = this.getFileRecordRawInstance(fileRecord);
       if (this.resumable) {
-        return uploader.tusDeleteUpload(plugins.tus, url, headers, fileData);
+        return uploader.tusDeleteUpload(plugins.tus, url, headers, fileRecord);
       }
       return new Promise((resolve, reject) => {
         uploader
-          .deleteUpload(url, headers, fileData as FileData, uploadData, this.prepareConfigureFn(configureXhr))
+          .deleteUpload(url, headers, fileRecord as FileRecord, uploadData, this.prepareConfigureFn(configureXhr))
           .then(
             (res: any) => {
-              res.fileData = fileDataRaw;
+              res.fileRecord = rawFileRecord;
               this.$emit('upload:delete', res);
               resolve(res);
             },
             (err: any) => {
-              err.fileData = fileDataRaw;
+              err.fileRecord = rawFileRecord;
               this.$emit('upload:delete:error', err);
               reject(err);
             },
@@ -251,46 +251,46 @@ export default Vue.extend({
     updateUpload(
       url: string,
       headers: object,
-      fileData: FileData | RawFileData,
+      fileRecord: FileRecord | RawFileRecord,
       uploadData?: any,
       configureXhr?: ConfigureFn,
     ): Promise<any> {
-      fileData = this.getFileDataInstance(fileData);
-      const fileDataRaw = this.getFileDataRawInstance(fileData);
+      fileRecord = this.getFileRecordInstance(fileRecord);
+      const rawFileRecord = this.getFileRecordRawInstance(fileRecord);
       return new Promise((resolve, reject) => {
         uploader
-          .updateUpload(url, headers, fileData as FileData, uploadData, this.prepareConfigureFn(configureXhr))
+          .updateUpload(url, headers, fileRecord as FileRecord, uploadData, this.prepareConfigureFn(configureXhr))
           .then(
             (res: any) => {
-              res.filesData = fileDataRaw;
+              res.fileRecords = rawFileRecord;
               this.$emit('upload:update', res);
               resolve(res);
             },
             (err) => {
-              err.filesData = fileDataRaw;
+              err.fileRecords = rawFileRecord;
               this.$emit('upload:update:error', err);
               reject(err);
             },
           );
       });
     },
-    autoUpload(filesData: FileData[] | RawFileData[]): Promise<any> {
+    autoUpload(fileRecords: FileRecord[] | RawFileRecord[]): Promise<any> {
       if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
-      return this.upload(this.uploadUrl, this.uploadHeaders, filesData, this.uploadConfig);
+      return this.upload(this.uploadUrl, this.uploadHeaders, fileRecords, this.uploadConfig);
     },
-    autoDeleteUpload(fileData: FileData | RawFileData): Promise<any> {
+    autoDeleteUpload(fileRecord: FileRecord | RawFileRecord): Promise<any> {
       if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
-      return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
+      return this.deleteUpload(this.uploadUrl, this.uploadHeaders, fileRecord, this.uploadConfig);
     },
-    autoUpdateUpload(fileData: FileData): Promise<any> {
+    autoUpdateUpload(fileRecord: FileRecord): Promise<any> {
       if (!this.uploadUrl || this.auto === false) {
         return Promise.resolve(false);
       }
-      return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileData, this.uploadConfig);
+      return this.updateUpload(this.uploadUrl, this.uploadHeaders, fileRecord, this.uploadConfig);
     },
     equalFiles(file1: File, file2: File): boolean {
       return (
@@ -303,8 +303,8 @@ export default Vue.extend({
       );
     },
     isFileAddedAlready(file: File): boolean {
-      for (const fileData of this.filesData) {
-        if (this.equalFiles(file, fileData.file as File)) {
+      for (const fileRecord of this.fileRecords) {
+        if (this.equalFiles(file, fileRecord.file as File)) {
           return true;
         }
       }
@@ -317,7 +317,7 @@ export default Vue.extend({
       if (this.hasMultiple && !this.canAddMore) {
         return;
       }
-      const filesData: FileData[] = [];
+      const fileRecords: FileRecord[] = [];
       const filesFiltered: File[] = [];
       // tslint:disable-next-line
       for (let i = 0; i < files.length; i++) {
@@ -327,15 +327,15 @@ export default Vue.extend({
         filesFiltered.push(files[i]);
       }
       files = filesFiltered;
-      if (this.maxFiles && files.length > this.maxFiles - this.filesData.length) {
-        files = files.slice(0, this.maxFiles - this.filesData.length);
+      if (this.maxFiles && files.length > this.maxFiles - this.fileRecords.length) {
+        files = files.slice(0, this.maxFiles - this.fileRecords.length);
       }
       for (const file of files) {
-        filesData.push(
-          new FileData(
+        fileRecords.push(
+          new FileRecord(
             {
               file,
-            } as RawFileData,
+            } as RawFileRecord,
             {
               read: this.shouldRead,
               maxSize: this.maxSize,
@@ -346,26 +346,26 @@ export default Vue.extend({
         );
       }
 
-      for (const fileData of filesData) {
-        if (fileData.file.size <= 20 * 1024 * 1024) {
+      for (const fileRecord of fileRecords) {
+        if (fileRecord.file.size <= 20 * 1024 * 1024) {
           // <= 20MB
-          this.initVideo(fileData);
+          this.initVideo(fileRecord);
         }
       }
       if (this.hasMultiple) {
         // splice: for list transitions to work properly
-        this.filesData.splice(this.filesData.length, 0, ...filesData);
+        this.fileRecords.splice(this.fileRecords.length, 0, ...fileRecords);
       } else {
-        this.filesData = filesData;
+        this.fileRecords = fileRecords;
       }
 
-      FileData.readFiles(filesData).then((filesDataNew: FileData[]) => {
-        const allFilesDataRaw = FileData.toRawArray(this.filesData);
-        this.filesDataRaw = allFilesDataRaw;
-        this.$emit('input', Array.isArray(this.value) ? allFilesDataRaw : allFilesDataRaw[0]);
-        this.$emit('select', FileData.toRawArray(filesDataNew));
+      FileRecord.readFiles(fileRecords).then((fileRecordsNew: FileRecord[]) => {
+        const allFileRecordsRaw = FileRecord.toRawArray(this.fileRecords);
+        this.rawFileRecords = allFileRecordsRaw;
+        this.$emit('input', Array.isArray(this.value) ? allFileRecordsRaw : allFileRecordsRaw[0]);
+        this.$emit('select', FileRecord.toRawArray(fileRecordsNew));
       });
-      this.autoUpload(filesData);
+      this.autoUpload(fileRecords);
     },
     filesChanged(event: InputEvent): void {
       const files: FileList = (event.target as HTMLInputElement).files as FileList;
@@ -429,68 +429,68 @@ export default Vue.extend({
         this.isDragging = false;
       }
     },
-    removeFileData(fileDataOrRaw: FileData | RawFileData): void {
+    removeFileRecord(fileRecordOrRaw: FileRecord | RawFileRecord): void {
       let i: number;
-      if (fileDataOrRaw instanceof FileData) {
-        i = this.filesData.indexOf(fileDataOrRaw);
+      if (fileRecordOrRaw instanceof FileRecord) {
+        i = this.fileRecords.indexOf(fileRecordOrRaw);
       } else {
-        i = this.filesDataRaw.indexOf(fileDataOrRaw);
+        i = this.rawFileRecords.indexOf(fileRecordOrRaw);
       }
-      let fileData = this.filesData[i];
-      let fileDataRaw = this.filesDataRaw[i];
-      this.$emit('input', this.filesDataRaw);
-      this.$emit('delete', fileDataRaw);
-      fileData = this.filesData.splice(i, 1)[0];
-      fileDataRaw = this.filesDataRaw.splice(i, 1)[0];
-      this.autoDeleteUpload(fileData).then(
+      let fileRecord = this.fileRecords[i];
+      let rawFileRecord = this.rawFileRecords[i];
+      this.$emit('input', this.rawFileRecords);
+      this.$emit('delete', rawFileRecord);
+      fileRecord = this.fileRecords.splice(i, 1)[0];
+      rawFileRecord = this.rawFileRecords.splice(i, 1)[0];
+      this.autoDeleteUpload(fileRecord).then(
         (res) => {
           /* no op */
         },
         (err) => {
-          this.filesData.splice(i, 1, fileData);
-          this.filesDataRaw.splice(i, 1, fileDataRaw);
+          this.fileRecords.splice(i, 1, fileRecord);
+          this.rawFileRecords.splice(i, 1, rawFileRecord);
         },
       );
     },
-    filenameChanged(fileData: FileData): void {
-      this.$emit('rename', FileData.toRawArray([fileData])[0]);
-      this.autoUpdateUpload(fileData).then(
+    filenameChanged(fileRecord: FileRecord): void {
+      this.$emit('rename', FileRecord.toRawArray([fileRecord])[0]);
+      this.autoUpdateUpload(fileRecord).then(
         (res) => {
           /* no op */
         },
         (err) => {
-          fileData.customName = fileData.oldCustomName;
+          fileRecord.customName = fileRecord.oldCustomName;
         },
       );
     },
     checkValue(): void {
-      let filesDataRaw: RawFileData[] = this.value || [];
-      filesDataRaw = Array.isArray(filesDataRaw) ? filesDataRaw : [filesDataRaw];
+      let rawFileRecords: RawFileRecord[] = this.value || [];
+      rawFileRecords = Array.isArray(rawFileRecords) ? rawFileRecords : [rawFileRecords];
 
-      const fdPromises: Array<Promise<FileData>> = [];
-      const filesDataRawNew: RawFileData[] = [];
+      const fdPromises: Array<Promise<FileRecord>> = [];
+      const rawFileRecordsNew: RawFileRecord[] = [];
 
-      for (let i = 0; i < filesDataRaw.length; i++) {
-        const existingIndex = this.filesDataRaw.indexOf(filesDataRaw[i]);
+      for (let i = 0; i < rawFileRecords.length; i++) {
+        const existingIndex = this.rawFileRecords.indexOf(rawFileRecords[i]);
         if (existingIndex !== -1) {
-          fdPromises.push(Promise.resolve(this.filesData[existingIndex]));
-          filesDataRawNew[i] = this.filesDataRaw[existingIndex];
+          fdPromises.push(Promise.resolve(this.fileRecords[existingIndex]));
+          rawFileRecordsNew[i] = this.rawFileRecords[existingIndex];
         } else {
           fdPromises.push(
-            FileData.fromRaw(filesDataRaw[i], {
+            FileRecord.fromRaw(rawFileRecords[i], {
               read: this.shouldRead,
               maxSize: this.maxSize,
               accept: this.accept,
               thumbnailSize: this.thumbnailSize,
             }),
           );
-          filesDataRawNew.push(filesDataRaw[i]);
+          rawFileRecordsNew.push(rawFileRecords[i]);
         }
       }
 
-      this.filesDataRaw = filesDataRawNew;
-      Promise.all(fdPromises).then((filesData) => {
-        this.filesData = filesData;
+      this.rawFileRecords = rawFileRecordsNew;
+      Promise.all(fdPromises).then((fileRecords) => {
+        this.fileRecords = fileRecords;
       });
     },
     sortStart(): void {
@@ -509,9 +509,9 @@ export default Vue.extend({
         this.isSorting = false;
       }, this.transitionDuration + 100);
       if (sortData.oldIndex !== sortData.newIndex) {
-        this.filesDataRaw = utils.arrayMove(this.filesDataRaw, sortData.oldIndex, sortData.newIndex);
+        this.rawFileRecords = utils.arrayMove(this.rawFileRecords, sortData.oldIndex, sortData.newIndex);
         this.$nextTick(() => {
-          this.$emit('input', this.filesDataRaw);
+          this.$emit('input', this.rawFileRecords);
           this.$emit('sort', {
             oldIndex: sortData.oldIndex,
             newIndex: sortData.newIndex,

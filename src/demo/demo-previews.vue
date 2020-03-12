@@ -2,10 +2,10 @@
   <!-- {% raw %} -->
   <div class="theme-default">
     <div class="vue-file-agent grid-block-wrapper" style="padding: 0;">
-      <template v-for="(fileData, i) in filesData">
+      <template v-for="(fileRecord, i) in fileRecords">
         <VueFilePreview
           :key="i"
-          :value="fileData"
+          :value="fileRecord"
           :linkable="true"
           class="file-preview-wrapper grid-box-item grid-block"
         ></VueFilePreview>
@@ -19,12 +19,12 @@
 export default {
   data: function() {
     return {
-      filesData: this.getFilesDataInitial(),
+      fileRecords: this.getFileRecordsInitial(),
     };
   },
   methods: {
-    getFilesDataInitial: function() {
-      return window.getFilesDataInitial();
+    getFileRecordsInitial: function() {
+      return window.getFileRecordsInitial();
     },
   },
   mounted: function() {},

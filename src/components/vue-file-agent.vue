@@ -40,7 +40,7 @@
 
       <component
         :is="isSortable ? 'vfa-sortable-list' : 'VueFileList'"
-        v-model="filesData"
+        v-model="fileRecords"
         :axis="theme == 'list' ? 'y' : 'xy'"
         :appendTo="'#vfa-' + uniqueId + ' .vue-file-agent'"
         :transitionDuration="transitionDuration"
@@ -51,29 +51,29 @@
         :helperClass="'active-sorting-item'"
       >
         <transition-group name="grid-box" tag="div" class="">
-          <!-- <template v-for="(fileData, index) in filesData"> -->
+          <!-- <template v-for="(fileRecord, index) in fileRecords"> -->
           <component
             :is="isSortable ? 'vfa-sortable-item' : 'VueFileListItem'"
-            v-for="(fileData, index) in filesData"
+            v-for="(fileRecord, index) in fileRecords"
             class="file-preview-wrapper grid-box-item grid-block"
             :index="index"
-            :key="fileData.id"
+            :key="fileRecord.id"
           >
             <span v-vfa-sortable-handle class="file-sortable-handle" v-if="sortable === 'handle'">
               <slot name="sortable-handle">
                 <VueFileIcon name="system-sortable-handle"></VueFileIcon>
               </slot>
             </span>
-            <slot name="file-preview" :fileData="fileData" :index="index">
+            <slot name="file-preview" :fileRecord="fileRecord" :index="index">
               <VueFilePreview
-                :value="fileData"
+                :value="fileRecord"
                 :deletable="isDeletable"
                 :editable="editable === true"
                 :linkable="linkable === true"
                 :errorText="errorText"
                 :disabled="disabled"
                 :thumbnailSize="thumbnailSize"
-                @remove="removeFileData($event)"
+                @remove="removeFileRecord($event)"
                 @rename="filenameChanged($event)"
                 class=""
               ></VueFilePreview>

@@ -28,7 +28,7 @@ interface ErrorFlags {
   upload?: false | string;
 }
 
-interface RawFileData {
+interface RawFileRecord {
   url: string | null;
   urlResized: string | null;
   src: () => any;
@@ -62,64 +62,68 @@ interface UploadData {
   error: string | false;
 }
 
-export { Dimensions, Options, RawFileData };
+export { Dimensions, Options, RawFileRecord };
 
-class FileData {
-  public static getFromRaw(fileDataRaw: RawFileData, options: Options, isSync = false): FileData | Promise<FileData> {
-    const fileData = new FileData(fileDataRaw, options);
-    const promise = fileData.setUrl(fileDataRaw.url);
-    fileDataRaw.progress = fileData.progress.bind(fileData); // convert it as a function
-    fileDataRaw.src = fileData.src.bind(fileData);
-    fileDataRaw.name = fileData.name.bind(fileData); // convert it as a function
+class FileRecord {
+  public static getFromRaw(
+    rawFileRecord: RawFileRecord,
+    options: Options,
+    isSync = false,
+  ): FileRecord | Promise<FileRecord> {
+    const fileRecord = new FileRecord(rawFileRecord, options);
+    const promise = fileRecord.setUrl(rawFileRecord.url);
+    rawFileRecord.progress = fileRecord.progress.bind(fileRecord); // convert it as a function
+    rawFileRecord.src = fileRecord.src.bind(fileRecord);
+    rawFileRecord.name = fileRecord.name.bind(fileRecord); // convert it as a function
     if (isSync) {
-      return fileData;
+      return fileRecord;
     }
     return promise;
   }
 
-  public static fromRaw(fileDataRaw: RawFileData, options: Options): Promise<FileData> {
-    return FileData.getFromRaw(fileDataRaw, options, false) as Promise<FileData>;
+  public static fromRaw(rawFileRecord: RawFileRecord, options: Options): Promise<FileRecord> {
+    return FileRecord.getFromRaw(rawFileRecord, options, false) as Promise<FileRecord>;
   }
 
-  public static fromRawSync(fileDataRaw: RawFileData, options: Options): FileData {
-    return FileData.getFromRaw(fileDataRaw, options, true) as FileData;
+  public static fromRawSync(rawFileRecord: RawFileRecord, options: Options): FileRecord {
+    return FileRecord.getFromRaw(rawFileRecord, options, true) as FileRecord;
   }
 
-  public static fromRawArray(filesDataRaw: RawFileData[], options: Options): Promise<FileData[]> {
-    const promises: Array<Promise<FileData>> = [];
-    for (const fileDataRaw of filesDataRaw) {
-      promises.push(FileData.fromRaw(fileDataRaw, options));
+  public static fromRawArray(rawFileRecords: RawFileRecord[], options: Options): Promise<FileRecord[]> {
+    const promises: Array<Promise<FileRecord>> = [];
+    for (const rawFileRecord of rawFileRecords) {
+      promises.push(FileRecord.fromRaw(rawFileRecord, options));
     }
     return Promise.all(promises);
   }
 
-  public static toRawArray(filesData: FileData[]): RawFileData[] {
-    const filesDataRaw: RawFileData[] = [];
-    for (const fileData of filesData) {
-      filesDataRaw.push(fileData.toRaw());
+  public static toRawArray(fileRecords: FileRecord[]): RawFileRecord[] {
+    const rawFileRecords: RawFileRecord[] = [];
+    for (const fileRecord of fileRecords) {
+      rawFileRecords.push(fileRecord.toRaw());
     }
-    return filesDataRaw;
+    return rawFileRecords;
   }
 
-  public static readFile(fileData: FileData): Promise<FileData> {
+  public static readFile(fileRecord: FileRecord): Promise<FileRecord> {
     return new Promise((resolve, reject) => {
-      if (!fileData.read) {
-        fileData.setUrl(null);
-        resolve(fileData);
+      if (!fileRecord.read) {
+        fileRecord.setUrl(null);
+        resolve(fileRecord);
         return;
       }
-      utils.getDataURL(fileData.file).then((dataUrl) => {
-        fileData.setUrl(dataUrl).then(() => {
-          resolve(fileData);
+      utils.getDataURL(fileRecord.file).then((dataUrl) => {
+        fileRecord.setUrl(dataUrl).then(() => {
+          resolve(fileRecord);
         }, reject);
       }, reject);
     });
   }
 
-  public static readFiles(filesData: FileData[]): Promise<FileData[]> {
-    const promises: Array<Promise<FileData>> = [];
-    for (const fileData of filesData) {
-      promises.push(FileData.readFile(fileData));
+  public static readFiles(fileRecords: FileRecord[]): Promise<FileRecord[]> {
+    const promises: Array<Promise<FileRecord>> = [];
+    for (const fileRecord of fileRecords) {
+      promises.push(FileRecord.readFile(fileRecord));
     }
     return Promise.all(promises);
   }
@@ -133,7 +137,7 @@ class FileData {
   public oldCustomName: string | null = null;
   public upload: UploadData = { data: null, error: false };
 
-  public raw: RawFileData;
+  public raw: RawFileRecord;
   public progressInternal: number;
   public accept?: string;
   public dimensions: Dimensions;
@@ -155,7 +159,7 @@ class FileData {
   public stopAv?: (() => any) | null;
   public tusUpload?: any;
 
-  public constructor(data: RawFileData, options: Options) {
+  public constructor(data: RawFileRecord, options: Options) {
     this.url = null;
     this.urlResized = null;
     this.lastKnownSrc = null;
@@ -167,8 +171,8 @@ class FileData {
     this.raw = data;
     this.file = data.file instanceof File ? data.file : (this.createDummyFile(data) as any);
     this.progressInternal = !isNaN(data.progress as number) ? (data.progress as number) : 0;
-    // this.width = FileData.defaultWidth;
-    // this.height = FileData.defaultHeight;
+    // this.width = FileRecord.defaultWidth;
+    // this.height = FileRecord.defaultHeight;
     this.thumbnailSize = options.thumbnailSize || 360;
     this.read = !!options.read;
     this.dimensions = data.dimensions || {};
@@ -188,7 +192,7 @@ class FileData {
 
   // populate(data, options = {}) {}
 
-  public createDummyFile(data: RawFileData): DummyFile {
+  public createDummyFile(data: RawFileRecord): DummyFile {
     const file: DummyFile = {} as DummyFile;
     file.lastModified = data.lastModified;
     const d = new Date();
@@ -374,7 +378,7 @@ class FileData {
     return errorText.common as string;
   }
 
-  public toRaw(): RawFileData {
+  public toRaw(): RawFileRecord {
     const raw = this.raw || {};
     raw.url = this.url;
     raw.urlResized = this.urlResized;
@@ -414,4 +418,4 @@ class FileData {
   }
 }
 
-export default FileData;
+export default FileRecord;

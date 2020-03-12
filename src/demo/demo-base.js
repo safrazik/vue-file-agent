@@ -1,4 +1,4 @@
-window.getFilesDataInitial = function() {
+window.getFileRecordsInitial = function() {
   var filesBaseUrl =
     window.location.port == '4000'
       ? '/vue-file-agent/website/assets/files/'
@@ -16,7 +16,7 @@ window.getFilesDataInitial = function() {
   videoData.videoThumbnail = filesBaseUrl + 'Golf-thumb.jpg';
   videoData.imageColor = [66, 62, 45];
 
-  var filesData = [];
+  var fileRecords = [];
   [
     {
       name: 'sample.pdf',
@@ -48,10 +48,10 @@ window.getFilesDataInitial = function() {
   ].forEach(function(fd) {
     fd.url = filesBaseUrl + fd.name;
     // fd.progress = 10;
-    filesData.push(fd);
+    fileRecords.push(fd);
   });
 
-  return filesData;
+  return fileRecords;
 };
 
 window.uploadUrl = localStorage.getItem('uploadUrl') || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3';

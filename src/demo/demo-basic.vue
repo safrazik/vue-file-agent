@@ -23,7 +23,7 @@
     </div>
 
     <VueFileAgent
-      v-model="filesData"
+      v-model="fileRecords"
       :deletable="true"
       :editable="true"
       :linkable="true"
@@ -47,7 +47,7 @@ export default {
     return {
       theme: 'default',
       lastProgress: 0,
-      filesData: this.getFilesDataInitial(),
+      fileRecords: this.getFileRecordsInitial(),
       sortable: false,
       resumable: true,
     };
@@ -61,8 +61,8 @@ export default {
     },
   },
   methods: {
-    getFilesDataInitial: function() {
-      return window.getFilesDataInitial();
+    getFileRecordsInitial: function() {
+      return window.getFileRecordsInitial();
     },
     demonstrate: function() {
       if (this.lastProgress >= 100) {
@@ -71,21 +71,21 @@ export default {
       setTimeout(
         function() {
           this.lastProgress = this.lastProgress + 5;
-          this.filesData[0].progress(this.lastProgress);
+          this.fileRecords[0].progress(this.lastProgress);
           this.demonstrate();
         }.bind(this),
         400,
       );
     },
-    filesSelected: function(filesData) {
-      console.log(filesData);
-      console.log(JSON.stringify(filesData));
+    filesSelected: function(fileRecords) {
+      console.log(fileRecords);
+      console.log(JSON.stringify(fileRecords));
       // manual handling
-      // this.$refs.vueFileInput.upload(this.uploadUrl, filesData);
+      // this.$refs.vueFileInput.upload(this.uploadUrl, fileRecords);
     },
-    fileDeleted: function(fileData) {
+    fileDeleted: function(fileRecord) {
       // manual handling
-      // this.$refs.vueFileInput.deleteUpload(this.uploadUrl, fileData);
+      // this.$refs.vueFileInput.deleteUpload(this.uploadUrl, fileRecord);
     },
     switchTheme: function() {
       this.theme = this.theme == 'list' ? 'default' : 'list';
