@@ -1,5 +1,16 @@
 # Change Log
 
+### 1.6.0 House Sparrow
+
+- New Feature 🎉 `readonly` prop support
+- (UX) Improve drag over style (red for invalid/no-op drag, green for valid drag)
+- Added upload events #38
+- Improved the detection of folders (on Mac OS) - (Thanks to @algm) #41
+- Fixed file link for images in list theme #39
+- Handling of broken image urls gracefully (in preloaded previews) #37
+- Fixed single mode controls issue (that prevented from deleting, renaming and clicking on link)
+- Demo URL updated
+- Usage of `FileData`, `filesData`, etc. deprecated in favor of `FileRecord`, `fileRecords`, etc. (See #42)
 
 ### 1.5.2
 
