@@ -27,7 +27,7 @@ declare class Utils {
     getColorForText(text: string): string;
     validateType(file: File, accept?: string): boolean;
     validateSize(file: File, maxSize?: string): boolean;
-    getFilesFromDroppedItems(dataTransfer: DataTransfer): Promise<File[] | FileList>;
+    getFilesFromDroppedItems(dataTransfer: DataTransfer): Promise<FileList | File[]>;
 }
 declare const _default: Utils;
 export default _default;

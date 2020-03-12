@@ -1945,6 +1945,7 @@ var AjaxRequest = /** @class */ (function () {
     }
     AjaxRequest.prototype.createError = function (message, code, request, response) {
         var error = new Error(message);
+        error.error = true;
         if (code) {
             error.code = code;
         }
@@ -2218,7 +2219,7 @@ var upload_helper_UploadHelper = /** @class */ (function () {
                     resolve(response);
                 } /* */, function (err) {
                     _this.prepareUploadError(fileData, err);
-                    resolve({ error: err });
+                    resolve(err);
                     failedUploadsCount++;
                 } /* */);
             }));
@@ -2242,7 +2243,7 @@ var upload_helper_UploadHelper = /** @class */ (function () {
             Promise.all(promises).then(function (responses) {
                 if (failedUploadsCount === promises.length) {
                     // all uploads failed
-                    reject(responses.map(function (res) { return res.error; }));
+                    reject(responses);
                     return;
                 }
                 resolve(responses);
@@ -2625,18 +2626,24 @@ var dragCounter = 0;
                     _this.overallProgress = overallProgress;
                 });
             }
-            return upload_helper
-                .upload(url, headers, validFilesData, createFormData, function (overallProgress) {
-                _this.overallProgress = overallProgress;
-            }, this.prepareConfigureFn(configureXhr))
-                .then(function (res) {
-                for (var i = 0; i < res.length; i++) {
-                    res[i].fileData = validFilesRawData[i];
-                }
-                _this.$emit('upload', res);
-                return res;
-            }, function (err) {
-                _this.$emit('upload:error', err);
+            return new Promise(function (resolve, reject) {
+                upload_helper
+                    .upload(url, headers, validFilesData, createFormData, function (overallProgress) {
+                    _this.overallProgress = overallProgress;
+                }, _this.prepareConfigureFn(configureXhr))
+                    .then(function (res) {
+                    for (var i = 0; i < res.length; i++) {
+                        res[i].fileData = validFilesRawData[i];
+                    }
+                    _this.$emit('upload', res);
+                    resolve(res);
+                }, function (err) {
+                    for (var i = 0; i < err.length; i++) {
+                        err[i].fileData = validFilesRawData[i];
+                    }
+                    _this.$emit('upload:error', err);
+                    reject(err);
+                });
             });
         },
         deleteUpload: function (url, headers, fileData, uploadData, configureXhr) {
@@ -2649,24 +2656,36 @@ var dragCounter = 0;
             if (this.resumable) {
                 return upload_helper.tusDeleteUpload(plugins.tus, url, headers, fileData);
             }
-            return upload_helper.deleteUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(function (res) {
-                res.fileData = fileDataRaw;
-                _this.$emit('upload:delete', res);
-                return res;
-            }, function (err) {
-                _this.$emit('upload:delete:error', err);
+            return new Promise(function (resolve, reject) {
+                upload_helper
+                    .deleteUpload(url, headers, fileData, uploadData, _this.prepareConfigureFn(configureXhr))
+                    .then(function (res) {
+                    res.fileData = fileDataRaw;
+                    _this.$emit('upload:delete', res);
+                    resolve(res);
+                }, function (err) {
+                    err.fileData = fileDataRaw;
+                    _this.$emit('upload:delete:error', err);
+                    reject(err);
+                });
             });
         },
         updateUpload: function (url, headers, fileData, uploadData, configureXhr) {
             var _this = this;
             fileData = this.getFileDataInstance(fileData);
             var fileDataRaw = this.getFileDataRawInstance(fileData);
-            return upload_helper.updateUpload(url, headers, fileData, uploadData, this.prepareConfigureFn(configureXhr)).then(function (res) {
-                res.filesData = fileDataRaw;
-                _this.$emit('upload:update', res);
-                return res;
-            }, function (err) {
-                _this.$emit('upload:update:error', err);
+            return new Promise(function (resolve, reject) {
+                upload_helper
+                    .updateUpload(url, headers, fileData, uploadData, _this.prepareConfigureFn(configureXhr))
+                    .then(function (res) {
+                    res.filesData = fileDataRaw;
+                    _this.$emit('upload:update', res);
+                    resolve(res);
+                }, function (err) {
+                    err.filesData = fileDataRaw;
+                    _this.$emit('upload:update:error', err);
+                    reject(err);
+                });
             });
         },
         autoUpload: function (filesData) {
@@ -2859,11 +2878,12 @@ var dragCounter = 0;
             else {
                 i = this.filesDataRaw.indexOf(fileDataOrRaw);
             }
-            var fileData = this.filesData.splice(i, 1)[0];
-            var fileDataRaw = this.filesDataRaw.splice(i, 1)[0];
+            var fileData = this.filesData[i];
+            var fileDataRaw = this.filesDataRaw[i];
             this.$emit('input', this.filesDataRaw);
-            // this.$emit('delete', fileData);
             this.$emit('delete', fileDataRaw);
+            fileData = this.filesData.splice(i, 1)[0];
+            fileDataRaw = this.filesDataRaw.splice(i, 1)[0];
             this.autoDeleteUpload(fileData).then(function (res) {
                 /* no op */
             }, function (err) {
