@@ -1,6 +1,6 @@
 {
   "name": "vue-file-agent",
-  "version": "1.6.1-beta.1",
+  "version": "1.6.1-beta.2",
   "description": "High performant Vue file upload component with elegant and distinguishable previews for every file type and support for drag and drop, validations, default uploader with progress support and externally customizable in the \"vue way\"",
   "main": "dist/vue-file-agent.umd.js",
   "types": "types/src/index.d.ts",
@@ -10,7 +10,7 @@
     "upload-server": "node upload-server-examples/node/upload-server.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:watch": "vue-cli-service test:unit --watch",
+    "test:watch": "vue-cli-service test:unit --watch --coverage",
     "build:dev": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.ts",
     "docs:serve:dev": "jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0",
     "docs:serve": "jekyll serve --host 0.0.0.0"
