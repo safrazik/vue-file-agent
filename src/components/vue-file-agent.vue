@@ -64,7 +64,7 @@
                 <VueFileIcon name="system-sortable-handle"></VueFileIcon>
               </slot>
             </span>
-            <slot name="file-preview" :fileRecord="fileRecord" :index="index">
+            <slot name="file-preview" :fileRecord="fileRecord" :fileData="fileRecord" :index="index">
               <VueFilePreview
                 :value="fileRecord"
                 :deletable="isDeletable"
