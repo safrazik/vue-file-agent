@@ -17,6 +17,7 @@ export default Vue.extend({
   props: [
     'accept',
     'auto',
+    'capture',
     'compact',
     'deletable',
     'disabled',

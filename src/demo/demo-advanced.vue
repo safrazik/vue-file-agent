@@ -21,6 +21,23 @@
               </div>
             </div>
           </div>
+          <div class="col-md-12 col-12 px-2">
+            <div class="input-group input-group-sm mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><small>:capture</small></span>
+              </div>
+              <input class="form-control" type="text" v-model="valCapture" placeholder="e.g: user, environment" />
+              <div class="input-group-append">
+                <a
+                  class="btn btn-warning"
+                  href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#attr-capture"
+                  target="_blank"
+                >
+                  ?
+                </a>
+              </div>
+            </div>
+          </div>
           <div class="col-md-12 col-6 px-2">
             <div class="input-group input-group-sm mb-2">
               <div class="input-group-prepend">
@@ -150,6 +167,7 @@
           :disabled="disabled"
           :compact="compact"
           :accept="valAccept"
+          :capture="valCapture"
           :maxSize="valMaxSize"
           :maxFiles="valMaxFiles"
           :theme="theme"
@@ -295,6 +313,7 @@ export default {
       },
       selectedIdx: 1,
       valAccept: 'image/*,video/*,.pdf,.doc,.docx,.ods',
+      valCapture: '',
       valMaxSize: '10MB',
       valMaxFiles: 14,
     };

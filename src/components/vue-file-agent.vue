@@ -103,7 +103,8 @@
         class="file-input"
         @change="filesChanged"
         :accept="accept || '*'"
-        v-if="this.readonly !== true"
+        :capture="capture || undefined"
+        v-if="readonly !== true"
       />
       <slot name="after-inner"></slot>
     </div>
