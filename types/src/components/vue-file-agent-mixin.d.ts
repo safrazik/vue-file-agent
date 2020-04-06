@@ -50,5 +50,5 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+}, Record<"accept" | "auto" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
 export default _default;
