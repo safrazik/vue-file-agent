@@ -156,6 +156,9 @@ export default Vue.extend({
     },
 
     dismissError() {
+      if (this.fileRecord.error && (this.fileRecord.error.size || this.fileRecord.error.type)) {
+        return;
+      }
       this.fileRecord.error = false;
     },
   },

@@ -11,11 +11,6 @@
       { 'has-error': fileRecord.error },
     ]"
   >
-    <div class="file-error-wrapper" v-if="fileRecord.error" @click="dismissError()">
-      <div class="file-error-message file-error-message-client">
-        {{ fileRecord.getErrorMessage(errorText) }}
-      </div>
-    </div>
     <div ref="wrapper" class="file-av-wrapper" v-if="fileRecord.isPlayableAudio() || fileRecord.isPlayableVideo()">
       <div class="file-av-action" @click="playAv(fileRecord)">
         <span class="file-av-stop">
@@ -37,6 +32,11 @@
         'background-color': fileRecord.color(),
       }"
     >
+      <span class="file-error-wrapper" v-if="fileRecord.error" @click="dismissError()">
+        <span class="file-error-message file-error-message-client">
+          {{ fileRecord.getErrorMessage(errorText) }}
+        </span>
+      </span>
       <span class="file-preview-overlay"></span>
       <span
         class="thumbnail"
