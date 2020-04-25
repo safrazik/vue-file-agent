@@ -43,7 +43,7 @@
         style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
         v-if="fileRecord.isImage() || fileRecord.isPlayableVideo()"
       >
-        <a v-if="hasLinkableUrl" :href="fileRecord.url" target="_blank" :title="fileRecord.name()">
+        <a v-if="hasLinkableUrl" :href="fileRecord.url()" target="_blank" :title="fileRecord.name()">
           <img class="file-preview-img" :src="fileRecord.src()" />
         </a>
         <img v-else class="file-preview-img" :src="fileRecord.src()" />
@@ -95,7 +95,7 @@
         <span class="file-progress-bar" :style="{ width: fileRecord.progress() + '%' }"></span>
       </span>
       <span class="file-icon">
-        <a v-if="hasLinkableUrl" :href="fileRecord.url" target="_blank" :title="fileRecord.name()">
+        <a v-if="hasLinkableUrl" :href="fileRecord.url()" target="_blank" :title="fileRecord.name()">
           <VueFileIcon :ext="fileRecord.ext()"></VueFileIcon>
         </a>
         <VueFileIcon v-else :ext="fileRecord.ext()"></VueFileIcon>

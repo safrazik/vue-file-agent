@@ -304,6 +304,9 @@ class Utils {
     return new Promise((resolve, reject) => {
       image.onload = () => {
         const resized = this.getImageResized(image, thumbnailSize, undefined, undefined, calculateAverageColor);
+        if (resized) {
+          resized.url = url;
+        }
         resolve(resized);
       };
       image.onerror = () => {
