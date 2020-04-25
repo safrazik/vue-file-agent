@@ -180,6 +180,7 @@
     .file-name,
     .file-size,
     .image-dimension,
+    &::before,
     &::after {
       display: none;
     }
