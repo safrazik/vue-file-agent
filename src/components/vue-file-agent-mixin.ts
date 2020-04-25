@@ -186,9 +186,16 @@ export default Vue.extend({
         }
       }
       if (this.resumable) {
-        return uploader.tusUpload(plugins.tus, url, headers, validFileRecords, (overallProgress) => {
-          this.overallProgress = overallProgress;
-        });
+        return uploader.tusUpload(
+          plugins.tus,
+          url,
+          headers,
+          validFileRecords,
+          (overallProgress) => {
+            this.overallProgress = overallProgress;
+          },
+          this.resumable === true ? undefined : this.resumable,
+        );
       }
       return new Promise((resolve, reject) => {
         uploader

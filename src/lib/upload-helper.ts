@@ -5,6 +5,13 @@ import FileRecord from './file-record';
 type ProgressFn = (event: ProgressEvent) => void;
 type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
 
+export interface TusOptions {
+  retryDelays?: number[];
+  metadata?: any;
+}
+
+export type TusOptionsFn = (fileRecord: FileRecord) => TusOptions;
+
 class UploadHelper {
   // useAxios(axios){
   //   this.axios = axios;
@@ -273,7 +280,15 @@ class UploadHelper {
     });
   }
 
-  public doTusUpload(tus: any, url: string, fileRecord: FileRecord, headers: object, progressCallback: ProgressFn) {
+  public doTusUpload(
+    tus: any,
+    url: string,
+    fileRecord: FileRecord,
+    headers: object,
+    progressCallback: ProgressFn,
+    tusOptionsFn?: TusOptionsFn,
+  ) {
+    const tusOptions: TusOptions = tusOptionsFn ? tusOptionsFn(fileRecord) : {};
     return new Promise((resolve, reject) => {
       if (!tus) {
         return reject(new Error('tus required. Please install tus-js-client'));
@@ -284,11 +299,13 @@ class UploadHelper {
       const upload = new tus.Upload(file, {
         endpoint: url,
         headers,
-        retryDelays: [0, 3000, 5000, 10000, 20000],
-        metadata: {
-          filename: file.name,
-          filetype: file.type,
-        },
+        retryDelays: tusOptions.retryDelays ? tusOptions.retryDelays : [0, 3000, 5000, 10000, 20000],
+        metadata: tusOptions.metadata
+          ? tusOptions.metadata
+          : {
+              filename: file.name,
+              filetype: file.type,
+            },
         onError(error: any) {
           reject(error);
           // console.log("Failed because: " + error)
@@ -313,6 +330,7 @@ class UploadHelper {
     headers: object,
     fileRecords: FileRecord[],
     progressFn?: (progress: number) => void,
+    tusOptionsFn?: TusOptionsFn,
   ) {
     let updateOverallProgress = () => {
       /* no op */
@@ -328,12 +346,19 @@ class UploadHelper {
     }
     const promises = [];
     for (const fileRecord of fileRecords) {
-      const promise = this.doTusUpload(tus, url, fileRecord, headers, (progressEvent: ProgressEvent) => {
-        const percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
-        // do not complete until promise resolved
-        fileRecord.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
-        updateOverallProgress();
-      });
+      const promise = this.doTusUpload(
+        tus,
+        url,
+        fileRecord,
+        headers,
+        (progressEvent: ProgressEvent) => {
+          const percentCompleted = (progressEvent.loaded * 100) / progressEvent.total;
+          // do not complete until promise resolved
+          fileRecord.progress(percentCompleted >= 100 ? 99.9999 : percentCompleted);
+          updateOverallProgress();
+        },
+        tusOptionsFn,
+      );
       promise.then(
         (response) => {
           // delete fileRecord.tusUpload;
