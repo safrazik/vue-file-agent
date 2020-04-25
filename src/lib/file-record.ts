@@ -30,7 +30,7 @@ interface ErrorFlags {
 }
 
 interface RawFileRecord {
-  url: string | ((value?: string) => string | void);
+  url: string | ((value?: string) => string | undefined | Promise<FileRecord>);
   urlResized: string | null;
   src: () => any;
   name: any;
