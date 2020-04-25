@@ -20,7 +20,7 @@ export default Vue.extend({
       if (!this.linkable) {
         return false;
       }
-      return !!this.fileRecord.url && !this.fileRecord.isPlayableVideo() && !this.fileRecord.isPlayableAudio();
+      return !!this.fileRecord.url() && !this.fileRecord.isPlayableVideo() && !this.fileRecord.isPlayableAudio();
     },
   },
   methods: {
@@ -73,7 +73,7 @@ export default Vue.extend({
       player.controls = true;
       // player.style.width = this.prvWidth + 'px';
       wrapper.appendChild(player);
-      const url = fileRecord.url || createObjectURL(fileRecord.file);
+      const url = (fileRecord.url() as string) || createObjectURL(fileRecord.file);
       player.src = url;
       player.play();
       fileRecord.isPlayingAv = true;

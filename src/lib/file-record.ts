@@ -30,7 +30,7 @@ interface ErrorFlags {
 }
 
 interface RawFileRecord {
-  url: string | null;
+  url: string | ((value?: string) => string | void);
   urlResized: string | null;
   src: () => any;
   name: any;
@@ -72,7 +72,7 @@ class FileRecord {
     isSync = false,
   ): FileRecord | Promise<FileRecord> {
     const fileRecord = new FileRecord(rawFileRecord, options);
-    const promise = fileRecord.setUrl(rawFileRecord.url);
+    const promise = fileRecord.setUrl(rawFileRecord.url as string);
     rawFileRecord.progress = fileRecord.progress.bind(fileRecord); // convert it as a function
     rawFileRecord.src = fileRecord.src.bind(fileRecord);
     rawFileRecord.name = fileRecord.name.bind(fileRecord); // convert it as a function
@@ -129,7 +129,7 @@ class FileRecord {
     return Promise.all(promises);
   }
 
-  public url: null | string = null;
+  public urlValue: null | string = null;
   public urlResized: null | string = null;
   public image: HTMLImageElement | {} = {};
   public isPlayingAv: boolean = false;
@@ -162,7 +162,7 @@ class FileRecord {
   public calculateAverageColor: boolean;
 
   public constructor(data: RawFileRecord, options: Options) {
-    this.url = null;
+    this.urlValue = null;
     this.urlResized = null;
     this.lastKnownSrc = null;
     this.image = {};
@@ -220,9 +220,16 @@ class FileRecord {
     return this.progressInternal || 0;
   }
 
+  public url(value?: string): string | undefined | Promise<this> {
+    if (value !== undefined) {
+      return this.setUrl(value);
+    }
+    return this.urlValue || undefined;
+  }
+
   public src(): string {
     if (this.isImage()) {
-      return this.urlResized || this.url || (this.file as any).url;
+      return this.urlResized || this.urlValue || (this.file as any).url;
     }
     if (this.isPlayableVideo()) {
       return this.videoThumbnail || '';
@@ -310,7 +317,7 @@ class FileRecord {
   }
 
   public setUrl(url: string | null): Promise<this> {
-    this.url = url;
+    this.urlValue = url;
     return new Promise((resolve, reject) => {
       if (this.isImage()) {
         this.resizeImage().then(
@@ -344,7 +351,7 @@ class FileRecord {
   public resizeImage(): Promise<this> {
     return new Promise((resolve, reject) => {
       utils
-        .resizeImage(this.thumbnailSize, this.file, this.url as string, this.calculateAverageColor)
+        .resizeImage(this.thumbnailSize, this.file, this.urlValue as string, this.calculateAverageColor)
         .then((resized) => {
           this.imageResized(resized);
           resolve(this);
@@ -382,7 +389,8 @@ class FileRecord {
 
   public toRaw(): RawFileRecord {
     const raw = this.raw || {};
-    raw.url = this.url;
+    // raw.url = this.urlValue;
+    raw.url = this.url.bind(this);
     raw.urlResized = this.urlResized;
     raw.src = this.src.bind(this);
     raw.name = this.name.bind(this);
