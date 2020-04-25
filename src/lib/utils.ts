@@ -75,6 +75,7 @@ class Utils {
     video: HTMLVideoElement,
     canvas: HTMLCanvasElement,
     thumbnailSize: number,
+    calculateAverageColor?: boolean,
   ): Promise<VideoThumbnail> {
     video.setAttribute('crossOrigin', 'anonymous'); // fix cross origin issue
     return new Promise((resolve, reject) => {
@@ -86,11 +87,15 @@ class Utils {
         }
         const context = canvas.getContext('2d') as CanvasRenderingContext2D;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let color: RGBA | undefined;
+        if (calculateAverageColor) {
+          const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+          color = this.getAverageColor(imageData.data);
+        }
         const url = canvas.toDataURL();
         resolve({
           url,
-          color: this.getAverageColor(imageData.data),
+          color,
           width: video.videoWidth,
           height: video.videoHeight,
         });
@@ -231,6 +236,7 @@ class Utils {
     widthLimit: number,
     heightLimit?: number,
     orientation?: number,
+    calculateAverageColor?: boolean,
   ): ImageThumbnail | null {
     let width = image.width;
     let height = image.height;
@@ -271,8 +277,11 @@ class Utils {
     context.drawImage(image, 0, 0, width, height);
     let avgColor = null;
     try {
-      const imageData = context.getImageData(0, 0, width, height);
-      const rgba = this.getAverageColor(imageData.data);
+      let rgba: RGBA | undefined;
+      if (calculateAverageColor) {
+        const imageData = context.getImageData(0, 0, width, height);
+        rgba = this.getAverageColor(imageData.data);
+      }
       if (rgba) {
         avgColor = rgba;
       }
@@ -286,10 +295,15 @@ class Utils {
     } as ImageThumbnail;
   }
 
-  public resizeImageUrl(image: HTMLImageElement, url: string, thumbnailSize: number): Promise<ImageThumbnail | null> {
+  public resizeImageUrl(
+    image: HTMLImageElement,
+    url: string,
+    thumbnailSize: number,
+    calculateAverageColor?: boolean,
+  ): Promise<ImageThumbnail | null> {
     return new Promise((resolve, reject) => {
       image.onload = () => {
-        const resized = this.getImageResized(image, thumbnailSize);
+        const resized = this.getImageResized(image, thumbnailSize, undefined, undefined, calculateAverageColor);
         resolve(resized);
       };
       image.onerror = () => {
@@ -299,7 +313,12 @@ class Utils {
     });
   }
 
-  public resizeImageFile(image: HTMLImageElement, file: File, thumbnailSize: number): Promise<ImageThumbnail | null> {
+  public resizeImageFile(
+    image: HTMLImageElement,
+    file: File,
+    thumbnailSize: number,
+    calculateAverageColor?: boolean,
+  ): Promise<ImageThumbnail | null> {
     return new Promise((resolve, reject) => {
       if (file.type.indexOf('image') === -1) {
         reject(new Error('Not an image'));
@@ -311,7 +330,7 @@ class Utils {
       const orientationPromise = this.getImageOrientation(file);
       image.onload = () => {
         orientationPromise.then((orientation) => {
-          const resized = this.getImageResized(image, thumbnailSize, undefined, orientation);
+          const resized = this.getImageResized(image, thumbnailSize, undefined, orientation, calculateAverageColor);
           if (shouldRevoke) {
             revokeObjectURL(image.src);
           }
@@ -332,12 +351,17 @@ class Utils {
     });
   }
 
-  public resizeImage(thumbnailSize: number, file?: File, url?: string): Promise<ImageThumbnail | null> {
+  public resizeImage(
+    thumbnailSize: number,
+    file?: File,
+    url?: string,
+    calculateAverageColor?: boolean,
+  ): Promise<ImageThumbnail | null> {
     const image = new Image();
     image.setAttribute('crossOrigin', 'anonymous');
     return url
-      ? this.resizeImageUrl(image, url, thumbnailSize)
-      : this.resizeImageFile(image, file as File, thumbnailSize);
+      ? this.resizeImageUrl(image, url, thumbnailSize, calculateAverageColor)
+      : this.resizeImageFile(image, file as File, thumbnailSize, calculateAverageColor);
   }
 
   public getSizeFormatted(bytes: number) {

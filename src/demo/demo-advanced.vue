@@ -84,14 +84,14 @@
           </div>
           <div class="col-6 col-md-12 px-2">
             <div class="custom-control custom-checkbox mt-1">
-              <input type="checkbox" class="custom-control-input" id="advanced-demo-deletable" v-model="deletable" />
-              <label class="custom-control-label" for="advanced-demo-deletable">:deletable</label>
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-readonly" v-model="readonly" />
+              <label class="custom-control-label" for="advanced-demo-readonly">:readonly</label>
             </div>
           </div>
           <div class="col-6 col-md-12 px-2">
             <div class="custom-control custom-checkbox mt-1">
-              <input type="checkbox" class="custom-control-input" id="advanced-demo-editable" v-model="editable" />
-              <label class="custom-control-label" for="advanced-demo-editable">:editable</label>
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled" />
+              <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
             </div>
           </div>
           <div class="col-6 col-md-12 px-2">
@@ -102,12 +102,12 @@
           </div>
           <div class="col-6 col-md-12 px-2">
             <div class="custom-control custom-checkbox mt-1">
-              <input type="checkbox" class="custom-control-input" id="advanced-demo-readonly" v-model="readonly" />
-              <label class="custom-control-label" for="advanced-demo-readonly">:readonly</label>
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-editable" v-model="editable" />
+              <label class="custom-control-label" for="advanced-demo-editable">:editable</label>
             </div>
             <div class="custom-control custom-checkbox mt-1">
-              <input type="checkbox" class="custom-control-input" id="advanced-demo-disabled" v-model="disabled" />
-              <label class="custom-control-label" for="advanced-demo-disabled">:disabled</label>
+              <input type="checkbox" class="custom-control-input" id="advanced-demo-deletable" v-model="deletable" />
+              <label class="custom-control-label" for="advanced-demo-deletable">:deletable</label>
             </div>
           </div>
           <div class="col-6 col-md-12 px-2">
@@ -145,6 +145,19 @@
             <label class="custom-control-label" for="advanced-demo-compact">:compact</label>
           </div> -->
           </div>
+          <div class="col-6 col-md-12 px-2">
+            <div class="custom-control custom-checkbox mt-1">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="advanced-demo-averageColor"
+                v-model="averageColor"
+              />
+              <label class="custom-control-label" for="advanced-demo-averageColor"
+                >:averageColor <small>(this prop is not reactive)</small></label
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -154,6 +167,7 @@
         <VueFileAgent
           ref="vueFileAgent"
           :auto="auto"
+          :averageColor="averageColor"
           :uploadUrl="uploadUrl"
           :uploadHeaders="uploadHeaders"
           :multiple="multiple"
@@ -294,6 +308,7 @@ export default {
       fileRecords: this.getFileRecordsInitial(),
       fileRecordsForUpload: [],
       auto: false,
+      averageColor: true,
       uploadUrl: window.uploadUrl || 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
       uploadHeaders: {},
       meta: true,

@@ -17,6 +17,7 @@ export default Vue.extend({
   props: [
     'accept',
     'auto',
+    'averageColor',
     'capture',
     'compact',
     'deletable',
@@ -114,13 +115,15 @@ export default Vue.extend({
     createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement): Promise<void> {
       return new Promise((resolve, reject) => {
         const canvas = document.createElement('canvas');
-        utils.createVideoThumbnail(video, canvas, fileRecord.thumbnailSize).then((thumbnail) => {
-          fileRecord.imageColor = thumbnail.color;
-          fileRecord.videoThumbnail = thumbnail.url;
-          fileRecord.dimensions.width = thumbnail.width;
-          fileRecord.dimensions.height = thumbnail.height;
-          resolve();
-        }, reject);
+        utils
+          .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.averageColor !== false)
+          .then((thumbnail) => {
+            fileRecord.imageColor = thumbnail.color;
+            fileRecord.videoThumbnail = thumbnail.url;
+            fileRecord.dimensions.width = thumbnail.width;
+            fileRecord.dimensions.height = thumbnail.height;
+            resolve();
+          }, reject);
       });
     },
     initVideo(fileRecord: FileRecord): void {
@@ -342,6 +345,7 @@ export default Vue.extend({
               maxSize: this.maxSize,
               accept: this.accept,
               thumbnailSize: this.thumbnailSize,
+              averageColor: this.averageColor,
             },
           ),
         );
@@ -483,6 +487,7 @@ export default Vue.extend({
               maxSize: this.maxSize,
               accept: this.accept,
               thumbnailSize: this.thumbnailSize,
+              averageColor: this.averageColor,
             }),
           );
           rawFileRecordsNew.push(rawFileRecords[i]);

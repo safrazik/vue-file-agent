@@ -12,6 +12,7 @@ interface Options {
   maxSize?: string;
   read: boolean;
   thumbnailSize?: number;
+  averageColor?: boolean;
 }
 
 interface ErrorText {
@@ -158,6 +159,7 @@ class FileRecord {
   public xhrQueue?: () => any;
   public stopAv?: (() => any) | null;
   public tusUpload?: any;
+  public calculateAverageColor: boolean;
 
   public constructor(data: RawFileRecord, options: Options) {
     this.url = null;
@@ -186,7 +188,7 @@ class FileRecord {
     this.videoThumbnail = data.videoThumbnail;
     this.imageColor = data.imageColor;
     this.customName = data.customName;
-
+    this.calculateAverageColor = options.averageColor !== undefined ? options.averageColor : true;
     this.validate();
   }
 
@@ -342,7 +344,7 @@ class FileRecord {
   public resizeImage(): Promise<this> {
     return new Promise((resolve, reject) => {
       utils
-        .resizeImage(this.thumbnailSize, this.file, this.url as string)
+        .resizeImage(this.thumbnailSize, this.file, this.url as string, this.calculateAverageColor)
         .then((resized) => {
           this.imageResized(resized);
           resolve(this);

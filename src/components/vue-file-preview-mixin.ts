@@ -4,7 +4,7 @@ import FileRecord, { RawFileRecord, Options } from '../lib/file-record';
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['value', 'deletable', 'editable', 'linkable', 'errorText', 'disabled', 'thumbnailSize'],
+  props: ['value', 'deletable', 'editable', 'linkable', 'errorText', 'disabled', 'thumbnailSize', 'averageColor'],
   components: {
     VueFileIcon,
   },
@@ -31,11 +31,13 @@ export default Vue.extend({
       }
       FileRecord.fromRaw(this.value, {
         thumbnailSize: this.thumbnailSize,
+        averageColor: this.averageColor,
       } as Options).then((fileRecord) => {
         this.fileRecord = fileRecord;
       });
       this.fileRecord = FileRecord.fromRawSync(this.value, {
         thumbnailSize: this.thumbnailSize,
+        averageColor: this.averageColor,
       } as Options);
     },
     createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement) {
@@ -44,13 +46,15 @@ export default Vue.extend({
         return;
       }
       const canvas = document.createElement('canvas');
-      utils.createVideoThumbnail(video, canvas, this.fileRecord.thumbnailSize).then((thumbnail) => {
-        fileRecord.imageColor = thumbnail.color;
-        fileRecord.videoThumbnail = thumbnail.url;
-        fileRecord.dimensions.width = thumbnail.width;
-        fileRecord.dimensions.height = thumbnail.height;
-        video.poster = fileRecord.src();
-      });
+      utils
+        .createVideoThumbnail(video, canvas, this.fileRecord.thumbnailSize, this.averageColor !== false)
+        .then((thumbnail) => {
+          fileRecord.imageColor = thumbnail.color;
+          fileRecord.videoThumbnail = thumbnail.url;
+          fileRecord.dimensions.width = thumbnail.width;
+          fileRecord.dimensions.height = thumbnail.height;
+          video.poster = fileRecord.src();
+        });
     },
 
     playAv(fileRecord: FileRecord) {

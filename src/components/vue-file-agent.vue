@@ -66,6 +66,7 @@
             </span>
             <slot name="file-preview" :fileRecord="fileRecord" :fileData="fileRecord" :index="index">
               <VueFilePreview
+                :averageColor="averageColor"
                 :value="fileRecord"
                 :deletable="isDeletable"
                 :editable="editable === true"
