@@ -9,6 +9,7 @@ interface Options {
     maxSize?: string;
     read: boolean;
     thumbnailSize?: number;
+    averageColor?: boolean;
 }
 interface ErrorText {
     common?: string;
@@ -23,7 +24,7 @@ interface ErrorFlags {
     upload?: false | string;
 }
 interface RawFileRecord {
-    url: string | null;
+    url: string | ((value?: string) => string | undefined | Promise<FileRecord>);
     urlResized: string | null;
     src: () => any;
     name: any;
@@ -62,7 +63,7 @@ declare class FileRecord {
     static toRawArray(fileRecords: FileRecord[]): RawFileRecord[];
     static readFile(fileRecord: FileRecord): Promise<FileRecord>;
     static readFiles(fileRecords: FileRecord[]): Promise<FileRecord[]>;
-    url: null | string;
+    urlValue: null | string;
     urlResized: null | string;
     image: HTMLImageElement | {};
     isPlayingAv: boolean;
@@ -90,10 +91,12 @@ declare class FileRecord {
     xhrQueue?: () => any;
     stopAv?: (() => any) | null;
     tusUpload?: any;
+    calculateAverageColor: boolean;
     constructor(data: RawFileRecord, options: Options);
     createDummyFile(data: RawFileRecord): DummyFile;
     hasProgress(): boolean;
     progress(value?: number): number | void;
+    url(value?: string): string | undefined | Promise<this>;
     src(): string;
     size(): string;
     ext(): string;
