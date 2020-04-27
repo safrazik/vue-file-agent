@@ -9,7 +9,7 @@
     "build": "vue-cli-service build --target lib --name vue-file-agent ./src/index.ts",
     "upload-server": "node upload-server-examples/node/upload-server.js",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --coverage",
     "test:watch": "vue-cli-service test:unit --watch --coverage",
     "build:dev": "vue-cli-service build --watch --target lib --name vue-file-agent ./src/index.ts",
     "docs:serve:dev": "jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0",

@@ -4,3 +4,4 @@ _site
 dist_dev
 node_modules
 uploads
+coverage
