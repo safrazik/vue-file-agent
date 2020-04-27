@@ -2,32 +2,77 @@ import utils from '@/lib/utils';
 import { createFile } from './shared';
 
 describe('utills', () => {
-  it('arrayMove', () => {
+  test('arrayMove', () => {
     const inp = ['a', 'b', 'c', 'd', 'e', 'f'];
     const out = ['a', 'c', 'd', 'e', 'b', 'f'];
+    const out2 = ['d', 'a', 'b', 'c', 'e', 'f'];
     const moved = utils.arrayMove(inp, inp.indexOf('b'), inp.indexOf('e'));
-    // expect(moved).toBe(['a', 'c', 'd', 'b', 'e', 'd', 'f']);
+    const moved2 = utils.arrayMove(inp, inp.indexOf('d'), inp.indexOf('a'));
     for (let i = 0; i < moved.length; i++) {
       expect(moved[i]).toBe(out[i]);
     }
-    //
+    for (let i = 0; i < moved2.length; i++) {
+      expect(moved2[i]).toBe(out2[i]);
+    }
   });
-  //   it('createVideoThumbnail', () => {
+  //   test('getAverageColor', () => {
   //     //
   //   });
-  //   it('getFilesFromDroppedItems', () => {
+  //   test('createVideoThumbnail', () => {
   //     //
   //   });
-  //   it('getDataURL', () => {
+  //   test('getDataURL', () => {
   //     //
   //   });
-  //   it('getSizeFormatted', () => {
+  //   test('getImageOrientationFromArrayBuffer', () => {
   //     //
   //   });
-  //   it('getColorForText', () => {
+  //   test('getImageOrientation', () => {
   //     //
   //   });
-  it('validateType', () => {
+  //   test('rotateCanvas', () => {
+  //     //
+  //   });
+  //   test('getImageResized', () => {
+  //     //
+  //   });
+  //   test('resizeImageUrl', () => {
+  //     //
+  //   });
+  //   test('resizeImageFile', () => {
+  //     //
+  //   });
+  //   test('resizeImage', () => {
+  //     //
+  //   });
+  const sizes = {
+    '8 KB': 8 * 1024,
+    '567 B': 567,
+    '25 KB': 25 * 1024,
+    '250 KB': 250 * 1024,
+    '3 MB': 3 * 1024 * 1024,
+  };
+  test('getSizeFormatted', () => {
+    for (const sizeText in sizes) {
+      if (!sizes.hasOwnProperty(sizeText)) {
+        continue;
+      }
+      expect(utils.getSizeFormatted((sizes as any)[sizeText])).toBe(sizeText);
+    }
+  });
+  test('getSizeParsed', () => {
+    for (const sizeText in sizes) {
+      if (!sizes.hasOwnProperty(sizeText)) {
+        continue;
+      }
+      expect(utils.getSizeParsed(sizeText)).toBe((sizes as any)[sizeText]);
+    }
+  });
+  //   test('getColorForText', () => {
+  //     //
+  //   });
+
+  test('validateType', () => {
     const file = createFile('Hello.html', 16500, 'text/html');
     expect(utils.validateType(file, '.html')).toBe(true);
     expect(utils.validateType(file, '.jpg')).toBe(false);
@@ -36,7 +81,7 @@ describe('utills', () => {
     expect(utils.validateType(file, 'image/jpeg')).toBe(false);
     expect(utils.validateType(file, 'text/html')).toBe(true);
   });
-  it('validateSize', () => {
+  test('validateSize', () => {
     const size = '146 KB';
     const bytes = utils.getSizeParsed(size);
     expect(utils.getSizeFormatted(bytes)).toBe(size);
@@ -49,7 +94,8 @@ describe('utills', () => {
     expect(utils.validateSize(file, '2MB')).toBe(true);
     expect(utils.validateSize(file, '10B')).toBe(false);
   });
-  //   it('resizeImage', () => {
+
+  //   test('getFilesFromDroppedItems', () => {
   //     //
   //   });
 });
