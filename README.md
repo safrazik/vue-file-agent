@@ -141,7 +141,7 @@ or with script tag
 ```html
 <script>
   export default {
-    data: function() {
+    data: function () {
       return {
         fileRecords: [],
         uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
@@ -150,20 +150,20 @@ or with script tag
       };
     },
     methods: {
-      uploadFiles: function() {
+      uploadFiles: function () {
         // Using the default uploader. You may use another uploader instead.
         this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForUpload);
         this.fileRecordsForUpload = [];
       },
-      deleteUploadedFile: function(fileRecord) {
+      deleteUploadedFile: function (fileRecord) {
         // Using the default uploader. You may use another uploader instead.
         this.$refs.vueFileAgent.deleteUpload(this.uploadUrl, this.uploadHeaders, fileRecord);
       },
-      filesSelected: function(fileRecordsNewlySelected) {
+      filesSelected: function (fileRecordsNewlySelected) {
         var validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
         this.fileRecordsForUpload = this.fileRecordsForUpload.concat(validFileRecords);
       },
-      fileDeleted: function(fileRecord) {
+      fileDeleted: function (fileRecord) {
         var i = this.fileRecordsForUpload.indexOf(fileRecord);
         if (i !== -1) {
           this.fileRecordsForUpload.splice(i, 1);
@@ -183,3 +183,17 @@ The MIT License
 ## [Live Demo][]
 
 [live demo]: https://safrazik.github.io/vue-file-agent
+
+## Contributors
+
+### Author
+
+[![safrazik](https://avatars1.githubusercontent.com/u/3174706?s=50&v=4)](https://github.com/safrazik)
+
+### Contributors
+
+[![kevinleedrum](https://avatars1.githubusercontent.com/u/3342530?s=30&v=4)](https://github.com/kevinleedrum)
+[![seriouslag](https://avatars1.githubusercontent.com/u/14366926?s=30&v=4)](https://github.com/seriouslag)
+[![codeflorist](https://avatars1.githubusercontent.com/u/41453547?s=30&v=4)](https://github.com/codeflorist)
+[![algm](https://avatars1.githubusercontent.com/u/146385?s=30&v=4)](https://github.com/algm)
+[![yanqd0](https://avatars1.githubusercontent.com/u/8525143?s=30&v=4)](https://github.com/yanqd0)
