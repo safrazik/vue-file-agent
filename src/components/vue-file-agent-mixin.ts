@@ -443,13 +443,13 @@ export default Vue.extend({
     },
     removeFileRecord(fileRecordOrRaw: FileRecord | RawFileRecord): void {
       const rawFileRecord = this.getFileRecordRawInstance(fileRecordOrRaw);
-      this.$emit('remove', rawFileRecord);
+      this.$emit('beforedelete', rawFileRecord);
       if (!this.uploadUrl || this.auto === false) {
         return;
       }
-      this.remove(fileRecordOrRaw);
+      this.deleteFileRecord(fileRecordOrRaw);
     },
-    remove(fileRecordOrRaw: FileRecord | RawFileRecord): void {
+    deleteFileRecord(fileRecordOrRaw: FileRecord | RawFileRecord): void {
       let i: number;
       if (fileRecordOrRaw instanceof FileRecord) {
         i = this.fileRecords.indexOf(fileRecordOrRaw);

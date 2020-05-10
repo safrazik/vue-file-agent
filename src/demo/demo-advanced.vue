@@ -187,7 +187,7 @@
           :theme="theme"
           @select="filesSelected($event)"
           @delete="fileDeleted($event)"
-          @remove="fileRemoved($event)"
+          @beforedelete="onBeforeDelete($event)"
           @sort="onSort($event)"
           @upload="uploadEvent('upload', $event)"
           @upload:error="uploadEvent('upload:error', $event)"
@@ -492,13 +492,13 @@ export default {
       console.log('filesSelected', fileRecords, validFileRecords);
       this.fileRecordsForUpload = this.fileRecordsForUpload.concat(validFileRecords);
     },
-    fileRemoved: function (fileRecord) {
+    onBeforeDelete: function (fileRecord) {
       var i = this.fileRecordsForUpload.indexOf(fileRecord);
       if (i !== -1) {
         this.fileRecordsForUpload.splice(i, 1);
       } else {
         if (confirm('Are you sure you want to delete?')) {
-          this.$refs.vueFileAgent.remove(fileRecord); // will trigger 'delete' event
+          this.$refs.vueFileAgent.deleteFileRecord(fileRecord); // will trigger 'delete' event
         }
       }
     },
