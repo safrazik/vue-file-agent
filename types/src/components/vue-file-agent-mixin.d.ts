@@ -34,6 +34,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     dragOver(event: DragEvent): void;
     dragLeave(event: DragEvent): void;
     removeFileRecord(fileRecordOrRaw: FileRecord | RawFileRecord): void;
+    deleteFileRecord(fileRecordOrRaw: FileRecord | RawFileRecord): void;
     filenameChanged(fileRecord: FileRecord): void;
     checkValue(): void;
     sortStart(): void;
@@ -50,5 +51,5 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+}, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize" | "averageColor" | "accept" | "auto" | "capture" | "compact" | "helpText" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials", any>>;
 export default _default;

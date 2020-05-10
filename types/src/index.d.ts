@@ -44,6 +44,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         dragOver(event: DragEvent): void;
         dragLeave(event: DragEvent): void;
         removeFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
+        deleteFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
         filenameChanged(fileRecord: FileRecord): void;
         checkValue(): void;
         sortStart(): void;
@@ -60,7 +61,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+    }, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize" | "averageColor" | "accept" | "auto" | "capture" | "compact" | "helpText" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials", any>>;
     plugins: {
         tus: any;
     };
@@ -96,6 +97,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         dragOver(event: DragEvent): void;
         dragLeave(event: DragEvent): void;
         removeFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
+        deleteFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
         filenameChanged(fileRecord: FileRecord): void;
         checkValue(): void;
         sortStart(): void;
@@ -112,7 +114,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+    }, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize" | "averageColor" | "accept" | "auto" | "capture" | "compact" | "helpText" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials", any>>;
     VueFilePreviewMixin: import("vue/types/vue").ExtendedVue<_Vue, {
         isEditInputFocused: boolean;
         isEditCancelable: boolean;
@@ -131,7 +133,7 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         dismissError(): void;
     }, {
         hasLinkableUrl: boolean;
-    }, Record<"averageColor" | "deletable" | "disabled" | "editable" | "errorText" | "linkable" | "thumbnailSize" | "value", any>>;
+    }, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize" | "averageColor", any>>;
     install: Vue.PluginFunction<any>;
 }
 declare const vfaPlugin: VueFileAgentPlugin;
@@ -167,6 +169,7 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
     dragOver(event: DragEvent): void;
     dragLeave(event: DragEvent): void;
     removeFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
+    deleteFileRecord(fileRecordOrRaw: FileRecord | import("./lib/file-record").RawFileRecord): void;
     filenameChanged(fileRecord: FileRecord): void;
     checkValue(): void;
     sortStart(): void;
@@ -183,7 +186,7 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+}, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize" | "averageColor" | "accept" | "auto" | "capture" | "compact" | "helpText" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials", any>>;
 export { VueFileAgentMixin, VueFilePreviewMixin };
 export { utils, FileRecord, plugins };
 export declare const FileData: typeof FileRecord;
