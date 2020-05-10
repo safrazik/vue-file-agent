@@ -187,6 +187,7 @@
           :theme="theme"
           @select="filesSelected($event)"
           @delete="fileDeleted($event)"
+          @remove="fileRemoved($event)"
           @sort="onSort($event)"
           @upload="uploadEvent('upload', $event)"
           @upload:error="uploadEvent('upload:error', $event)"
@@ -303,7 +304,7 @@
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
       fileRecords: this.getFileRecordsInitial(),
       fileRecordsForUpload: [],
@@ -334,7 +335,7 @@ export default {
     };
   },
   computed: {
-    fileRecordsInvalid: function() {
+    fileRecordsInvalid: function () {
       var fileRecordsInvalid = [];
       for (var i = 0; i < this.fileRecords.length; i++) {
         if (this.fileRecords[i].error) {
@@ -343,7 +344,7 @@ export default {
       }
       return fileRecordsInvalid;
     },
-    uploadEndpoint: function() {
+    uploadEndpoint: function () {
       if (this.resumable && this.uploadUrl.indexOf('mocky.io') !== -1) {
         return 'https://master.tus.io/files/';
       }
@@ -354,10 +355,10 @@ export default {
     uploadEvent(eventName, data) {
       console.log('UPLOAD EVENT ', eventName, data);
     },
-    getFileRecordsInitial: function() {
+    getFileRecordsInitial: function () {
       return window.getFileRecordsInitial();
     },
-    getSelectedFileRecord: function() {
+    getSelectedFileRecord: function () {
       var i = this.selectedIdx;
       i = i - 1;
       if (!this.fileRecords[i]) {
@@ -365,12 +366,12 @@ export default {
       }
       return this.fileRecords[i];
     },
-    removeAll: function() {
+    removeAll: function () {
       console.log(this.fileRecords);
       this.fileRecords = [];
       this.fileRecordsForUpload = [];
     },
-    setProgress: function() {
+    setProgress: function () {
       var fileRecord = this.getSelectedFileRecord();
       if (!fileRecord) {
         return;
@@ -378,7 +379,7 @@ export default {
       var prg = this.$refs.prgInput.value;
       fileRecord.progress(prg);
     },
-    removeInvalid: function() {
+    removeInvalid: function () {
       var fileRecordsNew = this.fileRecords.concat([]);
       for (var i = 0; i < this.fileRecordsInvalid.length; i++) {
         var idx = fileRecordsNew.indexOf(this.fileRecordsInvalid[i]);
@@ -394,7 +395,7 @@ export default {
       }
       this.fileRecords = fileRecordsNew; // mutate at once, do not splice each
     },
-    remove: function() {
+    remove: function () {
       console.log('removing...');
       var i = this.selectedIdx;
       i = i - 1;
@@ -403,7 +404,7 @@ export default {
       }
       this.fileRecords.splice(i, 1);
     },
-    update: function() {
+    update: function () {
       var fileRecord = this.getSelectedFileRecord();
       if (!fileRecord) {
         return;
@@ -414,7 +415,7 @@ export default {
       }
       this.$refs.vueFileAgent.updateUpload(this.uploadUrl, this.uploadHeaders, fileRecord);
     },
-    upload: function() {
+    upload: function () {
       console.log('let au debug');
       var fileRecord = this.getSelectedFileRecord();
       if (!fileRecord) {
@@ -429,14 +430,14 @@ export default {
         this.fileRecordsForUpload.splice(i, 1);
       }
       this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, [fileRecord]).then(
-        function(result) {
+        function (result) {
           console.log('uploded: ', result);
           console.log('after upload: ', fileRecord);
           console.log('after upload all: ', this.fileRecords);
         }.bind(this),
       );
     },
-    moveIndex: function(dir) {
+    moveIndex: function (dir) {
       console.log('moveIndex', dir);
       var index = parseInt(this.selectedIdx) - 1;
       var newIndex = index + dir;
@@ -457,13 +458,13 @@ export default {
       fileRecords[index] = adjacent;
       this.fileRecords = fileRecords.concat([]); // cause Vue array mutation
     },
-    sortBy: function(prop) {
+    sortBy: function (prop) {
       // var asc = this['_is_sorted_desc_' + prop] = !this['_is_sorted_desc_' + prop];
       var direction = this.sortDirection[prop];
       this.sortDirection[prop] = direction == 'DESC' ? 'ASC' : 'DESC';
       // console.log('sortBy', prop, this.fileRecords);
       var ret = direction == 'DESC' ? -1 : 1;
-      this.fileRecords = this.fileRecords.sort(function(fd1, fd2) {
+      this.fileRecords = this.fileRecords.sort(function (fd1, fd2) {
         var f1 = fd1.file || fd1;
         var f2 = fd2.file || fd2;
         return f1[prop] > f2[prop] ? 1 * ret : -1 * ret;
@@ -471,16 +472,16 @@ export default {
       // console.log('sortBy after', prop, this.fileRecords);
     },
 
-    uploadFiles: function() {
+    uploadFiles: function () {
       // Using the default uploader. You may use another uploader instead.
       this.$refs.vueFileAgent.upload(this.uploadEndpoint, this.uploadHeaders, this.fileRecordsForUpload);
       this.fileRecordsForUpload = [];
     },
-    deleteUploadedFile: function(fileRecord) {
+    deleteUploadedFile: function (fileRecord) {
       // Using the default uploader. You may use another uploader instead.
       this.$refs.vueFileAgent.deleteUpload(this.uploadEndpoint, this.uploadHeaders, fileRecord);
     },
-    filesSelected: function(fileRecords) {
+    filesSelected: function (fileRecords) {
       console.log('filesSelected', fileRecords);
       var validFileRecords = [];
       for (var i = 0; i < fileRecords.length; i++) {
@@ -491,7 +492,17 @@ export default {
       console.log('filesSelected', fileRecords, validFileRecords);
       this.fileRecordsForUpload = this.fileRecordsForUpload.concat(validFileRecords);
     },
-    fileDeleted: function(fileRecord) {
+    fileRemoved: function (fileRecord) {
+      var i = this.fileRecordsForUpload.indexOf(fileRecord);
+      if (i !== -1) {
+        this.fileRecordsForUpload.splice(i, 1);
+      } else {
+        if (confirm('Are you sure you want to delete?')) {
+          this.$refs.vueFileAgent.remove(fileRecord);
+        }
+      }
+    },
+    fileDeleted: function (fileRecord) {
       var i = this.fileRecordsForUpload.indexOf(fileRecord);
       if (i !== -1) {
         this.fileRecordsForUpload.splice(i, 1);
@@ -504,7 +515,7 @@ export default {
         'sorted',
         event.oldIndex,
         event.newIndex,
-        this.fileRecords.map(function(fd) {
+        this.fileRecords.map(function (fd) {
           return typeof fd.name == 'function' ? fd.name() : fd.name;
         }),
       );
