@@ -498,7 +498,7 @@ export default {
         this.fileRecordsForUpload.splice(i, 1);
       } else {
         if (confirm('Are you sure you want to delete?')) {
-          this.$refs.vueFileAgent.remove(fileRecord);
+          this.$refs.vueFileAgent.remove(fileRecord); // will trigger 'delete' event
         }
       }
     },
