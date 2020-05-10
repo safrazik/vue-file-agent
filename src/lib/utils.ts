@@ -303,6 +303,14 @@ class Utils {
   ): Promise<ImageThumbnail | null> {
     return new Promise((resolve, reject) => {
       image.onload = () => {
+        if (!calculateAverageColor) {
+          resolve({
+            image,
+            url,
+            color: undefined,
+          } as ImageThumbnail);
+          return;
+        }
         const resized = this.getImageResized(image, thumbnailSize, undefined, undefined, calculateAverageColor);
         if (resized) {
           resized.url = url;
