@@ -124,7 +124,7 @@ or with script tag
       size: 'Files should not exceed 10MB in size',
     }"
     @select="filesSelected($event)"
-    @remove="fileRemoved($event)"
+    @beforedelete="onBeforeDelete($event)"
     @delete="fileDeleted($event)"
     v-model="fileRecords"
   ></VueFileAgent>
@@ -164,13 +164,13 @@ or with script tag
         var validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
         this.fileRecordsForUpload = this.fileRecordsForUpload.concat(validFileRecords);
       },
-      fileRemoved: function (fileRecord) {
+      onBeforeDelete: function (fileRecord) {
         var i = this.fileRecordsForUpload.indexOf(fileRecord);
         if (i !== -1) {
           this.fileRecordsForUpload.splice(i, 1);
         } else {
           if (confirm('Are you sure you want to delete?')) {
-            this.$refs.vueFileAgent.remove(fileRecord); // will trigger 'delete' event
+            this.$refs.vueFileAgent.deleteFileRecord(fileRecord); // will trigger 'delete' event
           }
         }
       },
