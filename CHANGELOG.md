@@ -4,7 +4,7 @@
 
 - [BREAKING CHANGE] Added support for `beforedelete` event and `deleteFileRecord` method. [See Usage](https://safrazik.com/vue-file-agent/docs/#beforedelete)
 
-### 1.7.0 Common Nightingale
+### 1.7.0 Elegant Euphonia
 
 - Added `averageColor` boolean prop #52
 - Fixed extra shadow when meta=false #55
