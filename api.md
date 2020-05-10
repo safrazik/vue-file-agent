@@ -297,11 +297,51 @@ Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/s
 
 ## Events
 
+### delete
+
+`$event`: FileRecord instance
+
 ### input
 
 `$event`: array of serialized FileRecord
 
 Fired whenever files are selected. Passes all selected files data (including previously selected). You shouldn't use this event directly. Instead, use v-model for two way binding, and use `select` event for other purposes
+
+### beforedelete
+
+`$event`: FileRecord instance
+
+Fired when the remove icon (`x`) is pressed. You may have to call `deleteFileRecord` method ([See methods](#methods)) when `beforedelete` event is triggered. In auto upload mode `deleteFileRecord` is called implicitly.
+
+E.g
+
+```vue
+<template>
+  <VueFileAgent
+    ref="fileAgent"
+    @beforedelete="onBeforeDelete($event)"
+    @delete="onDelete($event)"
+  </VueFileAgent>
+</template>
+<script>
+  export default {
+    // ...
+    metods: {
+      // ...
+      onBeforeDelete(fileRecord){
+        if(confirm('Are you sure?')){
+          this.$refs.fileAgent.deleteFileRecord(fileRecord);
+        }
+      },
+      onDelete(fileRecord){
+        this.$refs.fileAgent.deleteUpload(/* ... */);
+      }
+      // ...
+    }
+    // ...
+  }
+</script>
+```
 
 ### select
 
@@ -359,6 +399,10 @@ Fired after file is updated (renamed). If the file fails to be uploaded, `upload
 Fired after file is deleted. If the file fails to be deleted, `upload:delete:error` is triggered instead.
 
 ## Methods
+
+### deleteFileRecord(`fileRecord`: FileRecord | RawFileRecord): void
+
+- Removes the `fileRecord` from the list and triggers `delete` event
 
 ### upload(`uploadUrl` : string, `uploadHeaders` : object, `fileRecords` : FileRecord[] | RawFileRecord[], `createFormData` ?: (fileRecord: FileRecord) => FormData, `uploadConfig` ?: (request: XMLHttpRequest) => any): Promise
 
