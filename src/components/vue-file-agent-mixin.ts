@@ -442,6 +442,14 @@ export default Vue.extend({
       }
     },
     removeFileRecord(fileRecordOrRaw: FileRecord | RawFileRecord): void {
+      const rawFileRecord = this.getFileRecordRawInstance(fileRecordOrRaw);
+      this.$emit('remove', rawFileRecord);
+      if (!this.uploadUrl || this.auto === false) {
+        return;
+      }
+      this.remove(fileRecordOrRaw);
+    },
+    remove(fileRecordOrRaw: FileRecord | RawFileRecord): void {
       let i: number;
       if (fileRecordOrRaw instanceof FileRecord) {
         i = this.fileRecords.indexOf(fileRecordOrRaw);
@@ -534,11 +542,7 @@ export default Vue.extend({
     },
   },
   created() {
-    this.uniqueId =
-      new Date().getTime().toString(36) +
-      Math.random()
-        .toString(36)
-        .slice(2);
+    this.uniqueId = new Date().getTime().toString(36) + Math.random().toString(36).slice(2);
     this.checkValue();
   },
   watch: {
