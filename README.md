@@ -10,6 +10,10 @@ High performant Vue file **upload** component with elegant and distinguishable *
 
 [Become a Sponsor/Supporter](https://www.patreon.com/safrazik)
 
+## [Live Demo][] · [CodePen Playground](https://codepen.io/safrazik/pen/BaBpYme)
+
+![Demo](website/assets/demo.gif?v=1.5)
+
 ## Contributors
 
 ### Author
@@ -23,10 +27,6 @@ High performant Vue file **upload** component with elegant and distinguishable *
 [![codeflorist](https://avatars1.githubusercontent.com/u/41453547?s=30&v=4)](https://github.com/codeflorist)
 [![algm](https://avatars1.githubusercontent.com/u/146385?s=30&v=4)](https://github.com/algm)
 [![yanqd0](https://avatars1.githubusercontent.com/u/8525143?s=30&v=4)](https://github.com/yanqd0)
-
-## [Live Demo][] · [CodePen Playground](https://codepen.io/safrazik/pen/BaBpYme)
-
-![Demo](website/assets/demo.gif?v=1.5)
 
 ## Features
 
