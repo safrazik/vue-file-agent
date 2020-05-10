@@ -1,5 +1,26 @@
 # Change Log
 
+### 1.7.1
+
+- [BREAKING CHANGE] Added support for `beforedelete` event and `deleteFileRecord` method. [See Usage](https://safrazik.com/vue-file-agent/docs/#beforedelete)
+
+### 1.7.0 Common Nightingale
+
+- Added `averageColor` boolean prop #52
+- Fixed extra shadow when meta=false #55
+- Made `url` property reactive #53
+- Support for custom tus.Upload options #58
+- Disabled resized image data urls (base64) for preloaded images #54
+
+### 1.6.2
+
+- Restricted dismissing client errors #45
+- Added `capture` prop #48
+
+### 1.6.1
+
+- Renamed `FileData` to `FileRecord`
+
 ### 1.6.0 House Sparrow
 
 - New Feature 🎉 `readonly` prop support
