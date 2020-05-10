@@ -25,6 +25,12 @@ e.g: `image/*,.pdf`
 Equivalent to HTML5 file input [accept attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept). Validated and error message is shown when selecting invalid files.
 Value can be a combination of: [Unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers)
 
+### averageColor
+
+boolean, default true
+
+Set it to false to disable smart background color (average color) for images and video thumbnails. Note: this prop is not reactive (not respected when changed at runtime)
+
 ### capture
 
 string, default `undefined`
