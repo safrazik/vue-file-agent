@@ -20,7 +20,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     getFileRecordInstance(fileRecordOrRaw: FileRecord | RawFileRecord): FileRecord;
     prepareConfigureFn(configureXhr?: ConfigureFn | undefined): ConfigureFn | undefined;
     upload(url: string, headers: object, fileRecordsOrRaw: FileRecord[] | RawFileRecord[], createFormData?: ((fileRecord: FileRecord) => FormData) | undefined, configureXhr?: ConfigureFn | undefined): Promise<any>;
-    deleteUpload(url: string, headers: object, fileRecord: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
+    deleteUpload(url: string, headers: object, fileRecordOrRaw: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
     updateUpload(url: string, headers: object, fileRecord: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
     autoUpload(fileRecords: FileRecord[] | RawFileRecord[]): Promise<any>;
     autoDeleteUpload(fileRecord: FileRecord | RawFileRecord): Promise<any>;
@@ -51,5 +51,5 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"value" | "deletable" | "editable" | "linkable" | "errorText" | "disabled" | "thumbnailSize" | "averageColor" | "accept" | "auto" | "capture" | "compact" | "helpText" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials", any>>;
+}, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
 export default _default;

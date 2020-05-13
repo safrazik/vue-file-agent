@@ -2770,13 +2770,13 @@ var dragCounter = 0;
                 });
             });
         },
-        deleteUpload: function (url, headers, fileRecord, uploadData, configureXhr) {
+        deleteUpload: function (url, headers, fileRecordOrRaw, uploadData, configureXhr) {
             var _this = this;
             if (this.fileRecords.length < 1) {
                 this.overallProgress = 0;
             }
-            fileRecord = this.getFileRecordInstance(fileRecord);
-            var rawFileRecord = this.getFileRecordRawInstance(fileRecord);
+            var fileRecord = this.getFileRecordInstance(fileRecordOrRaw);
+            var rawFileRecord = this.getFileRecordRawInstance(fileRecordOrRaw);
             if (this.resumable) {
                 return upload_helper.tusDeleteUpload(plugins.tus, url, headers, fileRecord);
             }
@@ -2876,7 +2876,7 @@ var dragCounter = 0;
                 filesFiltered.push(files[i]);
             }
             files = filesFiltered;
-            if (this.maxFiles && files.length > this.maxFiles - this.fileRecords.length) {
+            if (this.hasMultiple && this.maxFiles && files.length > this.maxFiles - this.fileRecords.length) {
                 files = files.slice(0, this.maxFiles - this.fileRecords.length);
             }
             try {
@@ -2936,6 +2936,9 @@ var dragCounter = 0;
             this.$emit('change', event);
             if (!files[0]) {
                 return;
+            }
+            if (!this.hasMultiple) {
+                files = [files[0]];
             }
             this.handleFiles(files);
             if (this.$refs.fileInput) {
