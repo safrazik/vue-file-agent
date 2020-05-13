@@ -109,8 +109,15 @@ class FileRecord {
   public static readFile(fileRecord: FileRecord): Promise<FileRecord> {
     return new Promise((resolve, reject) => {
       if (!fileRecord.read) {
-        fileRecord.setUrl(null);
-        resolve(fileRecord);
+        fileRecord.setUrl(null).then(
+          () => {
+            resolve(fileRecord);
+          },
+          (err) => {
+            // ignore error
+            resolve(fileRecord);
+          },
+        );
         return;
       }
       utils.getDataURL(fileRecord.file).then((dataUrl) => {
@@ -177,7 +184,7 @@ class FileRecord {
     // this.height = FileRecord.defaultHeight;
     this.thumbnailSize = options.thumbnailSize || 360;
     this.read = !!options.read;
-    this.dimensions = data.dimensions || {};
+    this.dimensions = data.dimensions || { width: 0, height: 0 };
     this.dimensions.width = this.dimensions.width || 0;
     this.dimensions.height = this.dimensions.height || 0;
     this.error = data.error || false;
@@ -388,7 +395,7 @@ class FileRecord {
   }
 
   public toRaw(): RawFileRecord {
-    const raw = this.raw || {};
+    const raw = this.raw || ({} as RawFileRecord);
     // raw.url = this.urlValue;
     raw.url = this.url.bind(this);
     raw.urlResized = this.urlResized;
