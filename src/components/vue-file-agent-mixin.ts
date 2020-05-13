@@ -230,15 +230,15 @@ export default Vue.extend({
     deleteUpload(
       url: string,
       headers: object,
-      fileRecord: FileRecord | RawFileRecord,
+      fileRecordOrRaw: FileRecord | RawFileRecord,
       uploadData?: any,
       configureXhr?: ConfigureFn,
     ): Promise<any> {
       if (this.fileRecords.length < 1) {
         this.overallProgress = 0;
       }
-      fileRecord = this.getFileRecordInstance(fileRecord);
-      const rawFileRecord = this.getFileRecordRawInstance(fileRecord);
+      const fileRecord = this.getFileRecordInstance(fileRecordOrRaw);
+      const rawFileRecord = this.getFileRecordRawInstance(fileRecordOrRaw);
       if (this.resumable) {
         return uploader.tusDeleteUpload(plugins.tus, url, headers, fileRecord);
       }
@@ -338,7 +338,7 @@ export default Vue.extend({
         filesFiltered.push(files[i]);
       }
       files = filesFiltered;
-      if (this.maxFiles && files.length > this.maxFiles - this.fileRecords.length) {
+      if (this.hasMultiple && this.maxFiles && files.length > this.maxFiles - this.fileRecords.length) {
         files = files.slice(0, this.maxFiles - this.fileRecords.length);
       }
       for (const file of files) {
@@ -380,10 +380,13 @@ export default Vue.extend({
       this.autoUpload(fileRecords);
     },
     filesChanged(event: InputEvent): void {
-      const files: FileList = (event.target as HTMLInputElement).files as FileList;
+      let files: File[] | FileList = (event.target as HTMLInputElement).files as FileList;
       this.$emit('change', event);
       if (!files[0]) {
         return;
+      }
+      if (!this.hasMultiple) {
+        files = [files[0]];
       }
       this.handleFiles(files);
       if (this.$refs.fileInput) {
