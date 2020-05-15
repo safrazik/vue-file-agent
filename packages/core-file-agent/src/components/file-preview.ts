@@ -23,6 +23,7 @@ let previewEl: Element;
 
 export class FilePreview extends Component {
   isEditInputFocused = false;
+
   constructor(public $props: Props) {
     super();
   }
@@ -377,7 +378,10 @@ export class FilePreview extends Component {
     }
   }
 
-  getEl() {
+  get $el() {
+    if (this.cachedEl) {
+      return this.cachedEl;
+    }
     const fileRecord = this.$props.fileRecord as FileRecord;
     let el: HTMLElement = (fileRecord as any)._el ? (fileRecord as any)._el : undefined;
     if (!el) {
