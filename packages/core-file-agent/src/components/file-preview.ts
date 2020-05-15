@@ -11,6 +11,8 @@ interface Props {
   linkable?: boolean;
   disabled?: boolean;
   fileRecord?: FileRecord;
+  onDelete?: (fileRecord: FileRecord) => void;
+  onRename?: (fileRecord: FileRecord) => void;
   errorText?: {
     // common?: string;
     type?: string;
@@ -23,6 +25,7 @@ let previewEl: Element;
 
 export class FilePreview extends Component {
   isEditInputFocused = false;
+  isEditCancelable = true;
 
   constructor(public $props: Props) {
     super();
@@ -245,10 +248,135 @@ export class FilePreview extends Component {
     };
   }
 
+  dismissError() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    if (fileRecord.error && (fileRecord.error.size || fileRecord.error.type)) {
+      return;
+    }
+    fileRecord.error = false;
+    this.getRef('error-wrapper').style.display = 'none';
+    // this.update();
+  }
+
+  filenameClearPressed() {
+    if (!(this.$props.editable === true && this.isEditInputFocused)) {
+      return;
+    }
+    this.isEditCancelable = false;
+  }
+
+  editInputFocused() {
+    this.isEditInputFocused = true;
+    this.isEditCancelable = true;
+    this.updateWrapper();
+  }
+
+  editInputBlured() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    fileRecord.oldFileName = fileRecord.name();
+    const oldValue = fileRecord.name(true);
+    const value = this.getRef<HTMLInputElement>('file-name-input').value;
+    fileRecord.customName = value;
+    const newValue = fileRecord.name(true);
+    if (newValue !== oldValue) {
+      fileRecord.oldCustomName = oldValue;
+      this.update();
+      if (this.$props.onRename) {
+        this.$props.onRename(fileRecord);
+      }
+    }
+    const timeout = 100;
+    setTimeout(() => {
+      // this.$nextTick(() => {
+      if (!this.isEditCancelable) {
+        return;
+      }
+      this.isEditInputFocused = false;
+      // });
+      this.updateWrapper();
+    }, timeout);
+  }
+
+  clearFilename() {
+    if (!(this.$props.editable === true && this.isEditInputFocused)) {
+      return false;
+    }
+    this.getRef<HTMLInputElement>('file-name-input').value = '';
+    this.isEditCancelable = true;
+    this.editInputBlured();
+    return true;
+  }
+
+  removeFileRecord() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    if (this.clearFilename()) {
+      return;
+    }
+    if (this.$props.disabled === true) {
+      return;
+    }
+    if (this.$props.onDelete) {
+      this.$props.onDelete(fileRecord);
+    }
+  }
+
+  editFileName() {
+    if (this.$props.editable !== true) {
+      return;
+    }
+    const input = this.getRef<HTMLInputElement>('file-name-input');
+    if (!input) {
+      return;
+    }
+    input.focus();
+  }
+
+  filenameChanged(completed?: boolean) {
+    if (completed) {
+      this.getRef<HTMLInputElement>('file-name-input').blur(); // @see editInputBlured method
+    }
+    if (completed === false) {
+      this.clearFilename();
+    }
+  }
+
   bindEvents() {
     const fileRecord = this.$props.fileRecord as FileRecord;
     this.getRef('av-action').onclick = () => {
       this.playAv();
+    };
+
+    this.getRef('error-wrapper').onclick = () => {
+      this.dismissError();
+    };
+
+    this.getRef('file-delete').onclick = () => {
+      this.removeFileRecord();
+    };
+
+    this.getRef('file-delete').ontouchstart = this.getRef('file-delete').onmousedown = () => {
+      this.filenameClearPressed();
+    };
+
+    this.getRef('file-name').onclick = () => {
+      this.editFileName();
+    };
+
+    const input = this.getRef<HTMLInputElement>('file-name-input');
+    input.onfocus = () => {
+      this.editInputFocused();
+    };
+
+    input.onblur = () => {
+      this.editInputBlured();
+    };
+    input.oninput = input.onchange = () => {
+      this.filenameChanged();
+    };
+    input.onkeyup = (event) => {
+      if (event.keyCode === 13 || event.keyCode === 27) {
+        this.filenameChanged(true);
+      }
     };
   }
 
@@ -270,8 +398,10 @@ export class FilePreview extends Component {
     const fileRecord = this.$props.fileRecord as FileRecord;
     this.updateWrapper();
 
+    const visible = '';
+
     this.getRef('av-wrapper').style.display =
-      fileRecord.isPlayableAudio() || fileRecord.isPlayableVideo() ? 'block' : 'none';
+      fileRecord.isPlayableAudio() || fileRecord.isPlayableVideo() ? visible : 'none';
 
     const previewRefEl = this.getRef('preview');
 
@@ -283,14 +413,14 @@ export class FilePreview extends Component {
 
     previewRefEl.style.backgroundColor = fileRecord.color();
 
-    this.getRef('error-wrapper').style.display = fileRecord.error ? 'block' : 'none';
+    this.getRef('error-wrapper').style.display = fileRecord.error ? visible : 'none';
     this.getRef('error-text').innerText = fileRecord.getErrorMessage(this.$props.errorText);
 
     if (fileRecord.isImage() || fileRecord.isPlayableVideo()) {
-      this.getRef('thumbnail').style.display = 'block';
+      this.getRef('thumbnail').style.display = visible;
       if (this.hasLinkableUrl(fileRecord)) {
         const link = this.getRef<HTMLLinkElement>('thumbnail-link');
-        link.style.display = 'block';
+        link.style.display = visible;
         this.getRef('thumbnail-image').style.display = 'none';
         const img = this.getRef<HTMLImageElement>('thumbnail-link-image');
         img.src = fileRecord.src();
@@ -299,25 +429,27 @@ export class FilePreview extends Component {
       } else {
         this.getRef('thumbnail-link').style.display = 'none';
         const img = this.getRef<HTMLImageElement>('thumbnail-image');
-        img.style.display = 'block';
+        img.style.display = visible;
         img.src = fileRecord.src();
       }
     } else {
       this.getRef('thumbnail').style.display = 'none';
     }
 
-    this.getRef('file-delete').style.display = this.$props.deletable ? 'block' : 'none';
+    this.getRef('file-delete').style.display = this.$props.deletable ? visible : 'none';
 
+    const input = this.getRef<HTMLInputElement>('file-name-input');
     if (this.$props.editable === true) {
-      this.getRef('file-name-input').style.display = 'inline';
-      this.getRef('file-name-edit-icon').style.display = 'inline';
+      input.style.display = visible;
+      input.value = fileRecord.name(true);
+      this.getRef('file-name-edit-icon').style.display = visible;
     } else {
-      this.getRef('file-name-input').style.display = 'none';
+      input.style.display = 'none';
       this.getRef('file-name-edit-icon').style.display = 'none';
     }
 
     if (fileRecord.dimensions.width && fileRecord.dimensions.height) {
-      this.getRef('image-dimension').style.display = 'block';
+      this.getRef('image-dimension').style.display = visible;
       this.getRef('image-dimension-width').innerText = '' + fileRecord.dimensions.width;
       this.getRef('image-dimension-height').innerText = '' + fileRecord.dimensions.height;
     } else {
@@ -326,7 +458,7 @@ export class FilePreview extends Component {
 
     if (fileRecord.hasProgress()) {
       const progressEl = this.getRef('file-progress');
-      progressEl.style.display = 'block';
+      progressEl.style.display = visible;
       progressEl.className = `file-progress
         ${fileRecord.progress() >= 99.9999 ? 'file-progress-full' : ''}
         ${fileRecord.progress() >= 100 ? 'file-progress-done' : ''}
@@ -342,13 +474,13 @@ export class FilePreview extends Component {
     const fileIcon = this.getRef('file-icon');
     if (this.hasLinkableUrl(fileRecord)) {
       fileIcon.style.display = 'none';
-      fileIconLink.style.display = 'block';
+      fileIconLink.style.display = visible;
       fileIconLink.innerHTML = '';
       fileIconLink.appendChild(svg);
       fileIconLink.href = fileRecord.url() as string;
       fileIconLink.title = fileRecord.name();
     } else {
-      fileIcon.style.display = 'block';
+      fileIcon.style.display = visible;
       fileIconLink.style.display = 'none';
       fileIcon.innerHTML = '';
       fileIcon.appendChild(svg);
@@ -367,7 +499,7 @@ export class FilePreview extends Component {
     const values = {
       'file-ext': fileRecord.ext(),
       'file-size': fileRecord.size(),
-      'file-name-text': fileRecord.name(),
+      'file-name-text': fileRecord.name(true),
     };
     for (const ref in values) {
       if (!values.hasOwnProperty(ref)) {

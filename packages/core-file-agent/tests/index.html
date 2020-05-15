@@ -7,6 +7,12 @@
     <meta name="description" content="File Agent Component Live HTML test" />
     <meta name="author" content="Safraz Razik" />
 
+    <!-- <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    /> -->
     <link rel="stylesheet" href="../dist/core-file-agent.css" />
   </head>
 
@@ -86,7 +92,7 @@
 
       var container = document.getElementById('file-preview-blocks-container');
 
-      FileRecord.fromRawArray(rawFileRecords, { read: false }).then(function (fileRecords) {
+      FileRecord.fromRawArray(rawFileRecords, { read: false, maxSize: '4MB' }).then(function (fileRecords) {
         for (var i = 0; i < fileRecords.length; i++) {
           var fileRecord = fileRecords[i];
           var filePreview = new FilePreview({
@@ -95,6 +101,12 @@
             deletable: true,
             editable: true,
             linkable: true,
+            onRename: function (fileRecord) {
+              console.log('onRename', fileRecord.name(), fileRecord);
+            },
+            onDelete: function (fileRecord) {
+              console.log('onDelete', fileRecord.name(), fileRecord);
+            },
           });
           var child = document.createElement('div');
           child.className = 'file-preview-wrapper grid-box-item grid-block';
