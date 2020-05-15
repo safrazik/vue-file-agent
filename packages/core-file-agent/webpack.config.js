@@ -1,7 +1,13 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const createConfig = (options) => {
+const createConfig = (options, isDebugging) => {
   return {
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'core-file-agent.css',
+      }),
+    ],
     watch: options.watch === true,
     watchOptions:
       options.watch === true
@@ -35,6 +41,26 @@ const createConfig = (options) => {
           test: /\.html$/i,
           loader: 'html-loader',
         },
+        {
+          test: /\.scss$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: !!isDebugging,
+              },
+            },
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'postcss-loader',
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
+        },
       ],
     },
     resolve: {
@@ -50,16 +76,22 @@ module.exports = (env, argv) => {
 
   if (!isDebugging) {
     configs.push(
-      createConfig({
-        mode: 'production',
-      }),
+      createConfig(
+        {
+          mode: 'production',
+        },
+        isDebugging,
+      ),
     );
   }
   configs.push(
-    createConfig({
-      mode: 'development',
-      watch: true,
-    }),
+    createConfig(
+      {
+        mode: 'development',
+        watch: true,
+      },
+      isDebugging,
+    ),
   );
 
   return configs;

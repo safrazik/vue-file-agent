@@ -2,6 +2,8 @@ import { FileIcon } from './components/file-icon';
 import FileRecord from './lib/file-record';
 export * from './components/file-preview';
 
+import './scss/index.scss';
+
 export interface Props {
   multiple?: boolean;
 }
