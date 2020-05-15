@@ -80,7 +80,9 @@ function includesFolder(transfer: DataTransfer): boolean {
   }
 
   // Loop through the dropped items and log their data
-  for (const item of transfer.items) {
+  // tslint:disable-next-line
+  for (let i = 0; i < transfer.items.length; i++) {
+    const item = transfer.items[i];
     if (item.webkitGetAsEntry != null) {
       const entry = item.webkitGetAsEntry();
 

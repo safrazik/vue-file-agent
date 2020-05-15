@@ -2,16 +2,17 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "sourceMap": true,
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "es6",
+    "target": "es5",
     "strict": true,
     "esModuleInterop": true,
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "outDir": "./dist",
     "declaration": true,
     "declarationDir": "types",
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

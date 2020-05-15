@@ -1,0 +1,51 @@
+<div data-ref="wrapper">
+  <div data-ref="av-wrapper" class="file-av-wrapper">
+    <div data-ref="av-action" class="file-av-action">
+      <span class="file-av-stop">
+        <icon name="system-close"></icon>
+      </span>
+      <span class="file-av-play">
+        <icon name="system-file-av-play"></icon>
+      </span>
+    </div>
+  </div>
+  <span data-ref="preview" class="file-preview">
+    <span data-ref="error-wrapper" class="file-error-wrapper">
+      <span data-ref="error-text" class="file-error-message file-error-message-client"></span>
+    </span>
+    <span class="file-preview-overlay"></span>
+    <span
+      data-ref="thumbnail"
+      class="thumbnail"
+      style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
+    >
+      <a data-ref="thumbnail-link" target="_blank">
+        <img data-ref="thumbnail-link-image" class="file-preview-img" />
+      </a>
+      <img data-ref="thumbnail-image" class="file-preview-img" />
+    </span>
+    <span data-ref="file-ext" class="file-ext"></span>
+    <span data-ref="file-size" class="file-size"></span>
+    <span data-ref="file-delete" class="file-delete">
+      <icon name="system-close"></icon>
+    </span>
+    <span data-ref="file-name" class="file-name">
+      <input data-ref="file-name-input" class="file-name-input" type="text" />
+      <span data-ref="file-name-edit-icon" class="file-name-edit-icon">
+        <icon name="system-file-name-edit"></icon>
+      </span>
+      <span data-ref="file-name-text" class="file-name-text"></span>
+    </span>
+    <span data-ref="image-dimension" class="image-dimension">
+      <span data-ref="image-dimension-width" class="image-dimension-width"></span
+      ><span data-ref="image-dimension-height" class="image-dimension-height"></span>
+    </span>
+    <span data-ref="file-progress" class="file-progress">
+      <span data-ref="file-progress-bar" class="file-progress-bar"></span>
+    </span>
+    <span class="file-icon">
+      <a data-ref="file-icon-link" target="_blank"></a>
+      <span data-ref="file-icon"></span>
+    </span>
+  </span>
+</div>

@@ -12,11 +12,12 @@ const createConfig = (options) => {
     mode: options.mode,
     devtool: options.devtool || 'source-map',
     entry: './src/index.ts',
-    target: 'node',
     output: {
       path: options.output || path.resolve(__dirname, 'dist'),
       filename: 'core-file-agent' + (options.mode === 'production' ? '.min' : '') + '.js',
-      libraryTarget: 'commonjs',
+      library: 'core-file-agent',
+      libraryTarget: 'umd',
+      globalObject: "typeof self !== 'undefined' ? self : this",
     },
     module: {
       rules: [
@@ -29,6 +30,10 @@ const createConfig = (options) => {
               configFile: 'tsconfig.json',
             },
           },
+        },
+        {
+          test: /\.html$/i,
+          loader: 'html-loader',
         },
       ],
     },

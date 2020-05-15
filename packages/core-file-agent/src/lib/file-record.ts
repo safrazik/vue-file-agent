@@ -91,7 +91,7 @@ class FileRecord {
   }
 
   public static fromRawArray(rawFileRecords: RawFileRecord[], options: Options): Promise<FileRecord[]> {
-    const promises: Array<Promise<FileRecord>> = [];
+    const promises: Promise<FileRecord>[] = [];
     for (const rawFileRecord of rawFileRecords) {
       promises.push(FileRecord.fromRaw(rawFileRecord, options));
     }
@@ -122,7 +122,7 @@ class FileRecord {
   }
 
   public static readFiles(fileRecords: FileRecord[]): Promise<FileRecord[]> {
-    const promises: Array<Promise<FileRecord>> = [];
+    const promises: Promise<FileRecord>[] = [];
     for (const fileRecord of fileRecords) {
       promises.push(FileRecord.readFile(fileRecord));
     }

@@ -31,6 +31,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^25.2.1",
+    "html-loader": "^1.1.0",
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",

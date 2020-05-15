@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>File Agent Test</title>
+    <meta name="description" content="File Agent Component Live HTML test" />
+    <meta name="author" content="Safraz Razik" />
+
+    <link rel="stylesheet" href="../dist/core-file-agent.css" />
+  </head>
+
+  <body>
+    <h3>File Icon</h3>
+    <div style="border: 1px solid green; width: 100px;" id="file-icon-wrapper"></div>
+    <h3>File Preview</h3>
+
+    <div style="border: 1px solid blue;">
+      <div class="theme-default">
+        <div class="vue-file-agent grid-block-wrapper" style="padding: 0;" id="file-preview-blocks-container">
+          <!-- <div id="file-preview-wrapper" class="file-preview-wrapper grid-box-item grid-block"></div> -->
+        </div>
+      </div>
+    </div>
+
+    <h3>File Agent</h3>
+    <div style="border: 1px solid brown;" id="file-agent-wrapper"></div>
+    <script src="../dist/core-file-agent.js"></script>
+    <script>
+      var FileAgent = window['core-file-agent'].FileAgent;
+      var FileIcon = window['core-file-agent'].FileIcon;
+      var FilePreview = window['core-file-agent'].FilePreview;
+      var FileRecord = window['core-file-agent'].FileRecord;
+
+      var fileAgent = new FileAgent({
+        multiple: false,
+      });
+      fileAgent.render(document.getElementById('file-agent-wrapper'));
+
+      var fileIcon = new FileIcon({
+        ext: 'pdf',
+      });
+      fileIcon.render(document.getElementById('file-icon-wrapper'));
+
+      var rawFileRecords = [
+        {
+          name: 'Some Large File.zip',
+          size: 25165824, // 24 MB
+          type: 'application/zip',
+          ext: 'zip',
+        },
+        {
+          name: 'House Sparrow.jpg',
+          lastModified: 1583992794341,
+          sizeText: '14 KB',
+          size: 14403,
+          type: 'image/jpeg',
+          ext: 'jpg',
+          url: 'https://safrazik.com/vue-file-agent/website/assets/files/House Sparrow.jpg',
+        },
+        {
+          name: 'Golf.mp4',
+          lastModified: 1576563996233,
+          sizeText: '549 KB',
+          size: 561813,
+          type: 'video/mp4',
+          ext: 'mp4',
+          dimensions: {
+            width: 640,
+            height: 360,
+          },
+          url: 'https://safrazik.com/vue-file-agent/website/assets/files/Golf.mp4',
+          videoThumbnail: 'https://safrazik.com/vue-file-agent/website/assets/files/Golf-thumb.jpg',
+          imageColor: [66, 62, 45],
+        },
+        {
+          name: 'sample.pdf',
+          lastModified: 1565232623243,
+          sizeText: '3 KB',
+          size: 3028,
+          type: 'application/pdf',
+          ext: 'pdf',
+          url: 'https://safrazik.com/vue-file-agent/website/assets/files/sample.pdf',
+        },
+      ];
+
+      var container = document.getElementById('file-preview-blocks-container');
+
+      FileRecord.fromRawArray(rawFileRecords, { read: false }).then(function (fileRecords) {
+        for (var i = 0; i < fileRecords.length; i++) {
+          var fileRecord = fileRecords[i];
+          var filePreview = new FilePreview({
+            ext: 'pdf',
+            fileRecord: fileRecord,
+            deletable: true,
+            editable: true,
+            linkable: true,
+          });
+          var child = document.createElement('div');
+          child.className = 'file-preview-wrapper grid-box-item grid-block';
+          container.appendChild(child);
+          filePreview.render(child);
+        }
+      });
+      // var fileRecord = FileRecord.fromRawSync(
+      //   {
+      //     name: 'Some Large File.zip',
+      //     size: 25165824, // 24 MB
+      //     type: 'application/zip',
+      //     ext: 'zip',
+      //   },
+      //   { read: false },
+      // );
+    </script>
+  </body>
+</html>
