@@ -1,0 +1,39 @@
+.vue-file-agent {
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.is-drag-over * {
+  pointer-events: none !important;
+}
+
+.is-drag-over::before {
+  content: ' ';
+}
+
+.is-disabled .vue-file-agent {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.grid-box-item {
+  transition-duration: 600ms;
+}
+
+.grid-box-enter,
+.grid-box-leave-to {
+  opacity: 0 !important;
+  /*transform: translate3d(-20px, -20px, -20px) scale(0) !important;*/
+  transform: translate3d(0, 0, 0) scale(0.25) !important;
+}
+
+.grid-box-leave-active {
+  position: absolute !important;
+}
+
+.is-readonly .vue-file-agent.file-input-wrapper {
+  border: 0;
+}

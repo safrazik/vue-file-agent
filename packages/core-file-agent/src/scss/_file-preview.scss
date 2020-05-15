@@ -1,0 +1,188 @@
+.vue-file-agent {
+  .file-preview {
+    position: relative;
+    z-index: 1;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+
+    &::before,
+    &::after {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      top: auto;
+      height: 25px;
+    }
+
+    &::before {
+      height: 28px;
+      top: 0;
+      bottom: auto;
+    }
+
+    .file-preview-img {
+      max-width: 100%;
+      max-height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.1)" /><rect x="50%" y="0" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /><rect x="0" y="50%" width="50%" height="50%" fill="rgba(0, 0, 0, 0.075)" /></svg>');
+      background-repeat: repeat;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .file-preview-img-clone {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      object-fit: cover;
+      filter: blur(10px);
+      height: 100%;
+      width: 100%;
+    }
+
+    .file-name {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 0 5px;
+      z-index: 4;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 28px;
+      height: 28px;
+      font-size: 16px;
+    }
+
+    .file-delete {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0;
+      font-size: 16px;
+      background: transparent;
+      height: 28px;
+      width: 22px;
+      display: block;
+      color: #fff;
+      color: rgba(255, 255, 255, 0.75);
+      z-index: 500;
+    }
+
+    .file-delete svg {
+      width: 1em;
+      height: 1em;
+      fill: currentColor;
+      vertical-align: middle;
+    }
+
+    .file-icon {
+      z-index: 455;
+      position: absolute;
+      top: 50%;
+      height: 72px;
+      width: 72px;
+      margin-top: -36px;
+      left: 50%;
+      margin-left: -36px;
+    }
+
+    .file-icon svg {
+      width: 72px;
+      height: 72px;
+      fill: #fff;
+    }
+
+    .file-ext {
+      position: absolute;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: left;
+      display: block;
+      /*width: 100%;*/
+      right: 0;
+      left: 0;
+      bottom: 0;
+      line-height: 25px;
+      padding: 0 5px;
+      z-index: 3;
+    }
+
+    .file-size {
+      position: absolute;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: right;
+      display: block;
+      /*width: 100%;*/
+      right: 0;
+      bottom: 0;
+      line-height: 25px;
+      padding: 0 5px;
+      z-index: 4;
+    }
+
+    .image-dimension .image-dimension-width,
+    .image-dimension .image-dimension-height {
+      display: inline-block;
+    }
+
+    .image-dimension .image-dimension-width::after {
+      content: 'x';
+    }
+
+    .image-dimension {
+      position: absolute;
+      font-size: 12px;
+      text-align: center;
+      display: block;
+      width: 100%;
+      right: 0;
+      bottom: 0;
+      line-height: 25px;
+      padding: 0 5px;
+      z-index: 4;
+    }
+
+    .file-name,
+    .file-ext,
+    .file-size,
+    .image-dimension,
+    .image-dimension .image-dimension-width::after {
+      color: #fff;
+    }
+  }
+
+  &.has-multiple .file-preview,
+  &.is-single .is-deletable .file-preview {
+    z-index: 11;
+  }
+
+  .is-deletable .file-preview .file-name {
+    padding-right: 20px;
+  }
+
+  &.no-meta .file-preview {
+    .file-ext,
+    .file-name,
+    .file-size,
+    .image-dimension,
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}

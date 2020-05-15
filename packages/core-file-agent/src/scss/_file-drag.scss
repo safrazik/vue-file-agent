@@ -1,0 +1,20 @@
+.vue-file-agent {
+  &.file-input-wrapper {
+    position: relative;
+    border: 2px dashed #aaa;
+    text-align: center;
+    transition: all 600ms;
+  }
+
+  &.file-input-wrapper.is-drag-over,
+  .is-drag-over &.file-input-wrapper {
+    border-color: #f61a1a;
+    box-shadow: inset 0px 0px 20px 1px #f61a1a;
+  }
+
+  &.file-input-wrapper.is-drag-valid.is-drag-over,
+  .is-drag-valid.is-drag-over &.file-input-wrapper {
+    border-color: #54d500;
+    box-shadow: inset 0px 0px 20px 1px #54d500;
+  }
+}

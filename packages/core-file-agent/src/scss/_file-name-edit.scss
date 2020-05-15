@@ -1,0 +1,50 @@
+.vue-file-agent .is-editable {
+  .file-name {
+    cursor: pointer;
+  }
+
+  .file-name .file-name-input {
+    color: inherit;
+    background: transparent;
+    font-weight: inherit;
+    padding: inherit;
+    margin: inherit;
+    border: 0;
+    outline: 0;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: inherit;
+    opacity: 0;
+    z-index: -5;
+  }
+
+  .file-name .file-name-edit-icon svg {
+    height: 1em;
+    width: 1em;
+    margin-right: 2px;
+    opacity: 0.5;
+    fill: currentColor;
+    vertical-align: middle;
+    margin-top: -2px;
+  }
+
+  &.is-edit-input-focused {
+    .file-name {
+      border-bottom: 1px solid currentColor;
+    }
+
+    .file-name .file-name-edit-icon {
+      display: none;
+    }
+
+    .file-name .file-name-text {
+      display: none;
+    }
+
+    .file-name .file-name-input {
+      opacity: 1;
+      z-index: 2;
+    }
+  }
+}

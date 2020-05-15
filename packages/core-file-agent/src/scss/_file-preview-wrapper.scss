@@ -1,0 +1,70 @@
+.vue-file-agent {
+  .file-preview-wrapper {
+    display: inline-block;
+    margin: 5px;
+    position: relative;
+    vertical-align: top;
+    margin: 16px;
+    margin: 8px;
+
+    &::before {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  // image preview, video thumbnail
+  .file-preview-wrapper-image,
+  .file-category-video-playable {
+    .file-preview .file-preview-overlay {
+      content: ' ';
+      background: rgba(0, 0, 0, 0.25);
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .file-preview::before {
+      // background: rgba(100, 100, 100, 0.5);
+      box-shadow: inset 0px 40px 20px -25px rgba(0, 0, 0, 0.5);
+      height: 40px;
+    }
+
+    .file-preview::after {
+      // background: rgba(100, 100, 100, 0.5);
+      box-shadow: inset 0px -40px 20px -25px rgba(0, 0, 0, 0.5);
+      height: 40px;
+    }
+
+    .file-preview .file-icon {
+      display: none;
+    }
+  }
+
+  .file-category-audio-playable,
+  .file-category-video-playable {
+    .file-preview .file-icon {
+      display: none;
+    }
+  }
+
+  .file-category-video-playable {
+    .file-preview .file-preview-overlay {
+      z-index: 1;
+    }
+  }
+
+  .file-preview-wrapper-image {
+    .file-preview.dark-content .file-preview-overlay {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+}

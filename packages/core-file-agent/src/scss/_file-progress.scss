@@ -1,0 +1,52 @@
+.vue-file-agent {
+  .file-progress {
+    display: block;
+    height: 3px;
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    top: 32px;
+    top: 1px;
+    top: 0;
+    height: 28px;
+
+    height: 4px;
+    margin-top: 1px;
+    margin-left: 1px;
+    margin-right: 1px;
+
+    .file-progress-bar {
+      background: #fac525;
+      display: block;
+      height: 100%;
+      transition: all 100ms;
+      width: 0;
+    }
+
+    &.has-file-progress {
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0px 2px 10px -1px rgba(0, 0, 0, 0.75);
+    }
+
+    &.file-progress-full .file-progress-bar {
+      background: #54d500;
+    }
+
+    &.file-progress-done {
+      width: 5px !important;
+      height: 5px !important;
+      right: 0 !important;
+      left: auto !important;
+      border-radius: 50%;
+      box-shadow: -1px 1px 2px 0px rgba(0, 0, 0, 0.75);
+
+      .file-progress-bar {
+        // background: #6eef1a;
+        background: #54d500;
+      }
+    }
+  }
+}

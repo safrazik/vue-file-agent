@@ -1,0 +1,26 @@
+.vue-file-agent {
+  .file-error-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    color: #fff;
+    bottom: 25px;
+    z-index: 499;
+    padding: 10px;
+    // background: #ea2626;
+    // background: rgba(234, 38, 38, 0.85);
+    top: 28px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+
+    .file-error-message {
+      background: #ea2626;
+      width: 100%;
+      height: auto;
+      color: #fff;
+      padding: 0 5px;
+      display: block;
+    }
+  }
+}

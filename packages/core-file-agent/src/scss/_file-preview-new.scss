@@ -1,0 +1,34 @@
+.vue-file-agent {
+  .file-preview-new {
+    text-align: center;
+    padding: 8px;
+    z-index: 1;
+
+    &::before {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    svg {
+      fill: #aaa;
+      margin-top: 16%;
+      height: 36%;
+    }
+
+    .help-text {
+      color: #aaa;
+      text-align: center;
+      font-size: 16px;
+      line-height: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .file-preview {
+      z-index: 8;
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+}
