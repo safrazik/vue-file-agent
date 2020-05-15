@@ -83,10 +83,13 @@
     }
 
     .file-delete svg {
-      width: 1em;
-      height: 1em;
+      width: 16px;
+      height: 16px;
       fill: currentColor;
       vertical-align: middle;
+      position: absolute;
+      top: 6px;
+      right: 3px;
     }
 
     .file-icon {
