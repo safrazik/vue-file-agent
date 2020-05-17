@@ -17,20 +17,25 @@
   </head>
 
   <body>
-    <h3>File Icon</h3>
-    <div style="border: 1px solid green; width: 100px;" id="file-icon-wrapper"></div>
+    <h1>File Agent Demo</h1>
+    <fieldset id="file-drag-area">
+      <legend>Drag Area</legend>
+      CI
+      <h3>File Icon</h3>
+      <div style="border: 1px solid green; width: 100px;" id="file-icon-wrapper"></div>
 
-    <h3>File Agent</h3>
-    <div id="file-agent-wrapper"></div>
+      <h3>File Agent</h3>
+      <div id="file-agent-wrapper"></div>
 
-    <h3>File Preview</h3>
-    <div style="border: 1px solid blue;">
-      <div class="theme-default">
-        <div class="vue-file-agent grid-block-wrapper" style="padding: 0;" id="file-preview-blocks-container">
-          <!-- <div id="file-preview-wrapper" class="file-preview-wrapper grid-box-item grid-block"></div> -->
+      <h3>File Preview</h3>
+      <div style="border: 1px solid blue;">
+        <div class="theme-default">
+          <div class="vue-file-agent grid-block-wrapper" style="padding: 0;" id="file-preview-blocks-container">
+            <!-- <div id="file-preview-wrapper" class="file-preview-wrapper grid-box-item grid-block"></div> -->
+          </div>
         </div>
       </div>
-    </div>
+    </fieldset>
 
     <script src="../dist/core-file-agent.js"></script>
     <script>
@@ -96,11 +101,23 @@
           editable: true,
           linkable: true,
           maxSize: '4MB',
+          // draggable: document.getElementById('file-drag-area'),
           onBeforeDelete: function (fileRecord, callback) {
             console.log('onBeforrrrrr', fileRecord.name());
             if (true || confirm('Sure?')) {
               callback();
             }
+          },
+          slots: {
+            afterInner: 'After inner',
+            afterOuter: 'After outer',
+            beforeInner: 'Before inner',
+            beforeOuter: 'Before outer',
+            filePreview: function (fileRecord) {
+              return '<div>File: ' + fileRecord.name() + '</div>';
+            },
+            filePreviewNew: 'File Preview New',
+            sortableHandle: 'Sortable Handle',
           },
         });
         fileAgent.render(document.getElementById('file-agent-wrapper'));

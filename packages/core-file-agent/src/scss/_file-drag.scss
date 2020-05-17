@@ -18,3 +18,15 @@
     box-shadow: inset 0px 0px 20px 1px #54d500;
   }
 }
+
+.file-agent-drag-over {
+  opacity: 0.75;
+  transition: all 300ms;
+}
+
+.file-agent-drag-over.file-agent-drag-invalid {
+  box-shadow: inset 0px 0px 20px 1px #f61a1a;
+}
+.file-agent-drag-over.file-agent-drag-valid {
+  box-shadow: inset 0px 0px 20px 1px #54d500;
+}

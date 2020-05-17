@@ -24,8 +24,11 @@ interface Props {
   capture?: string;
   thumbnailSize?: number;
   fileRecords: FileRecord[];
+  draggable?: boolean | HTMLElement;
   onBeforeDelete?: (fileRecord: FileRecord, deleter: () => void) => void;
   onDelete?: (fileRecord: FileRecord) => void;
+  onChange?: (event: InputEvent) => void;
+  onDrop?: (event: DragEvent) => void;
   // onRename?: (fileRecord: FileRecord) => void;
   // errorText?: {
   //   // common?: string;
@@ -33,10 +36,22 @@ interface Props {
   //   size?: string;
   //   // upload?: string;
   // };
+  slots?: {
+    afterInner?: HTMLElement | string;
+    afterOuter?: HTMLElement | string;
+    beforeInner?: HTMLElement | string;
+    beforeOuter?: HTMLElement | string;
+    filePreview?: (fileRecord: FileRecord) => HTMLElement | string;
+    filePreviewNew?: HTMLElement | string;
+    sortableHandle?: HTMLElement | string;
+  };
 }
 
 let fileAgentEl: Element;
 let newFilePreviewEl: Element;
+
+// tslint:disable-next-line
+var dragCounter = 0;
 
 export class FileAgent extends Component {
   isDragging = false;
@@ -120,6 +135,7 @@ export class FileAgent extends Component {
     video.src = createObjectURL(fileRecord.file);
     this.createThumbnail(fileRecord, video).then(() => {
       revokeObjectURL(video.src);
+      (fileRecord as any)._filePreview.update();
     });
     video.load();
   }
@@ -248,9 +264,9 @@ export class FileAgent extends Component {
 
   filesChanged(event: InputEvent) {
     const files: FileList = (event.target as HTMLInputElement).files as FileList;
-    // if (this.$props.onChange) {
-    //   this.$props.onChange(event);
-    // }
+    if (this.$props.onChange) {
+      this.$props.onChange(event);
+    }
     if (!files[0]) {
       return;
     }
@@ -262,8 +278,119 @@ export class FileAgent extends Component {
     }
   }
 
+  drop(event: DragEvent): void {
+    event.stopPropagation();
+    event.preventDefault();
+    dragCounter = 0;
+    this.updateDragStatus(false);
+    if (this.$props.disabled === true || this.$props.readonly === true) {
+      return;
+    }
+    if (!event.dataTransfer) {
+      return;
+    }
+    utils.getFilesFromDroppedItems(event.dataTransfer).then((files) => {
+      if (this.$props.onDrop) {
+        this.$props.onDrop(event);
+      }
+      if (!files || !files[0]) {
+        return;
+      }
+      if (!this.hasMultiple) {
+        files = [files[0]];
+      }
+      this.handleFiles(files);
+    });
+  }
+
+  dragEnter(event: DragEvent): void {
+    if (!event.dataTransfer) {
+      return;
+    }
+    this.updateDragStatus(true);
+    event.stopPropagation();
+    event.preventDefault();
+    dragCounter++;
+    event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+  }
+
+  dragOver(event: DragEvent): void {
+    if (!event.dataTransfer) {
+      return;
+    }
+    this.updateDragStatus(true);
+    event.stopPropagation();
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+  }
+
+  dragLeave(event: DragEvent): void {
+    if (!event.dataTransfer) {
+      return;
+    }
+    dragCounter--;
+    if (dragCounter === 0) {
+      this.updateDragStatus(false);
+    }
+  }
+
   bindEvents() {
-    //
+    // @dragover="dragOver"
+    // @dragenter="dragEnter"
+    // @dragleave="dragLeave"
+    // @drop="drop"
+    if (this.$props.draggable === false) {
+      return;
+    }
+    const dragEl =
+      this.$props.draggable === undefined || this.$props.draggable === true
+        ? this.$el
+        : (this.$props.draggable as HTMLElement);
+    dragEl.ondragover = (event) => {
+      this.dragOver(event);
+    };
+    dragEl.ondragenter = (event) => {
+      this.dragEnter(event);
+    };
+    dragEl.ondragleave = (event) => {
+      this.dragLeave(event);
+    };
+    dragEl.ondrop = (event) => {
+      this.drop(event);
+    };
+  }
+
+  updateDragStatus(isDragging: boolean) {
+    // console.log('update drag status');
+    if (this.isDragging === isDragging) {
+      return;
+    }
+    // console.log('updating drag status...');
+    this.isDragging = isDragging;
+    if (this.$props.draggable === false) {
+      return;
+    }
+    const dragEl =
+      this.$props.draggable === undefined || this.$props.draggable === true
+        ? this.$el
+        : (this.$props.draggable as HTMLElement);
+    if (this.isDragging) {
+      // dragEl.classList.add('is-drag-over');
+      dragEl.classList.add('file-agent-drag-over');
+      if (!(this.$props.disabled === true || this.$props.readonly === true || (this.hasMultiple && !this.canAddMore))) {
+        // dragEl.classList.add('is-drag-valid');
+        dragEl.classList.add('file-agent-drag-valid');
+        dragEl.classList.remove('file-agent-drag-invalid');
+      } else {
+        // dragEl.classList.remove('is-drag-valid');
+        dragEl.classList.remove('file-agent-drag-valid');
+        dragEl.classList.add('file-agent-drag-invalid');
+      }
+    } else {
+      // dragEl.classList.remove('is-drag-over');
+      dragEl.classList.remove('file-agent-drag-over');
+    }
+    // this.updateWrapper();
   }
 
   updateWrapper() {
@@ -291,6 +418,40 @@ export class FileAgent extends Component {
     `;
   }
 
+  getSlotContent(ref: string | HTMLElement, slot: string) {
+    if (!this.$props.slots) {
+      return;
+    }
+    const slotContent = (this.$props.slots as any)[slot];
+    if (!slotContent) {
+      return;
+    }
+    if (typeof slotContent === 'string') {
+      const div = document.createElement('div');
+      div.innerHTML = slotContent;
+      return div;
+    }
+    return slotContent;
+  }
+
+  insertSlotBefore(ref: string | HTMLElement, slot: string) {
+    const slotContent = this.getSlotContent(ref, slot);
+    if (!slotContent) {
+      return;
+    }
+    const el = typeof ref === 'string' ? this.getRef(ref) : (ref as HTMLElement);
+    el.insertBefore(slotContent, el.firstChild);
+  }
+
+  insertSlotAfter(ref: string | HTMLElement, slot: string) {
+    const slotContent = this.getSlotContent(ref, slot);
+    if (!slotContent) {
+      return;
+    }
+    const el = typeof ref === 'string' ? this.getRef(ref) : (ref as HTMLElement);
+    el.appendChild(slotContent);
+  }
+
   update() {
     this.updateWrapper();
     // const container = this.getRef('file-preview-wrapper-container');
@@ -299,21 +460,43 @@ export class FileAgent extends Component {
     container.innerHTML = '';
     container.appendChild(newFilePreviewEl);
     this.getRef('help-text').innerText = this.helpTextComputed;
+
+    // afterInner?: HTMLElement | string;
+    // afterOuter?: HTMLElement | string;
+    // beforeInner?: HTMLElement | string;
+    // beforeOuter?: HTMLElement | string;
+    // filePreview?: (fileRecord: FileRecord) => HTMLElement | string;
+    // filePreviewNew?: HTMLElement | string;
+    // sortableHandle?: HTMLElement | string;
+
+    this.insertSlotBefore(this.$el, 'beforeOuter');
+    this.insertSlotBefore('container', 'beforeInner');
+    this.insertSlotAfter('container', 'afterInner');
+    this.insertSlotAfter(this.$el, 'afterOuter');
+
     for (const fileRecord of this.$props.fileRecords.concat([]).reverse()) {
       const child = document.createElement('div');
       child.className = 'file-preview-wrapper grid-box-item grid-block';
-      const filePreview = new FilePreview({
-        fileRecord,
-        deletable: this.$props.deletable,
-        editable: this.$props.editable,
-        linkable: this.$props.linkable,
-        onRename: (fr) => {
-          this.onRenameFileRecord(fr);
-        },
-        onDelete: (fr) => {
-          this.onDeleteFileRecord(fr);
-        },
-      });
+      let filePreview: FilePreview = (fileRecord as any)._filePreview;
+      if (!filePreview) {
+        filePreview = new FilePreview({
+          fileRecord,
+          deletable: this.$props.deletable,
+          editable: this.$props.editable,
+          linkable: this.$props.linkable,
+          onRename: (fr) => {
+            this.onRenameFileRecord(fr);
+          },
+          onDelete: (fr) => {
+            this.onDeleteFileRecord(fr);
+          },
+        });
+        (fileRecord as any)._filePreview = filePreview;
+        child.classList.add('grid-box-enter');
+        setTimeout(() => {
+          child.classList.remove('grid-box-enter');
+        }, 10);
+      }
       filePreview.render(child);
       if (container.firstChild) {
         container.insertBefore(child, container.firstChild);
@@ -331,9 +514,9 @@ export class FileAgent extends Component {
     };
   }
 
-  get $el() {
+  get $el(): HTMLElement {
     if (this.cachedEl) {
-      return this.cachedEl;
+      return this.cachedEl as HTMLElement;
     }
     // let el?: HTMLElement;
     // if (!el) {

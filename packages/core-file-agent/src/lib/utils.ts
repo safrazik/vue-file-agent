@@ -32,6 +32,23 @@ class Utils {
     return array;
   }
 
+  public getThumbnailDimensions(width: number, height: number, thumbnailSize: number) {
+    if (width > height) {
+      if (width > thumbnailSize) {
+        height *= thumbnailSize / width;
+        width = thumbnailSize;
+      }
+    } else {
+      if (height > thumbnailSize) {
+        width *= thumbnailSize / height;
+        height = thumbnailSize;
+      }
+    }
+
+    return { width, height };
+    // }
+  }
+
   public getAverageColor(arr: Uint8ClampedArray): RGBA | undefined {
     const bytesPerPixel = 4;
     const arrLength = arr.length;
@@ -102,9 +119,11 @@ class Utils {
       };
       // Load metadata of the video to get video duration and dimensions
       video.addEventListener('loadedmetadata', () => {
-        // var video_duration = video.duration;
-        canvas.width = thumbnailSize;
-        canvas.height = (canvas.width / video.videoWidth) * video.videoHeight;
+        const dimensions = this.getThumbnailDimensions(video.videoWidth, video.videoHeight, thumbnailSize);
+        canvas.width = dimensions.width;
+        canvas.height = dimensions.height;
+        // canvas.width = thumbnailSize;
+        // canvas.height = (canvas.width / video.videoWidth) * video.videoHeight;
         video.currentTime = 1; // video time
         loadedmetadata = true;
         tryGetThumbnail();
@@ -245,17 +264,9 @@ class Utils {
       width = widthLimit;
       height = heightLimit;
     } else {
-      if (width > height) {
-        if (width > thumbnailSize) {
-          height *= thumbnailSize / width;
-          width = thumbnailSize;
-        }
-      } else {
-        if (height > thumbnailSize) {
-          width *= thumbnailSize / height;
-          height = thumbnailSize;
-        }
-      }
+      const dimensions = this.getThumbnailDimensions(width, height, thumbnailSize);
+      width = dimensions.width;
+      height = dimensions.height;
     }
 
     width = Math.floor(width);

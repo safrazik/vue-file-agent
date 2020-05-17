@@ -6,11 +6,13 @@
   }
 }
 
-.is-drag-over * {
+.is-drag-over *,
+.file-agent-drag-over * {
   pointer-events: none !important;
 }
 
-.is-drag-over::before {
+.is-drag-over::before,
+.file-agent-drag-over::before {
   content: ' ';
 }
 
