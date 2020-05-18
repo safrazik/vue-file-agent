@@ -5,6 +5,18 @@ export class Component {
   getEl(): Element {
     return document.createElement('div');
   }
+  toggleClass(el: Element, cls: string, toggle: boolean) {
+    const hasClass = el.classList.contains(cls);
+    if (toggle) {
+      if (!hasClass) {
+        el.classList.add(cls);
+      }
+    } else {
+      if (hasClass) {
+        el.classList.remove(cls);
+      }
+    }
+  }
   get $el(): Element {
     if (this.cachedEl) {
       return this.cachedEl;

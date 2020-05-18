@@ -275,9 +275,18 @@ export class FilePreview extends Component {
     }
   }
 
+  updateError() {
+    const visible = '';
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    this.toggleClass(this.$el, 'has-error', !!fileRecord.error);
+    this.getRef('error-wrapper').style.display = fileRecord.error ? visible : 'none';
+    this.getRef('error-text').innerText = fileRecord.getErrorMessage(this.$props.errorText);
+  }
+
   update() {
     const fileRecord = this.$props.fileRecord as FileRecord;
     this.updateWrapper();
+    this.updateError();
 
     const visible = '';
 
@@ -293,9 +302,6 @@ export class FilePreview extends Component {
         `;
 
     previewRefEl.style.backgroundColor = fileRecord.color();
-
-    this.getRef('error-wrapper').style.display = fileRecord.error ? visible : 'none';
-    this.getRef('error-text').innerText = fileRecord.getErrorMessage(this.$props.errorText);
 
     if (fileRecord.isImage() || fileRecord.isPlayableVideo()) {
       this.getRef('thumbnail').style.display = visible;
