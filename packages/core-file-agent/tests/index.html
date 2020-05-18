@@ -113,10 +113,19 @@
             afterOuter: 'After outer',
             beforeInner: 'Before inner',
             beforeOuter: 'Before outer',
-            filePreview: function (fileRecord) {
-              return '<div>File: ' + fileRecord.name() + '</div>';
+            filePreviewx: function (fileRecord) {
+              return `<div>
+                  File: ${fileRecord.name()}
+                </div>`;
             },
-            filePreviewNew: 'File Preview New',
+            filePreviewNew: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
+                  
+        <span class="file-preview">
+          <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
+            <h1 data-ref="help-text" class="help-text"></h1>
+          </span>
+        </span>
+                </div>`,
             sortableHandle: 'Sortable Handle',
           },
         });

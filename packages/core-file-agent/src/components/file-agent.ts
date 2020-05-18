@@ -41,7 +41,7 @@ interface Props {
     afterOuter?: HTMLElement | string;
     beforeInner?: HTMLElement | string;
     beforeOuter?: HTMLElement | string;
-    filePreview?: (fileRecord: FileRecord) => HTMLElement | string;
+    filePreview?: (fileRecord: FileRecord, index: number) => HTMLElement | string;
     filePreviewNew?: HTMLElement | string;
     sortableHandle?: HTMLElement | string;
   };
@@ -135,7 +135,9 @@ export class FileAgent extends Component {
     video.src = createObjectURL(fileRecord.file);
     this.createThumbnail(fileRecord, video).then(() => {
       revokeObjectURL(video.src);
-      (fileRecord as any)._filePreview.update();
+      if ((fileRecord as any)._filePreview) {
+        (fileRecord as any)._filePreview.update();
+      }
     });
     video.load();
   }
@@ -233,8 +235,12 @@ export class FileAgent extends Component {
     return div.innerHTML;
   }
 
-  getRef<T extends HTMLElement>(ref: string, el?: Element) {
-    return (el || this.$el).querySelector('[data-ref="' + ref + '"]') as T;
+  getRef<T extends HTMLElement>(ref: string, el?: Element): T {
+    return ((el || this.$el).querySelector('[data-ref="' + ref + '"]') as T) || document.createElement('span');
+  }
+
+  getSlot<T extends HTMLElement>(slot: string): T {
+    return this.$el.querySelector('[data-slot="' + slot + '"]') as T;
   }
 
   deleteFileRecord(fileRecord: FileRecord) {
@@ -418,38 +424,56 @@ export class FileAgent extends Component {
     `;
   }
 
-  getSlotContent(ref: string | HTMLElement, slot: string) {
-    if (!this.$props.slots) {
-      return;
-    }
-    const slotContent = (this.$props.slots as any)[slot];
-    if (!slotContent) {
-      return;
-    }
+  getSlotContentParsed(slotContent: string | HTMLElement): HTMLElement {
     if (typeof slotContent === 'string') {
       const div = document.createElement('div');
       div.innerHTML = slotContent;
+      if (div.children.length === 1) {
+        return div.firstChild as HTMLElement;
+      }
       return div;
     }
     return slotContent;
   }
-
-  insertSlotBefore(ref: string | HTMLElement, slot: string) {
-    const slotContent = this.getSlotContent(ref, slot);
+  getSlotContent(slot: string) {
+    if (!this.$props.slots) {
+      return;
+    }
+    const slotContent: string | HTMLElement = (this.$props.slots as any)[slot];
     if (!slotContent) {
       return;
     }
-    const el = typeof ref === 'string' ? this.getRef(ref) : (ref as HTMLElement);
-    el.insertBefore(slotContent, el.firstChild);
+    return this.getSlotContentParsed(slotContent);
+  }
+
+  insertSlot(slot: string) {
+    const slotContent = this.getSlotContent(slot);
+    if (!slotContent) {
+      return;
+    }
+    const slotEl = this.getSlot(slot);
+    slotEl.innerHTML = '';
+    slotEl.appendChild(slotContent);
+  }
+
+  insertSlotBefore(ref: string | HTMLElement, slot: string) {
+    return this.insertSlot(slot);
+    // const slotContent = this.getSlotContent(slot);
+    // if (!slotContent) {
+    //   return;
+    // }
+    // const el = typeof ref === 'string' ? this.getRef(ref) : (ref as HTMLElement);
+    // el.insertBefore(slotContent, el.firstChild);
   }
 
   insertSlotAfter(ref: string | HTMLElement, slot: string) {
-    const slotContent = this.getSlotContent(ref, slot);
-    if (!slotContent) {
-      return;
-    }
-    const el = typeof ref === 'string' ? this.getRef(ref) : (ref as HTMLElement);
-    el.appendChild(slotContent);
+    return this.insertSlot(slot);
+    // const slotContent = this.getSlotContent(slot);
+    // if (!slotContent) {
+    //   return;
+    // }
+    // const el = typeof ref === 'string' ? this.getRef(ref) : (ref as HTMLElement);
+    // el.appendChild(slotContent);
   }
 
   update() {
@@ -458,51 +482,55 @@ export class FileAgent extends Component {
     const container = this.getRef('file-preview-list');
     // console.log('this.$props.fileRecords', this.$props.fileRecords);
     container.innerHTML = '';
-    container.appendChild(newFilePreviewEl);
+    const slotContent = this.getSlotContent('filePreviewNew');
+    if (slotContent) {
+      container.appendChild(slotContent);
+    } else {
+      container.appendChild(newFilePreviewEl);
+    }
     this.getRef('help-text').innerText = this.helpTextComputed;
-
-    // afterInner?: HTMLElement | string;
-    // afterOuter?: HTMLElement | string;
-    // beforeInner?: HTMLElement | string;
-    // beforeOuter?: HTMLElement | string;
-    // filePreview?: (fileRecord: FileRecord) => HTMLElement | string;
-    // filePreviewNew?: HTMLElement | string;
-    // sortableHandle?: HTMLElement | string;
 
     this.insertSlotBefore(this.$el, 'beforeOuter');
     this.insertSlotBefore('container', 'beforeInner');
     this.insertSlotAfter('container', 'afterInner');
     this.insertSlotAfter(this.$el, 'afterOuter');
 
+    let index = 0;
     for (const fileRecord of this.$props.fileRecords.concat([]).reverse()) {
       const child = document.createElement('div');
       child.className = 'file-preview-wrapper grid-box-item grid-block';
-      let filePreview: FilePreview = (fileRecord as any)._filePreview;
-      if (!filePreview) {
-        filePreview = new FilePreview({
-          fileRecord,
-          deletable: this.$props.deletable,
-          editable: this.$props.editable,
-          linkable: this.$props.linkable,
-          onRename: (fr) => {
-            this.onRenameFileRecord(fr);
-          },
-          onDelete: (fr) => {
-            this.onDeleteFileRecord(fr);
-          },
-        });
-        (fileRecord as any)._filePreview = filePreview;
-        child.classList.add('grid-box-enter');
-        setTimeout(() => {
-          child.classList.remove('grid-box-enter');
-        }, 10);
+      if (this.$props.slots && this.$props.slots.filePreview) {
+        const previewSlotContent = this.getSlotContentParsed(this.$props.slots.filePreview(fileRecord, index));
+        child.appendChild(previewSlotContent);
+      } else {
+        let filePreview: FilePreview = (fileRecord as any)._filePreview;
+        if (!filePreview) {
+          filePreview = new FilePreview({
+            fileRecord,
+            deletable: this.$props.deletable,
+            editable: this.$props.editable,
+            linkable: this.$props.linkable,
+            onRename: (fr) => {
+              this.onRenameFileRecord(fr);
+            },
+            onDelete: (fr) => {
+              this.onDeleteFileRecord(fr);
+            },
+          });
+          (fileRecord as any)._filePreview = filePreview;
+          child.classList.add('grid-box-enter');
+          setTimeout(() => {
+            child.classList.remove('grid-box-enter');
+          }, 10);
+        }
+        filePreview.render(child);
       }
-      filePreview.render(child);
       if (container.firstChild) {
         container.insertBefore(child, container.firstChild);
       } else {
         container.appendChild(child);
       }
+      index++;
     }
     const input = this.getRef<HTMLInputElement>('file-input');
     input.disabled = this.$props.disabled === true || (this.hasMultiple && !this.canAddMore);

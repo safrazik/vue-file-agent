@@ -1,7 +1,7 @@
 <div data-ref="wrapper">
-  <!-- <slot name="before-outer"></slot> -->
+  <div data-slot="beforeOuter"></div>
   <div data-ref="container" class="grid-block-wrapper vue-file-agent file-input-wrapper">
-    <!-- <slot name="before-inner"></slot> -->
+    <div data-slot="beforeInner"></div>
     <canvas data-ref="thumbnail-canvas" style="position: fixed; visibility: hidden; z-index: -3;"></canvas>
     <!-- <div data-ref="overall-progress" class="overall-progress">
       <div data-ref="overall-progress-bar" class="overall-progress-bar"></div>
@@ -70,7 +70,7 @@
     </div>
     <!-- </component> -->
     <input data-ref="file-input" title="" type="file" class="file-input" />
-    <!-- <slot name="after-inner"></slot> -->
+    <div data-slot="afterInner"></div>
   </div>
-  <!-- <slot name="after-outer"></slot> -->
+  <div data-slot="afterOuter"></div>
 </div>
