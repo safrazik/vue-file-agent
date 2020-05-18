@@ -37,6 +37,10 @@
       </div>
     </fieldset>
 
+    <div id="some-unique-el">
+      This is a unique element
+    </div>
+
     <script src="../dist/core-file-agent.js"></script>
     <script>
       var FileAgent = window['core-file-agent'].FileAgent;
@@ -64,6 +68,7 @@
           type: 'image/jpeg',
           ext: 'jpg',
           url: 'https://safrazik.com/vue-file-agent/website/assets/files/House Sparrow.jpg',
+          progress: 67,
         },
         {
           name: 'Golf.mp4',
@@ -94,6 +99,7 @@
       var container = document.getElementById('file-preview-blocks-container');
 
       FileRecord.fromRawArray(rawFileRecords, { read: false, maxSize: '4MB' }).then(function (fileRecords) {
+        window.fileRecords = fileRecords;
         var fileAgent = new FileAgent({
           multiple: true,
           fileRecords: fileRecords,
@@ -101,17 +107,23 @@
           editable: true,
           linkable: true,
           maxSize: '4MB',
+          theme: 'list',
           // draggable: document.getElementById('file-drag-area'),
-          onBeforeDelete: function (fileRecord, callback) {
+          onBeforeDelete: function (fileRecord) {
             console.log('onBeforrrrrr', fileRecord.name());
             if (true || confirm('Sure?')) {
-              callback();
+              return true;
             }
+            return false;
+          },
+          onBeforeRename: function (fileRecord) {
+            console.log('onBefoererere', ',,,,');
+            return false;
           },
           slots: {
             afterInner: 'After inner',
             afterOuter: 'After outer',
-            beforeInner: 'Before inner',
+            beforeInner: document.getElementById('some-unique-el'),
             beforeOuter: 'Before outer',
             filePreviewx: function (fileRecord) {
               return `<div>
@@ -119,7 +131,7 @@
                 </div>`;
             },
             filePreviewNew: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
-                  
+
         <span class="file-preview">
           <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
             <h1 data-ref="help-text" class="help-text"></h1>

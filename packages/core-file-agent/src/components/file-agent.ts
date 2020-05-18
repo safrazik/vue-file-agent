@@ -4,6 +4,7 @@ import FileRecord, { RawFileRecord } from '../lib/file-record';
 import { FileIcon } from './file-icon';
 import { FilePreview } from './file-preview';
 import utils from '../lib/utils';
+import uploader from '../lib/uploader/upload-helper';
 
 interface Props {
   multiple?: boolean;
@@ -25,11 +26,12 @@ interface Props {
   thumbnailSize?: number;
   fileRecords: FileRecord[];
   draggable?: boolean | HTMLElement;
-  onBeforeDelete?: (fileRecord: FileRecord, deleter: () => void) => void;
+  onBeforeDelete?: (fileRecord: FileRecord) => boolean | Promise<boolean>;
   onDelete?: (fileRecord: FileRecord) => void;
   onChange?: (event: InputEvent) => void;
   onDrop?: (event: DragEvent) => void;
-  // onRename?: (fileRecord: FileRecord) => void;
+  onBeforeRename?: (fileRecord: FileRecord) => boolean | Promise<boolean>;
+  onRename?: (fileRecord: FileRecord) => void;
   // errorText?: {
   //   // common?: string;
   //   type?: string;
@@ -142,6 +144,10 @@ export class FileAgent extends Component {
     video.load();
   }
 
+  upload() {
+    uploader.upload('', {}, []);
+  }
+
   handleFiles(files: File[] | FileList): void {
     if (this.$props.disabled === true || this.$props.readonly === true) {
       return;
@@ -252,20 +258,69 @@ export class FileAgent extends Component {
     }
   }
 
-  onDeleteFileRecord(fileRecord: FileRecord) {
-    if (this.$props.onBeforeDelete) {
-      this.$props.onBeforeDelete(fileRecord, () => {
-        this.deleteFileRecord(fileRecord);
-      });
+  renameFileRecord(fileRecord: FileRecord) {
+    // should be saved
+  }
+
+  cancelRenameFileRecord(fileRecord: FileRecord) {
+    fileRecord.customName = fileRecord.oldCustomName;
+    if ((fileRecord as any)._filePreview) {
+      (fileRecord as any)._filePreview.update();
     }
-    // if (!this.uploadUrl || this.auto === false) {
-    //   return;
-    // }
-    // this.deleteFileRecord(fileRecordOrRaw);
+  }
+
+  onBeforeCheckEvent(
+    fileRecord: FileRecord,
+    onBeforeEvent: ((FileRecord: FileRecord) => boolean | Promise<boolean>) | undefined,
+    okFn: () => void,
+    cancelFn: () => void,
+  ) {
+    if (!onBeforeEvent) {
+      okFn();
+      return;
+    }
+    const response = onBeforeEvent(fileRecord);
+    if (utils.isPromise(response)) {
+      (response as Promise<boolean>).then((result) => {
+        if (result === false) {
+          cancelFn();
+        } else {
+          okFn();
+        }
+      });
+    } else {
+      if (response === false) {
+        cancelFn();
+      } else {
+        okFn();
+      }
+    }
+  }
+
+  onDeleteFileRecord(fileRecord: FileRecord) {
+    this.onBeforeCheckEvent(
+      fileRecord,
+      this.$props.onBeforeDelete,
+      () => {
+        this.deleteFileRecord(fileRecord);
+      },
+      () => {
+        // no op
+      },
+    );
   }
 
   onRenameFileRecord(fileRecord: FileRecord) {
-    //
+    this.onBeforeCheckEvent(
+      fileRecord,
+      this.$props.onBeforeRename,
+      () => {
+        this.renameFileRecord(fileRecord);
+      },
+      () => {
+        this.cancelRenameFileRecord(fileRecord);
+      },
+    );
   }
 
   filesChanged(event: InputEvent) {

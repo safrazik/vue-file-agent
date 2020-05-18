@@ -32,6 +32,10 @@ class Utils {
     return array;
   }
 
+  public isPromise(value: any): boolean {
+    return value && value.then && typeof value.then === 'function';
+  }
+
   public getThumbnailDimensions(width: number, height: number, thumbnailSize: number) {
     if (width > height) {
       if (width > thumbnailSize) {

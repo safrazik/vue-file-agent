@@ -258,6 +258,23 @@ export class FilePreview extends Component {
           `;
   }
 
+  updateProgress() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    const visible = '';
+    if (fileRecord.hasProgress()) {
+      const progressEl = this.getRef('file-progress');
+      progressEl.style.display = visible;
+      progressEl.className = `file-progress
+        ${fileRecord.progress() >= 99.9999 ? 'file-progress-full' : ''}
+        ${fileRecord.progress() >= 100 ? 'file-progress-done' : ''}
+        ${fileRecord.progress() > 0 ? 'has-file-progress' : ''}
+      `;
+      this.getRef('file-progress-bar').style.width = fileRecord.progress() + '%';
+    } else {
+      this.getRef('file-progress').style.display = 'none';
+    }
+  }
+
   update() {
     const fileRecord = this.$props.fileRecord as FileRecord;
     this.updateWrapper();
@@ -320,18 +337,7 @@ export class FilePreview extends Component {
       this.getRef('image-dimension').style.display = 'none';
     }
 
-    if (fileRecord.hasProgress()) {
-      const progressEl = this.getRef('file-progress');
-      progressEl.style.display = visible;
-      progressEl.className = `file-progress
-        ${fileRecord.progress() >= 99.9999 ? 'file-progress-full' : ''}
-        ${fileRecord.progress() >= 100 ? 'file-progress-done' : ''}
-        ${fileRecord.progress() > 0 ? 'has-file-progress' : ''}
-      `;
-      this.getRef('file-progress-bar').style.width = fileRecord.progress() + '%';
-    } else {
-      this.getRef('file-progress').style.display = 'none';
-    }
+    this.updateProgress();
 
     const svg = this.iconByExt(fileRecord.ext());
     const fileIconLink = this.getRef<HTMLLinkElement>('file-icon-link');

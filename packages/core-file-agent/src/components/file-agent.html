@@ -2,60 +2,7 @@
   <div data-slot="beforeOuter"></div>
   <div data-ref="container" class="grid-block-wrapper vue-file-agent file-input-wrapper">
     <div data-slot="beforeInner"></div>
-    <canvas data-ref="thumbnail-canvas" style="position: fixed; visibility: hidden; z-index: -3;"></canvas>
-    <!-- <div data-ref="overall-progress" class="overall-progress">
-      <div data-ref="overall-progress-bar" class="overall-progress-bar"></div>
-      <div data-ref="overall-progress-left" class="overall-progress-left"></div>
-    </div> -->
-
-    <!-- <component
-      :is="isSortable ? 'vfa-sortable-list' : 'VueFileList'"
-      v-model="fileRecords"
-      :axis="theme == 'list' ? 'y' : 'xy'"
-      :appendTo="'#vfa-' + uniqueId + ' .vue-file-agent'"
-      :transitionDuration="transitionDuration"
-      :pressDelay="sortable === 'hold' ? 200 : 0"
-      :useDragHandle="sortable === 'handle'"
-      @sort-start="sortStart()"
-      @sort-end="sortEnd($event)"
-      :helperClass="'active-sorting-item'"
-    > -->
     <div data-ref="file-preview-list" class="file-preview-list">
-      <!-- <transition-group name="grid-box" tag="div" class=""> -->
-      <!-- <component
-        :is="isSortable ? 'vfa-sortable-item' : 'VueFileListItem'"
-        v-for="(fileRecord, index) in fileRecords"
-        class="file-preview-wrapper grid-box-item grid-block"
-        :index="index"
-        :key="fileRecord.id"
-        > -->
-      <!-- <div data-ref="file-preview-wrapper-container"> -->
-      <!-- <div data-ref="file-preview-wrapper" class="file-preview-wrapper grid-box-item grid-block"> -->
-      <!-- <span v-vfa-sortable-handle class="file-sortable-handle" v-if="sortable === 'handle'">
-          <slot name="sortable-handle">
-            <icon name="system-sortable-handle"></icon>
-          </slot>
-        </span> -->
-      <!-- <slot name="file-preview" :fileRecord="fileRecord" :fileData="fileRecord" :index="index"> -->
-      <!-- <VueFilePreview
-          :averageColor="averageColor"
-          :value="fileRecord"
-          :deletable="isDeletable"
-          :editable="editable === true"
-          :linkable="linkable === true"
-          :errorText="errorText"
-          :disabled="disabled"
-          :thumbnailSize="thumbnailSize"
-          @remove="removeFileRecord($event)"
-          @rename="filenameChanged($event)"
-          class=""
-        ></VueFilePreview> -->
-      <!-- </slot> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <!-- </component> -->
-      <!-- <template v-if="canAddMore && readonly !== true"> -->
-      <!-- <slot name="file-preview-new"> -->
       <div data-ref="file-preview-new" class="file-preview-wrapper grid-box-item grid-block file-preview-new">
         <span class="file-preview">
           <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
@@ -64,11 +11,7 @@
           </span>
         </span>
       </div>
-      <!-- </slot> -->
-      <!-- </template> -->
-      <!-- </transition-group> -->
     </div>
-    <!-- </component> -->
     <input data-ref="file-input" title="" type="file" class="file-input" />
     <div data-slot="afterInner"></div>
   </div>

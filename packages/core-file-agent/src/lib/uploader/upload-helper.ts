@@ -1,6 +1,6 @@
 import ajax from './ajax-request';
 import { ConfigureFn, AjaxResponse, AjaxError } from './ajax-request';
-import FileRecord from './file-record';
+import FileRecord from '../file-record';
 
 type ProgressFn = (event: ProgressEvent) => void;
 type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
@@ -141,7 +141,7 @@ class UploadHelper {
         progressFn(prgTotal / fileRecords.length);
       };
     }
-    const promises: Array<Promise<AjaxResponse | AjaxError>> = [];
+    const promises: Promise<AjaxResponse | AjaxError>[] = [];
     let failedUploadsCount = 0;
     for (const fileRecord of fileRecords) {
       let formData;
