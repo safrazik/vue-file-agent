@@ -11,7 +11,20 @@
   </div>
   <span data-ref="preview" class="file-preview">
     <span data-ref="error-wrapper" class="file-error-wrapper">
-      <span data-ref="error-text" class="file-error-message file-error-message-client"></span>
+      <span class="file-error-message file-error-message-client">
+        <span data-ref="error-text"></span>
+        <small
+          data-ref="error-dismiss"
+          style="
+            margin-left: 1px;
+            font-weight: normal;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 0px 2px;
+          "
+          >dismiss</small
+        >
+      </span>
     </span>
     <span class="file-preview-overlay"></span>
     <span

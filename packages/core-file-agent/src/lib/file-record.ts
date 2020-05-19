@@ -387,6 +387,12 @@ class FileRecord {
     return errorText.common as string;
   }
 
+  public customError(error?: string) {
+    this.error = {
+      upload: error,
+    };
+  }
+
   public toRaw(): RawFileRecord {
     const raw = this.raw || {};
     // raw.url = this.urlValue;

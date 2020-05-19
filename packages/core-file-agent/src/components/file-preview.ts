@@ -112,9 +112,14 @@ export class FilePreview extends Component {
     };
   }
 
+  hasDismissibleError() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    return !(fileRecord.error && (fileRecord.error.size || fileRecord.error.type));
+  }
+
   dismissError() {
     const fileRecord = this.$props.fileRecord as FileRecord;
-    if (fileRecord.error && (fileRecord.error.size || fileRecord.error.type)) {
+    if (!this.hasDismissibleError()) {
       return;
     }
     fileRecord.error = false;
@@ -280,7 +285,23 @@ export class FilePreview extends Component {
     const fileRecord = this.$props.fileRecord as FileRecord;
     this.toggleClass(this.$el, 'has-error', !!fileRecord.error);
     this.getRef('error-wrapper').style.display = fileRecord.error ? visible : 'none';
-    this.getRef('error-text').innerText = fileRecord.getErrorMessage(this.$props.errorText);
+    const errorText = this.getRef('error-text');
+    errorText.innerText = fileRecord.getErrorMessage(this.$props.errorText);
+    this.getRef('error-dismiss').style.display = this.hasDismissibleError() ? visible : 'none';
+    // if (this.hasDismissibleError()) {
+    //   const dismiss = document.createElement('small');
+    //   dismiss.style.marginLeft = '5px';
+    //   dismiss.style.fontWeight = 'normal';
+    //   dismiss.style.cursor = 'pointer';
+    //   dismiss.innerText = 'dismiss';
+    //   // dismiss.appendChild(this.getIcon({ name: 'system-close' }));
+    //   errorText.appendChild(dismiss);
+    // }
+  }
+
+  updateName() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    this.getRef('file-name-text').innerText = fileRecord.name(true);
   }
 
   update() {
