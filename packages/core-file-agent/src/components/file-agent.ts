@@ -389,18 +389,23 @@ export class FileAgent extends Component {
     if (!event.dataTransfer) {
       return;
     }
-    utils.getFilesFromDroppedItems(event.dataTransfer).then((files) => {
-      if (this.$props.onDrop) {
-        this.$props.onDrop(event);
-      }
-      if (!files || !files[0]) {
-        return;
-      }
-      if (!this.hasMultiple) {
-        files = [files[0]];
-      }
-      this.handleFiles(files);
-    });
+    utils.getFilesFromDroppedItems(event.dataTransfer).then(
+      (files) => {
+        if (this.$props.onDrop) {
+          this.$props.onDrop(event);
+        }
+        if (!files || !files[0]) {
+          return;
+        }
+        if (!this.hasMultiple) {
+          files = [files[0]];
+        }
+        this.handleFiles(files);
+      },
+      (err) => {
+        // no op
+      },
+    );
   }
 
   dragEnter(event: DragEvent): void {
@@ -446,18 +451,18 @@ export class FileAgent extends Component {
       this.$props.draggable === undefined || this.$props.draggable === true
         ? this.$el
         : (this.$props.draggable as HTMLElement);
-    // dragEl.ondragover = (event) => {
-    //   this.dragOver(event);
-    // };
-    // dragEl.ondragenter = (event) => {
-    //   this.dragEnter(event);
-    // };
-    // dragEl.ondragleave = (event) => {
-    //   this.dragLeave(event);
-    // };
-    // dragEl.ondrop = (event) => {
-    //   this.drop(event);
-    // };
+    dragEl.ondragover = (event) => {
+      this.dragOver(event);
+    };
+    dragEl.ondragenter = (event) => {
+      this.dragEnter(event);
+    };
+    dragEl.ondragleave = (event) => {
+      this.dragLeave(event);
+    };
+    dragEl.ondrop = (event) => {
+      this.drop(event);
+    };
   }
 
   updateDragStatus(isDragging: boolean) {

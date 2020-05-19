@@ -1,5 +1,5 @@
 export function getFilesFromDroppedItems(dataTransfer: DataTransfer): Promise<File[] | FileList> {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     if (!includesFolder(dataTransfer)) {
       return resolve(dataTransfer.files);
     }
@@ -21,9 +21,14 @@ export function getFilesFromDroppedItems(dataTransfer: DataTransfer): Promise<Fi
         }
       }
     }
-    Promise.all(folderReadQueue).then((filesInFolders) => {
-      resolve(files.concat(...filesInFolders));
-    });
+    Promise.all(folderReadQueue).then(
+      (filesInFolders) => {
+        resolve(files.concat(...filesInFolders));
+      },
+      (err) => {
+        reject(err);
+      },
+    );
   });
 }
 
