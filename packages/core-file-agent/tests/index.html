@@ -37,6 +37,12 @@
       </div>
     </fieldset>
 
+    <ul id="items">
+      <li>item 1</li>
+      <li>item 2</li>
+      <li>item 3</li>
+    </ul>
+
     <div id="some-unique-el">
       This is a unique element
     </div>
@@ -47,6 +53,7 @@
       var FileIcon = window['core-file-agent'].FileIcon;
       var FilePreview = window['core-file-agent'].FilePreview;
       var FileRecord = window['core-file-agent'].FileRecord;
+      var plugins = window['core-file-agent'].plugins;
 
       var fileIcon = new FileIcon({
         ext: 'pdf',
@@ -107,6 +114,7 @@
           editable: true,
           linkable: true,
           maxSize: '4MB',
+          // sortable: true,
           theme: 'list',
           // draggable: document.getElementById('file-drag-area'),
           onBeforeDelete: function (fileRecord) {
@@ -118,7 +126,34 @@
           },
           onBeforeRename: function (fileRecord) {
             console.log('onBefoererere', ',,,,');
-            return false;
+            // return false;
+          },
+          onSelect: function (fileRecords) {
+            console.log('onSelect', fileRecords);
+          },
+          onRename: function (fileRecord) {
+            console.log('onRename', fileRecord.name(), fileRecord);
+            if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
+              return;
+            }
+            fileRecord.customError('Shitty name is not allowed.');
+            return new Promise(function (resolve, reject) {
+              setTimeout(function () {
+                resolve(false);
+              }, 1000);
+            });
+          },
+          onDelete: function (fileRecord) {
+            console.log('onDelete', fileRecord.name(), fileRecord);
+            if (fileRecord.name().toLowerCase().indexOf('system') === -1) {
+              return;
+            }
+            fileRecord.customError('System files cannot be deleted.');
+            return new Promise(function (resolve, reject) {
+              setTimeout(function () {
+                resolve(false);
+              }, 1000);
+            });
           },
           slots: {
             afterInner: 'After inner',

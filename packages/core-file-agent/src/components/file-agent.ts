@@ -27,11 +27,13 @@ interface Props {
   fileRecords: FileRecord[];
   draggable?: boolean | HTMLElement;
   onBeforeDelete?: (fileRecord: FileRecord) => boolean | Promise<boolean>;
-  onDelete?: (fileRecord: FileRecord) => void;
+  onDelete?: (fileRecord: FileRecord) => boolean | Promise<boolean>;
   onChange?: (event: InputEvent) => void;
   onDrop?: (event: DragEvent) => void;
   onBeforeRename?: (fileRecord: FileRecord) => boolean | Promise<boolean>;
-  onRename?: (fileRecord: FileRecord) => void;
+  onRename?: (fileRecord: FileRecord) => boolean | Promise<boolean>;
+  onInput?: (fileRecords: FileRecord[]) => void;
+  onSelect?: (fileRecords: FileRecord[]) => void;
   // errorText?: {
   //   // common?: string;
   //   type?: string;
@@ -138,7 +140,7 @@ export class FileAgent extends Component {
     this.createThumbnail(fileRecord, video).then(() => {
       revokeObjectURL(video.src);
       if ((fileRecord as any)._filePreview) {
-        (fileRecord as any)._filePreview.update();
+        (fileRecord as any)._filePreview.updateWrapper();
       }
     });
     video.load();
@@ -196,6 +198,13 @@ export class FileAgent extends Component {
         this.$props.fileRecords[0] = fileRecords[0];
       }
 
+      if (this.$props.onInput) {
+        this.$props.onInput(this.$props.fileRecords);
+      }
+      if (this.$props.onSelect) {
+        this.$props.onSelect(fileRecords);
+      }
+
       this.update();
       /*       FileRecord.readFiles(fileRecords).then((fileRecordsNew: FileRecord[]) => {
         // const allFileRecordsRaw = FileRecord.toRawArray(this.$props.fileRecords);
@@ -250,16 +259,46 @@ export class FileAgent extends Component {
   }
 
   deleteFileRecord(fileRecord: FileRecord) {
-    const i = this.$props.fileRecords.indexOf(fileRecord);
-    const fr = this.$props.fileRecords.splice(i, 1)[0];
+    const index = this.$props.fileRecords.indexOf(fileRecord);
+    const fr = this.$props.fileRecords.splice(index, 1)[0];
     this.update();
-    if (this.$props.onDelete) {
-      this.$props.onDelete(fileRecord);
+    // if (this.$props.onDelete) {
+    //   this.$props.onDelete(fileRecord);
+    // }
+    if (this.$props.onInput) {
+      this.$props.onInput(this.$props.fileRecords);
     }
+    this.onEventCheck(
+      fileRecord,
+      this.$props.onDelete,
+      () => {
+        // no op
+      },
+      () => {
+        this.cancelDeleteFileRecord(fileRecord, index);
+      },
+    );
   }
 
   renameFileRecord(fileRecord: FileRecord) {
-    // should be saved
+    // if (this.$props.onRename) {
+    //   this.$props.onRename(fileRecord);
+    // }
+    this.onEventCheck(
+      fileRecord,
+      this.$props.onRename,
+      () => {
+        // no op
+      },
+      () => {
+        this.cancelRenameFileRecord(fileRecord);
+      },
+    );
+  }
+
+  cancelDeleteFileRecord(fileRecord: FileRecord, index: number) {
+    this.$props.fileRecords.splice(index, 0, fileRecord);
+    this.update();
   }
 
   cancelRenameFileRecord(fileRecord: FileRecord) {
@@ -269,7 +308,7 @@ export class FileAgent extends Component {
     }
   }
 
-  onBeforeCheckEvent(
+  onEventCheck(
     fileRecord: FileRecord,
     onBeforeEvent: ((FileRecord: FileRecord) => boolean | Promise<boolean>) | undefined,
     okFn: () => void,
@@ -298,7 +337,7 @@ export class FileAgent extends Component {
   }
 
   onDeleteFileRecord(fileRecord: FileRecord) {
-    this.onBeforeCheckEvent(
+    this.onEventCheck(
       fileRecord,
       this.$props.onBeforeDelete,
       () => {
@@ -311,7 +350,7 @@ export class FileAgent extends Component {
   }
 
   onRenameFileRecord(fileRecord: FileRecord) {
-    this.onBeforeCheckEvent(
+    this.onEventCheck(
       fileRecord,
       this.$props.onBeforeRename,
       () => {
@@ -407,18 +446,18 @@ export class FileAgent extends Component {
       this.$props.draggable === undefined || this.$props.draggable === true
         ? this.$el
         : (this.$props.draggable as HTMLElement);
-    dragEl.ondragover = (event) => {
-      this.dragOver(event);
-    };
-    dragEl.ondragenter = (event) => {
-      this.dragEnter(event);
-    };
-    dragEl.ondragleave = (event) => {
-      this.dragLeave(event);
-    };
-    dragEl.ondrop = (event) => {
-      this.drop(event);
-    };
+    // dragEl.ondragover = (event) => {
+    //   this.dragOver(event);
+    // };
+    // dragEl.ondragenter = (event) => {
+    //   this.dragEnter(event);
+    // };
+    // dragEl.ondragleave = (event) => {
+    //   this.dragLeave(event);
+    // };
+    // dragEl.ondrop = (event) => {
+    //   this.drop(event);
+    // };
   }
 
   updateDragStatus(isDragging: boolean) {
@@ -576,6 +615,10 @@ export class FileAgent extends Component {
           setTimeout(() => {
             child.classList.remove('grid-box-enter');
           }, 10);
+        } else {
+          filePreview.updateWrapper();
+          filePreview.updateProgress();
+          filePreview.updateError();
         }
         filePreview.render(child);
       }
