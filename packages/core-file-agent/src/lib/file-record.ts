@@ -161,6 +161,12 @@ class FileRecord {
   public tusUpload?: any;
   public calculateAverageColor: boolean;
 
+  public onChange = {
+    name: (value: string) => {},
+    progress: (value: number) => {},
+    url: (value: string) => {},
+  };
+
   public constructor(data: RawFileRecord, options: Options) {
     this.urlValue = null;
     this.urlResized = null;
@@ -215,6 +221,7 @@ class FileRecord {
   public progress(value?: number): number | void {
     if (value !== undefined) {
       this.progressInternal = value;
+      this.onChange.progress(value);
       return;
     }
     return this.progressInternal || 0;
@@ -222,7 +229,10 @@ class FileRecord {
 
   public url(value?: string): string | undefined | Promise<this> {
     if (value !== undefined) {
-      return this.setUrl(value);
+      return this.setUrl(value).then(() => {
+        this.onChange.url(value);
+        return this;
+      });
     }
     return this.urlValue || undefined;
   }
@@ -262,6 +272,28 @@ class FileRecord {
       if (ext !== '?') {
         return name.substr(0, name.length - (ext.length + 1));
       }
+    }
+    return name;
+  }
+
+  public nameWithoutExtension(value?: string | false): string | void {
+    if (value !== undefined) {
+      const newValue = value === false ? (this.oldCustomName as string) : value;
+      const oldValue = this.nameWithoutExtension() as string;
+      if (oldValue !== newValue) {
+        this.oldCustomName = oldValue;
+        this.customName = newValue;
+        this.onChange.name(newValue);
+      }
+      return;
+    }
+    if (this.customName) {
+      return this.customName;
+    }
+    const ext = this.ext();
+    const name = this.file && this.file.name;
+    if (ext !== '?') {
+      return name.substr(0, name.length - (ext.length + 1));
     }
     return name;
   }

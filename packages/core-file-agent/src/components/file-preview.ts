@@ -142,14 +142,15 @@ export class FilePreview extends Component {
 
   editInputBlured() {
     const fileRecord = this.$props.fileRecord as FileRecord;
-    fileRecord.oldFileName = fileRecord.name();
-    const oldValue = fileRecord.name(true);
-    const value = this.getRef<HTMLInputElement>('file-name-input').value;
-    fileRecord.customName = value;
-    const newValue = fileRecord.name(true);
+    // fileRecord.oldFileName = fileRecord.name();
+    const oldValue = fileRecord.nameWithoutExtension();
+    const newValue = this.getRef<HTMLInputElement>('file-name-input').value;
+    // fileRecord.customName = value;
+    // const newValue = fileRecord.nameWithoutExtension();
     if (newValue !== oldValue) {
-      fileRecord.oldCustomName = oldValue;
-      this.update();
+      // fileRecord.oldCustomName = oldValue;
+      // this.update();
+      fileRecord.nameWithoutExtension(newValue);
       if (this.$props.onRename) {
         this.$props.onRename(fileRecord);
       }
@@ -197,7 +198,9 @@ export class FilePreview extends Component {
     if (!input) {
       return;
     }
-    input.focus();
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    input.value = fileRecord.nameWithoutExtension() as string;
+    // input.focus();
   }
 
   filenameChanged(completed?: boolean) {
@@ -301,7 +304,10 @@ export class FilePreview extends Component {
 
   updateName() {
     const fileRecord = this.$props.fileRecord as FileRecord;
-    this.getRef('file-name-text').innerText = fileRecord.name(true);
+    const input = this.getRef<HTMLInputElement>('file-name-input');
+    input.value = fileRecord.nameWithoutExtension() as string;
+    console.log('update name');
+    this.getRef('file-name-text').innerText = input.value;
   }
 
   update() {
@@ -349,7 +355,7 @@ export class FilePreview extends Component {
     const input = this.getRef<HTMLInputElement>('file-name-input');
     if (this.$props.editable === true) {
       input.style.display = visible;
-      input.value = fileRecord.name(true);
+      input.value = fileRecord.nameWithoutExtension() as string;
       this.getRef('file-name-edit-icon').style.display = visible;
     } else {
       input.style.display = 'none';
@@ -365,6 +371,7 @@ export class FilePreview extends Component {
     }
 
     this.updateProgress();
+    this.updateName();
 
     const svg = this.iconByExt(fileRecord.ext());
     const fileIconLink = this.getRef<HTMLLinkElement>('file-icon-link');
@@ -396,7 +403,7 @@ export class FilePreview extends Component {
     const values = {
       'file-ext': fileRecord.ext(),
       'file-size': fileRecord.size(),
-      'file-name-text': fileRecord.name(true),
+      // 'file-name-text': fileRecord.nameWithoutExtension(),
     };
     for (const ref in values) {
       if (!values.hasOwnProperty(ref)) {

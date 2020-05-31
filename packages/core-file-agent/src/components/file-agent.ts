@@ -302,10 +302,11 @@ export class FileAgent extends Component {
   }
 
   cancelRenameFileRecord(fileRecord: FileRecord) {
-    fileRecord.customName = fileRecord.oldCustomName;
-    if ((fileRecord as any)._filePreview) {
-      (fileRecord as any)._filePreview.update();
-    }
+    fileRecord.nameWithoutExtension(false);
+    // fileRecord.customName = fileRecord.oldCustomName;
+    // if ((fileRecord as any)._filePreview) {
+    //   (fileRecord as any)._filePreview.update();
+    // }
   }
 
   onEventCheck(
@@ -616,13 +617,19 @@ export class FileAgent extends Component {
             },
           });
           (fileRecord as any)._filePreview = filePreview;
+          fileRecord.onChange.progress = () => {
+            filePreview.updateProgress();
+          };
+          fileRecord.onChange.name = () => {
+            filePreview.updateName();
+          };
           child.classList.add('grid-box-enter');
           setTimeout(() => {
             child.classList.remove('grid-box-enter');
           }, 10);
         } else {
           filePreview.updateWrapper();
-          filePreview.updateProgress();
+          // filePreview.updateProgress();
           filePreview.updateError();
         }
         filePreview.render(child);
@@ -638,7 +645,11 @@ export class FileAgent extends Component {
     input.disabled = this.$props.disabled === true || (this.hasMultiple && !this.canAddMore);
     input.multiple = this.hasMultiple;
     input.accept = this.$props.accept || '*';
-    (input as any).capture = this.$props.capture || undefined;
+    if (this.$props.capture) {
+      (input as any).capture = this.$props.capture;
+    } else {
+      delete (input as any).capture;
+    }
     input.onchange = (event) => {
       this.filesChanged(event as InputEvent);
     };
