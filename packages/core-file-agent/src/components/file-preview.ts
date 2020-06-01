@@ -200,7 +200,7 @@ export class FilePreview extends Component {
     }
     const fileRecord = this.$props.fileRecord as FileRecord;
     input.value = fileRecord.nameWithoutExtension() as string;
-    // input.focus();
+    input.focus();
   }
 
   filenameChanged(completed?: boolean) {
@@ -306,7 +306,6 @@ export class FilePreview extends Component {
     const fileRecord = this.$props.fileRecord as FileRecord;
     const input = this.getRef<HTMLInputElement>('file-name-input');
     input.value = fileRecord.nameWithoutExtension() as string;
-    console.log('update name');
     this.getRef('file-name-text').innerText = input.value;
   }
 

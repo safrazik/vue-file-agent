@@ -623,10 +623,10 @@ export class FileAgent extends Component {
           fileRecord.onChange.name = () => {
             filePreview.updateName();
           };
-          child.classList.add('grid-box-enter');
-          setTimeout(() => {
-            child.classList.remove('grid-box-enter');
-          }, 10);
+          // child.classList.add('grid-box-enter');
+          // setTimeout(() => {
+          //   child.classList.remove('grid-box-enter');
+          // }, 10);
         } else {
           filePreview.updateWrapper();
           // filePreview.updateProgress();

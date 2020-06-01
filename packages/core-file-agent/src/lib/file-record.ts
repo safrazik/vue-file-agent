@@ -162,9 +162,15 @@ class FileRecord {
   public calculateAverageColor: boolean;
 
   public onChange = {
-    name: (value: string) => {},
-    progress: (value: number) => {},
-    url: (value: string) => {},
+    name: (value: string) => {
+      /** no op */
+    },
+    progress: (value: number) => {
+      /** no op */
+    },
+    url: (value: string) => {
+      /** no op */
+    },
   };
 
   public constructor(data: RawFileRecord, options: Options) {
