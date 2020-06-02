@@ -14,7 +14,7 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     /> -->
-    <link rel="stylesheet" href="../dist/core-file-agent.css" />
+    <link rel="stylesheet" href="../dist/file-agent.css" />
   </head>
 
   <body>
@@ -42,14 +42,14 @@
       This is a unique element
     </div>
 
-    <script src="../dist/core-file-agent.js"></script>
+    <script src="../dist/file-agent.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
     <script>
-      var FileAgent = window['core-file-agent'].FileAgent;
-      var FileIcon = window['core-file-agent'].FileIcon;
-      var FilePreview = window['core-file-agent'].FilePreview;
-      var FileRecord = window['core-file-agent'].FileRecord;
-      var plugins = window['core-file-agent'].plugins;
+      var FileAgent = window['file-agent'].FileAgent;
+      var FileIcon = window['file-agent'].FileIcon;
+      var FilePreview = window['file-agent'].FilePreview;
+      var FileRecord = window['file-agent'].FileRecord;
+      var plugins = window['file-agent'].plugins;
 
       plugins.tus = window.tus;
 
@@ -103,7 +103,7 @@
 
       var container = document.getElementById('file-preview-blocks-container');
 
-      var maxSize = '9994MB';
+      var maxSize = '4MB';
 
       FileRecord.fromRawArray(rawFileRecords, { read: false, maxSize: maxSize }).then(function (fileRecords) {
         window.fileRecords = fileRecords;
@@ -117,7 +117,7 @@
           linkable: true,
           maxSize: maxSize,
           // sortable: true,
-          theme: 'list',
+          // theme: 'list',
           // draggable: document.getElementById('file-drag-area'),
           events: {
             onBeforeDelete: function (fileRecord) {

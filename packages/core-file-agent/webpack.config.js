@@ -5,7 +5,7 @@ const createConfig = (options, isDebugging) => {
   return {
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'core-file-agent.css',
+        filename: 'file-agent.css',
       }),
     ],
     watch: options.watch === true,
@@ -20,8 +20,8 @@ const createConfig = (options, isDebugging) => {
     entry: './src/index.ts',
     output: {
       path: options.output || path.resolve(__dirname, 'dist'),
-      filename: 'core-file-agent' + (options.mode === 'production' ? '.min' : '') + '.js',
-      library: 'core-file-agent',
+      filename: 'file-agent' + (options.mode === 'production' ? '.min' : '') + '.js',
+      library: 'file-agent',
       libraryTarget: 'umd',
       globalObject: "typeof self !== 'undefined' ? self : this",
     },
@@ -93,11 +93,17 @@ module.exports = (env, argv) => {
         devServer: isDebugging
           ? {
               contentBase: path.join(__dirname, ''),
+              // contentBase: ['/tests/', '/src/'],
               compress: true,
               port: 9000,
               watchOptions: {
                 ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
               },
+              openPage: 'tests/index.html',
+              inline: true,
+              publicPath: '/dist/',
+              hot: true,
+              hotOnly: false,
             }
           : undefined,
       },

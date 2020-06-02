@@ -1,8 +1,8 @@
 {
-  "name": "core-file-agent",
+  "name": "@file-agent/core",
   "version": "2.0.0-pre.0",
   "description": "High performant file upload component with elegant and distinguishable previews for every file type and support for drag and drop, validations, default uploader with progress support and externally customizable via props and methods",
-  "main": "dist/core-file-agent.min.js",
+  "main": "dist/file-agent.min.js",
   "types": "types/index.d.ts",
   "files": [
     "/dist",
@@ -17,7 +17,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch --coverage",
     "servex": "npx serve",
-    "serve": "webpack-dev-server",
+    "serve": "webpack-dev-server --env=development --open",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache"
   },
   "author": "Safraz Razik",
