@@ -379,6 +379,9 @@ export class FileAgent extends Component {
       fileRecord,
       (fr) => {
         const promise = this.autoDeleteUpload(fr);
+        promise.catch((err) => {
+          this.cancelDeleteFileRecord(fr, index);
+        });
         if (!this.$props.events?.onDelete) {
           return promise;
         }
@@ -399,9 +402,12 @@ export class FileAgent extends Component {
     // }
     this.onEventCheck(
       fileRecord,
-      // this.$props.events.onRename,
+      // this.$props.events?.onRename,
       (fr) => {
         const promise = this.autoUpdateUpload(fr);
+        promise.catch((err) => {
+          this.cancelRenameFileRecord(fr);
+        });
         if (!this.$props.events?.onRename) {
           return promise;
         }
@@ -742,6 +748,9 @@ export class FileAgent extends Component {
           };
           fileRecord.onChange.name = () => {
             filePreview.updateName();
+          };
+          fileRecord.onChange.error = () => {
+            filePreview.updateError();
           };
           // child.classList.add('grid-box-enter');
           // setTimeout(() => {

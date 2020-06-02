@@ -122,7 +122,7 @@ export class FilePreview extends Component {
     if (!this.hasDismissibleError()) {
       return;
     }
-    fileRecord.error = false;
+    fileRecord.customError(false);
     this.getRef('error-wrapper').style.display = 'none';
     // this.update();
   }

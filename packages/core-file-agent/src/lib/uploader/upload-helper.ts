@@ -102,21 +102,20 @@ class UploadHelper {
         // ignore
       }
     }
-    if (!fileRecord.error) {
-      fileRecord.error = {};
-    }
-    fileRecord.error.upload = errorText;
+    // if (!fileRecord.error) {
+    //   fileRecord.error = {};
+    // }
+    // fileRecord.error.upload = errorText;
+    fileRecord.uploadError(errorText);
     fileRecord.upload.data = undefined;
     fileRecord.upload.error = errorText;
     if (timeout) {
       setTimeout(() => {
-        if (!fileRecord.error) {
-          fileRecord.error = {};
-        }
-        fileRecord.error.upload = false;
-        if (!fileRecord.error.size && !fileRecord.error.type) {
-          fileRecord.error = false;
-        }
+        // if (!fileRecord.error) {
+        //   fileRecord.error = {};
+        // }
+        // fileRecord.error.upload = false;
+        fileRecord.uploadError(false);
       }, timeout);
     }
   }

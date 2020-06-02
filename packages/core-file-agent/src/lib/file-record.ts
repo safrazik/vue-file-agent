@@ -171,6 +171,9 @@ class FileRecord {
     url: (value: string) => {
       /** no op */
     },
+    error: (value: false | ErrorFlags) => {
+      /** no op */
+    },
   };
 
   public constructor(data: RawFileRecord, options: Options) {
@@ -425,10 +428,19 @@ class FileRecord {
     return errorText.common as string;
   }
 
-  public customError(error?: string) {
-    this.error = {
-      upload: error,
-    };
+  public customError(error?: string | false) {
+    if (error === false) {
+      this.error = false;
+    } else {
+      this.error = {
+        upload: error,
+      };
+    }
+    this.onChange.error(this.error);
+  }
+
+  public uploadError(error?: string | false) {
+    return this.customError(error);
   }
 
   public toRaw(): RawFileRecord {
