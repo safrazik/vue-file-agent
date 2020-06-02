@@ -16,7 +16,8 @@
     "watch": "webpack --env=development",
     "test": "jest --coverage",
     "test:watch": "jest --watch --coverage",
-    "serve": "npx serve",
+    "servex": "npx serve",
+    "serve": "webpack-dev-server",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache"
   },
   "author": "Safraz Razik",
@@ -46,6 +47,7 @@
     "tslint": "^6.1.2",
     "typescript": "^3.9.2",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
   }
 }

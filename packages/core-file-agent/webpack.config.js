@@ -66,6 +66,7 @@ const createConfig = (options, isDebugging) => {
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
     },
+    devServer: options.devServer,
   };
 };
 
@@ -89,6 +90,16 @@ module.exports = (env, argv) => {
       {
         mode: 'development',
         watch: true,
+        devServer: isDebugging
+          ? {
+              contentBase: path.join(__dirname, ''),
+              compress: true,
+              port: 9000,
+              watchOptions: {
+                ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
+              },
+            }
+          : undefined,
       },
       isDebugging,
     ),
