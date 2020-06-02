@@ -2,8 +2,8 @@ import ajax from './ajax-request';
 import { ConfigureFn, AjaxResponse, AjaxError } from './ajax-request';
 import FileRecord from '../file-record';
 
-type ProgressFn = (event: ProgressEvent) => void;
-type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
+export type ProgressFn = (event: ProgressEvent) => void;
+export type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
 
 export interface TusOptions {
   retryDelays?: number[];
@@ -291,7 +291,9 @@ class UploadHelper {
     const tusOptions: TusOptions = tusOptionsFn ? tusOptionsFn(fileRecord) : {};
     return new Promise((resolve, reject) => {
       if (!tus) {
-        return reject(new Error('tus required. Please install tus-js-client'));
+        return reject(
+          new Error('tus-js-client required for resumable uploads. Install https://github.com/tus/tus-js-client'),
+        );
       }
       // https://github.com/tus/tus-js-client
       // Create a new tus upload
@@ -319,8 +321,13 @@ class UploadHelper {
         },
       });
       fileRecord.tusUpload = upload;
-      // Start the upload
-      upload.start();
+      upload.findPreviousUploads().then((previousUploads: any[]) => {
+        if (previousUploads.length > 0) {
+          upload.resumeFromPreviousUpload(previousUploads[0]);
+        }
+        // Start the upload
+        upload.start();
+      });
     });
   }
 
@@ -384,16 +391,14 @@ class UploadHelper {
       // const shouldTerminate = true;
       const abort = (shouldTerminate: boolean) => {
         return new Promise((res, rej) => {
-          fileRecord.tusUpload.abort(shouldTerminate, (err: any) => {
-            if (err) {
-              this.prepareUploadError(fileRecord, err);
-              rej(err);
-              return;
-            }
-            res();
+          fileRecord.tusUpload.abort(shouldTerminate).then(res, (err: any) => {
+            this.prepareUploadError(fileRecord, err);
+            rej(err);
           });
         });
       };
+      abort(true).then(resolve, reject);
+      return;
       abort(false).then(() => {
         setTimeout(() => {
           abort(true).then(resolve, reject);
