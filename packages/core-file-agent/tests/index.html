@@ -43,12 +43,15 @@
     </div>
 
     <script src="../dist/core-file-agent.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
     <script>
       var FileAgent = window['core-file-agent'].FileAgent;
       var FileIcon = window['core-file-agent'].FileIcon;
       var FilePreview = window['core-file-agent'].FilePreview;
       var FileRecord = window['core-file-agent'].FileRecord;
       var plugins = window['core-file-agent'].plugins;
+
+      plugins.tus = window.tus;
 
       var fileIcon = new FileIcon({
         ext: 'pdf',
@@ -100,55 +103,61 @@
 
       var container = document.getElementById('file-preview-blocks-container');
 
-      FileRecord.fromRawArray(rawFileRecords, { read: false, maxSize: '4MB' }).then(function (fileRecords) {
+      var maxSize = '9994MB';
+
+      FileRecord.fromRawArray(rawFileRecords, { read: false, maxSize: maxSize }).then(function (fileRecords) {
         window.fileRecords = fileRecords;
         var fileAgent = new FileAgent({
+          uploadUrl: 'https://master.tus.io/files/',
+          resumable: true,
           multiple: true,
           fileRecords: fileRecords,
           deletable: true,
           editable: true,
           linkable: true,
-          maxSize: '4MB',
+          maxSize: maxSize,
           // sortable: true,
           theme: 'list',
           // draggable: document.getElementById('file-drag-area'),
-          onBeforeDelete: function (fileRecord) {
-            console.log('onBeforrrrrr', fileRecord.name());
-            if (true || confirm('Sure?')) {
-              return true;
-            }
-            return false;
-          },
-          onBeforeRename: function (fileRecord) {
-            console.log('onBefoererere', ',,,,');
-            // return false;
-          },
-          onSelect: function (fileRecords) {
-            console.log('onSelect', fileRecords);
-          },
-          onRename: function (fileRecord) {
-            console.log('onRename', fileRecord.name(), fileRecord);
-            if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
-              return;
-            }
-            fileRecord.customError('Shitty name is not allowed.');
-            return new Promise(function (resolve, reject) {
-              setTimeout(function () {
-                resolve(false);
-              }, 1000);
-            });
-          },
-          onDelete: function (fileRecord) {
-            console.log('onDelete', fileRecord.name(), fileRecord);
-            if (fileRecord.name().toLowerCase().indexOf('system') === -1) {
-              return;
-            }
-            fileRecord.customError('System files cannot be deleted.');
-            return new Promise(function (resolve, reject) {
-              setTimeout(function () {
-                resolve(false);
-              }, 1000);
-            });
+          events: {
+            onBeforeDelete: function (fileRecord) {
+              console.log('onBeforrrrrr', fileRecord.name());
+              if (true || confirm('Sure?')) {
+                return true;
+              }
+              return false;
+            },
+            onBeforeRename: function (fileRecord) {
+              console.log('onBefoererere', ',,,,');
+              // return false;
+            },
+            onSelect: function (fileRecords) {
+              console.log('onSelect', fileRecords);
+            },
+            onRename: function (fileRecord) {
+              console.log('onRename', fileRecord.name(), fileRecord);
+              if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
+                return;
+              }
+              fileRecord.customError('Shitty name is not allowed.');
+              return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                  resolve(false);
+                }, 1000);
+              });
+            },
+            onDelete: function (fileRecord) {
+              console.log('onDelete', fileRecord.name(), fileRecord);
+              if (fileRecord.name().toLowerCase().indexOf('system') === -1) {
+                return;
+              }
+              return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                  fileRecord.customError('System files cannot be deleted.');
+                  resolve(false);
+                }, 1000);
+              });
+            },
           },
           slots: {
             afterInner: 'After inner',
@@ -160,7 +169,7 @@
                   File: ${fileRecord.name()}
                 </div>`;
             },
-            filePreviewNew: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
+            filePreviewNewx: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
 
         <span class="file-preview">
           <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
