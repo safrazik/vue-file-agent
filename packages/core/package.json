@@ -9,6 +9,7 @@
     "/types"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "coverage": "jest --coverage",
     "lint": "tslint -p tsconfig.json",
     "prebuild": "rimraf dist",
