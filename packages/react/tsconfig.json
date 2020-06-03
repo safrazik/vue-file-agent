@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist",
+    "target": "es5",
+    "module": "esnext",
+    "jsx": "react",
+    "declaration": true,
+    "declarationDir": "types",
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "isolatedModules": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}
