@@ -105,7 +105,7 @@ module.exports = (env, argv) => {
               watchOptions: {
                 ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
               },
-              openPage: 'tests/index.html',
+              openPage: 'demo/index.html',
               inline: true,
               publicPath: '/dist/',
               hot: true,
