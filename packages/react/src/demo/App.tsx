@@ -79,121 +79,125 @@ export default function DemoApp() {
       <div>
         Here's the React File Agent <hr />
       </div>
-      <FileAgent
-        {...{
-          uploadUrl: 'https://master.tus.io/files/',
-          resumable: true,
-          multiple: true,
-          fileRecords: fileRecords,
-          deletable: true,
-          editable: true,
-          linkable: true,
-          maxSize: maxSize,
-          // sortable: true,
-          // theme: 'list',
-          // draggable: document.getElementById('file-drag-area'),
-          events: {
-            onBeforeDelete: function (fileRecord) {
-              console.log('onBeforrrrrr', fileRecord.name());
-              if (true || confirm('Sure?')) {
-                return true;
-              }
-              return false;
-            },
-            onBeforeRename: function (fileRecord) {
-              console.log('onBefoererere', ',,,,');
-              // return false;
-            },
-            onSelect: function (fileRecords) {
-              console.log('onSelect', fileRecords);
-            },
-            onRename: function (fileRecord) {
-              console.log('onRename', fileRecord.name(), fileRecord);
-              if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
-                return;
-              }
-              fileRecord.customError('Shitty name is not allowed.');
-              return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                  resolve(false);
-                }, 1000);
-              });
-            },
-            onDelete: function (fileRecord) {
-              console.log('onDelete', fileRecord.name(), fileRecord);
-              if (fileRecord.name().toLowerCase().indexOf('system') === -1) {
-                return;
-              }
-              return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                  fileRecord.customError('System files cannot be deleted.');
-                  resolve(false);
-                }, 1000);
-              });
-            },
-          },
-          slots: {
-            afterInner: 'After inner',
-            afterOuter: 'After outer',
-            beforeInner: document.getElementById('some-unique-el'),
-            beforeOuter: 'Before outer',
-            // filePreview: function (fileRecord) {
-            //   return `<div>
-            //       File: ${fileRecord.name()}
-            //     </div>`;
-            // },
-            //     filePreviewNewx: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
 
-            // <span class="file-preview">
-            //   <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
-            //     <h1 data-ref="help-text" class="help-text"></h1>
-            //   </span>
-            // </span>
-            //         </div>`,
-            sortableHandle: 'Sortable Handle',
-          },
-        }}
-      />
-      <div>
-        File Previews:
-        {false ? (
-          ''
-        ) : (
-          <div style={{ border: '1px solid blue' }}>
-            <div className="theme-default">
-              <div
-                className="vue-file-agent grid-block-wrapper"
-                style={{ padding: 0 }}
-                id="file-preview-blocks-container"
-              >
-                {fileRecords.map((fileRecord) => (
-                  <div className="file-preview-wrapper grid-box-item grid-block">
-                    <FilePreview
-                      {...{
-                        fileRecord: fileRecord,
-                        deletable: true,
-                        editable: true,
-                        linkable: true,
-                        onRename: function (fileRecord) {
-                          console.log('onRename', fileRecord.name(), fileRecord);
-                        },
-                        onDelete: function (fileRecord) {
-                          console.log('onDelete', fileRecord.name(), fileRecord);
-                        },
-                      }}
-                    />
-                  </div>
-                ))}
+      <fieldset id="file-drag-area">
+        <legend>Drag Area</legend>
+        CI
+        <h3>File Icon</h3>
+        <div id="file-icon-wrapper">
+          <FileIcon ext="pdf" />
+        </div>
+        <FileAgent
+          {...{
+            uploadUrl: 'https://master.tus.io/files/',
+            resumable: true,
+            multiple: true,
+            fileRecords: fileRecords,
+            deletable: true,
+            editable: true,
+            linkable: true,
+            maxSize: maxSize,
+            // sortable: true,
+            // theme: 'list',
+            // draggable: document.getElementById('file-drag-area'),
+            events: {
+              onBeforeDelete: function (fileRecord) {
+                console.log('onBeforrrrrr', fileRecord.name());
+                if (true || confirm('Sure?')) {
+                  return true;
+                }
+                return false;
+              },
+              onBeforeRename: function (fileRecord) {
+                console.log('onBefoererere', ',,,,');
+                // return false;
+              },
+              onSelect: function (fileRecords) {
+                console.log('onSelect', fileRecords);
+              },
+              onRename: function (fileRecord) {
+                console.log('onRename', fileRecord.name(), fileRecord);
+                if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
+                  return;
+                }
+                fileRecord.customError('Shitty name is not allowed.');
+                return new Promise(function (resolve, reject) {
+                  setTimeout(function () {
+                    resolve(false);
+                  }, 1000);
+                });
+              },
+              onDelete: function (fileRecord) {
+                console.log('onDelete', fileRecord.name(), fileRecord);
+                if (fileRecord.name().toLowerCase().indexOf('system') === -1) {
+                  return;
+                }
+                return new Promise(function (resolve, reject) {
+                  setTimeout(function () {
+                    fileRecord.customError('System files cannot be deleted.');
+                    resolve(false);
+                  }, 1000);
+                });
+              },
+            },
+            slots: {
+              afterInner: 'After inner',
+              afterOuter: 'After outer',
+              beforeInner: document.getElementById('some-unique-el'),
+              beforeOuter: 'Before outer',
+              // filePreview: function (fileRecord) {
+              //   return `<div>
+              //       File: ${fileRecord.name()}
+              //     </div>`;
+              // },
+              //     filePreviewNewx: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
+
+              // <span class="file-preview">
+              //   <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
+              //     <h1 data-ref="help-text" class="help-text"></h1>
+              //   </span>
+              // </span>
+              //         </div>`,
+              sortableHandle: 'Sortable Handle',
+            },
+          }}
+        />
+        <div>
+          File Previews:
+          {false ? (
+            ''
+          ) : (
+            <div style={{ border: '1px solid blue' }}>
+              <div className="theme-default">
+                <div
+                  className="vue-file-agent grid-block-wrapper"
+                  style={{ padding: 0 }}
+                  id="file-preview-blocks-container"
+                >
+                  {fileRecords.map((fileRecord) => (
+                    <div className="file-preview-wrapper grid-box-item grid-block">
+                      <FilePreview
+                        {...{
+                          fileRecord: fileRecord,
+                          deletable: true,
+                          editable: true,
+                          linkable: true,
+                          onRename: function (fileRecord) {
+                            console.log('onRename', fileRecord.name(), fileRecord);
+                          },
+                          onDelete: function (fileRecord) {
+                            console.log('onDelete', fileRecord.name(), fileRecord);
+                          },
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      <div>
-        File ICon??:
-        <FileIcon name="system-close" />
-      </div>
+          )}
+        </div>
+      </fieldset>
     </div>
   );
 }
