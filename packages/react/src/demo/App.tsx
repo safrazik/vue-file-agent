@@ -63,6 +63,13 @@ export default function DemoApp() {
   if (!fileRecords.length) {
     FileRecord.fromRawArray(rawFileRecords as any, { read: false, maxSize: '4MB' }).then((fileRecords) => {
       setFileRecords(fileRecords);
+      setTimeout(() => {
+        setTimeout(() => {
+          fileRecords[0].progress(34);
+          fileRecords[0].customError('Custom Error test');
+        }, 2000);
+        setFileRecords(fileRecords.reverse().concat([]));
+      }, 2000);
     });
   }
 
@@ -147,40 +154,45 @@ export default function DemoApp() {
           },
         }}
       />
-      {/* <div>
-        File ICon??:
-        <FileIcon name="system-close" />
-      </div> */}
       <div>
         File Previews:
-        <div style={{ border: '1px solid blue' }}>
-          <div className="theme-default">
-            <div
-              className="vue-file-agent grid-block-wrapper"
-              style={{ padding: 0 }}
-              id="file-preview-blocks-container"
-            >
-              {fileRecords.map((fileRecord) => (
-                <div className="file-preview-wrapper grid-box-item grid-block">
-                  <FilePreview
-                    {...{
-                      fileRecord: fileRecord,
-                      deletable: true,
-                      editable: true,
-                      linkable: true,
-                      onRename: function (fileRecord) {
-                        console.log('onRename', fileRecord.name(), fileRecord);
-                      },
-                      onDelete: function (fileRecord) {
-                        console.log('onDelete', fileRecord.name(), fileRecord);
-                      },
-                    }}
-                  />
-                </div>
-              ))}
+        {false ? (
+          ''
+        ) : (
+          <div style={{ border: '1px solid blue' }}>
+            <div className="theme-default">
+              <div
+                className="vue-file-agent grid-block-wrapper"
+                style={{ padding: 0 }}
+                id="file-preview-blocks-container"
+              >
+                {fileRecords.map((fileRecord) => (
+                  <div className="file-preview-wrapper grid-box-item grid-block">
+                    <FilePreview
+                      {...{
+                        fileRecord: fileRecord,
+                        deletable: true,
+                        editable: true,
+                        linkable: true,
+                        onRename: function (fileRecord) {
+                          console.log('onRename', fileRecord.name(), fileRecord);
+                        },
+                        onDelete: function (fileRecord) {
+                          console.log('onDelete', fileRecord.name(), fileRecord);
+                        },
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+      </div>
+
+      <div>
+        File ICon??:
+        <FileIcon name="system-close" />
       </div>
     </div>
   );
