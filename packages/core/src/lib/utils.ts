@@ -102,8 +102,9 @@ class Utils {
     return new Promise((resolve, reject) => {
       let loadedmetadata = false;
       let loadeddata = false;
+      let seeked = false;
       const tryGetThumbnail = () => {
-        if (!(loadedmetadata && loadeddata)) {
+        if (!(loadedmetadata && loadeddata && seeked)) {
           return;
         }
         const context = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -135,6 +136,11 @@ class Utils {
 
       video.addEventListener('loadeddata', () => {
         loadeddata = true;
+        tryGetThumbnail();
+      });
+
+      video.addEventListener('seeked', () => {
+        seeked = true;
         tryGetThumbnail();
       });
     });

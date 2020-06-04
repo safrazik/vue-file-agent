@@ -27,6 +27,8 @@ export class FilePreview extends Component {
   isEditInputFocused = false;
   isEditCancelable = true;
 
+  isVisible = '';
+
   constructor(public $props: Props) {
     super();
   }
@@ -71,10 +73,7 @@ export class FilePreview extends Component {
     utils
       .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.$props.averageColor !== false)
       .then((thumbnail) => {
-        fileRecord.imageColor = thumbnail.color;
-        fileRecord.videoThumbnail = thumbnail.url;
-        fileRecord.dimensions.width = thumbnail.width;
-        fileRecord.dimensions.height = thumbnail.height;
+        fileRecord.thumbnail(thumbnail);
         video.poster = fileRecord.src();
       });
   }
@@ -268,10 +267,9 @@ export class FilePreview extends Component {
 
   updateProgress() {
     const fileRecord = this.$props.fileRecord as FileRecord;
-    const visible = '';
     if (fileRecord.hasProgress()) {
       const progressEl = this.getRef('file-progress');
-      progressEl.style.display = visible;
+      progressEl.style.display = this.isVisible;
       progressEl.className = `file-progress
         ${fileRecord.progress() >= 99.9999 ? 'file-progress-full' : ''}
         ${fileRecord.progress() >= 100 ? 'file-progress-done' : ''}
@@ -284,13 +282,12 @@ export class FilePreview extends Component {
   }
 
   updateError() {
-    const visible = '';
     const fileRecord = this.$props.fileRecord as FileRecord;
     this.toggleClass(this.$el, 'has-error', !!fileRecord.error);
-    this.getRef('error-wrapper').style.display = fileRecord.error ? visible : 'none';
+    this.getRef('error-wrapper').style.display = fileRecord.error ? this.isVisible : 'none';
     const errorText = this.getRef('error-text');
     errorText.innerText = fileRecord.getErrorMessage(this.$props.errorText);
-    this.getRef('error-dismiss').style.display = this.hasDismissibleError() ? visible : 'none';
+    this.getRef('error-dismiss').style.display = this.hasDismissibleError() ? this.isVisible : 'none';
     // if (this.hasDismissibleError()) {
     //   const dismiss = document.createElement('small');
     //   dismiss.style.marginLeft = '5px';
@@ -309,15 +306,67 @@ export class FilePreview extends Component {
     this.getRef('file-name-text').innerText = input.value;
   }
 
+  updateUrl() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    const svg = this.iconByExt(fileRecord.ext());
+    const fileIconLink = this.getRef<HTMLLinkElement>('file-icon-link');
+    const fileIcon = this.getRef('file-icon');
+    if (this.hasLinkableUrl(fileRecord)) {
+      fileIcon.style.display = 'none';
+      fileIconLink.style.display = this.isVisible;
+      fileIconLink.innerHTML = '';
+      fileIconLink.appendChild(svg);
+      fileIconLink.href = fileRecord.url() as string;
+      fileIconLink.title = fileRecord.name();
+    } else {
+      fileIcon.style.display = this.isVisible;
+      fileIconLink.style.display = 'none';
+      fileIcon.innerHTML = '';
+      fileIcon.appendChild(svg);
+    }
+  }
+
+  updateThumbnail() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    if (fileRecord.isImage() || fileRecord.isPlayableVideo()) {
+      this.getRef('thumbnail').style.display = this.isVisible;
+      if (this.hasLinkableUrl(fileRecord)) {
+        const link = this.getRef<HTMLLinkElement>('thumbnail-link');
+        link.style.display = this.isVisible;
+        this.getRef('thumbnail-image').style.display = 'none';
+        const img = this.getRef<HTMLImageElement>('thumbnail-link-image');
+        img.src = fileRecord.src();
+        link.title = fileRecord.name();
+        link.href = fileRecord.url() as string;
+      } else {
+        this.getRef('thumbnail-link').style.display = 'none';
+        const img = this.getRef<HTMLImageElement>('thumbnail-image');
+        img.style.display = this.isVisible;
+        img.src = fileRecord.src();
+      }
+    } else {
+      this.getRef('thumbnail').style.display = 'none';
+    }
+  }
+
+  updateDimensions() {
+    const fileRecord = this.$props.fileRecord as FileRecord;
+    if (fileRecord.dimensions.width && fileRecord.dimensions.height) {
+      this.getRef('image-dimension').style.display = this.isVisible;
+      this.getRef('image-dimension-width').innerText = '' + fileRecord.dimensions.width;
+      this.getRef('image-dimension-height').innerText = '' + fileRecord.dimensions.height;
+    } else {
+      this.getRef('image-dimension').style.display = 'none';
+    }
+  }
+
   update() {
     const fileRecord = this.$props.fileRecord as FileRecord;
     this.updateWrapper();
     this.updateError();
 
-    const visible = '';
-
     this.getRef('av-wrapper').style.display =
-      fileRecord.isPlayableAudio() || fileRecord.isPlayableVideo() ? visible : 'none';
+      fileRecord.isPlayableAudio() || fileRecord.isPlayableVideo() ? this.isVisible : 'none';
 
     const previewRefEl = this.getRef('preview');
 
@@ -329,65 +378,26 @@ export class FilePreview extends Component {
 
     previewRefEl.style.backgroundColor = fileRecord.color();
 
-    if (fileRecord.isImage() || fileRecord.isPlayableVideo()) {
-      this.getRef('thumbnail').style.display = visible;
-      if (this.hasLinkableUrl(fileRecord)) {
-        const link = this.getRef<HTMLLinkElement>('thumbnail-link');
-        link.style.display = visible;
-        this.getRef('thumbnail-image').style.display = 'none';
-        const img = this.getRef<HTMLImageElement>('thumbnail-link-image');
-        img.src = fileRecord.src();
-        link.title = fileRecord.name();
-        link.href = fileRecord.url() as string;
-      } else {
-        this.getRef('thumbnail-link').style.display = 'none';
-        const img = this.getRef<HTMLImageElement>('thumbnail-image');
-        img.style.display = visible;
-        img.src = fileRecord.src();
-      }
-    } else {
-      this.getRef('thumbnail').style.display = 'none';
-    }
+    this.updateThumbnail();
 
-    this.getRef('file-delete').style.display = this.$props.deletable ? visible : 'none';
+    this.getRef('file-delete').style.display = this.$props.deletable ? this.isVisible : 'none';
 
     const input = this.getRef<HTMLInputElement>('file-name-input');
     if (this.$props.editable === true) {
-      input.style.display = visible;
+      input.style.display = this.isVisible;
       input.value = fileRecord.nameWithoutExtension() as string;
-      this.getRef('file-name-edit-icon').style.display = visible;
+      this.getRef('file-name-edit-icon').style.display = this.isVisible;
     } else {
       input.style.display = 'none';
       this.getRef('file-name-edit-icon').style.display = 'none';
     }
 
-    if (fileRecord.dimensions.width && fileRecord.dimensions.height) {
-      this.getRef('image-dimension').style.display = visible;
-      this.getRef('image-dimension-width').innerText = '' + fileRecord.dimensions.width;
-      this.getRef('image-dimension-height').innerText = '' + fileRecord.dimensions.height;
-    } else {
-      this.getRef('image-dimension').style.display = 'none';
-    }
-
+    this.updateDimensions();
     this.updateProgress();
     this.updateName();
 
-    const svg = this.iconByExt(fileRecord.ext());
-    const fileIconLink = this.getRef<HTMLLinkElement>('file-icon-link');
-    const fileIcon = this.getRef('file-icon');
-    if (this.hasLinkableUrl(fileRecord)) {
-      fileIcon.style.display = 'none';
-      fileIconLink.style.display = visible;
-      fileIconLink.innerHTML = '';
-      fileIconLink.appendChild(svg);
-      fileIconLink.href = fileRecord.url() as string;
-      fileIconLink.title = fileRecord.name();
-    } else {
-      fileIcon.style.display = visible;
-      fileIconLink.style.display = 'none';
-      fileIcon.innerHTML = '';
-      fileIcon.appendChild(svg);
-    }
+    this.updateUrl();
+
     // return `<span class="file-icon">
     //   ${
     //     this.hasLinkableUrl(fileRecord)
@@ -428,7 +438,7 @@ export class FilePreview extends Component {
         previewEl = this.parseTemplate(templateString);
       }
       el = previewEl.cloneNode(true) as HTMLElement;
-      (fileRecord as any)._el = el;
+      // (fileRecord as any)._el = el;
     }
     // el.appendChild();
     // el.innerHTML = this.getHtml(fileRecord);

@@ -81,10 +81,7 @@ export class FileAgent extends Component {
       utils
         .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.$props.averageColor !== false)
         .then((thumbnail) => {
-          fileRecord.imageColor = thumbnail.color;
-          fileRecord.videoThumbnail = thumbnail.url;
-          fileRecord.dimensions.width = thumbnail.width;
-          fileRecord.dimensions.height = thumbnail.height;
+          fileRecord.thumbnail(thumbnail);
           resolve();
         }, reject);
     });
@@ -100,9 +97,9 @@ export class FileAgent extends Component {
     video.src = createObjectURL(fileRecord.file);
     this.createThumbnail(fileRecord, video).then(() => {
       revokeObjectURL(video.src);
-      if ((fileRecord as any)._filePreview) {
-        (fileRecord as any)._filePreview.updateWrapper();
-      }
+      // if ((fileRecord as any)._filePreview) {
+      //   (fileRecord as any)._filePreview.updateWrapper();
+      // }
     });
     video.load();
   }
@@ -742,12 +739,21 @@ export class FileAgent extends Component {
               this.onDeleteFileRecord(fr);
             },
           });
-          (fileRecord as any)._filePreview = filePreview;
+          // (fileRecord as any)._filePreview = filePreview;
           fileRecord.onChange.progress = () => {
             filePreview.updateProgress();
           };
           fileRecord.onChange.name = () => {
             filePreview.updateName();
+          };
+          fileRecord.onChange.url = () => {
+            filePreview.updateUrl();
+          };
+          fileRecord.onChange.thumbnail = () => {
+            filePreview.updateThumbnail();
+          };
+          fileRecord.onChange.dimensions = () => {
+            filePreview.updateDimensions();
           };
           fileRecord.onChange.error = () => {
             filePreview.updateError();

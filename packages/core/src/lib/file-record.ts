@@ -171,6 +171,12 @@ class FileRecord {
     url: (value: string) => {
       /** no op */
     },
+    thumbnail: (value: VideoThumbnail) => {
+      /** no op */
+    },
+    dimensions: (value: { width: number; height: number }) => {
+      /** no op */
+    },
     error: (value: false | ErrorFlags) => {
       /** no op */
     },
@@ -199,7 +205,7 @@ class FileRecord {
     this.options = options;
     this.maxSize = options.maxSize;
     this.accept = options.accept;
-    this.id = Math.random() + ':' + new Date().getTime();
+    this.id = '' + new Date().getTime() + Math.random();
     this.videoThumbnail = data.videoThumbnail;
     this.imageColor = data.imageColor;
     this.customName = data.customName;
@@ -244,6 +250,23 @@ class FileRecord {
       });
     }
     return this.urlValue || undefined;
+  }
+
+  public thumbnail(value?: VideoThumbnail): VideoThumbnail | void {
+    if (value !== undefined) {
+      this.imageColor = value.color;
+      this.videoThumbnail = value.url;
+      this.dimensions.width = value.width;
+      this.dimensions.height = value.height;
+      this.onChange.thumbnail(value);
+      this.onChange.dimensions(this.dimensions);
+    }
+    return {
+      color: this.imageColor,
+      url: this.videoThumbnail,
+      width: this.dimensions.width,
+      height: this.dimensions.height,
+    } as VideoThumbnail;
   }
 
   public src(): string {
