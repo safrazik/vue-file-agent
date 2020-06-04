@@ -6,6 +6,7 @@
     "outDir": "./dist",
     "target": "es5",
     "module": "esnext",
+    "moduleResolution": "node",
     "jsx": "react",
     "declaration": true,
     "declarationDir": "types",

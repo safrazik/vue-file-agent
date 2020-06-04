@@ -18,7 +18,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch --coverage",
     "servex": "npx serve",
-    "serve": "webpack-dev-server --env=development --open",
+    "serve": "webpack-dev-server --env=development",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache"
   },
   "author": "Safraz Razik",
@@ -32,6 +32,7 @@
   },
   "homepage": "https://safrazik.com/file-agent/",
   "dependencies": {
+    "@file-agent/core": "^2.0.0-pre.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
@@ -39,9 +40,11 @@
     "@types/jest": "^25.2.3",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "css-loader": "^3.5.3",
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
+    "style-loader": "^1.2.1",
     "ts-jest": "^26.1.0",
     "ts-loader": "^7.0.5",
     "tslint": "^6.1.2",

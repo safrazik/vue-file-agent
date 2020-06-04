@@ -20,16 +20,17 @@ const createConfig = (options, isDebugging) => {
       globalObject: "typeof self !== 'undefined' ? self : this",
     },
     module: {
-      rules: [
+      rules: (options.rules || []).concat([
         {
           test: /\.tsx?$/,
           use: 'ts-loader',
           exclude: '/node_modules/',
         },
-      ],
+      ]),
     },
     externals: options.externals,
     resolve: {
+      alias: options.alias || {},
       extensions: ['.ts', '.tsx', '.js'],
     },
     devServer: options.devServer,
@@ -74,8 +75,20 @@ module.exports = (env, argv) => {
   const entry = {
     'react-file-agent': path.join(__dirname, 'src', 'index.tsx'),
   };
+  const rules = [];
+  let alias = {};
   if (isDebugging) {
     entry['react-file-agent-demo'] = path.join(__dirname, 'src', 'demo', 'index.tsx');
+    rules.push({
+      test: /\.css$/i,
+      use: ['style-loader', 'css-loader'],
+    });
+    alias = {
+      // '@file-agent/core$': '@file-agent/core/dist/file-agent.js',
+      // '@file-agent/core/dist/file-agent.min.js$': '@file-agent/core/dist/file-agent.js',
+      '@file-agent/core$': path.resolve(__dirname, '../core/dist/file-agent.js'),
+      '@file-agent/core/dist/file-agent.min.js$': path.resolve(__dirname, '../core/dist/file-agent.js'),
+    };
   }
   configs.push(
     createConfig(
@@ -85,14 +98,17 @@ module.exports = (env, argv) => {
         outputFilename: '[name].js',
         watch: true,
         externals: isDebugging ? undefined : externals,
+        rules: rules,
+        alias: alias,
         devServer: isDebugging
           ? {
-              contentBase: path.join(__dirname, ''),
+              contentBase: [path.join(__dirname, ''), path.join(__dirname, '../core/dist')],
               // contentBase: ['/tests/', '/src/'],
               compress: true,
               port: 9001,
               watchOptions: {
-                ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
+                // ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
+                ignored: ['**/*.d.ts', 'node_modules/**'],
               },
               openPage: 'demo/index.html',
               inline: true,
@@ -105,33 +121,6 @@ module.exports = (env, argv) => {
       isDebugging,
     ),
   );
-  // configs.push(
-  //   createConfig(
-  //     {
-  //       mode: 'development',
-  //       entry: path.join(__dirname, 'src', 'demo', 'index.tsx'),
-  //       outputFilename: 'react-file-agent-demo.js',
-  //       outputPath: path.resolve(__dirname, 'demo', 'dist'),
-  //       watch: true,
-  //       // externals: externals,
-  //       devServer: {
-  //         contentBase: path.join(__dirname, 'demo'),
-  //         // contentBase: ['/tests/', '/src/'],
-  //         compress: true,
-  //         port: 9001,
-  //         watchOptions: {
-  //           ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
-  //         },
-  //         // openPage: 'demo/index.html',
-  //         inline: true,
-  //         // publicPath: '/demo/',
-  //         hot: true,
-  //         hotOnly: false,
-  //       },
-  //     },
-  //     isDebugging,
-  //   ),
-  // );
 
   return configs;
 };
