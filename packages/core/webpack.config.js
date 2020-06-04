@@ -40,6 +40,12 @@ const createConfig = (options, isDebugging) => {
         {
           test: /\.html$/i,
           loader: 'html-loader',
+          options: {
+            minimize: {
+              removeComments: true,
+              collapseWhitespace: true,
+            },
+          },
         },
         {
           test: /\.scss$/,
