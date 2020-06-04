@@ -60,12 +60,11 @@ export interface Props {
 
 export default class FilePreview extends React.Component<Props> {
   private $container?: HTMLElement;
-  private coreFileAgent: CoreFileAgent;
-  private coreRendered = false;
+  private coreFileAgent?: CoreFileAgent;
+  // private coreRendered = false;
   constructor(public props: Props) {
     super(props);
     // fileIcon.render(document.getElementById('file-icon-wrapper') as HTMLElement);
-    this.coreFileAgent = new CoreFileAgent(this.props);
   }
 
   setContainer(el: HTMLElement | null) {
@@ -75,25 +74,27 @@ export default class FilePreview extends React.Component<Props> {
   }
 
   renderCore() {
-    if (this.coreRendered) {
+    if (/* this.coreRendered &&  */ this.coreFileAgent) {
+      this.coreFileAgent.$props = this.props;
       this.coreFileAgent.update();
       return;
     }
     if (!this.$container) {
       return;
     }
+    this.coreFileAgent = new CoreFileAgent(this.props);
     this.coreFileAgent.render(this.$container);
-    this.coreRendered = true;
+    // this.coreRendered = true;
   }
 
   componentDidMount() {
     console.log('componentDidMount', this.props.fileRecords);
-    this.renderCore();
+    // this.renderCore();
   }
 
   componentDidUpdate() {
     console.log('componentDidUpdate', this.props.fileRecords);
-    this.renderCore();
+    // this.renderCore();
   }
 
   componentWillUnmount() {
