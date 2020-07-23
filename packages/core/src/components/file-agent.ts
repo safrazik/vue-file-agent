@@ -7,7 +7,7 @@ import utils from '../lib/utils';
 // import uploader from '../lib/uploader/upload-helper';
 import uploader from '../lib/uploader/uploader';
 import plugins from '../lib/plugins';
-import { Props } from '../lib/props';
+import { FileAgentProps } from '../lib/props';
 import { ConfigureFn } from '../lib/uploader/ajax-request';
 
 let fileAgentEl: Element;
@@ -18,12 +18,14 @@ var dragCounter = 0;
 
 plugins.uploader = uploader;
 
+export { FileAgentProps };
+
 export class FileAgent extends Component {
   isDragging = false;
   isSorting = false;
   isSortingActive = false;
 
-  constructor(public $props: Props) {
+  constructor(public $props: FileAgentProps) {
     super();
   }
 
@@ -210,7 +212,7 @@ export class FileAgent extends Component {
     configureXhr?: ConfigureFn,
   ): Promise<any> {
     return new Promise((resolve, reject) => {
-      uploader
+      plugins.uploader
         .updateUpload(url, headers, this.$props, fileRecord, uploadData, this.prepareConfigureFn(configureXhr))
         .then(
           (res: any) => {
@@ -805,7 +807,7 @@ export class FileAgent extends Component {
       newFilePreviewEl = this.getRef('file-preview-new', fileAgentEl);
     }
     const el = fileAgentEl.cloneNode(true) as HTMLElement;
-    this.cachedEl = el;
+    this.cachedEl = el; // important to avoid recursion because this getter is called in update method
     const uniqueId = new Date().getTime().toString(36) + Math.random().toString(36).slice(2);
     el.id = 'vfa-' + uniqueId;
 

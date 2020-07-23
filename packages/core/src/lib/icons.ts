@@ -182,11 +182,12 @@ for (const cat in extensions) {
 }
 
 export function getIconByName(name: string): SvgIcon {
-  const svgIcon = (icons as any)[name] || icons.other;
+  const svgIcon = (icons as any)[name || ''] || icons.other;
   return svgIcon;
 }
 
 export function getIconFromExt(ext: string): SvgIcon {
+  ext = ext || '';
   ext = ext.toLowerCase();
   const cat = extensionsMap[ext];
   return getIconByName(cat);

@@ -101,6 +101,7 @@ module.exports = (env, argv) => {
               contentBase: path.join(__dirname, ''),
               // contentBase: ['/tests/', '/src/'],
               compress: true,
+              host: '0.0.0.0',
               port: 9000,
               watchOptions: {
                 ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
@@ -110,6 +111,7 @@ module.exports = (env, argv) => {
               publicPath: '/dist/',
               hot: true,
               hotOnly: false,
+              writeToDisk: true,
             }
           : undefined,
       },

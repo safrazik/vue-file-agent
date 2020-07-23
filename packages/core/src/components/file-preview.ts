@@ -3,23 +3,7 @@ import template from './file-preview.html';
 import FileRecord from '../lib/file-record';
 import { FileIcon } from './file-icon';
 import utils from '../lib/utils';
-
-interface Props {
-  averageColor?: boolean;
-  deletable?: boolean;
-  editable?: boolean;
-  linkable?: boolean;
-  disabled?: boolean;
-  fileRecord?: FileRecord;
-  onDelete?: (fileRecord: FileRecord) => void;
-  onRename?: (fileRecord: FileRecord) => void;
-  errorText?: {
-    // common?: string;
-    type?: string;
-    size?: string;
-    // upload?: string;
-  };
-}
+import { FilePreviewProps } from '../lib/props';
 
 let previewEl: Element;
 
@@ -29,7 +13,7 @@ export class FilePreview extends Component {
 
   isVisible = '';
 
-  constructor(public $props: Props) {
+  constructor(public $props: FilePreviewProps) {
     super();
   }
 

@@ -1,13 +1,13 @@
 import FileRecord from './file-record';
 import { ConfigureFn } from './uploader/ajax-request';
 import { CreateFormDataFn } from './uploader/upload-helper';
-import { Props } from './props';
+import { FileAgentProps } from './props';
 
 export interface Uploader {
   upload: (
     url: string,
     headers: object,
-    props: Props,
+    props: FileAgentProps,
     fileRecords: FileRecord[],
     createFormData?: CreateFormDataFn,
     progressFn?: (progress: number) => void,
@@ -17,7 +17,7 @@ export interface Uploader {
   deleteUpload: (
     url: string,
     headers: object,
-    props: Props,
+    props: FileAgentProps,
     fileRecord: FileRecord,
     uploadData?: any,
     configureFn?: ConfigureFn,
@@ -26,7 +26,7 @@ export interface Uploader {
   updateUpload: (
     url: string,
     headers: object,
-    props: Props,
+    props: FileAgentProps,
     fileRecord: FileRecord,
     uploadData?: any,
     configureFn?: ConfigureFn,

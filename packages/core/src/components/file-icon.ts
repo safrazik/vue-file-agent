@@ -1,14 +1,9 @@
 import { Component } from './component';
 import { getIconFromExt, getIconByName, SvgIcon } from '../lib/icons';
-
-interface Props {
-  ext?: string;
-  name?: string;
-  viewBox?: string;
-}
+import { FileIconProps } from '../lib/props';
 
 export class FileIcon extends Component {
-  constructor(public $props: Props) {
+  constructor(public $props: FileIconProps) {
     super();
   }
 
@@ -27,47 +22,41 @@ export class FileIcon extends Component {
     return this.$props.viewBox ? this.$props.viewBox : '0 0 100 100';
   }
 
-  getEl() {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  update() {
+    const svg = this.$el;
     svg.setAttribute('viewBox', this.viewBox);
+    svg.innerHTML = '';
     for (const d of this.icon.paths) {
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path.setAttribute('d', d);
       svg.appendChild(path);
     }
+  }
+
+  // getEl() {
+  //   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  //   svg.setAttribute('viewBox', this.viewBox);
+  //   for (const d of this.icon.paths) {
+  //     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  //     path.setAttribute('d', d);
+  //     svg.appendChild(path);
+  //   }
+  //   return svg;
+  // }
+
+  get $el(): SVGElement {
+    if (this.cachedEl) {
+      return this.cachedEl as SVGElement;
+    }
+    // let el?: HTMLElement;
+    // if (!el) {
+    // const el = document.createElement('div');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+    this.cachedEl = svg; // important to avoid recursion because this getter is called in update method
+
+    this.update();
+
     return svg;
   }
 }
-
-/* <template>
-  <svg :viewBox="viewBoxComputed">
-    <template v-for="(d, index) in icon.paths">
-      <path :d="d" v-if="d" :key="index" />
-    </template>
-  </svg>
-</template>
-<style></style>
-<script lang="ts">
-import { getIconFromExt, getIconByName, SvgIcon } from '../lib/icons';
-import Vue from 'vue';
-
-export default Vue.extend({
-  props: ['ext', 'name', 'viewBox'],
-  computed: {
-    viewBoxComputed(): string {
-      if (!this.viewBox && this.icon && this.icon.viewBox) {
-        return this.icon.viewBox;
-      }
-      return this.viewBox ? this.viewBox : '0 0 100 100';
-    },
-    icon(): SvgIcon {
-      if (this.name) {
-        return getIconByName(this.name);
-      }
-      const svgIcon = getIconFromExt(this.ext);
-      return svgIcon;
-    },
-  },
-});
-</script>
- */
