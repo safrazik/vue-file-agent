@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import { FilePreview as CoreFilePreview, FileRecord, filePreviewProps, FilePreviewProps } from '@file-agent/core';
+import propsHelper from '../lib/props-helper';
+
+const propsWatch = propsHelper.createWatcher(filePreviewProps);
 
 export default Vue.extend({
   props: filePreviewProps,
@@ -10,6 +13,7 @@ export default Vue.extend({
     );
   },
   created() {
+    propsHelper.bindThis(propsWatch, this);
     this.renderCore();
   },
   mounted() {
@@ -28,13 +32,10 @@ export default Vue.extend({
       this.coreFilePreview = new CoreFilePreview(this.$props as FilePreviewProps);
       this.coreFilePreview.render(this.$el as HTMLElement);
     },
-  },
-  watch: {
-    $props: {
-      handler(val, oldVal) {
-        this.renderCore();
-      },
-      deep: true,
+    propUpdated(propName: string, value: any) {
+      console.log('FilePreview propUpdated', propName, value);
+      this.renderCore();
     },
   },
+  watch: propsWatch,
 });

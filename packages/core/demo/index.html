@@ -22,7 +22,6 @@
     <fieldset id="file-drag-area">
       <legend>Drag Area</legend>
       CI
-      <h3>File Icon Vilakku:<span id="vilakku"></span></h3>
       <div style="border: 1px solid green; width: 100px;" id="file-icon-wrapper"></div>
 
       <h3>File Agent</h3>
@@ -49,7 +48,6 @@
       var FileIcon = window['file-agent'].FileIcon;
       var FilePreview = window['file-agent'].FilePreview;
       var FileRecord = window['file-agent'].FileRecord;
-      var vilakku = window['file-agent'].vilakku;
       var plugins = window['file-agent'].plugins;
 
       plugins.tus = window.tus;
@@ -216,7 +214,6 @@
       //   },
       //   { read: false },
       // );
-      document.getElementById('vilakku').innerText = vilakku;
     </script>
   </body>
 </html>
