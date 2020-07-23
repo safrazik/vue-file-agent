@@ -1,0 +1,55 @@
+{
+  "name": "@file-agent/vue",
+  "version": "2.0.0-pre.0",
+  "description": "High performant file upload component with elegant and distinguishable previews for every file type and support for drag and drop, validations, default uploader with progress support and externally customizable via props and methods",
+  "main": "dist/vue-file-agent.min.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "/dist",
+    "/types"
+  ],
+  "scripts": {
+    "prepare": "npm run build",
+    "coverage": "jest --coverage",
+    "lint": "tslint -p tsconfig.json",
+    "prebuild": "rimraf dist",
+    "build": "webpack --env=production",
+    "watch": "webpack --env=development",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch --coverage",
+    "servex": "npx serve",
+    "serve": "webpack-dev-server --env=development",
+    "test:prod": "npm run lint && npm run test -- --coverage --no-cache"
+  },
+  "author": "Safraz Razik",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safrazik/file-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/safrazik/file-agent/issues"
+  },
+  "homepage": "https://safrazik.com/file-agent/",
+  "dependencies": {
+    "@file-agent/core": "^2.0.0-pre.0",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.3",
+    "css-loader": "^3.5.3",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "style-loader": "^1.2.1",
+    "ts-jest": "^26.1.0",
+    "ts-loader": "^7.0.5",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.3",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
