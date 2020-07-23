@@ -102,7 +102,7 @@ module.exports = (env, argv) => {
         alias: alias,
         devServer: isDebugging
           ? {
-              contentBase: [path.join(__dirname, ''), path.join(__dirname, '../core/dist')],
+              contentBase: [path.join(__dirname, ''), path.join(__dirname, '../core')],
               // contentBase: ['/tests/', '/src/'],
               compress: true,
               port: 9001,

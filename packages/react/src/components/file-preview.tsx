@@ -1,27 +1,12 @@
 import React from 'react';
 
-import { FilePreview as CoreFilePreview, FileRecord } from '@file-agent/core';
+import { FilePreview as CoreFilePreview, FilePreviewProps, FileRecord } from '@file-agent/core';
 
-interface Props {
-  averageColor?: boolean;
-  deletable?: boolean;
-  editable?: boolean;
-  linkable?: boolean;
-  disabled?: boolean;
-  fileRecord?: FileRecord;
-  onDelete?: (fileRecord: FileRecord) => void;
-  onRename?: (fileRecord: FileRecord) => void;
-  errorText?: {
-    type?: string;
-    size?: string;
-  };
-}
-
-export default class FilePreview extends React.Component<Props> {
+export default class FilePreview extends React.Component<FilePreviewProps> {
   private $container?: HTMLElement;
   private coreFilePreview: CoreFilePreview;
   private coreRendered = false;
-  constructor(public props: Props) {
+  constructor(public props: FilePreviewProps) {
     super(props);
     // fileIcon.render(document.getElementById('file-icon-wrapper') as HTMLElement);
     this.coreFilePreview = new CoreFilePreview(this.props);

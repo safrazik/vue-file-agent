@@ -59,6 +59,7 @@ export default function DemoApp() {
   // const fileRecords: FileRecord[] = [];
 
   const [fileRecords, setFileRecords] = useState([] as FileRecord[]);
+  const [myExt, setMyExt] = useState('pdf');
 
   if (!fileRecords.length) {
     FileRecord.fromRawArray(rawFileRecords as any, { read: false, maxSize: '4MB' }).then((fileRecords) => {
@@ -83,9 +84,15 @@ export default function DemoApp() {
       <fieldset id="file-drag-area">
         <legend>Drag Area</legend>
         CI
-        <h3>File Icon</h3>
+        <input
+          type="text"
+          value={myExt}
+          onInput={(event) => {
+            setMyExt((event.target as HTMLInputElement).value);
+          }}
+        />
         <div id="file-icon-wrapper">
-          <FileIcon ext="pdf" />
+          <FileIcon ext={myExt} />
         </div>
         <FileAgent
           {...{

@@ -9,7 +9,6 @@
     <fieldset id="file-drag-area">
       <legend>Drag Area</legend>
       CI
-      <h3>File Icon Vilakku:{{ vilakku }}</h3>
       <input type="text" v-model="ext" /> ({{ ext }})
       <div id="file-icon-wrapper">
         <FileIcon :ext="ext" />
@@ -50,7 +49,7 @@ import Vue from 'vue';
 import FileIcon from '../components/file-icon';
 import FilePreview from '../components/file-preview';
 import FileAgent from '../components/file-agent';
-import { FileRecord, plugins, vilakku } from '@file-agent/core';
+import { FileRecord, plugins } from '@file-agent/core';
 
 plugins.tus = (window as any).tus;
 
@@ -109,7 +108,6 @@ export default Vue.extend({
     return {
       ext: 'svg',
       fileRecords: [] as FileRecord[],
-      vilakku,
       settings: {
         editable: true,
         deletable: true,

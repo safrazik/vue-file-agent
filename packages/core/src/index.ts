@@ -8,5 +8,3 @@ import plugins from './lib/plugins';
 import './scss/index.scss';
 
 export { FileRecord, plugins };
-
-export const vilakku = 'maay';
