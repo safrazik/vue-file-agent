@@ -21,12 +21,14 @@ plugins.uploader = uploader;
 
 export { FileAgentProps };
 
+interface CachedItem {
+  fileRecord: FileRecord;
+  filePreview?: FilePreview;
+  child: HTMLElement;
+}
+
 export class FileAgent extends Component {
-  private cachedElements: {
-    fileRecord: FileRecord;
-    filePreview: FilePreview;
-    child: HTMLElement;
-  }[] = [];
+  private cachedItems: CachedItem[] = [];
   isDragging = false;
   isSorting = false;
   isSortingActive = false;
@@ -63,33 +65,22 @@ export class FileAgent extends Component {
     return 'Choose ' + (this.hasMultiple ? 'files' : 'file') + ' or drag & drop here';
   }
 
-  getFilePreviewForFileRecord(fileRecord: FileRecord) {
-    const cachedElement = this.cachedElements.filter((ch) => ch.fileRecord === fileRecord)[0];
-    if (cachedElement) {
-      return cachedElement.filePreview;
+  getCachedItemForFileRecord(fileRecord: FileRecord) {
+    const cachedItem = this.cachedItems.filter((ch) => ch.fileRecord === fileRecord)[0];
+    if (cachedItem) {
+      return cachedItem;
     }
     return undefined;
   }
 
-  getChildForFileRecord(fileRecord: FileRecord) {
-    const cachedElement = this.cachedElements.filter((ch) => ch.fileRecord === fileRecord)[0];
+  setCachedItemForFileRecord(cachedItem: CachedItem) {
+    const cachedElement = this.cachedItems.filter((ch) => ch.fileRecord === cachedItem.fileRecord)[0];
     if (cachedElement) {
-      return cachedElement.child;
-    }
-    return undefined;
-  }
-
-  setFilePreviewForFileRecord(fileRecord: FileRecord, filePreview: FilePreview, child: HTMLElement) {
-    const cachedElement = this.cachedElements.filter((ch) => ch.fileRecord === fileRecord)[0];
-    if (cachedElement) {
-      cachedElement.filePreview = filePreview;
+      cachedElement.filePreview = cachedItem.filePreview;
+      cachedElement.child = cachedItem.child;
       return;
     }
-    this.cachedElements.push({
-      fileRecord,
-      filePreview,
-      child,
-    });
+    this.cachedItems.push(cachedItem);
   }
 
   equalFiles(file1: File, file2: File): boolean {
@@ -737,10 +728,8 @@ export class FileAgent extends Component {
 
   update() {
     this.updateWrapper();
-    // const container = this.getRef('file-preview-wrapper-container');
     const container = this.getRef('file-preview-list');
     if (!(this as any).isAddedNewFilePreview) {
-      // console.log('this.$props.fileRecords', this.$props.fileRecords);
       container.innerHTML = '';
       const slotContent = this.getSlotContent('filePreviewNew');
       if (slotContent) {
@@ -750,13 +739,7 @@ export class FileAgent extends Component {
       }
       (this as any).isAddedNewFilePreview = true;
     }
-    // const newFileElement = container.lastElementChild as HTMLElement;
-    // const newFileElementFirst = newFileElement.getBoundingClientRect();
     const newFileChild = container.lastElementChild as HTMLElement;
-    // const newFileElement = {
-    //   rect: newFileChild.getBoundingClientRect(),
-    //   child: newFileChild,
-    // };
     this.getRef('help-text').innerText = this.helpTextComputed;
 
     this.insertSlotBefore(this.$el, 'beforeOuter');
@@ -766,23 +749,32 @@ export class FileAgent extends Component {
     let index = 0;
     const fileRecords = this.$props.fileRecords.concat([]).reverse();
     const newChildren: HTMLElement[] = [];
-    // const otherElements: { rect: DOMRect; child: HTMLElement }[] = [];
     const otherChildren: HTMLElement[] = [];
     const childRects: { rect: DOMRect; child: HTMLElement }[] = [];
-    // tslint:disable-next-line
-    for (let i = 0; i < container.children.length; i++) {
-      const child = container.children[i] as HTMLElement;
-      childRects.push({ child, rect: child.getBoundingClientRect() });
+    const enableTransitions = true;
+    if (enableTransitions) {
+      // tslint:disable-next-line
+      for (let i = 0; i < container.children.length; i++) {
+        const child = container.children[i] as HTMLElement;
+        childRects.push({ child, rect: child.getBoundingClientRect() });
+      }
     }
     for (const fileRecord of fileRecords) {
-      let child = this.getChildForFileRecord(fileRecord) as HTMLElement;
+      const cachedItem = this.getCachedItemForFileRecord(fileRecord);
+      let child = cachedItem?.child;
+      let filePreview = cachedItem?.filePreview;
+      if (filePreview) {
+        // console.log('EXISTING filePreview...');
+        filePreview.updateWrapper();
+        // filePreview.updateProgress();
+        filePreview.updateError();
+      }
       if (child) {
         if (container.firstChild) {
           container.insertBefore(child, container.firstChild);
         } else {
           container.appendChild(child);
         }
-        // otherElements.push({ child, rect: child.getBoundingClientRect() });
         otherChildren.push(child);
         continue;
       }
@@ -794,54 +786,50 @@ export class FileAgent extends Component {
         const previewSlotContent = this.getSlotContentParsed(this.$props.slots.filePreview(fileRecord, index));
         child.appendChild(previewSlotContent);
       } else {
-        // let filePreview: FilePreview = (fileRecord as any)._filePreview;
-        let filePreview = this.getFilePreviewForFileRecord(fileRecord) as FilePreview;
-        if (!filePreview) {
-          console.log('new filePreview...');
-          filePreview = new FilePreview({
-            averageColor: this.$props.averageColor,
-            deletable: this.$props.deletable,
-            editable: this.$props.editable,
-            linkable: this.$props.linkable,
-            disabled: this.$props.disabled,
-            fileRecord,
-            onRename: (fr) => {
-              this.onRenameFileRecord(fr);
-            },
-            onDelete: (fr) => {
-              this.onDeleteFileRecord(fr);
-            },
-            // errorText: this.$props.errorText,
-          });
-          // (fileRecord as any)._filePreview = filePreview;
-          fileRecord.onChange.progress = () => {
-            filePreview.updateProgress();
-          };
-          fileRecord.onChange.name = () => {
-            filePreview.updateName();
-          };
-          fileRecord.onChange.url = () => {
-            filePreview.updateUrl();
-          };
-          fileRecord.onChange.thumbnail = () => {
-            filePreview.updateThumbnail();
-          };
-          fileRecord.onChange.dimensions = () => {
-            filePreview.updateDimensions();
-          };
-          fileRecord.onChange.error = () => {
-            filePreview.updateError();
-          };
-          this.setFilePreviewForFileRecord(fileRecord, filePreview, child);
-          newChildren.push(child);
-        } else {
-          console.log('EXISTING filePreview...');
-          filePreview.updateWrapper();
-          // filePreview.updateProgress();
-          filePreview.updateError();
-        }
+        filePreview = new FilePreview({
+          averageColor: this.$props.averageColor,
+          deletable: this.$props.deletable,
+          editable: this.$props.editable,
+          linkable: this.$props.linkable,
+          disabled: this.$props.disabled,
+          fileRecord,
+          onRename: (fr) => {
+            this.onRenameFileRecord(fr);
+          },
+          onDelete: (fr) => {
+            this.onDeleteFileRecord(fr);
+          },
+          // errorText: this.$props.errorText,
+        });
+        // (fileRecord as any)._filePreview = filePreview;
+        fileRecord.onChange.progress = () => {
+          filePreview?.updateProgress();
+        };
+        fileRecord.onChange.name = () => {
+          filePreview?.updateName();
+        };
+        fileRecord.onChange.url = () => {
+          filePreview?.updateUrl();
+        };
+        fileRecord.onChange.thumbnail = () => {
+          filePreview?.updateThumbnail();
+        };
+        fileRecord.onChange.dimensions = () => {
+          filePreview?.updateDimensions();
+        };
+        fileRecord.onChange.error = () => {
+          filePreview?.updateError();
+        };
+        newChildren.push(child);
+        // } else {
+        //   console.log('EXISTING filePreview...');
+        //   filePreview.updateWrapper();
+        //   // filePreview.updateProgress();
+        //   filePreview.updateError();
+        // }
         filePreview.render(child);
       }
+      this.setCachedItemForFileRecord({ fileRecord, filePreview, child });
       // animation:test:begin
       // setTimeout(() => {
       //   child.classList.remove('grid-box-enter');
@@ -855,93 +843,16 @@ export class FileAgent extends Component {
       index++;
     }
     // newFileElementFirst;
-    const removedElements = this.cachedElements.filter((ch) => fileRecords.indexOf(ch.fileRecord) === -1);
-    const removedChildren = removedElements.map((ch) => ch.child);
-    const enableTransitions = true;
+    const removedItems = this.cachedItems.filter((ch) => fileRecords.indexOf(ch.fileRecord) === -1);
+    const removedChildren = removedItems.map((ch) => ch.child);
     if (!enableTransitions) {
       removedChildren.map((child) => container.removeChild(child));
     } else {
-      // let displayValue = 'inline-block';
-      // removedChildren.map((child) => {
-      //   displayValue = child.style.display;
-      //   child.style.display = 'none';
-      // });
-
-      // transitionManager.addElements(newChildren);
-      // transitionManager.transformNewElement(newFileElement, newFileElementFirst);
-      // removedChildren.map((child) => {
-      //   child.style.position = 'absolute';
-      //   child.style.display = displayValue;
-      //   child.style.opacity = '0.25';
-      // });
-      // transitionManager.removeElements(removedChildren);
       const transitionManager = new TransitionManager(this.$props.theme);
-      transitionManager.applyTransitions(
-        newChildren,
-        removedChildren,
-        // otherElements.concat([newFileElement]),
-        otherChildren.concat(newFileChild),
-        childRects,
-      );
+      transitionManager.applyTransitions(newChildren, removedChildren, otherChildren.concat(newFileChild), childRects);
     }
 
-    // setTimeout(() => {
-    // }, 1);
-    // removedChildren.map((child) => container.removeChild(child));
-    // const newEl = container.lastElementChild as HTMLElement;
-    // const first = newEl.getBoundingClientRect();
-    const removeElement = (ch: typeof removedElements[0]) => {
-      return new Promise((resolve, reject) => {
-        const removedChild = ch.filePreview.$el.parentElement;
-        if (!removedChild) {
-          return;
-        }
-        // console.log('removedChildremovedChild', removedChild, removedChild?.parentElement, ch.filePreview);
-        // removedChild.classList.add('grid-box-leave-active');
-        removedChild.classList.add('grid-box-leave-to');
-        // setTimeout(() => {
-        removedChild.addEventListener('transitionend', () => {
-          removedChild?.parentElement?.removeChild(removedChild);
-          resolve();
-        });
-        // }, 300);
-        requestAnimationFrame(() => {
-          // remove after 1 frame
-          requestAnimationFrame(() => {
-            // removedChild.classList.remove('grid-box-leave-to');
-          });
-        });
-      });
-    };
-    // Promise.all(removedElements.map((ch) => removeElement(ch))).then(() => {
-    //   requestAnimationFrame(() => {
-    //     const last = newEl.getBoundingClientRect();
-    //     console.log('ok complete2', first, last);
-    //     // Invert.
-    //     const transform = `translate3d(${first.left - last.left}px, ${first.top - last.top}px, 0)`;
-    //     newEl.style.transform = transform;
-    //     console.log('newEl.style.transform', transform);
-    //     // Wait for the next frame so we
-    //     // know all the style changes have
-    //     // taken hold.
-    //     requestAnimationFrame(() => {
-    //       // Switch on animations.
-    //       // newEl.classList.add('animate-on-transforms');
-    //       // GO GO GOOOOOO!
-    //       newEl.style.transform = '';
-    //     });
-    //   });
-    //   // setTimeout(() => {
-    //   // }, 100);
-
-    //   // Capture the end with transitionend
-    //   newEl.addEventListener('transitionend', () => {
-    //     // newEl.style.transform = '';
-    //     //
-    //   });
-    //   //
-    // });
-    this.cachedElements = this.cachedElements.filter((ch) => removedElements.indexOf(ch) === -1);
+    this.cachedItems = this.cachedItems.filter((ch) => removedItems.indexOf(ch) === -1);
     const input = this.getRef<HTMLInputElement>('file-input');
     input.disabled = this.$props.disabled === true || (this.hasMultiple && !this.canAddMore);
     input.multiple = this.hasMultiple;
