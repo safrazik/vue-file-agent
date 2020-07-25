@@ -15,6 +15,12 @@
       crossorigin="anonymous"
     /> -->
     <link rel="stylesheet" href="../dist/file-agent.css" />
+    <style type="text/css">
+      body {
+        background-color: #333;
+        color: #fff;
+      }
+    </style>
   </head>
 
   <body>
@@ -75,6 +81,16 @@
           progress: 67,
         },
         {
+          name: 'UNDELETABLE System file.sys',
+          lastModified: 1583992794341,
+          sizeText: '14 KB',
+          size: 14403,
+          type: 'system/file',
+          ext: 'sys',
+          url: 'files/UNDELETABLE System file.sys',
+          progress: 10,
+        },
+        {
           name: 'Golf.mp4',
           lastModified: 1576563996233,
           sizeText: '549 KB',
@@ -104,9 +120,26 @@
 
       var maxSize = '4MB';
 
-      FileRecord.fromRawArray(rawFileRecords, { read: false, maxSize: maxSize }).then(function (fileRecords) {
+      // var secFileRecord = rawFileRecords[1];
+
+      // setTimeout(() => {
+      //   FileRecord.fromRawArray([secFileRecord], {}).then(function (secFileRecords) {
+      //     window.fileRecords = window.fileRecords
+      //       .slice(0, 1)
+      //       .concat(secFileRecords)
+      //       .concat(window.fileRecords.slice(1));
+      //     window.fileAgent.$props.fileRecords = window.fileRecords;
+      //     window.fileAgent.update();
+      //   });
+      // }, 2000);
+
+      FileRecord.fromRawArray(rawFileRecords.slice(0, 1).concat(rawFileRecords.slice(2)), {
+        read: false,
+        maxSize: maxSize,
+      }).then(function (fileRecords) {
         window.fileRecords = fileRecords;
-        var fileAgent = new FileAgent({
+        window.fileAgent = new FileAgent({
+          auto: false,
           uploadUrl: 'https://master.tus.io/files/',
           resumable: true,
           multiple: true,
