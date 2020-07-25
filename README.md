@@ -1,3 +1,5 @@
+#### 🔥 V2 is in the making...!
+
 # Vue File Agent
 
 > Every file deserves to be treated equally
