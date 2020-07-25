@@ -123,11 +123,13 @@ export class TransitionManager {
         child.style.height = `${rect.height}px`;
         child.style.width = `${rect.width}px`;
         child.style.top = `${rect.top}px`;
+        child.style.right = `${rect.right}px`;
+        child.style.bottom = `${rect.bottom}px`;
         child.style.left = `${rect.left}px`;
       } else {
         child.style.position = 'absolute';
       }
-      child.style.display = 'inline-block';
+      child.style.display = displayValue;
       child.style.opacity = '0.25';
       this.removeElement(child);
     }

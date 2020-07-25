@@ -120,18 +120,23 @@
 
       var maxSize = '4MB';
 
-      // var secFileRecord = rawFileRecords[1];
+      var secFileRecord = rawFileRecords[1];
 
-      // setTimeout(() => {
-      //   FileRecord.fromRawArray([secFileRecord], {}).then(function (secFileRecords) {
-      //     window.fileRecords = window.fileRecords
-      //       .slice(0, 1)
-      //       .concat(secFileRecords)
-      //       .concat(window.fileRecords.slice(1));
-      //     window.fileAgent.$props.fileRecords = window.fileRecords;
-      //     window.fileAgent.update();
-      //   });
-      // }, 2000);
+      setTimeout(() => {
+        FileRecord.fromRawArray([secFileRecord], {}).then(function (secFileRecords) {
+          window.fileRecords = window.fileRecords
+            .slice(0, 1)
+            .concat(secFileRecords)
+            .concat(window.fileRecords.slice(1));
+          window.fileAgent.$props.fileRecords = window.fileRecords;
+          window.fileAgent.update();
+        });
+      }, 1000);
+      setTimeout(() => {
+        window.fileRecords = window.fileRecords.reverse();
+        window.fileAgent.$props.fileRecords = window.fileRecords;
+        window.fileAgent.update();
+      }, 2000);
 
       FileRecord.fromRawArray(rawFileRecords.slice(0, 1).concat(rawFileRecords.slice(2)), {
         read: false,
