@@ -2,12 +2,12 @@ import { getIconFromExt, SvgIcon } from './icons';
 import utils from './utils';
 import { RGBA, ImageThumbnail, VideoThumbnail } from './utils';
 
-interface Dimensions {
+export interface Dimensions {
   height: number;
   width: number;
 }
 
-interface Options {
+export interface Options {
   accept?: string;
   maxSize?: string;
   read: boolean;
@@ -29,7 +29,7 @@ interface ErrorFlags {
   upload?: false | string;
 }
 
-interface RawFileRecord {
+export interface RawFileRecord {
   url: string | ((value?: string) => string | undefined | Promise<FileRecord>);
   urlResized: string | null;
   src: () => any;
@@ -62,8 +62,6 @@ interface UploadData {
   data: any;
   error: string | false;
 }
-
-export { Dimensions, Options, RawFileRecord };
 
 class FileRecord {
   public static getFromRaw(

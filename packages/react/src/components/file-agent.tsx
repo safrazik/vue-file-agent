@@ -5,7 +5,7 @@ import { FileAgent as CoreFileAgent, FileAgentProps, FileRecord } from '@file-ag
 type CancelableEventReturnType = boolean | Promise<boolean> | undefined | null | void | any;
 type SlotValue = HTMLElement | string | undefined | null | any;
 
-export default class FilePreview extends React.Component<FileAgentProps> {
+export default class FileAgent extends React.Component<FileAgentProps> {
   private $container?: HTMLElement;
   private coreFileAgent?: CoreFileAgent;
   // private coreRendered = false;

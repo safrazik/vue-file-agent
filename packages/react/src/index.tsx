@@ -1,7 +1,3 @@
-import React from 'react';
-
-export * from './components/file-icon';
-
-export default function FileAgent() {
-  return <h1>React File Agent</h1>;
-}
+export { default as FileIcon } from './components/file-icon';
+export { default as FilePreview } from './components/file-preview';
+export { default as FileAgent } from './components/file-agent';

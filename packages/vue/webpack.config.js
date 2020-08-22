@@ -1,8 +1,15 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const createConfig = (options, isDebugging) => {
   return {
+    plugins: [
+      new VueLoaderPlugin(),
+      new MiniCssExtractPlugin({
+        filename: 'vue-file-agent-demo.css',
+      }),
+    ],
     watch: options.watch === true,
     watchOptions:
       options.watch === true
@@ -33,8 +40,44 @@ const createConfig = (options, isDebugging) => {
         // },
         {
           test: /\.ts$/,
-          loader: 'ts-loader',
-          options: { appendTsSuffixTo: [/\.vue$/] },
+          use: {
+            loader: 'ts-loader',
+            options: {
+              configFile: isDebugging ? 'tsconfig.json' : 'tsconfig.build.json',
+              appendTsSuffixTo: [/\.vue$/],
+            },
+          },
+          exclude: '/node_modules/',
+        },
+        {
+          test: /\.html$/i,
+          loader: 'html-loader',
+          options: {
+            minimize: {
+              removeComments: true,
+              collapseWhitespace: true,
+            },
+          },
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: !!isDebugging,
+              },
+            },
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'postcss-loader',
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
         },
       ]),
     },
@@ -44,7 +87,6 @@ const createConfig = (options, isDebugging) => {
       extensions: ['.ts', '.tsx', '.js'],
     },
     devServer: options.devServer,
-    plugins: [new VueLoaderPlugin()],
   };
 };
 
@@ -64,9 +106,33 @@ module.exports = (env, argv) => {
   };
 
   const entry = {
-    'vue-file-agent': path.join(__dirname, 'src', 'index.ts'),
+    // 'vue-file-agent': path.join(__dirname, 'src', 'index.ts'),
   };
-  if (!isDebugging) {
+  const rules = [];
+  let alias = {};
+  if (isDebugging) {
+    entry['vue-file-agent-demo'] = path.join(__dirname, 'src', 'demo', 'index.ts');
+    // rules.push({
+    //   test: /\.css$/i,
+    //   use: ['style-loader', 'css-loader'],
+    // });
+    alias = {
+      // '@file-agent/core$': '@file-agent/core/dist/file-agent.js',
+      // '@file-agent/core/dist/file-agent.min.js$': '@file-agent/core/dist/file-agent.js',
+      //
+      // '@file-agent/core$': path.resolve(__dirname, '../core/dist/file-agent.js'),
+      // '@file-agent/core/dist/file-agent.min.js$': path.resolve(__dirname, '../core/dist/file-agent.js'),
+      '@file-agent/core': path.resolve(__dirname, '../core/src'),
+      // '@file-agent/core/dist/file-agent.min.js$': path.resolve(__dirname, '../core/src'),
+    };
+  } else {
+    entry['vue-file-agent'] = path.join(__dirname, 'src', 'index.ts');
+    externals['@file-agent/core'] = {
+      commonjs: '@file-agent/core',
+      commonjs2: '@file-agent/core',
+      amd: 'FileAgent',
+      root: 'FileAgent',
+    };
     configs.push(
       createConfig(
         {
@@ -79,21 +145,6 @@ module.exports = (env, argv) => {
         isDebugging,
       ),
     );
-  }
-  const rules = [];
-  let alias = {};
-  if (isDebugging) {
-    entry['vue-file-agent-demo'] = path.join(__dirname, 'src', 'demo', 'index.ts');
-    rules.push({
-      test: /\.css$/i,
-      use: ['style-loader', 'css-loader'],
-    });
-    alias = {
-      // '@file-agent/core$': '@file-agent/core/dist/file-agent.js',
-      // '@file-agent/core/dist/file-agent.min.js$': '@file-agent/core/dist/file-agent.js',
-      '@file-agent/core$': path.resolve(__dirname, '../core/dist/file-agent.js'),
-      '@file-agent/core/dist/file-agent.min.js$': path.resolve(__dirname, '../core/dist/file-agent.js'),
-    };
   }
   configs.push(
     createConfig(
@@ -115,9 +166,9 @@ module.exports = (env, argv) => {
                 // ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
                 ignored: ['**/*.d.ts', 'node_modules/**'],
               },
-              openPage: 'demo/index.html',
+              // openPage: 'demo/index.html',
               inline: true,
-              publicPath: '/dist/',
+              // publicPath: '/dist/',
               hot: true,
               hotOnly: false,
             }

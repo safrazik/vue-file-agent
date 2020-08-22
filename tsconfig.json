@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.build.json",
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@file-agent/core": ["packages/core/src"],
+      "@file-agent/react": ["packages/react/src"],
+      "@file-agent/vue": ["packages/vue/src"]
+    }
+  }
+}

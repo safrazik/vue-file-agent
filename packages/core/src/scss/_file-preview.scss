@@ -63,7 +63,7 @@
       text-overflow: ellipsis;
       line-height: 28px;
       height: 28px;
-      font-size: 16px;
+      font-size: 1em;
     }
 
     .file-delete {
@@ -72,7 +72,7 @@
       right: 0;
       top: 0;
       padding: 0;
-      font-size: 16px;
+      font-size: 1em;
       background: transparent;
       height: 28px;
       width: 22px;
@@ -111,7 +111,7 @@
 
     .file-ext {
       position: absolute;
-      font-size: 16px;
+      font-size: 1em;
       text-transform: uppercase;
       text-align: left;
       display: block;
@@ -126,7 +126,7 @@
 
     .file-size {
       position: absolute;
-      font-size: 16px;
+      font-size: 1em;
       text-transform: uppercase;
       text-align: right;
       display: block;
@@ -149,7 +149,7 @@
 
     .image-dimension {
       position: absolute;
-      font-size: 12px;
+      font-size: 0.75em;
       text-align: center;
       display: block;
       width: 100%;

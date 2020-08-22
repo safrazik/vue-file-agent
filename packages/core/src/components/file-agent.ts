@@ -19,8 +19,6 @@ var dragCounter = 0;
 
 plugins.uploader = uploader;
 
-export { FileAgentProps };
-
 interface CachedItem {
   fileRecord: FileRecord;
   filePreview?: FilePreview;
@@ -183,8 +181,8 @@ export class FileAgent extends Component {
             // for (let i = 0; i < res.length; i++) {
             //   res[i].fileRecord = validFileRecords[i];
             // }
-            if (this.$props.events?.onUpload) {
-              this.$props.events.onUpload(validFileRecords, res);
+            if (this.$props.onUpload) {
+              this.$props.onUpload(validFileRecords, res);
             }
             resolve(res);
           },
@@ -192,8 +190,8 @@ export class FileAgent extends Component {
             // for (let i = 0; i < err.length; i++) {
             //   err[i].fileRecord = validFileRecords[i];
             // }
-            if (this.$props.events?.onUploadError) {
-              this.$props.events.onUploadError(validFileRecords, err);
+            if (this.$props.onUploadError) {
+              this.$props.onUploadError(validFileRecords, err);
             }
             reject(err);
           },
@@ -214,15 +212,15 @@ export class FileAgent extends Component {
         .then(
           (res: any) => {
             // res.fileRecord = fileRecord;
-            if (this.$props.events?.onUploadDelete) {
-              this.$props.events.onUploadDelete(fileRecord, res);
+            if (this.$props.onUploadDelete) {
+              this.$props.onUploadDelete(fileRecord, res);
             }
             resolve(res);
           },
           (err: any) => {
             // err.fileRecord = fileRecord;
-            if (this.$props.events?.onUploadDeleteError) {
-              this.$props.events.onUploadDeleteError(fileRecord, err);
+            if (this.$props.onUploadDeleteError) {
+              this.$props.onUploadDeleteError(fileRecord, err);
             }
             reject(err);
           },
@@ -243,15 +241,15 @@ export class FileAgent extends Component {
         .then(
           (res: any) => {
             // res.fileRecord = fileRecord;
-            if (this.$props.events?.onUploadUpdate) {
-              this.$props.events.onUploadUpdate(fileRecord, res);
+            if (this.$props.onUploadUpdate) {
+              this.$props.onUploadUpdate(fileRecord, res);
             }
             resolve(res);
           },
           (err) => {
             // err.fileRecord = fileRecord;
-            if (this.$props.events?.onUploadUpdateError) {
-              this.$props.events.onUploadUpdateError(fileRecord, err);
+            if (this.$props.onUploadUpdateError) {
+              this.$props.onUploadUpdateError(fileRecord, err);
             }
             reject(err);
           },
@@ -330,11 +328,11 @@ export class FileAgent extends Component {
         this.$props.fileRecords[0] = fileRecords[0];
       }
 
-      if (this.$props.events?.onInput) {
-        this.$props.events.onInput(this.$props.fileRecords);
+      if (this.$props.onInput) {
+        this.$props.onInput(this.$props.fileRecords);
       }
-      if (this.$props.events?.onSelect) {
-        this.$props.events.onSelect(fileRecords);
+      if (this.$props.onSelect) {
+        this.$props.onSelect(fileRecords);
       }
 
       this.update();
@@ -394,11 +392,11 @@ export class FileAgent extends Component {
     const index = this.$props.fileRecords.indexOf(fileRecord);
     const deletedFileRecord = this.$props.fileRecords.splice(index, 1)[0];
     this.update();
-    // if (this.$props.events?.onDelete) {
-    //   this.$props.events.onDelete(fileRecord);
+    // if (this.$props.onDelete) {
+    //   this.$props.onDelete(fileRecord);
     // }
-    if (this.$props.events?.onInput) {
-      this.$props.events.onInput(this.$props.fileRecords);
+    if (this.$props.onInput) {
+      this.$props.onInput(this.$props.fileRecords);
     }
     this.onEventCheck(
       fileRecord,
@@ -407,10 +405,10 @@ export class FileAgent extends Component {
         promise.catch((err) => {
           this.cancelDeleteFileRecord(fr, index);
         });
-        if (!this.$props.events?.onDelete) {
+        if (!this.$props.onDelete) {
           return promise;
         }
-        return this.$props.events.onDelete(fr);
+        return this.$props.onDelete(fr);
       },
       () => {
         // no op
@@ -422,21 +420,21 @@ export class FileAgent extends Component {
   }
 
   renameFileRecord(fileRecord: FileRecord) {
-    // if (this.$props.events?.onRename) {
-    //   this.$props.events.onRename(fileRecord);
+    // if (this.$props.onRename) {
+    //   this.$props.onRename(fileRecord);
     // }
     this.onEventCheck(
       fileRecord,
-      // this.$props.events?.onRename,
+      // this.$props.onRename,
       (fr) => {
         const promise = this.autoUpdateUpload(fr);
         promise.catch((err) => {
           this.cancelRenameFileRecord(fr);
         });
-        if (!this.$props.events?.onRename) {
+        if (!this.$props.onRename) {
           return promise;
         }
-        return this.$props.events.onRename(fr);
+        return this.$props.onRename(fr);
       },
       () => {
         // no op
@@ -491,7 +489,7 @@ export class FileAgent extends Component {
   onDeleteFileRecord(fileRecord: FileRecord) {
     this.onEventCheck(
       fileRecord,
-      this.$props.events?.onBeforeDelete,
+      this.$props.onBeforeDelete,
       () => {
         this.deleteFileRecord(fileRecord);
       },
@@ -504,7 +502,7 @@ export class FileAgent extends Component {
   onRenameFileRecord(fileRecord: FileRecord) {
     this.onEventCheck(
       fileRecord,
-      this.$props.events?.onBeforeRename,
+      this.$props.onBeforeRename,
       () => {
         this.renameFileRecord(fileRecord);
       },
@@ -516,8 +514,8 @@ export class FileAgent extends Component {
 
   filesChanged(event: InputEvent) {
     const files: FileList = (event.target as HTMLInputElement).files as FileList;
-    if (this.$props.events?.onChange) {
-      this.$props.events.onChange(event);
+    if (this.$props.onChange) {
+      this.$props.onChange(event);
     }
     if (!files[0]) {
       return;
@@ -543,8 +541,8 @@ export class FileAgent extends Component {
     }
     utils.getFilesFromDroppedItems(event.dataTransfer).then(
       (files) => {
-        if (this.$props.events?.onDrop) {
-          this.$props.events.onDrop(event);
+        if (this.$props.onDrop) {
+          this.$props.onDrop(event);
         }
         if (!files || !files[0]) {
           return;
@@ -875,13 +873,13 @@ export class FileAgent extends Component {
     // if (!el) {
     // const el = document.createElement('div');
     if (!fileAgentEl) {
-      const templateString = template.replace(/\<icon name="(.+?)"><\/icon>/g, (match, name) => {
+      const templateString = template.replace(/\<icon name="(.+?)"><\/icon>/g, (match: string, name: string) => {
         return this.iconByName(name);
       });
       fileAgentEl = this.parseTemplate(templateString);
-      newFilePreviewEl = this.getRef('file-preview-new', fileAgentEl);
     }
     const el = fileAgentEl.cloneNode(true) as HTMLElement;
+    newFilePreviewEl = this.getRef('file-preview-new', el);
     this.cachedEl = el; // important to avoid recursion because this getter is called in update method
     const uniqueId = new Date().getTime().toString(36) + Math.random().toString(36).slice(2);
     el.id = 'vfa-' + uniqueId;

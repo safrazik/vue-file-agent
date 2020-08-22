@@ -107,46 +107,46 @@ export default function DemoApp() {
             // sortable: true,
             // theme: 'list',
             // draggable: document.getElementById('file-drag-area'),
-            events: {
-              onBeforeDelete: function (fileRecord) {
-                console.log('onBeforrrrrr', fileRecord.name());
-                if (true || confirm('Sure?')) {
-                  return true;
-                }
-                return false;
-              },
-              onBeforeRename: function (fileRecord) {
-                console.log('onBefoererere', ',,,,');
-                // return false;
-              },
-              onSelect: function (fileRecords) {
-                console.log('onSelect', fileRecords);
-              },
-              onRename: function (fileRecord) {
-                console.log('onRename', fileRecord.name(), fileRecord);
-                if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
-                  return;
-                }
-                fileRecord.customError('Shitty name is not allowed.');
-                return new Promise(function (resolve, reject) {
-                  setTimeout(function () {
-                    resolve(false);
-                  }, 1000);
-                });
-              },
-              onDelete: function (fileRecord) {
-                console.log('onDelete', fileRecord.name(), fileRecord);
-                if (fileRecord.name().toLowerCase().indexOf('system') === -1) {
-                  return;
-                }
-                return new Promise(function (resolve, reject) {
-                  setTimeout(function () {
-                    fileRecord.customError('System files cannot be deleted.');
-                    resolve(false);
-                  }, 1000);
-                });
-              },
+            // events: {
+            onBeforeDelete: function (fileRecord) {
+              console.log('onBeforrrrrr', fileRecord.name());
+              if (true || confirm('Sure?')) {
+                return true;
+              }
+              return false;
             },
+            onBeforeRename: function (fileRecord) {
+              console.log('onBefoererere', ',,,,');
+              // return false;
+            },
+            onSelect: function (fileRecords) {
+              console.log('onSelect', fileRecords);
+            },
+            onRename: function (fileRecord) {
+              console.log('onRename', fileRecord.name(), fileRecord);
+              if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
+                return;
+              }
+              fileRecord.customError('Shitty name is not allowed.');
+              return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                  resolve(false);
+                }, 1000);
+              });
+            },
+            onDelete: function (fileRecord) {
+              console.log('onDelete', fileRecord.name(), fileRecord);
+              if (fileRecord.name().toLowerCase().indexOf('system') === -1) {
+                return;
+              }
+              return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                  fileRecord.customError('System files cannot be deleted.');
+                  resolve(false);
+                }, 1000);
+              });
+            },
+            // },
             slots: {
               afterInner: 'After inner',
               afterOuter: 'After outer',

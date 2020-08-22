@@ -1,18 +1,5 @@
 {
-  "compilerOptions": {
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "target": "es5",
-    "strict": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-    "outDir": "./dist",
-    "declaration": true,
-    "declarationDir": "types",
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "extends": "../../tsconfig.json",
+
+  "compilerOptions": {}
 }

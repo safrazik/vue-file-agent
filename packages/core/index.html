@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>File Agent Test</title>
+    <meta name="description" content="File Agent Component Live HTML test" />
+    <meta name="author" content="Safraz Razik" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    /> -->
+    <link rel="stylesheet" href="file-agent-demo.css" />
+    <style type="text/css">
+      body {
+        background-color: #333;
+        color: #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>File Agent Demo</h1>
+    <fieldset id="file-drag-area">
+      <legend>Drag Area</legend>
+      CI
+      <div style="border: 1px solid green; width: 100px;" id="file-icon-wrapper"></div>
+
+      <h3>File Agent</h3>
+      <div id="file-agent-wrapper"></div>
+
+      <h3>File Preview</h3>
+      <div style="border: 1px solid blue;">
+        <div class="theme-default">
+          <div class="vue-file-agent grid-block-wrapper" style="padding: 0;" id="file-preview-blocks-container">
+            <!-- <div id="file-preview-wrapper" class="file-preview-wrapper grid-box-item grid-block"></div> -->
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div id="some-unique-el">
+      This is a unique element
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+    <script src="file-agent-demo.js"></script>
+    <script>
+      // var fileAgentModule = window['file-agent'];
+      // var fileAgentModule = window.FileAgent;
+    </script>
+  </body>
+</html>

@@ -5,7 +5,7 @@ const createConfig = (options, isDebugging) => {
   return {
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'file-agent.css',
+        filename: isDebugging ? 'file-agent-demo.css' : 'file-agent.css',
       }),
     ],
     watch: options.watch === true,
@@ -17,11 +17,11 @@ const createConfig = (options, isDebugging) => {
         : {},
     mode: options.mode,
     devtool: options.devtool || 'source-map',
-    entry: './src/index.ts',
+    entry: options.entry,
     output: {
       path: options.output || path.resolve(__dirname, 'dist'),
-      filename: 'file-agent' + (options.mode === 'production' ? '.min' : '') + '.js',
-      library: 'file-agent',
+      filename: options.outputFilename,
+      library: 'FileAgent',
       libraryTarget: 'umd',
       globalObject: "typeof self !== 'undefined' ? self : this",
     },
@@ -33,7 +33,7 @@ const createConfig = (options, isDebugging) => {
           use: {
             loader: 'ts-loader',
             options: {
-              configFile: 'tsconfig.json',
+              configFile: isDebugging ? 'tsconfig.build.json' : 'tsconfig.build.json',
             },
           },
         },
@@ -81,11 +81,17 @@ module.exports = (env, argv) => {
 
   const configs = [];
 
-  if (!isDebugging) {
+  const entry = {};
+  if (isDebugging) {
+    entry['file-agent-demo'] = path.join(__dirname, 'src', 'demo', 'index.ts');
+  } else {
+    entry['file-agent'] = path.join(__dirname, 'src', 'index.ts');
     configs.push(
       createConfig(
         {
           mode: 'production',
+          outputFilename: '[name].min.js',
+          entry: entry,
         },
         isDebugging,
       ),
@@ -95,6 +101,8 @@ module.exports = (env, argv) => {
     createConfig(
       {
         mode: 'development',
+        outputFilename: '[name].js',
+        entry: entry,
         watch: true,
         devServer: isDebugging
           ? {
@@ -106,12 +114,12 @@ module.exports = (env, argv) => {
               watchOptions: {
                 ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
               },
-              openPage: 'demo/index.html',
+              // openPage: 'demo/index.html',
               inline: true,
-              publicPath: '/dist/',
+              // publicPath: '/dist/',
               hot: true,
               hotOnly: false,
-              writeToDisk: true,
+              // writeToDisk: true,
             }
           : undefined,
       },

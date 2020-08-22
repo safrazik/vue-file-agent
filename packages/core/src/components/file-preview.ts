@@ -416,7 +416,7 @@ export class FilePreview extends Component {
     if (!el) {
       // const el = document.createElement('div');
       if (!previewEl) {
-        const templateString = template.replace(/\<icon name="(.+?)"><\/icon>/g, (match, name) => {
+        const templateString = template.replace(/\<icon name="(.+?)"><\/icon>/g, (match: string, name: string) => {
           return this.iconByName(name);
         });
         previewEl = this.parseTemplate(templateString);

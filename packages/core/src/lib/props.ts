@@ -1,5 +1,6 @@
 import FileRecord from './file-record';
 
+// tslint:disable-next-line
 export type PropRef<T> = { (): T } | { new (...args: never[]): T & object } | { new (...args: string[]): Function };
 
 export type PropType<T> = PropRef<T> | PropRef<T>[];
@@ -13,6 +14,7 @@ interface Prop<T> {
   type: PropType<T>;
   typeString: TypeString;
   required: false;
+  default?: T;
 }
 
 interface RequiredProp<T> {
@@ -21,22 +23,26 @@ interface RequiredProp<T> {
   required: true;
 }
 
-const stringProp: Prop<string> = {
-  type: String as PropType<string>,
-  typeString: 'string',
-  required: false,
+const createProp = <T>(typeString: TypeString, Type: any, defaultValue?: T): Prop<T> => {
+  return {
+    type: Type as PropType<T>,
+    typeString,
+    default: defaultValue,
+    required: false,
+  };
 };
 
-const booleanProp: Prop<boolean> = {
-  type: Boolean as PropType<boolean>,
-  typeString: 'boolean',
-  required: false,
+const stringProp = (defaultValue?: string) => {
+  return createProp<string>('string', String, defaultValue);
 };
-
-const numberProp: Prop<number> = {
-  type: Number as PropType<number>,
-  typeString: 'number',
-  required: false,
+const booleanProp = (defaultValue?: boolean) => {
+  return createProp<boolean>('boolean', Boolean, defaultValue);
+};
+const numberProp = (defaultValue?: number) => {
+  return createProp<number>('number', Number, defaultValue);
+};
+const functionProp = <T>(defaultValue?: T) => {
+  return createProp<T>('function', Function, defaultValue);
 };
 
 type ErrorTextType = {
@@ -90,22 +96,22 @@ export interface FileAgentProps {
   draggable?: boolean | HTMLElement;
   resumable?: boolean;
   uploadWithCredentials?: boolean;
-  events?: {
-    onBeforeDelete?: (fileRecord: FileRecord) => CancelableEventReturnType;
-    onDelete?: (fileRecord: FileRecord) => CancelableEventReturnType;
-    onChange?: (event: InputEvent) => void;
-    onDrop?: (event: DragEvent) => void;
-    onBeforeRename?: (fileRecord: FileRecord) => CancelableEventReturnType;
-    onRename?: (fileRecord: FileRecord) => CancelableEventReturnType;
-    onInput?: (fileRecords: FileRecord[]) => void;
-    onSelect?: (fileRecords: FileRecord[]) => void;
-    onUpload?: (fileRecord: FileRecord[], result: any) => void;
-    onUploadError?: (fileRecord: FileRecord[], result: any) => void;
-    onUploadDelete?: (fileRecord: FileRecord, result: any) => void;
-    onUploadDeleteError?: (fileRecord: FileRecord, result: any) => void;
-    onUploadUpdate?: (fileRecord: FileRecord, result: any) => void;
-    onUploadUpdateError?: (fileRecord: FileRecord, result: any) => void;
-  };
+  // events?: {
+  onBeforeDelete?: (fileRecord: FileRecord) => CancelableEventReturnType;
+  onDelete?: (fileRecord: FileRecord) => CancelableEventReturnType;
+  onChange?: (event: InputEvent) => void;
+  onDrop?: (event: DragEvent) => void;
+  onBeforeRename?: (fileRecord: FileRecord) => CancelableEventReturnType;
+  onRename?: (fileRecord: FileRecord) => CancelableEventReturnType;
+  onInput?: (fileRecords: FileRecord[]) => void;
+  onSelect?: (fileRecords: FileRecord[]) => void;
+  onUpload?: (fileRecord: FileRecord[], result: any) => void;
+  onUploadError?: (fileRecord: FileRecord[], result: any) => void;
+  onUploadDelete?: (fileRecord: FileRecord, result: any) => void;
+  onUploadDeleteError?: (fileRecord: FileRecord, result: any) => void;
+  onUploadUpdate?: (fileRecord: FileRecord, result: any) => void;
+  onUploadUpdateError?: (fileRecord: FileRecord, result: any) => void;
+  // };
   // errorText?: {
   //   // common?: string;
   //   type?: string;
@@ -123,6 +129,66 @@ export interface FileAgentProps {
   };
 }
 
+export const fileIconPropsDefaults: FileIconProps = {
+  ext: undefined,
+  name: undefined,
+  viewBox: undefined,
+};
+
+export const filePreviewPropsDefaults: FilePreviewProps = {
+  averageColor: undefined,
+  deletable: undefined,
+  editable: undefined,
+  linkable: undefined,
+  disabled: undefined,
+  fileRecord: undefined,
+  onDelete: undefined,
+  onRename: undefined,
+  errorText: undefined,
+};
+
+export const fileAgentPropsDefaults: FileAgentProps = {
+  auto: undefined, // calculated
+  uploadUrl: undefined,
+  uploadHeaders: undefined,
+  uploadConfig: undefined,
+  multiple: undefined, // calculated
+  averageColor: true,
+  theme: 'default',
+  sortable: false,
+  meta: undefined,
+  compact: false,
+  deletable: false,
+  editable: false,
+  linkable: false,
+  helpText: undefined,
+  disabled: undefined,
+  readonly: undefined,
+  maxFiles: undefined,
+  maxSize: undefined,
+  accept: undefined,
+  capture: undefined,
+  thumbnailSize: undefined,
+  fileRecords: [],
+  draggable: undefined,
+  resumable: undefined,
+  uploadWithCredentials: undefined,
+  onBeforeDelete: undefined,
+  onDelete: undefined,
+  onChange: undefined,
+  onDrop: undefined,
+  onBeforeRename: undefined,
+  onRename: undefined,
+  onInput: undefined,
+  onSelect: undefined,
+  onUpload: undefined,
+  onUploadError: undefined,
+  onUploadDelete: undefined,
+  onUploadDeleteError: undefined,
+  onUploadUpdate: undefined,
+  onUploadUpdateError: undefined,
+};
+
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // |||||||||                                             |||||||||
@@ -132,87 +198,63 @@ export interface FileAgentProps {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 export const fileIconProps = {
-  ext: stringProp,
-  name: stringProp,
-  viewBox: stringProp,
+  ext: stringProp(fileIconPropsDefaults.ext),
+  name: stringProp(fileIconPropsDefaults.name),
+  viewBox: stringProp(fileIconPropsDefaults.viewBox),
 };
 
 export const filePreviewProps = {
-  averageColor: booleanProp,
-  deletable: booleanProp,
-  editable: booleanProp,
-  linkable: booleanProp,
-  disabled: booleanProp,
-  fileRecord: {
-    type: Object as PropType<FileRecord>,
-    typeString: 'object',
-    required: false,
-  } as Prop<FileRecord>,
-  onDelete: {
-    type: Function as PropType<(fileRecord: FileRecord) => void>,
-    typeString: 'function',
-    required: false,
-  } as Prop<(fileRecord: FileRecord) => void>,
-  onRename: {
-    type: Function as PropType<(fileRecord: FileRecord) => void>,
-    typeString: 'function',
-    required: false,
-  } as Prop<(fileRecord: FileRecord) => void>,
-  errorText: {
-    type: Object as PropType<ErrorTextType>,
-    typeString: 'object',
-    required: false,
-  } as Prop<ErrorTextType>,
+  averageColor: booleanProp(fileAgentPropsDefaults.averageColor),
+  deletable: booleanProp(fileAgentPropsDefaults.deletable),
+  editable: booleanProp(fileAgentPropsDefaults.editable),
+  linkable: booleanProp(fileAgentPropsDefaults.linkable),
+  disabled: booleanProp(fileAgentPropsDefaults.disabled),
+  fileRecord: createProp<FileRecord>('object', Object),
+  onDelete: functionProp<(fileRecord: FileRecord) => void>(),
+  onRename: functionProp<(fileRecord: FileRecord) => void>(),
+  errorText: createProp<ErrorTextType>('object', Object),
 };
 
 export const fileAgentProps = {
-  auto: booleanProp,
-  uploadUrl: stringProp,
-  uploadHeaders: {
-    type: Object as PropType<any>,
-    typeString: 'any',
-    required: false,
-  } as Prop<any>,
-  uploadConfig: {
-    type: Object as PropType<any>,
-    typeString: 'any',
-    required: false,
-  } as Prop<any>,
-  multiple: booleanProp,
-  averageColor: booleanProp,
-  theme: {
-    type: String as PropType<'default' | 'list'>,
-    typeString: 'string',
-    required: false,
-  } as Prop<'default' | 'list'>,
-  sortable: {
-    type: String as PropType<boolean | 'hold' | 'handle'>,
-    typeString: 'string',
-    required: false,
-  } as Prop<boolean | 'hold' | 'handle'>,
-  meta: booleanProp,
-  compact: booleanProp,
-  deletable: booleanProp,
-  editable: booleanProp,
-  linkable: booleanProp,
-  helpText: stringProp,
-  disabled: booleanProp,
-  readonly: booleanProp,
-  maxFiles: numberProp,
-  maxSize: stringProp,
-  accept: stringProp,
-  capture: stringProp,
-  thumbnailSize: numberProp,
-  fileRecords: {
-    type: Array as PropType<FileRecord[]>,
-    typeString: 'array',
-    required: true,
-  } as RequiredProp<FileRecord[]>,
-  draggable: {
-    type: Object as PropType<boolean | HTMLElement>,
-    typeString: 'boolean',
-    required: false,
-  } as Prop<boolean | HTMLElement>,
-  resumable: booleanProp,
-  uploadWithCredentials: booleanProp,
+  auto: booleanProp(),
+  uploadUrl: stringProp(fileAgentPropsDefaults.uploadUrl),
+  uploadHeaders: createProp<any>('any', Object),
+  uploadConfig: createProp<any>('any', Object),
+  multiple: booleanProp(fileAgentPropsDefaults.multiple),
+  averageColor: booleanProp(fileAgentPropsDefaults.averageColor),
+  theme: createProp<'default' | 'list'>('string', String),
+  sortable: createProp<boolean | 'hold' | 'handle'>('string', String),
+  meta: booleanProp(fileAgentPropsDefaults.meta),
+  compact: booleanProp(fileAgentPropsDefaults.compact),
+  deletable: booleanProp(fileAgentPropsDefaults.deletable),
+  editable: booleanProp(fileAgentPropsDefaults.editable),
+  linkable: booleanProp(fileAgentPropsDefaults.linkable),
+  helpText: stringProp(fileAgentPropsDefaults.helpText),
+  disabled: booleanProp(fileAgentPropsDefaults.disabled),
+  readonly: booleanProp(fileAgentPropsDefaults.readonly),
+  maxFiles: numberProp(fileAgentPropsDefaults.maxFiles),
+  maxSize: stringProp(fileAgentPropsDefaults.maxSize),
+  accept: stringProp(fileAgentPropsDefaults.accept),
+  capture: stringProp(fileAgentPropsDefaults.capture),
+  thumbnailSize: numberProp(fileAgentPropsDefaults.thumbnailSize),
+  fileRecords: createProp<FileRecord[]>('array', Array),
+  draggable: createProp<boolean | HTMLElement>('boolean', Object),
+  resumable: booleanProp(fileAgentPropsDefaults.resumable),
+  uploadWithCredentials: booleanProp(fileAgentPropsDefaults.uploadWithCredentials),
+  // events:
+  onBeforeDelete: functionProp<(fileRecord: FileRecord) => CancelableEventReturnType>(),
+  onDelete: functionProp<(fileRecord: FileRecord) => CancelableEventReturnType>(),
+  onChange: functionProp<(event: InputEvent) => void>(),
+  onDrop: functionProp<(event: DragEvent) => void>(),
+  onBeforeRename: functionProp<(fileRecord: FileRecord) => CancelableEventReturnType>(),
+  onRename: functionProp<(fileRecord: FileRecord) => CancelableEventReturnType>(),
+  onInput: functionProp<(fileRecords: FileRecord[]) => void>(),
+  onSelect: functionProp<(fileRecords: FileRecord[]) => void>(),
+  onUpload: functionProp<(fileRecord: FileRecord[], result: any) => void>(),
+  onUploadError: functionProp<(fileRecord: FileRecord[], result: any) => void>(),
+  onUploadDelete: functionProp<(fileRecord: FileRecord, result: any) => void>(),
+  onUploadDeleteError: functionProp<(fileRecord: FileRecord, result: any) => void>(),
+  onUploadUpdate: functionProp<(fileRecord: FileRecord, result: any) => void>(),
+  onUploadUpdateError: functionProp<(fileRecord: FileRecord, result: any) => void>(),
+  // end events
 };

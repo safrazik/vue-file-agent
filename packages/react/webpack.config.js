@@ -1,7 +1,14 @@
 const path = require('path');
+// const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const createConfig = (options, isDebugging) => {
   return {
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'react-file-agent-demo.css',
+      }),
+    ],
     watch: options.watch === true,
     watchOptions:
       options.watch === true
@@ -23,8 +30,43 @@ const createConfig = (options, isDebugging) => {
       rules: (options.rules || []).concat([
         {
           test: /\.tsx?$/,
-          use: 'ts-loader',
+          use: {
+            loader: 'ts-loader',
+            options: {
+              configFile: isDebugging ? 'tsconfig.json' : 'tsconfig.build.json',
+            },
+          },
           exclude: '/node_modules/',
+        },
+        {
+          test: /\.html$/i,
+          loader: 'html-loader',
+          options: {
+            minimize: {
+              removeComments: true,
+              collapseWhitespace: true,
+            },
+          },
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: !!isDebugging,
+              },
+            },
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'postcss-loader',
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
         },
       ]),
     },
@@ -32,6 +74,7 @@ const createConfig = (options, isDebugging) => {
     resolve: {
       alias: options.alias || {},
       extensions: ['.ts', '.tsx', '.js'],
+      // plugins: [new TsconfigPathsPlugin()],
     },
     devServer: options.devServer,
   };
@@ -58,7 +101,35 @@ module.exports = (env, argv) => {
     },
   };
 
-  if (!isDebugging) {
+  const entry = {
+    // 'react-file-agent': path.join(__dirname, 'src', 'index.tsx'),
+  };
+  const rules = [];
+  let alias = {};
+  if (isDebugging) {
+    entry['react-file-agent-demo'] = path.join(__dirname, 'src', 'demo', 'index.tsx');
+    // rules.push({
+    //   test: /\.css$/i,
+    //   use: ['style-loader', 'css-loader'],
+    // });
+    alias = {
+      // '@file-agent/core$': '@file-agent/core/dist/file-agent.js',
+      // '@file-agent/core/dist/file-agent.min.js$': '@file-agent/core/dist/file-agent.js',
+      //
+      // '@file-agent/core$': path.resolve(__dirname, '../core/dist/file-agent.js'),
+      // '@file-agent/core/dist/file-agent.min.js$': path.resolve(__dirname, '../core/dist/file-agent.js'),
+      '@file-agent/core': path.resolve(__dirname, '../core/src'),
+      // '@file-agent/core/dist/file-agent.min.js$': path.resolve(__dirname, '../core/src'),
+    };
+  } else {
+    entry['react-file-agent'] = path.join(__dirname, 'src', 'index.tsx');
+
+    externals['@file-agent/core'] = {
+      commonjs: '@file-agent/core',
+      commonjs2: '@file-agent/core',
+      amd: 'FileAgent',
+      root: 'FileAgent',
+    };
     configs.push(
       createConfig(
         {
@@ -71,24 +142,6 @@ module.exports = (env, argv) => {
         isDebugging,
       ),
     );
-  }
-  const entry = {
-    'react-file-agent': path.join(__dirname, 'src', 'index.tsx'),
-  };
-  const rules = [];
-  let alias = {};
-  if (isDebugging) {
-    entry['react-file-agent-demo'] = path.join(__dirname, 'src', 'demo', 'index.tsx');
-    rules.push({
-      test: /\.css$/i,
-      use: ['style-loader', 'css-loader'],
-    });
-    alias = {
-      // '@file-agent/core$': '@file-agent/core/dist/file-agent.js',
-      // '@file-agent/core/dist/file-agent.min.js$': '@file-agent/core/dist/file-agent.js',
-      '@file-agent/core$': path.resolve(__dirname, '../core/dist/file-agent.js'),
-      '@file-agent/core/dist/file-agent.min.js$': path.resolve(__dirname, '../core/dist/file-agent.js'),
-    };
   }
   configs.push(
     createConfig(
@@ -105,14 +158,16 @@ module.exports = (env, argv) => {
               contentBase: [path.join(__dirname, ''), path.join(__dirname, '../core')],
               // contentBase: ['/tests/', '/src/'],
               compress: true,
+              host: '0.0.0.0',
               port: 9001,
               watchOptions: {
                 // ignored: ['**/*.js', '**/*.d.ts', 'node_modules/**'],
                 ignored: ['**/*.d.ts', 'node_modules/**'],
               },
-              openPage: 'demo/index.html',
+              // openPage: 'demo/index.html',
               inline: true,
-              publicPath: '/dist/',
+              // publicPath: '/dist/',
+              // index: 'index.html',
               hot: true,
               hotOnly: false,
             }
