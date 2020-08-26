@@ -1,11 +1,5 @@
 import Vue from 'vue';
-import {
-  FileAgent as CoreFileAgent,
-  FileRecord,
-  fileAgentProps,
-  FileAgentProps,
-  FileAgentPropsExtended,
-} from '@file-agent/core';
+import { FileAgent as CoreFileAgent, FileRecord, fileAgentProps, FileAgentProps } from '@file-agent/core';
 import propsHelper from '../lib/props-helper';
 
 const propsWatch = propsHelper.createWatcher(fileAgentProps);
@@ -28,14 +22,14 @@ export default Vue.extend({
   methods: {
     renderCore() {
       if (this.coreFileAgent) {
-        this.coreFileAgent.$props = this.$props as FileAgentPropsExtended;
+        this.coreFileAgent.setProps(this.$props as FileAgentProps);
         this.coreFileAgent.update();
         return;
       }
       if (!this.$el) {
         return;
       }
-      this.coreFileAgent = new CoreFileAgent(this.$props as FileAgentPropsExtended);
+      this.coreFileAgent = new CoreFileAgent(this.$props as FileAgentProps);
       this.coreFileAgent.render(this.$el as HTMLElement);
     },
     propUpdated(propName: string, value: any) {
