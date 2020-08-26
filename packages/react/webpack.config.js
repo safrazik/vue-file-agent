@@ -135,7 +135,7 @@ module.exports = (env, argv) => {
         {
           mode: 'production',
           entry: path.join(__dirname, 'src', 'index.tsx'),
-          outputFilename: 'react-file-agent.min.js',
+          outputFilename: '[name].min.js',
           externals: externals,
           // mode: 'none',
         },

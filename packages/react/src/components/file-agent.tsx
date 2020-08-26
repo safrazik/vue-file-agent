@@ -22,7 +22,7 @@ export default class FileAgent extends React.Component<FileAgentProps> {
 
   renderCore() {
     if (/* this.coreRendered &&  */ this.coreFileAgent) {
-      this.coreFileAgent.$props = this.props;
+      this.coreFileAgent.setProps(this.props);
       this.coreFileAgent.update();
       return;
     }

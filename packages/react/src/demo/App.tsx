@@ -67,7 +67,7 @@ export default function DemoApp() {
       setTimeout(() => {
         setTimeout(() => {
           fileRecords[0].progress(34);
-          fileRecords[0].customError('Custom Error test');
+          fileRecords[0].setError('Custom Error test');
         }, 2000);
         setFileRecords(fileRecords.reverse().concat([]));
       }, 2000);
@@ -87,7 +87,7 @@ export default function DemoApp() {
         <input
           type="text"
           value={myExt}
-          onInput={(event) => {
+          onChange={(event) => {
             setMyExt((event.target as HTMLInputElement).value);
           }}
         />
@@ -103,6 +103,7 @@ export default function DemoApp() {
             deletable: true,
             editable: true,
             linkable: true,
+            sortable: true,
             maxSize: maxSize,
             // sortable: true,
             // theme: 'list',
@@ -127,7 +128,7 @@ export default function DemoApp() {
               if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
                 return;
               }
-              fileRecord.customError('Shitty name is not allowed.');
+              fileRecord.setError('Shitty name is not allowed.');
               return new Promise(function (resolve, reject) {
                 setTimeout(function () {
                   resolve(false);
@@ -141,32 +142,32 @@ export default function DemoApp() {
               }
               return new Promise(function (resolve, reject) {
                 setTimeout(function () {
-                  fileRecord.customError('System files cannot be deleted.');
+                  fileRecord.setError('System files cannot be deleted.');
                   resolve(false);
                 }, 1000);
               });
             },
             // },
-            slots: {
-              afterInner: 'After inner',
-              afterOuter: 'After outer',
-              beforeInner: document.getElementById('some-unique-el'),
-              beforeOuter: 'Before outer',
-              // filePreview: function (fileRecord) {
-              //   return `<div>
-              //       File: ${fileRecord.name()}
-              //     </div>`;
-              // },
-              //     filePreviewNewx: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
+            // slots: {
+            //   afterInner: 'After inner',
+            //   afterOuter: 'After outer',
+            //   beforeInner: document.getElementById('some-unique-el'),
+            //   beforeOuter: 'Before outer',
+            //   // filePreview: function (fileRecord) {
+            //   //   return `<div>
+            //   //       File: ${fileRecord.name()}
+            //   //     </div>`;
+            //   // },
+            //   //     filePreviewNewx: `<div class="file-preview-wrapper grid-box-item grid-block file-preview-new">
 
-              // <span class="file-preview">
-              //   <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
-              //     <h1 data-ref="help-text" class="help-text"></h1>
-              //   </span>
-              // </span>
-              //         </div>`,
-              sortableHandle: 'Sortable Handle',
-            },
+            //   // <span class="file-preview">
+            //   //   <span style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
+            //   //     <h1 data-ref="help-text" class="help-text"></h1>
+            //   //   </span>
+            //   // </span>
+            //   //         </div>`,
+            //   sortableHandle: 'Sortable Handle',
+            // },
           }}
         />
         <div>
@@ -177,7 +178,7 @@ export default function DemoApp() {
             <div style={{ border: '1px solid blue' }}>
               <div className="theme-default">
                 <div
-                  className="vue-file-agent grid-block-wrapper"
+                  className="file-agent grid-block-wrapper"
                   style={{ padding: 0 }}
                   id="file-preview-blocks-container"
                 >
