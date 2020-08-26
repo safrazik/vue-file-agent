@@ -9,7 +9,6 @@
     "/types"
   ],
   "scripts": {
-    "prepare": "npm run build",
     "coverage": "jest --coverage",
     "lint": "tslint -p tsconfig.json",
     "prebuild": "rimraf dist",
@@ -18,7 +17,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch --coverage",
     "servex": "npx serve",
-    "serve": "webpack-dev-server --env=development",
+    "dev": "webpack-dev-server --env=development",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache"
   },
   "author": "Safraz Razik",
@@ -38,9 +37,15 @@
   "devDependencies": {
     "@types/jest": "^26.0.10",
     "css-loader": "^4.2.1",
+    "html-loader": "^1.2.1",
     "jest": "^26.4.2",
+    "mini-css-extract-plugin": "^0.10.0",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
+    "sass-loader": "^9.0.3",
     "style-loader": "^1.2.1",
     "ts-jest": "^26.2.0",
     "ts-loader": "^8.0.2",
@@ -50,11 +55,6 @@
     "vue-template-compiler": "^2.6.12",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "html-loader": "^1.2.1",
-    "mini-css-extract-plugin": "^0.10.0",
-    "node-sass": "^4.14.1",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^9.0.3"
+    "webpack-dev-server": "^3.11.0"
   }
 }

@@ -27,7 +27,7 @@
       <input type="checkbox" v-model="settings.editable" /> Editable
       <div :style="{ border: '1px solid blue' }">
         <div class="theme-default">
-          <div class="vue-file-agent grid-block-wrapper" :style="{ padding: 0 }" id="file-preview-blocks-container">
+          <div class="file-agent grid-block-wrapper" :style="{ padding: 0 }" id="file-preview-blocks-container">
             <div :key="i" v-for="(fileRecord, i) in fileRecords" class="file-preview-wrapper grid-box-item grid-block">
               <FilePreview
                 :fileRecord="fileRecord"
@@ -127,7 +127,7 @@ export default Vue.extend({
     //     setTimeout(() => {
     //       setTimeout(() => {
     //         fileRecords[0].progress(34);
-    //         fileRecords[0].customError('Custom Error test');
+    //         fileRecords[0].setError('Custom Error test');
     //       }, 2000);
     //       this.fileRecords = fileRecords.reverse().concat([]);
     //     }, 2000);
@@ -147,7 +147,7 @@ export default Vue.extend({
         setTimeout(() => {
           setTimeout(() => {
             fileRecords[0].progress(34);
-            fileRecords[0].customError('Custom Error test');
+            fileRecords[0].setError('Custom Error test');
           }, 2000);
           setFileRecords(fileRecords.reverse().concat([]));
         }, 2000);
