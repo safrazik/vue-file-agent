@@ -158,48 +158,61 @@ export interface FileAgentPropsExtended extends FileAgentProps {
   fileRecords: FileRecord[];
 }
 
-export const createFileAgentProps = (): FileAgentPropsExtended => {
-  return {
-    auto: undefined, // calculated
-    uploadUrl: undefined,
-    uploadHeaders: undefined,
-    uploadConfig: undefined,
-    multiple: true,
-    smartBackground: true,
-    theme: 'default',
-    sortable: false,
-    meta: true,
-    compact: false,
-    deletable: false,
-    editable: false,
-    linkable: false,
-    helpText: undefined,
-    disabled: undefined,
-    readonly: undefined,
-    maxFiles: undefined,
-    maxSize: undefined,
-    accept: undefined,
-    capture: undefined,
-    thumbnailSize: undefined,
-    fileRecords: [],
-    draggable: undefined,
-    resumable: undefined,
-    uploadWithCredentials: undefined,
-    onBeforeDelete: undefined,
-    onDelete: undefined,
-    onChange: undefined,
-    onDrop: undefined,
-    onBeforeRename: undefined,
-    onRename: undefined,
-    onInput: undefined,
-    onSelect: undefined,
-    onUpload: undefined,
-    onUploadError: undefined,
-    onUploadDelete: undefined,
-    onUploadDeleteError: undefined,
-    onUploadUpdate: undefined,
-    onUploadUpdateError: undefined,
-  };
+export const createFileAgentProps = (
+  props?: FileAgentProps,
+  existingProps?: FileAgentPropsExtended
+): FileAgentPropsExtended => {
+  const newProps: FileAgentPropsExtended = existingProps
+    ? existingProps
+    : {
+        auto: undefined, // calculated
+        uploadUrl: undefined,
+        uploadHeaders: undefined,
+        uploadConfig: undefined,
+        multiple: true,
+        smartBackground: true,
+        theme: 'default',
+        sortable: false,
+        meta: true,
+        compact: false,
+        deletable: false,
+        editable: false,
+        linkable: false,
+        helpText: undefined,
+        disabled: undefined,
+        readonly: undefined,
+        maxFiles: undefined,
+        maxSize: undefined,
+        accept: undefined,
+        capture: undefined,
+        thumbnailSize: undefined,
+        fileRecords: [],
+        draggable: undefined,
+        resumable: undefined,
+        uploadWithCredentials: undefined,
+        onBeforeDelete: undefined,
+        onDelete: undefined,
+        onChange: undefined,
+        onDrop: undefined,
+        onBeforeRename: undefined,
+        onRename: undefined,
+        onInput: undefined,
+        onSelect: undefined,
+        onUpload: undefined,
+        onUploadError: undefined,
+        onUploadDelete: undefined,
+        onUploadDeleteError: undefined,
+        onUploadUpdate: undefined,
+        onUploadUpdateError: undefined,
+      };
+  if (props) {
+    for (const key in props) {
+      if (props.hasOwnProperty(key)) {
+        (newProps as any)[key] = (props as any)[key];
+      }
+    }
+  }
+  return newProps;
 };
 
 export const fileAgentPropsDefaults = createFileAgentProps();

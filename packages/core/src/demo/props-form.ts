@@ -8,11 +8,13 @@ export class PropsForm extends Component {
   props = createFileAgentProps();
   constructor(protected fileAgent: FileAgent) {
     super();
-    this.fileAgent.$props.deletable = true;
-    this.fileAgent.$props.editable = true;
-    // this.fileAgent.$props.sortable = 'handle';
-    this.fileAgent.$props.sortable = true;
-    this.fileAgent.$props.draggable = true;
+    this.fileAgent.setProps({
+      deletable: true,
+      editable: true,
+      // sortable: 'handle',
+      sortable: true,
+      draggable: true,
+    });
     this.fileAgent.update();
     // this.fileAgent.$props.theme = 'list';
     // this.fileAgent.$props.uploadUrl =
@@ -51,12 +53,12 @@ export class PropsForm extends Component {
       const div = document.createElement('div');
       const input = document.createElement('input');
       input.type = 'checkbox';
-      input.checked = (this.fileAgent.$props as any)[prop];
+      input.checked = (this.fileAgent.props as any)[prop];
       div.appendChild(input);
       div.appendChild(this.parseTemplate(`<span>${prop}</span>`));
       input.onchange = (event) => {
         console.log(prop, '(event.target as HTMLInputElement).checked', (event.target as HTMLInputElement).checked);
-        (this.fileAgent.$props as any)[prop] = (event.target as HTMLInputElement).checked;
+        this.fileAgent.setProps({ [prop]: (event.target as HTMLInputElement).checked });
         this.update();
       };
       booleans.appendChild(div);
@@ -76,7 +78,7 @@ export class PropsForm extends Component {
       const input = document.createElement('input');
       input.type = 'text';
       input.placeholder = ({ capture: 'e.g: user, environment', accept: 'image/*,.txt' } as any)[prop] || '';
-      const value = (this.fileAgent.$props as any)[prop];
+      const value = (this.fileAgent.props as any)[prop];
       if (value) {
         input.value = value;
       }
@@ -84,7 +86,7 @@ export class PropsForm extends Component {
       div.appendChild(input);
       input.oninput = (event) => {
         console.log(prop, '(event.target as HTMLInputElement).value', (event.target as HTMLInputElement).value);
-        (this.fileAgent.$props as any)[prop] = (event.target as HTMLInputElement).value;
+        this.fileAgent.setProps({ [prop]: (event.target as HTMLInputElement).value });
         this.update();
       };
       strings.appendChild(div);

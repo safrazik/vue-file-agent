@@ -30,14 +30,22 @@ export class FileAgent extends Component {
   isDragging = false;
   isSorting = false;
   isSortingActive = false;
-  $props = createFileAgentProps();
+  private $props = createFileAgentProps();
 
   constructor($props?: FileAgentProps) {
     super();
     if ($props) {
-      $props.fileRecords = $props.fileRecords || [];
-      this.$props = $props as any;
+      this.setProps($props);
     }
+  }
+
+  get props() {
+    return this.$props;
+  }
+
+  setProps(props: FileAgentProps) {
+    this.$props = createFileAgentProps(props, this.$props);
+    this.$props.fileRecords = this.$props.fileRecords || [];
   }
 
   get isSortable() {

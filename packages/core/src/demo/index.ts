@@ -80,13 +80,13 @@ const advancdeDemo: AdvancedDemo = new AdvancedDemo();
 setTimeout(() => {
   FileRecord.fromRawArray([secFileRecord as any], {} as any).then((secFileRecords) => {
     winFileRecords = winFileRecords.slice(0, 1).concat(secFileRecords).concat(winFileRecords.slice(1));
-    fileAgent.$props.fileRecords = winFileRecords;
+    fileAgent.setProps({ fileRecords: winFileRecords });
     fileAgent.update();
   });
 }, 1000);
 setTimeout(() => {
   winFileRecords = winFileRecords.reverse();
-  fileAgent.$props.fileRecords = winFileRecords;
+  fileAgent.setProps({ fileRecords: winFileRecords });
   fileAgent.update();
 }, 2000);
 

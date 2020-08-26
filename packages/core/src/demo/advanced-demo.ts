@@ -32,31 +32,33 @@ export class AdvancedDemo extends Component {
     //   //     }, 2000);
     //   //   });
     // };
-    this.fileAgent.$props.onDelete = (fr) => {
-      return new Promise((resolve, reject) => {
+    this.fileAgent.setProps({
+      onDelete: (fr) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (fr.name().toLocaleLowerCase().indexOf('system') !== -1) {
+              alert('"System" files cannot be deleted');
+              resolve(false);
+              return;
+            }
+            alert('File deleted: ' + fr.name());
+            resolve(true);
+          }, 500);
+        });
+      },
+      onRename: (fr) => {
         setTimeout(() => {
-          if (fr.name().toLocaleLowerCase().indexOf('system') !== -1) {
-            alert('"System" files cannot be deleted');
-            resolve(false);
-            return;
-          }
-          alert('File deleted: ' + fr.name());
-          resolve(true);
+          alert('File renamed: ' + fr.name());
         }, 500);
-      });
-    };
-    this.fileAgent.$props.onRename = (fr) => {
-      setTimeout(() => {
-        alert('File renamed: ' + fr.name());
-      }, 500);
-    };
+      },
+    });
     this.propsForm = new PropsForm(this.fileAgent);
     FileRecord.fromRawArray(rawFileRecords.slice(0, 1).concat(rawFileRecords.slice(2)) as any, {
       read: false,
       maxSize,
     }).then((fileRecords) => {
       console.log('fileRecords Reached', fileRecords);
-      this.fileAgent.$props.fileRecords = fileRecords;
+      this.fileAgent.setProps({ fileRecords });
       this.fileAgent.update();
     });
   }
