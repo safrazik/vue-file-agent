@@ -5,6 +5,12 @@ export class Component {
   getEl(): Element {
     return document.createElement('div');
   }
+  //  getRef<T extends HTMLElement>(ref: string) {
+  //    return this.$el.querySelector('[data-ref="' + ref + '"]') as T;
+  //  }
+  getRef<T extends HTMLElement>(ref: string, el?: Element): T {
+    return ((el || this.$el).querySelector('[data-ref="' + ref + '"]') as T) || document.createElement('span');
+  }
   toggleClass(el: Element, cls: string, toggle: boolean) {
     const hasClass = el.classList.contains(cls);
     if (toggle) {

@@ -1,4 +1,4 @@
-.vue-file-agent {
+.file-agent {
   .file-preview-wrapper {
     display: inline-block;
     margin: 5px;
@@ -16,6 +16,18 @@
       bottom: 0;
       background: rgba(0, 0, 0, 0.25);
     }
+
+    /// sortable testing
+    z-index: 11;
+    &.sortable-ghost {
+      opacity: 0;
+    }
+    &.sortable-chosen {
+      opacity: 0.99999;
+      background-image: none;
+      box-shadow: none;
+    }
+    /// END: sortable testing
   }
 
   // image preview, video thumbnail

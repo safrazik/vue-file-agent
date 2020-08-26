@@ -1,7 +1,11 @@
 type Theme = 'list' | 'default';
+export interface ElementRect {
+  rect: DOMRect;
+  element: HTMLElement;
+};
 export class TransitionManager {
   private options = {
-    transitionDuration: 600,
+    transitionDuration: 300,
     transitionStyle: {
       opacity: '0',
       transform: 'translate3d(0, 0, 0) scale(0.25)',
@@ -63,16 +67,26 @@ export class TransitionManager {
     this.applyTransitionStyle(child, resetStyle);
   }
   addElement(child: HTMLElement) {
-    this.applyTransitionStyle(child);
     child.style.transition = '';
+    this.applyTransitionStyle(child);
     this.nextFrame(() => {
       child.style.transition = `all ${this.options.transitionDuration}ms`;
       this.nextFrame(() => {
         this.resetTransitionStyle(child);
+        const onTransitionEnd = (event: Event) => {
+          event.stopPropagation();
+          if (event.target !== child) {
+            console.log('transition ended some other el');
+            return;
+          }
+          console.log('transition ended: SAME CHILD');
+          this.nextFrame(() => {
+            child.style.transition = '';
+          });
+          child.removeEventListener('transitionend', onTransitionEnd, false);
+        };
+        child.addEventListener('transitionend', onTransitionEnd, false);
       });
-    });
-    child.addEventListener('transitionend', () => {
-      child.style.transition = '';
     });
   }
   addElements(children: HTMLElement[]) {
@@ -86,13 +100,18 @@ export class TransitionManager {
     this.nextFrame(() => {
       this.applyTransitionStyle(child);
     });
-
-    child.addEventListener('transitionend', () => {
+    const onTransitionEnd = (event: Event) => {
+      event.stopPropagation();
+      if (event.target !== child) {
+        return;
+      }
+      console.log('on remove transition end...');
       child.style.transition = '';
-
       this.resetTransitionStyle(child);
       child.parentElement?.removeChild(child);
-    });
+      child.removeEventListener('transitionend', onTransitionEnd, false);
+    };
+    child.addEventListener('transitionend', onTransitionEnd, false);
   }
 
   removeElements(children: HTMLElement[]) {
@@ -105,8 +124,10 @@ export class TransitionManager {
     newChildren: HTMLElement[],
     removedChildren: HTMLElement[],
     otherChildren: HTMLElement[],
-    childRects: { rect: DOMRect; child: HTMLElement }[],
+    childRects: ElementRect[],
+    ignoredChildren?: HTMLElement[]
   ) {
+    console.log('applyTransitions');
     this.addElements(newChildren);
 
     let displayValue = 'inline-block';
@@ -116,7 +137,7 @@ export class TransitionManager {
     });
 
     for (const child of removedChildren) {
-      const childRect = childRects.filter((cr) => cr.child === child)[0];
+      const childRect = childRects.filter((cr) => cr.element === child)[0];
       const rect = childRect ? childRect.rect : undefined;
       if (rect) {
         child.style.position = 'fixed';
@@ -135,7 +156,7 @@ export class TransitionManager {
     }
 
     for (const child of otherChildren) {
-      const childRect = childRects.filter((cr) => cr.child === child)[0];
+      const childRect = childRects.filter((cr) => cr.element === child)[0];
       const rect = childRect ? childRect.rect : undefined;
       if (!rect) {
         continue;

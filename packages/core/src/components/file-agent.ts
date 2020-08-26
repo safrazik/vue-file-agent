@@ -5,11 +5,11 @@ import { FileIcon } from './file-icon';
 import { FilePreview } from './file-preview';
 import utils from '../lib/utils';
 // import uploader from '../lib/uploader/upload-helper';
-import uploader from '../lib/uploader/uploader';
+// import uploader from '../lib/uploader/uploader';
 import plugins from '../lib/plugins';
-import { FileAgentProps, filePreviewProps } from '../lib/props';
-import { ConfigureFn } from '../lib/uploader/ajax-request';
-import { TransitionManager } from '../lib/transition-manager';
+import { FileAgentProps, filePreviewProps, createFileAgentProps } from '../lib/props';
+import { ConfigureFn } from '../lib/uploader-interface';
+import { SortableManager, TransitionManager, ElementRect } from '../lib/sortable';
 
 let fileAgentEl: Element;
 let newFilePreviewEl: Element;
@@ -17,7 +17,7 @@ let newFilePreviewEl: Element;
 // tslint:disable-next-line
 var dragCounter = 0;
 
-plugins.uploader = uploader;
+// plugins.uploader = uploader;
 
 interface CachedItem {
   fileRecord: FileRecord;
@@ -30,9 +30,14 @@ export class FileAgent extends Component {
   isDragging = false;
   isSorting = false;
   isSortingActive = false;
+  $props = createFileAgentProps();
 
-  constructor(public $props: FileAgentProps) {
+  constructor($props?: FileAgentProps) {
     super();
+    if ($props) {
+      $props.fileRecords = $props.fileRecords || [];
+      this.$props = $props as any;
+    }
   }
 
   get isSortable() {
@@ -105,7 +110,7 @@ export class FileAgent extends Component {
     return new Promise((resolve, reject) => {
       const canvas = document.createElement('canvas');
       utils
-        .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.$props.averageColor !== false)
+        .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.$props.smartBackground !== false)
         .then((thumbnail) => {
           fileRecord.thumbnail(thumbnail);
           resolve();
@@ -155,15 +160,28 @@ export class FileAgent extends Component {
     };
   }
 
-  upload(
+  protected noUploader() {
+    const err = 'No uploader defined. Install @file-agent/uploader for default uploader';
+    console.error(err);
+    return err;
+  }
+
+  protected doUpload(
     url: string,
     headers: object,
     fileRecords: FileRecord[],
     createFormData?: (fileRecord: FileRecord) => FormData,
-    configureXhr?: ConfigureFn,
+    configureXhr?: ConfigureFn
   ): Promise<any> {
     const validFileRecords = this.getValidFileRecords(fileRecords);
     return new Promise((resolve, reject) => {
+      if (!plugins.uploader) {
+        reject(this.noUploader());
+        return;
+      }
+      // if (1 === 1) {
+      //   return Promise.resolve();
+      // }
       plugins.uploader
         .upload(
           url,
@@ -174,7 +192,7 @@ export class FileAgent extends Component {
           (overallProgress) => {
             // this.overallProgress = overallProgress;
           },
-          this.prepareConfigureFn(configureXhr),
+          this.prepareConfigureFn(configureXhr)
         )
         .then(
           (res: any) => {
@@ -194,19 +212,23 @@ export class FileAgent extends Component {
               this.$props.onUploadError(validFileRecords, err);
             }
             reject(err);
-          },
+          }
         );
     });
   }
 
-  deleteUpload(
+  protected doDeleteUpload(
     url: string,
     headers: object,
     fileRecord: FileRecord,
     uploadData?: any,
-    configureXhr?: ConfigureFn,
+    configureXhr?: ConfigureFn
   ): Promise<any> {
     return new Promise((resolve, reject) => {
+      if (!plugins.uploader) {
+        reject(this.noUploader());
+        return;
+      }
       plugins.uploader
         .deleteUpload(url, headers, this.$props, fileRecord, uploadData, this.prepareConfigureFn(configureXhr))
         .then(
@@ -223,19 +245,23 @@ export class FileAgent extends Component {
               this.$props.onUploadDeleteError(fileRecord, err);
             }
             reject(err);
-          },
+          }
         );
     });
   }
 
-  updateUpload(
+  protected doUpdateUpload(
     url: string,
     headers: object,
     fileRecord: FileRecord,
     uploadData?: any,
-    configureXhr?: ConfigureFn,
+    configureXhr?: ConfigureFn
   ): Promise<any> {
     return new Promise((resolve, reject) => {
+      if (!plugins.uploader) {
+        reject(this.noUploader());
+        return;
+      }
       plugins.uploader
         .updateUpload(url, headers, this.$props, fileRecord, uploadData, this.prepareConfigureFn(configureXhr))
         .then(
@@ -252,30 +278,30 @@ export class FileAgent extends Component {
               this.$props.onUploadUpdateError(fileRecord, err);
             }
             reject(err);
-          },
+          }
         );
     });
   }
 
-  autoUpload(fileRecords: FileRecord[]): Promise<any> {
+  protected autoUpload(fileRecords: FileRecord[]): Promise<any> {
     if (!this.$props.uploadUrl || this.$props.auto === false) {
       return Promise.resolve(false);
     }
-    return this.upload(this.$props.uploadUrl, this.$props.uploadHeaders, fileRecords, this.$props.uploadConfig);
+    return this.doUpload(this.$props.uploadUrl, this.$props.uploadHeaders, fileRecords, this.$props.uploadConfig);
   }
 
-  autoDeleteUpload(fileRecord: FileRecord): Promise<any> {
+  protected autoDeleteUpload(fileRecord: FileRecord): Promise<any> {
     if (!this.$props.uploadUrl || this.$props.auto === false) {
       return Promise.resolve(false);
     }
-    return this.deleteUpload(this.$props.uploadUrl, this.$props.uploadHeaders, fileRecord, this.$props.uploadConfig);
+    return this.doDeleteUpload(this.$props.uploadUrl, this.$props.uploadHeaders, fileRecord, this.$props.uploadConfig);
   }
 
-  autoUpdateUpload(fileRecord: FileRecord): Promise<any> {
+  protected autoUpdateUpload(fileRecord: FileRecord): Promise<any> {
     if (!this.$props.uploadUrl || this.$props.auto === false) {
       return Promise.resolve(false);
     }
-    return this.updateUpload(this.$props.uploadUrl, this.$props.uploadHeaders, fileRecord, this.$props.uploadConfig);
+    return this.doUpdateUpload(this.$props.uploadUrl, this.$props.uploadHeaders, fileRecord, this.$props.uploadConfig);
   }
 
   /* Upload Methods */
@@ -312,8 +338,8 @@ export class FileAgent extends Component {
         maxSize: this.$props.maxSize,
         accept: this.$props.accept,
         thumbnailSize: this.$props.thumbnailSize,
-        averageColor: this.$props.averageColor,
-      },
+        smartBackground: this.$props.smartBackground,
+      }
     ).then((fileRecords) => {
       for (const fileRecord of fileRecords) {
         if (fileRecord.file.size <= 20 * 1024 * 1024) {
@@ -335,13 +361,13 @@ export class FileAgent extends Component {
         this.$props.onSelect(fileRecords);
       }
 
-      this.update();
       /*       FileRecord.readFiles(fileRecords).then((fileRecordsNew: FileRecord[]) => {
         // const allFileRecordsRaw = FileRecord.toRawArray(this.$props.fileRecords);
         // this.rawFileRecords = allFileRecordsRaw;
         // this.$emit('input', Array.isArray(this.value) ? allFileRecordsRaw : allFileRecordsRaw[0]);
         // this.$emit('select', FileRecord.toRawArray(fileRecordsNew));
       }); */
+      this.update();
       this.autoUpload(fileRecords);
     });
     // for (const file of filesArray) {
@@ -402,12 +428,12 @@ export class FileAgent extends Component {
       fileRecord,
       (fr) => {
         const promise = this.autoDeleteUpload(fr);
-        promise.catch((err) => {
-          this.cancelDeleteFileRecord(fr, index);
-        });
         if (!this.$props.onDelete) {
           return promise;
         }
+        promise.catch((err) => {
+          this.cancelDeleteFileRecord(fr, index);
+        });
         return this.$props.onDelete(fr);
       },
       () => {
@@ -415,7 +441,7 @@ export class FileAgent extends Component {
       },
       () => {
         this.cancelDeleteFileRecord(fileRecord, index);
-      },
+      }
     );
   }
 
@@ -428,12 +454,12 @@ export class FileAgent extends Component {
       // this.$props.onRename,
       (fr) => {
         const promise = this.autoUpdateUpload(fr);
-        promise.catch((err) => {
-          this.cancelRenameFileRecord(fr);
-        });
         if (!this.$props.onRename) {
           return promise;
         }
+        promise.catch((err) => {
+          this.cancelRenameFileRecord(fr);
+        });
         return this.$props.onRename(fr);
       },
       () => {
@@ -441,7 +467,7 @@ export class FileAgent extends Component {
       },
       () => {
         this.cancelRenameFileRecord(fileRecord);
-      },
+      }
     );
   }
 
@@ -462,27 +488,30 @@ export class FileAgent extends Component {
     fileRecord: FileRecord,
     onEvent: ((FileRecord: FileRecord) => boolean | Promise<boolean>) | undefined,
     okFn: () => void,
-    cancelFn: () => void,
+    cancelFn: () => void
   ) {
     if (!onEvent) {
       okFn();
       return;
     }
-    const response = onEvent(fileRecord);
-    if (utils.isPromise(response)) {
-      (response as Promise<boolean>).then((result) => {
-        if (result === false) {
-          cancelFn();
-        } else {
-          okFn();
-        }
-      });
-    } else {
-      if (response === false) {
+    const okOrCancel = (result: boolean) => {
+      if (result === false) {
         cancelFn();
       } else {
         okFn();
       }
+    };
+    const response = onEvent(fileRecord);
+    if (utils.isPromise(response)) {
+      (response as Promise<boolean>)
+        .then((result) => {
+          okOrCancel(result);
+        })
+        .catch((err) => {
+          cancelFn();
+        });
+    } else {
+      okOrCancel(response as boolean);
     }
   }
 
@@ -491,11 +520,12 @@ export class FileAgent extends Component {
       fileRecord,
       this.$props.onBeforeDelete,
       () => {
+        console.log('onDeleteFileRecord');
         this.deleteFileRecord(fileRecord);
       },
       () => {
         // no op
-      },
+      }
     );
   }
 
@@ -508,7 +538,7 @@ export class FileAgent extends Component {
       },
       () => {
         this.cancelRenameFileRecord(fileRecord);
-      },
+      }
     );
   }
 
@@ -554,7 +584,7 @@ export class FileAgent extends Component {
       },
       (err) => {
         // no op
-      },
+      }
     );
   }
 
@@ -589,7 +619,7 @@ export class FileAgent extends Component {
     }
   }
 
-  bindEvents() {
+  bindDragEvents() {
     // @dragover="dragOver"
     // @dragenter="dragEnter"
     // @dragleave="dragLeave"
@@ -613,6 +643,9 @@ export class FileAgent extends Component {
     dragEl.ondrop = (event) => {
       this.drop(event);
     };
+  }
+  bindEvents() {
+    this.bindDragEvents();
   }
 
   updateDragStatus(isDragging: boolean) {
@@ -664,7 +697,7 @@ export class FileAgent extends Component {
           : ''
       }
     `;
-    this.getRef('container').className = `grid-block-wrapper vue-file-agent file-input-wrapper
+    this.getRef('container').className = `grid-block-wrapper file-agent file-input-wrapper
       ${!!this.$props.compact ? 'is-compact' : ''}
       ${!this.hasMultiple ? 'is-single' : ''}
       ${this.hasMultiple ? 'has-multiple' : ''}
@@ -748,13 +781,14 @@ export class FileAgent extends Component {
     const fileRecords = this.$props.fileRecords.concat([]).reverse();
     const newChildren: HTMLElement[] = [];
     const otherChildren: HTMLElement[] = [];
-    const childRects: { rect: DOMRect; child: HTMLElement }[] = [];
+    const childRects: ElementRect[] = [];
     const enableTransitions = true;
+    // const enableTransitions = false;
     if (enableTransitions) {
       // tslint:disable-next-line
       for (let i = 0; i < container.children.length; i++) {
         const child = container.children[i] as HTMLElement;
-        childRects.push({ child, rect: child.getBoundingClientRect() });
+        childRects.push({ element: child, rect: child.getBoundingClientRect() });
       }
     }
     for (const fileRecord of fileRecords) {
@@ -774,6 +808,15 @@ export class FileAgent extends Component {
           container.appendChild(child);
         }
         otherChildren.push(child);
+        const filePreviewAlready = cachedItem?.filePreview;
+        if (filePreviewAlready) {
+          filePreviewAlready.$props.smartBackground = this.$props.smartBackground;
+          filePreviewAlready.$props.deletable = this.$props.deletable;
+          filePreviewAlready.$props.editable = this.$props.editable;
+          filePreviewAlready.$props.linkable = this.$props.linkable;
+          filePreviewAlready.$props.disabled = this.$props.disabled;
+          filePreviewAlready.update();
+        }
         continue;
       }
       if (!child) {
@@ -785,7 +828,7 @@ export class FileAgent extends Component {
         child.appendChild(previewSlotContent);
       } else {
         filePreview = new FilePreview({
-          averageColor: this.$props.averageColor,
+          smartBackground: this.$props.smartBackground,
           deletable: this.$props.deletable,
           editable: this.$props.editable,
           linkable: this.$props.linkable,
@@ -843,11 +886,34 @@ export class FileAgent extends Component {
     // newFileElementFirst;
     const removedItems = this.cachedItems.filter((ch) => fileRecords.indexOf(ch.fileRecord) === -1);
     const removedChildren = removedItems.map((ch) => ch.child);
+    let transitionManager: TransitionManager | undefined;
     if (!enableTransitions) {
       removedChildren.map((child) => container.removeChild(child));
     } else {
-      const transitionManager = new TransitionManager(this.$props.theme);
+      transitionManager = new TransitionManager(this.$props.theme);
       transitionManager.applyTransitions(newChildren, removedChildren, otherChildren.concat(newFileChild), childRects);
+    }
+    const sortableManager = new SortableManager(
+      container,
+      removedChildren,
+      [container.lastElementChild as HTMLElement /* new file preview */],
+      transitionManager
+    );
+    if (this.$props.sortable) {
+      const handle = document.createElement('span');
+      if (this.$props.sortable === 'handle') {
+        handle.className = 'file-sortable-handle';
+        handle.appendChild(this.getIcon({ name: 'system-sortable-handle' }));
+        // <span v-vfa-sortable-handle class="file-sortable-handle" v-if="sortable === 'handle'">
+        //   <slot name="sortable-handle">
+        //     <VueFileIcon name="system-sortable-handle"></VueFileIcon>
+        //   </slot>
+        // </span>;
+      }
+      sortableManager.enable(this.$props.sortable, handle, 300);
+      // transitionManager = new TransitionManager(this.$props.theme);
+    } else {
+      sortableManager.disable();
     }
 
     this.cachedItems = this.cachedItems.filter((ch) => removedItems.indexOf(ch) === -1);
@@ -856,9 +922,12 @@ export class FileAgent extends Component {
     input.multiple = this.hasMultiple;
     input.accept = this.$props.accept || '*';
     if (this.$props.capture) {
+      console.log('props enabled');
       (input as any).capture = this.$props.capture;
     } else {
-      delete (input as any).capture;
+      // console.log('props disabled');
+      // (input as any).capture = undefined;
+      (input as any).removeAttribute('capture');
     }
     input.onchange = (event) => {
       this.filesChanged(event as InputEvent);

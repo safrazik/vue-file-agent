@@ -1,12 +1,12 @@
-.vue-file-agent {
-  .is-sorting & {
+.file-agent {
+  .is-sorting &, .is-sorting {
     .file-preview-wrapper,
     .active-sorting-item {
       transition-duration: 0s;
     }
   }
 
-  .is-sorting-active & {
+  .is-sorting-active &, .is-sorting-active {
     .file-preview-wrapper {
       opacity: 0.75;
     }

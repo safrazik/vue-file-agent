@@ -43,10 +43,6 @@ export class FilePreview extends Component {
     return !!fileRecord.url() && !fileRecord.isPlayableVideo() && !fileRecord.isPlayableAudio();
   }
 
-  getRef<T extends HTMLElement>(ref: string) {
-    return this.$el.querySelector('[data-ref="' + ref + '"]') as T;
-  }
-
   createThumbnail(video: HTMLVideoElement) {
     const fileRecord = this.$props.fileRecord as FileRecord;
     if (fileRecord.videoThumbnail) {
@@ -55,7 +51,7 @@ export class FilePreview extends Component {
     }
     const canvas = document.createElement('canvas');
     utils
-      .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.$props.averageColor !== false)
+      .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.$props.smartBackground !== false)
       .then((thumbnail) => {
         fileRecord.thumbnail(thumbnail);
         video.poster = fileRecord.src();
@@ -105,7 +101,7 @@ export class FilePreview extends Component {
     if (!this.hasDismissibleError()) {
       return;
     }
-    fileRecord.customError(false);
+    fileRecord.setError(false);
     this.getRef('error-wrapper').style.display = 'none';
     // this.update();
   }

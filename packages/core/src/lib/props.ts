@@ -59,7 +59,7 @@ export interface FileIconProps {
 }
 
 export interface FilePreviewProps {
-  averageColor?: boolean;
+  smartBackground?: boolean;
   deletable?: boolean;
   editable?: boolean;
   linkable?: boolean;
@@ -76,7 +76,7 @@ export interface FileAgentProps {
   uploadHeaders?: any;
   uploadConfig?: any;
   multiple?: boolean;
-  averageColor?: boolean;
+  smartBackground?: boolean;
   theme?: 'default' | 'list';
   sortable?: boolean | 'hold' | 'handle';
   meta?: boolean;
@@ -92,7 +92,7 @@ export interface FileAgentProps {
   accept?: string;
   capture?: string;
   thumbnailSize?: number;
-  fileRecords: FileRecord[];
+  fileRecords?: FileRecord[];
   draggable?: boolean | HTMLElement;
   resumable?: boolean;
   uploadWithCredentials?: boolean;
@@ -129,65 +129,80 @@ export interface FileAgentProps {
   };
 }
 
-export const fileIconPropsDefaults: FileIconProps = {
-  ext: undefined,
-  name: undefined,
-  viewBox: undefined,
+export const createFileIconProps = (): FileIconProps => {
+  return {
+    ext: undefined,
+    name: undefined,
+    viewBox: undefined,
+  };
 };
 
-export const filePreviewPropsDefaults: FilePreviewProps = {
-  averageColor: undefined,
-  deletable: undefined,
-  editable: undefined,
-  linkable: undefined,
-  disabled: undefined,
-  fileRecord: undefined,
-  onDelete: undefined,
-  onRename: undefined,
-  errorText: undefined,
+export const fileIconPropsDefaults = createFileIconProps();
+
+export const createFilePreviewProps = (): FilePreviewProps => {
+  return {
+    smartBackground: undefined,
+    deletable: undefined,
+    editable: undefined,
+    linkable: undefined,
+    disabled: undefined,
+    fileRecord: undefined,
+    onDelete: undefined,
+    onRename: undefined,
+    errorText: undefined,
+  };
+};
+export const filePreviewPropsDefaults = createFilePreviewProps();
+
+export interface FileAgentPropsExtended extends FileAgentProps {
+  fileRecords: FileRecord[];
+}
+
+export const createFileAgentProps = (): FileAgentPropsExtended => {
+  return {
+    auto: undefined, // calculated
+    uploadUrl: undefined,
+    uploadHeaders: undefined,
+    uploadConfig: undefined,
+    multiple: true,
+    smartBackground: true,
+    theme: 'default',
+    sortable: false,
+    meta: true,
+    compact: false,
+    deletable: false,
+    editable: false,
+    linkable: false,
+    helpText: undefined,
+    disabled: undefined,
+    readonly: undefined,
+    maxFiles: undefined,
+    maxSize: undefined,
+    accept: undefined,
+    capture: undefined,
+    thumbnailSize: undefined,
+    fileRecords: [],
+    draggable: undefined,
+    resumable: undefined,
+    uploadWithCredentials: undefined,
+    onBeforeDelete: undefined,
+    onDelete: undefined,
+    onChange: undefined,
+    onDrop: undefined,
+    onBeforeRename: undefined,
+    onRename: undefined,
+    onInput: undefined,
+    onSelect: undefined,
+    onUpload: undefined,
+    onUploadError: undefined,
+    onUploadDelete: undefined,
+    onUploadDeleteError: undefined,
+    onUploadUpdate: undefined,
+    onUploadUpdateError: undefined,
+  };
 };
 
-export const fileAgentPropsDefaults: FileAgentProps = {
-  auto: undefined, // calculated
-  uploadUrl: undefined,
-  uploadHeaders: undefined,
-  uploadConfig: undefined,
-  multiple: undefined, // calculated
-  averageColor: true,
-  theme: 'default',
-  sortable: false,
-  meta: undefined,
-  compact: false,
-  deletable: false,
-  editable: false,
-  linkable: false,
-  helpText: undefined,
-  disabled: undefined,
-  readonly: undefined,
-  maxFiles: undefined,
-  maxSize: undefined,
-  accept: undefined,
-  capture: undefined,
-  thumbnailSize: undefined,
-  fileRecords: [],
-  draggable: undefined,
-  resumable: undefined,
-  uploadWithCredentials: undefined,
-  onBeforeDelete: undefined,
-  onDelete: undefined,
-  onChange: undefined,
-  onDrop: undefined,
-  onBeforeRename: undefined,
-  onRename: undefined,
-  onInput: undefined,
-  onSelect: undefined,
-  onUpload: undefined,
-  onUploadError: undefined,
-  onUploadDelete: undefined,
-  onUploadDeleteError: undefined,
-  onUploadUpdate: undefined,
-  onUploadUpdateError: undefined,
-};
+export const fileAgentPropsDefaults = createFileAgentProps();
 
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -204,7 +219,7 @@ export const fileIconProps = {
 };
 
 export const filePreviewProps = {
-  averageColor: booleanProp(fileAgentPropsDefaults.averageColor),
+  smartBackground: booleanProp(fileAgentPropsDefaults.smartBackground),
   deletable: booleanProp(fileAgentPropsDefaults.deletable),
   editable: booleanProp(fileAgentPropsDefaults.editable),
   linkable: booleanProp(fileAgentPropsDefaults.linkable),
@@ -221,7 +236,7 @@ export const fileAgentProps = {
   uploadHeaders: createProp<any>('any', Object),
   uploadConfig: createProp<any>('any', Object),
   multiple: booleanProp(fileAgentPropsDefaults.multiple),
-  averageColor: booleanProp(fileAgentPropsDefaults.averageColor),
+  smartBackground: booleanProp(fileAgentPropsDefaults.smartBackground),
   theme: createProp<'default' | 'list'>('string', String),
   sortable: createProp<boolean | 'hold' | 'handle'>('string', String),
   meta: booleanProp(fileAgentPropsDefaults.meta),

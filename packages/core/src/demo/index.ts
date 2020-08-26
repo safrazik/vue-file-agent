@@ -5,6 +5,7 @@
 // var FileRecord = fileAgentModule.FileRecord;
 // var plugins = fileAgentModule.plugins;
 import { FileAgent, FileIcon, FilePreview, FileRecord, plugins } from '..';
+import { AdvancedDemo } from './advanced-demo';
 
 plugins.tus = (window as any).tus;
 
@@ -74,6 +75,7 @@ const secFileRecord = rawFileRecords[1];
 
 let winFileRecords: FileRecord[] = [];
 let fileAgent: FileAgent;
+const advancdeDemo: AdvancedDemo = new AdvancedDemo();
 
 setTimeout(() => {
   FileRecord.fromRawArray([secFileRecord as any], {} as any).then((secFileRecords) => {
@@ -125,7 +127,7 @@ FileRecord.fromRawArray(rawFileRecords.slice(0, 1).concat(rawFileRecords.slice(2
       if (fileRecord.name().toLowerCase().indexOf('shit') === -1) {
         return;
       }
-      fileRecord.customError('Shitty name is not allowed.');
+      fileRecord.setError('Shitty name is not allowed.');
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve(false);
@@ -139,7 +141,7 @@ FileRecord.fromRawArray(rawFileRecords.slice(0, 1).concat(rawFileRecords.slice(2
       }
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          fileRecord.customError('System files cannot be deleted.');
+          fileRecord.setError('System files cannot be deleted.');
           resolve(false);
         }, 1000);
       });
@@ -165,8 +167,9 @@ FileRecord.fromRawArray(rawFileRecords.slice(0, 1).concat(rawFileRecords.slice(2
       sortableHandle: 'Sortable Handle',
     },
   });
-  fileAgent.render(document.getElementById('file-agent-wrapper') as HTMLElement);
+  // fileAgent.render(document.getElementById('file-agent-wrapper') as HTMLElement);
 });
+advancdeDemo.render(document.getElementById('file-agent-wrapper') as HTMLElement);
 
 FileRecord.fromRawArray(rawFileRecords as any, { read: false, maxSize: '4MB' }).then((fileRecords) => {
   //   for (let i = 0; i < fileRecords.length; i++) {

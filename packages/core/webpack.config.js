@@ -93,8 +93,8 @@ module.exports = (env, argv) => {
           outputFilename: '[name].min.js',
           entry: entry,
         },
-        isDebugging,
-      ),
+        isDebugging
+      )
     );
   }
   configs.push(
@@ -123,8 +123,8 @@ module.exports = (env, argv) => {
             }
           : undefined,
       },
-      isDebugging,
-    ),
+      isDebugging
+    )
   );
 
   return configs;

@@ -1,6 +1,6 @@
-import { Uploader } from './uploader';
+import { UploaderInterface } from './uploader-interface';
 
 export default {
-  tus: null as any,
-  uploader: {} as Uploader,
+  tus: undefined as any,
+  uploader: undefined as UploaderInterface | undefined,
 };

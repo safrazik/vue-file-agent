@@ -12,7 +12,7 @@ export interface Options {
   maxSize?: string;
   read: boolean;
   thumbnailSize?: number;
-  averageColor?: boolean;
+  smartBackground?: boolean;
 }
 
 interface ErrorText {
@@ -207,7 +207,7 @@ class FileRecord {
     this.videoThumbnail = data.videoThumbnail;
     this.imageColor = data.imageColor;
     this.customName = data.customName;
-    this.calculateAverageColor = options.averageColor !== undefined ? options.averageColor : true;
+    this.calculateAverageColor = options.smartBackground !== undefined ? options.smartBackground : true;
     this.validate();
   }
 
@@ -450,6 +450,10 @@ class FileRecord {
   }
 
   public customError(error?: string | false) {
+    this.setError(error);
+  }
+
+  public setError(error?: string | false) {
     if (error === false) {
       this.error = false;
     } else {
@@ -461,7 +465,7 @@ class FileRecord {
   }
 
   public uploadError(error?: string | false) {
-    return this.customError(error);
+    return this.setError(error);
   }
 
   public toRaw(): RawFileRecord {

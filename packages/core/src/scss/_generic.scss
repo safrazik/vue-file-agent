@@ -1,4 +1,4 @@
-.vue-file-agent {
+.file-agent {
   box-sizing: border-box;
 
   * {
@@ -16,7 +16,7 @@
   content: ' ';
 }
 
-.is-disabled .vue-file-agent {
+.is-disabled .file-agent {
   opacity: 0.65;
   pointer-events: none;
 }
@@ -36,6 +36,6 @@
   position: absolute !important;
 }
 
-.is-readonly .vue-file-agent.file-input-wrapper {
+.is-readonly .file-agent.file-input-wrapper {
   border: 0;
 }

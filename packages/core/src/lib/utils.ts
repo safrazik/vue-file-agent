@@ -19,9 +19,41 @@ enum ImageOrientation {
 }
 
 class Utils {
-  public arrayMove(arr: any[], previousIndex: number, newIndex: number): any[] {
+
+  public arrayMove(arr: any[], fromIndex: number, toIndex: number, frozenElements: any[] = []): any[] {
+    const disabledList: {
+      index: number; element: any
+    }[] = [];
+    for (const el of frozenElements) {
+      // array = this.arrayMove(array, idx, idx);
+      disabledList.push({
+        index: arr.indexOf(el),
+        element: el,
+      });
+    }
+    let array = arr.slice(0);
+    const element = array[fromIndex];
+    array.splice(fromIndex, 1);
+    array.splice(toIndex, 0, element);
+    for (const disabledItem of disabledList) {
+      array = this.arrayMove(array, array.indexOf(disabledItem.element), disabledItem.index);
+    }
+    return array;
+  }
+
+  public arrayMoveOld(arr: any[], previousIndex: number, newIndex: number, frozenElements: any[] = []): any[] {
+        const disabledList: {
+      index: number; element: any
+    }[] = [];
+    for (const el of frozenElements) {
+      // array = this.arrayMove(array, idx, idx);
+      disabledList.push({
+        index: arr.indexOf(el),
+        element: el,
+      });
+    }
     // https://github.com/Jexordexan/vue-slicksort/blob/master/src/utils.js
-    const array = arr.slice(0);
+    let array = arr.slice(0);
     if (newIndex >= array.length) {
       let k = newIndex - array.length;
       while (k-- + 1) {
@@ -29,6 +61,9 @@ class Utils {
       }
     }
     array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+    for (const disabledItem of disabledList) {
+      array = this.arrayMove(array, array.indexOf(disabledItem.element), disabledItem.index);
+    }
     return array;
   }
 
