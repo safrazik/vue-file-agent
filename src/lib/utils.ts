@@ -77,7 +77,7 @@ class Utils {
     thumbnailSize: number,
     calculateAverageColor?: boolean,
   ): Promise<VideoThumbnail> {
-    video.setAttribute('crossOrigin', 'anonymous'); // fix cross origin issue
+    video.setAttribute('crossOrigin', 'use-credentials'); // fix cross origin issue
     return new Promise((resolve, reject) => {
       let loadedmetadata = false;
       let loadeddata = false;
@@ -369,7 +369,7 @@ class Utils {
     calculateAverageColor?: boolean,
   ): Promise<ImageThumbnail | null> {
     const image = new Image();
-    image.setAttribute('crossOrigin', 'anonymous');
+    image.setAttribute('crossOrigin', 'use-credentials');
     return url
       ? this.resizeImageUrl(image, url, thumbnailSize, calculateAverageColor)
       : this.resizeImageFile(image, file as File, thumbnailSize, calculateAverageColor);
