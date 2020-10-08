@@ -16,9 +16,9 @@ declare class UploadHelper {
     upload(url: string, headers: object, fileRecords: FileRecord[], createFormData?: CreateFormDataFn, progressFn?: (progress: number) => void, configureFn?: ConfigureFn): Promise<unknown>;
     deleteUpload(url: string, headers: object, fileRecord: FileRecord, uploadData?: any, configureFn?: ConfigureFn): Promise<unknown>;
     updateUpload(url: string, headers: object, fileRecord: FileRecord, uploadData: any, configureFn?: ConfigureFn): Promise<unknown>;
-    doTusUpload(tus: any, url: string, fileRecord: FileRecord, headers: object, progressCallback: ProgressFn, tusOptionsFn?: TusOptionsFn): Promise<unknown>;
-    tusUpload(tus: any, url: string, headers: object, fileRecords: FileRecord[], progressFn?: (progress: number) => void, tusOptionsFn?: TusOptionsFn): Promise<unknown[]>;
-    tusDeleteUpload(tus: any, url: string, headers: object, fileRecord: FileRecord): Promise<unknown>;
+    doTusUpload(tus: any, url: string, fileRecord: FileRecord, headers: object, progressCallback: ProgressFn, tusOptionsFn?: TusOptionsFn, uploadWithCredentials?: boolean): Promise<unknown>;
+    tusUpload(tus: any, url: string, headers: object, fileRecords: FileRecord[], progressFn?: (progress: number) => void, tusOptionsFn?: TusOptionsFn, uploadWithCredentials?: boolean): Promise<unknown[]>;
+    tusDeleteUpload(tus: any, url: string, headers: object, fileRecord: FileRecord, uploadWithCredentials?: boolean): Promise<unknown>;
 }
 declare const _default: UploadHelper;
 export default _default;
