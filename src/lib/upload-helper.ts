@@ -319,9 +319,9 @@ class UploadHelper {
           resolve(upload);
         },
         onBeforeRequest: function (req) {
-					var xhr = req.getUnderlyingObject()
-					xhr.withCredentials = uploadWithCredentials;
-				},
+            var xhr = req.getUnderlyingObject()
+            xhr.withCredentials = uploadWithCredentials;
+        },
       });
       fileRecord.tusUpload = upload;
       // Start the upload
