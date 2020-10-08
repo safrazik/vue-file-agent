@@ -18,7 +18,7 @@ declare class UploadHelper {
     updateUpload(url: string, headers: object, fileRecord: FileRecord, uploadData: any, configureFn?: ConfigureFn): Promise<unknown>;
     doTusUpload(tus: any, url: string, fileRecord: FileRecord, headers: object, progressCallback: ProgressFn, tusOptionsFn?: TusOptionsFn, uploadWithCredentials?: boolean): Promise<unknown>;
     tusUpload(tus: any, url: string, headers: object, fileRecords: FileRecord[], progressFn?: (progress: number) => void, tusOptionsFn?: TusOptionsFn, uploadWithCredentials?: boolean): Promise<unknown[]>;
-    tusDeleteUpload(tus: any, url: string, headers: object, fileRecord: FileRecord, uploadWithCredentials?: boolean): Promise<unknown>;
+    tusDeleteUpload(tus: any, url: string, headers: object, fileRecord: FileRecord): Promise<unknown>;
 }
 declare const _default: UploadHelper;
 export default _default;
