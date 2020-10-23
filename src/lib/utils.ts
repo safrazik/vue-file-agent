@@ -77,7 +77,8 @@ class Utils {
     thumbnailSize: number,
     calculateAverageColor?: boolean,
   ): Promise<VideoThumbnail> {
-    video.setAttribute('crossOrigin', 'anonymous'); // fix cross origin issue
+    video.setAttribute('crossOrigin', 'use-credentials'); // fix cross origin issue
+    video.setAttribute('preload', 'auto');
     return new Promise((resolve, reject) => {
       let loadedmetadata = false;
       let loadeddata = false;

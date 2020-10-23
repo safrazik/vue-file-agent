@@ -46,6 +46,7 @@
         <a v-if="hasLinkableUrl" :href="fileRecord.url()" target="_blank" :title="fileRecord.name()">
           <img class="file-preview-img" :src="fileRecord.src()" />
         </a>
+        <video v-else-if="!!fileRecord.url() && fileRecord.isPlayableVideo()" class="file-preview-img" :src="fileRecord.url()" crossOrigin="use-credentials" preload="auto"></video>
         <img v-else class="file-preview-img" :src="fileRecord.src()" />
       </span>
       <span class="file-ext">{{ fileRecord.ext() }}</span>
