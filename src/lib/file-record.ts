@@ -300,7 +300,7 @@ class FileRecord {
   }
 
   public isImage(): boolean {
-    return this.file && this.file.type.indexOf('image') !== -1;
+    return this.file && !!this.file.type.match(/image((?!vnd).)*$/i);
   }
 
   public isVideo(): boolean {
