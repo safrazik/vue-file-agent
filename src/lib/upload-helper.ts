@@ -287,6 +287,7 @@ class UploadHelper {
     headers: object,
     progressCallback: ProgressFn,
     tusOptionsFn?: TusOptionsFn,
+    uploadWithCredentials?: boolean,
   ) {
     const tusOptions: TusOptions = tusOptionsFn ? tusOptionsFn(fileRecord) : {};
     return new Promise((resolve, reject) => {
@@ -317,6 +318,10 @@ class UploadHelper {
         onSuccess() {
           resolve(upload);
         },
+        onBeforeRequest: function (req) {
+            var xhr = req.getUnderlyingObject()
+            xhr.withCredentials = uploadWithCredentials;
+        },
       });
       fileRecord.tusUpload = upload;
       // Start the upload
@@ -331,6 +336,7 @@ class UploadHelper {
     fileRecords: FileRecord[],
     progressFn?: (progress: number) => void,
     tusOptionsFn?: TusOptionsFn,
+    uploadWithCredentials?: boolean,
   ) {
     let updateOverallProgress = () => {
       /* no op */
@@ -358,6 +364,7 @@ class UploadHelper {
           updateOverallProgress();
         },
         tusOptionsFn,
+        uploadWithCredentials,
       );
       promise.then(
         (response) => {

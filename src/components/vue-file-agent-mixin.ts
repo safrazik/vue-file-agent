@@ -195,6 +195,7 @@ export default Vue.extend({
             this.overallProgress = overallProgress;
           },
           this.resumable === true ? undefined : this.resumable,
+          this.uploadWithCredentials,
         );
       }
       return new Promise((resolve, reject) => {
