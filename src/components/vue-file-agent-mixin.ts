@@ -481,8 +481,8 @@ export default Vue.extend({
           /* no op */
         },
         (err) => {
-          this.fileRecords.splice(i, 1, fileRecord);
-          this.rawFileRecords.splice(i, 1, rawFileRecord);
+          this.fileRecords.splice(i, 0, fileRecord);
+          this.rawFileRecords.splice(i, 0, rawFileRecord);
         }
       );
     },
