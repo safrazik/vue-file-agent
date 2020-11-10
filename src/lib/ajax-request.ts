@@ -20,7 +20,7 @@ class AjaxRequest {
     message: string,
     code: string | null,
     request: XMLHttpRequest,
-    response?: AjaxResponse,
+    response?: AjaxResponse
   ): AjaxError {
     const error: AjaxError = new Error(message) as AjaxError;
     error.error = true;
@@ -48,7 +48,7 @@ class AjaxRequest {
     method: string,
     url: string,
     formData: AjaxRequestData | null = null,
-    configureFn?: ConfigureFn,
+    configureFn?: ConfigureFn
   ): Promise<AjaxResponse> {
     return new Promise((resolve, reject) => {
       // tslint:disable-next-line

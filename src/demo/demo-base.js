@@ -1,4 +1,4 @@
-window.getFileRecordsInitial = function() {
+window.getFileRecordsInitial = function () {
   var filesBaseUrl =
     window.location.port == '4000'
       ? '/vue-file-agent/website/assets/files/'
@@ -45,7 +45,7 @@ window.getFileRecordsInitial = function() {
       ext: 'zip',
     },
     { name: 'Document 3.docx', lastModified: 1564392646097, sizeText: '109 KB', size: 111303, type: '', ext: 'docx' },
-  ].forEach(function(fd) {
+  ].forEach(function (fd) {
     fd.url = filesBaseUrl + fd.name;
     // fd.progress = 10;
     fileRecords.push(fd);

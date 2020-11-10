@@ -34,7 +34,7 @@ class UploadHelper {
     headers: object,
     formData: FormData,
     progressCallback: ProgressFn,
-    configureFn?: ConfigureFn,
+    configureFn?: ConfigureFn
   ): Promise<AjaxResponse> {
     return ajax.post(url, formData, (xhr) => {
       this.addHeaders(xhr, headers);
@@ -49,7 +49,7 @@ class UploadHelper {
     url: string,
     headers: object,
     uploadData: any,
-    configureFn?: ConfigureFn,
+    configureFn?: ConfigureFn
   ): Promise<AjaxResponse> {
     if (typeof uploadData !== 'string') {
       uploadData = JSON.stringify(uploadData);
@@ -67,7 +67,7 @@ class UploadHelper {
     url: string,
     headers: object,
     uploadData: any,
-    configureFn?: ConfigureFn,
+    configureFn?: ConfigureFn
   ): Promise<AjaxResponse> {
     if (typeof uploadData !== 'string') {
       uploadData = JSON.stringify(uploadData);
@@ -127,7 +127,7 @@ class UploadHelper {
     fileRecords: FileRecord[],
     createFormData?: CreateFormDataFn,
     progressFn?: (progress: number) => void,
-    configureFn?: ConfigureFn,
+    configureFn?: ConfigureFn
   ) {
     let updateOverallProgress = () => {
       /* no op */
@@ -168,7 +168,7 @@ class UploadHelper {
           if (typeof configureFn === 'function') {
             configureFn(xhr);
           }
-        },
+        }
       );
       promises.push(
         new Promise((resolve, reject) => {
@@ -188,9 +188,9 @@ class UploadHelper {
               this.prepareUploadError(fileRecord, err);
               resolve(err);
               failedUploadsCount++;
-            } /* */,
+            } /* */
           );
-        }),
+        })
       );
       // promises.push(promise);
       // })(fileRecord);
@@ -213,7 +213,7 @@ class UploadHelper {
     headers: object,
     fileRecord: FileRecord,
     uploadData?: any,
-    configureFn?: ConfigureFn,
+    configureFn?: ConfigureFn
   ) {
     return new Promise((resolve, reject) => {
       if (fileRecord.xhr) {
@@ -234,7 +234,7 @@ class UploadHelper {
           (err) => {
             this.prepareUploadError(fileRecord, err);
             reject(err);
-          },
+          }
         );
       }
     });
@@ -245,7 +245,7 @@ class UploadHelper {
     headers: object,
     fileRecord: FileRecord,
     uploadData: any,
-    configureFn?: ConfigureFn,
+    configureFn?: ConfigureFn
   ) {
     return new Promise((resolve, reject) => {
       if (fileRecord.xhr) {
@@ -274,7 +274,7 @@ class UploadHelper {
           (err) => {
             this.prepareUploadError(fileRecord, err);
             reject(err);
-          },
+          }
         );
       }
     });
@@ -287,7 +287,7 @@ class UploadHelper {
     headers: object,
     progressCallback: ProgressFn,
     tusOptionsFn?: TusOptionsFn,
-    uploadWithCredentials?: boolean,
+    uploadWithCredentials?: boolean
   ) {
     const tusOptions: TusOptions = tusOptionsFn ? tusOptionsFn(fileRecord) : {};
     return new Promise((resolve, reject) => {
@@ -318,9 +318,9 @@ class UploadHelper {
         onSuccess() {
           resolve(upload);
         },
-        onBeforeRequest: function (req) {
-            var xhr = req.getUnderlyingObject()
-            xhr.withCredentials = uploadWithCredentials;
+        onBeforeRequest: function (req: any) {
+          const xhr: XMLHttpRequest = req.getUnderlyingObject();
+          xhr.withCredentials = uploadWithCredentials === true;
         },
       });
       fileRecord.tusUpload = upload;
@@ -336,7 +336,7 @@ class UploadHelper {
     fileRecords: FileRecord[],
     progressFn?: (progress: number) => void,
     tusOptionsFn?: TusOptionsFn,
-    uploadWithCredentials?: boolean,
+    uploadWithCredentials?: boolean
   ) {
     let updateOverallProgress = () => {
       /* no op */
@@ -364,7 +364,7 @@ class UploadHelper {
           updateOverallProgress();
         },
         tusOptionsFn,
-        uploadWithCredentials,
+        uploadWithCredentials
       );
       promise.then(
         (response) => {
@@ -373,7 +373,7 @@ class UploadHelper {
         },
         (err) => {
           this.prepareUploadError(fileRecord, err);
-        },
+        }
       );
       promises.push(promise);
     }
