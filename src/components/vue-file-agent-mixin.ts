@@ -71,6 +71,9 @@ export default Vue.extend({
     };
   },
   computed: {
+    withCredentials(): boolean | undefined {
+      return this.uploadWithCredentials;
+    },
     canAddMore(): boolean {
       if (!this.hasMultiple) {
         return this.fileRecords.length === 0;
@@ -116,7 +119,13 @@ export default Vue.extend({
       return new Promise((resolve, reject) => {
         const canvas = document.createElement('canvas');
         utils
-          .createVideoThumbnail(video, canvas, fileRecord.thumbnailSize, this.averageColor !== false)
+          .createVideoThumbnail(
+            video,
+            canvas,
+            fileRecord.thumbnailSize,
+            this.averageColor !== false,
+            this.withCredentials
+          )
           .then((thumbnail) => {
             fileRecord.imageColor = thumbnail.color;
             fileRecord.videoThumbnail = thumbnail.url;
@@ -158,12 +167,12 @@ export default Vue.extend({
       return this.getFileRecordOrRawInstance(fileRecordOrRaw, false) as FileRecord;
     },
     prepareConfigureFn(configureXhr?: ConfigureFn) {
-      const uploadWithCredentials = this.uploadWithCredentials;
-      if (uploadWithCredentials !== true && uploadWithCredentials !== false) {
+      const withCredentials = this.uploadWithCredentials;
+      if (withCredentials !== true && withCredentials !== false) {
         return configureXhr;
       }
       return (request: XMLHttpRequest) => {
-        request.withCredentials = uploadWithCredentials;
+        request.withCredentials = withCredentials;
         if (typeof configureXhr === 'function') {
           configureXhr(request);
         }
@@ -174,7 +183,7 @@ export default Vue.extend({
       headers: object,
       fileRecordsOrRaw: FileRecord[] | RawFileRecord[],
       createFormData?: (fileRecord: FileRecord) => FormData,
-      configureXhr?: ConfigureFn,
+      configureXhr?: ConfigureFn
     ): Promise<any> {
       const validFileRecords: FileRecord[] = [];
       const validFilesRawData: RawFileRecord[] = [];
@@ -195,7 +204,7 @@ export default Vue.extend({
             this.overallProgress = overallProgress;
           },
           this.resumable === true ? undefined : this.resumable,
-          this.uploadWithCredentials,
+          this.uploadWithCredentials
         );
       }
       return new Promise((resolve, reject) => {
@@ -208,7 +217,7 @@ export default Vue.extend({
             (overallProgress) => {
               this.overallProgress = overallProgress;
             },
-            this.prepareConfigureFn(configureXhr),
+            this.prepareConfigureFn(configureXhr)
           )
           .then(
             (res: any) => {
@@ -224,7 +233,7 @@ export default Vue.extend({
               }
               this.$emit('upload:error', err);
               reject(err);
-            },
+            }
           );
       });
     },
@@ -233,7 +242,7 @@ export default Vue.extend({
       headers: object,
       fileRecordOrRaw: FileRecord | RawFileRecord,
       uploadData?: any,
-      configureXhr?: ConfigureFn,
+      configureXhr?: ConfigureFn
     ): Promise<any> {
       if (this.fileRecords.length < 1) {
         this.overallProgress = 0;
@@ -256,7 +265,7 @@ export default Vue.extend({
               err.fileRecord = rawFileRecord;
               this.$emit('upload:delete:error', err);
               reject(err);
-            },
+            }
           );
       });
     },
@@ -265,7 +274,7 @@ export default Vue.extend({
       headers: object,
       fileRecord: FileRecord | RawFileRecord,
       uploadData?: any,
-      configureXhr?: ConfigureFn,
+      configureXhr?: ConfigureFn
     ): Promise<any> {
       fileRecord = this.getFileRecordInstance(fileRecord);
       const rawFileRecord = this.getFileRecordRawInstance(fileRecord);
@@ -282,7 +291,7 @@ export default Vue.extend({
               err.fileRecords = rawFileRecord;
               this.$emit('upload:update:error', err);
               reject(err);
-            },
+            }
           );
       });
     },
@@ -354,8 +363,9 @@ export default Vue.extend({
               accept: this.accept,
               thumbnailSize: this.thumbnailSize,
               averageColor: this.averageColor,
-            },
-          ),
+              withCredentials: this.withCredentials,
+            }
+          )
         );
       }
 
@@ -473,7 +483,7 @@ export default Vue.extend({
         (err) => {
           this.fileRecords.splice(i, 1, fileRecord);
           this.rawFileRecords.splice(i, 1, rawFileRecord);
-        },
+        }
       );
     },
     filenameChanged(fileRecord: FileRecord): void {
@@ -484,7 +494,7 @@ export default Vue.extend({
         },
         (err) => {
           fileRecord.customName = fileRecord.oldCustomName;
-        },
+        }
       );
     },
     checkValue(): void {
@@ -507,7 +517,8 @@ export default Vue.extend({
               accept: this.accept,
               thumbnailSize: this.thumbnailSize,
               averageColor: this.averageColor,
-            }),
+              withCredentials: this.withCredentials,
+            })
           );
           rawFileRecordsNew.push(rawFileRecords[i]);
         }

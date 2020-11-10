@@ -13,6 +13,7 @@ interface Options {
   read: boolean;
   thumbnailSize?: number;
   averageColor?: boolean;
+  withCredentials?: boolean;
 }
 
 interface ErrorText {
@@ -69,7 +70,7 @@ class FileRecord {
   public static getFromRaw(
     rawFileRecord: RawFileRecord,
     options: Options,
-    isSync = false,
+    isSync = false
   ): FileRecord | Promise<FileRecord> {
     const fileRecord = new FileRecord(rawFileRecord, options);
     const promise = fileRecord.setUrl(rawFileRecord.url as string);
@@ -116,7 +117,7 @@ class FileRecord {
           (err) => {
             // ignore error
             resolve(fileRecord);
-          },
+          }
         );
         return;
       }
@@ -333,7 +334,7 @@ class FileRecord {
           },
           (err) => {
             resolve(this);
-          },
+          }
         );
         return;
       }

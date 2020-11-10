@@ -4,7 +4,17 @@ import FileRecord, { RawFileRecord, Options } from '../lib/file-record';
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['value', 'deletable', 'editable', 'linkable', 'errorText', 'disabled', 'thumbnailSize', 'averageColor'],
+  props: [
+    'value',
+    'deletable',
+    'editable',
+    'linkable',
+    'errorText',
+    'disabled',
+    'thumbnailSize',
+    'averageColor',
+    'withCredentials',
+  ],
   components: {
     VueFileIcon,
   },
@@ -32,12 +42,14 @@ export default Vue.extend({
       FileRecord.fromRaw(this.value, {
         thumbnailSize: this.thumbnailSize,
         averageColor: this.averageColor,
+        withCredentials: this.withCredentials,
       } as Options).then((fileRecord) => {
         this.fileRecord = fileRecord;
       });
       this.fileRecord = FileRecord.fromRawSync(this.value, {
         thumbnailSize: this.thumbnailSize,
         averageColor: this.averageColor,
+        withCredentials: this.withCredentials,
       } as Options);
     },
     createThumbnail(fileRecord: FileRecord, video: HTMLVideoElement) {
@@ -47,7 +59,13 @@ export default Vue.extend({
       }
       const canvas = document.createElement('canvas');
       utils
-        .createVideoThumbnail(video, canvas, this.fileRecord.thumbnailSize, this.averageColor !== false)
+        .createVideoThumbnail(
+          video,
+          canvas,
+          this.fileRecord.thumbnailSize,
+          this.averageColor !== false,
+          this.withCredentials === true
+        )
         .then((thumbnail) => {
           fileRecord.imageColor = thumbnail.color;
           fileRecord.videoThumbnail = thumbnail.url;

@@ -76,8 +76,11 @@ class Utils {
     canvas: HTMLCanvasElement,
     thumbnailSize: number,
     calculateAverageColor?: boolean,
+    withCredentials?: boolean
   ): Promise<VideoThumbnail> {
-    video.setAttribute('crossOrigin', 'anonymous'); // fix cross origin issue
+    if (withCredentials) {
+    }
+    video.setAttribute('crossOrigin', withCredentials ? 'use-credentials' : 'anonymous'); // fix cross origin issue
     return new Promise((resolve, reject) => {
       let loadedmetadata = false;
       let loadeddata = false;
@@ -192,7 +195,7 @@ class Utils {
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     width: number,
-    height: number,
+    height: number
   ) {
     // set proper canvas dimensions before transform & export
     if (4 < srcOrientation && srcOrientation < 9) {
@@ -236,7 +239,7 @@ class Utils {
     widthLimit: number,
     heightLimit?: number,
     orientation?: number,
-    calculateAverageColor?: boolean,
+    calculateAverageColor?: boolean
   ): ImageThumbnail | null {
     let width = image.width;
     let height = image.height;
@@ -299,7 +302,7 @@ class Utils {
     image: HTMLImageElement,
     url: string,
     thumbnailSize: number,
-    calculateAverageColor?: boolean,
+    calculateAverageColor?: boolean
   ): Promise<ImageThumbnail | null> {
     return new Promise((resolve, reject) => {
       image.onload = () => {
@@ -328,7 +331,7 @@ class Utils {
     image: HTMLImageElement,
     file: File,
     thumbnailSize: number,
-    calculateAverageColor?: boolean,
+    calculateAverageColor?: boolean
   ): Promise<ImageThumbnail | null> {
     return new Promise((resolve, reject) => {
       if (file.type.indexOf('image') === -1) {
@@ -367,9 +370,10 @@ class Utils {
     file?: File,
     url?: string,
     calculateAverageColor?: boolean,
+    withCredentials?: boolean
   ): Promise<ImageThumbnail | null> {
     const image = new Image();
-    image.setAttribute('crossOrigin', 'anonymous');
+    image.setAttribute('crossOrigin', withCredentials ? 'use-credentials' : 'anonymous');
     return url
       ? this.resizeImageUrl(image, url, thumbnailSize, calculateAverageColor)
       : this.resizeImageFile(image, file as File, thumbnailSize, calculateAverageColor);

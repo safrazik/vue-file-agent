@@ -74,6 +74,7 @@
                 :errorText="errorText"
                 :disabled="disabled"
                 :thumbnailSize="thumbnailSize"
+                :withCredentials="withCredentials"
                 @remove="removeFileRecord($event)"
                 @rename="filenameChanged($event)"
                 class=""
