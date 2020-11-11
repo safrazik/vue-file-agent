@@ -450,7 +450,15 @@ Content is placed (before) outside of the file input. Files can be dragged here.
 
 ### file-preview
 
-Preview block of each FileRecord
+Preview block of each FileRecord. `fileRecord` and `index` slot properties are available
+
+### file-preview-before
+
+Content before preview block of each FileRecord. `fileRecord` and `index` slot properties are available
+
+### file-preview-after
+
+Content after preview block of each FileRecord. `fileRecord` and `index` slot properties are available
 
 ### file-preview-new
 
