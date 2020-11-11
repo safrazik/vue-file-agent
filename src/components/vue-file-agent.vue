@@ -64,6 +64,8 @@
                 <VueFileIcon name="system-sortable-handle"></VueFileIcon>
               </slot>
             </span>
+            <slot name="file-preview-before" :fileRecord="fileRecord" :fileData="fileRecord" :index="index">
+            </slot>
             <slot name="file-preview" :fileRecord="fileRecord" :fileData="fileRecord" :index="index">
               <VueFilePreview
                 :averageColor="averageColor"
@@ -79,6 +81,8 @@
                 @rename="filenameChanged($event)"
                 class=""
               ></VueFilePreview>
+            </slot>
+            <slot name="file-preview-after" :fileRecord="fileRecord" :fileData="fileRecord" :index="index">
             </slot>
           </component>
           <!-- </template> -->
