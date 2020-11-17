@@ -62,7 +62,7 @@ Disables all user interactions on the component
 
 boolean, default `false`
 
-Whether the file name can be edited. The (modified) name can be retrieved by `fileRecord.name(withoutExtension = true)`
+Whether the file name can be edited. The (modified) name can be retrieved by `fileRecord.name(withoutExtension = true)`. See also [rename](#rename) event.
 
 ### errorText
 
@@ -348,6 +348,12 @@ E.g
   }
 </script>
 ```
+
+### rename
+
+`$event`: FileRecord instance
+
+Fired as soon as file is renamed. See also [editable](#editable) prop.
 
 ### select
 
