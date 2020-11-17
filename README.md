@@ -163,7 +163,7 @@ or with script tag
         fileRecords: [],
         uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3',
         uploadHeaders: { 'X-Test-Header': 'vue-file-agent' },
-        fileRecordsForUpload: [],
+        fileRecordsForUpload: [], // maintain an upload queue
       };
     },
     methods: {
@@ -183,7 +183,10 @@ or with script tag
       onBeforeDelete: function (fileRecord) {
         var i = this.fileRecordsForUpload.indexOf(fileRecord);
         if (i !== -1) {
+        // queued file, not yet uploaded. Just remove from the arrays
           this.fileRecordsForUpload.splice(i, 1);
+          var k = this.fileRecords.indexOf(fileRecord);
+          if (k !== -1) this.fileRecords.splice(k, 1);
         } else {
           if (confirm('Are you sure you want to delete?')) {
             this.$refs.vueFileAgent.deleteFileRecord(fileRecord); // will trigger 'delete' event

@@ -495,7 +495,10 @@ export default {
     onBeforeDelete: function (fileRecord) {
       var i = this.fileRecordsForUpload.indexOf(fileRecord);
       if (i !== -1) {
+        // queued file, not yet uploaded. Just remove from the arrays
         this.fileRecordsForUpload.splice(i, 1);
+          var k = this.fileRecords.indexOf(fileRecord);
+          if (k !== -1) this.fileRecords.splice(k, 1);
       } else {
         if (confirm('Are you sure you want to delete?')) {
           this.$refs.vueFileAgent.deleteFileRecord(fileRecord); // will trigger 'delete' event
