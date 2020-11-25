@@ -391,14 +391,23 @@ class UploadHelper {
       // const shouldTerminate = true;
       const abort = (shouldTerminate: boolean) => {
         return new Promise((res, rej) => {
-          fileRecord.tusUpload.abort(shouldTerminate, (err: any) => {
-            if (err) {
+          // If using tus-upload-client v1.x, `abort` takes two arguments and the second is a callback.
+          // If using v2.x, it takes only one argument and returns a promise.
+          if (fileRecord.tusUpload.abort.length === 2) {
+            fileRecord.tusUpload.abort(shouldTerminate, (err: any) => {
+              if (err) {
+                this.prepareUploadError(fileRecord, err);
+                rej(err);
+                return;
+              }
+              res();
+            });
+          } else {
+            fileRecord.tusUpload.abort(shouldTerminate).then(res, (err: any) => {
               this.prepareUploadError(fileRecord, err);
               rej(err);
-              return;
-            }
-            res();
-          });
+            });
+          }
         });
       };
       abort(false).then(() => {
