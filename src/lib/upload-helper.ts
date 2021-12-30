@@ -8,6 +8,7 @@ type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
 export interface TusOptions {
   retryDelays?: number[];
   metadata?: any;
+  chunkSize?: number;
 }
 
 export type TusOptionsFn = (fileRecord: FileRecord) => TusOptions;
@@ -301,6 +302,7 @@ class UploadHelper {
         endpoint: url,
         headers,
         retryDelays: tusOptions.retryDelays ? tusOptions.retryDelays : [0, 3000, 5000, 10000, 20000],
+        chunkSize: tusOptions.chunkSize ? tusOptions.chunkSize : tus.defaultOptions.chunkSize,
         metadata: tusOptions.metadata
           ? tusOptions.metadata
           : {
