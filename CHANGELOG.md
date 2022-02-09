@@ -2,7 +2,7 @@
 
 ### 1.7.1
 
-- [BREAKING CHANGE] Added support for `beforedelete` event and `deleteFileRecord` method. [See Usage](https://safrazik.com/vue-file-agent/docs/#beforedelete)
+- [BREAKING CHANGE] Added support for `beforedelete` event and `deleteFileRecord` method. [See Usage](https://safrazik.github.io/vue-file-agent/docs/#beforedelete)
 
 ### 1.7.0 Elegant Euphonia
 

@@ -2,7 +2,7 @@ window.getFileRecordsInitial = function () {
   var filesBaseUrl =
     window.location.port == '4000'
       ? '/vue-file-agent/website/assets/files/'
-      : 'https://safrazik.com/vue-file-agent/website/assets/files/';
+      : 'https://safrazik.github.io/vue-file-agent/website/assets/files/';
 
   var videoData = {
     name: 'Golf.mp4',

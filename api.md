@@ -280,8 +280,8 @@ Demo 1. Preloading Existing Files (<a target="_blank" href="https://codepen.io/s
               "width": 640,
               "height": 360
             },
-            "url": "https://safrazik.com/vue-file-agent/website/assets/files/Golf.mp4",
-            "videoThumbnail": "https://safrazik.com/vue-file-agent/website/assets/files/Golf-thumb.jpg",
+            "url": "https://safrazik.github.io/vue-file-agent/website/assets/files/Golf.mp4",
+            "videoThumbnail": "https://safrazik.github.io/vue-file-agent/website/assets/files/Golf-thumb.jpg",
             "imageColor": [66, 62, 45]
           },
           {
