@@ -194,8 +194,9 @@ export default Vue.extend({
           validFilesRawData.push(this.getFileRecordRawInstance(fileRecord));
         }
       }
+      let promise: Promise<any>;
       if (this.resumable) {
-        return uploader.tusUpload(
+        promise = uploader.tusUpload(
           plugins.tus,
           url,
           headers,
@@ -206,35 +207,37 @@ export default Vue.extend({
           this.resumable === true ? undefined : this.resumable,
           this.uploadWithCredentials
         );
+
+      } else {
+        promise = uploader.upload(
+          url,
+          headers,
+          validFileRecords,
+          createFormData,
+          (overallProgress) => {
+             this.overallProgress = overallProgress;
+          },
+          this.prepareConfigureFn(configureXhr)
+        );
       }
+
       return new Promise((resolve, reject) => {
-        uploader
-          .upload(
-            url,
-            headers,
-            validFileRecords,
-            createFormData,
-            (overallProgress) => {
-              this.overallProgress = overallProgress;
-            },
-            this.prepareConfigureFn(configureXhr)
-          )
-          .then(
-            (res: any) => {
-              for (let i = 0; i < res.length; i++) {
-                res[i].fileRecord = validFilesRawData[i];
-              }
-              this.$emit('upload', res);
-              resolve(res);
-            },
-            (err: any) => {
-              for (let i = 0; i < err.length; i++) {
-                err[i].fileRecord = validFilesRawData[i];
-              }
-              this.$emit('upload:error', err);
-              reject(err);
+        promise.then(
+          (res: any) => {
+            for (let i = 0; i < res.length; i++) {
+              res[i].fileRecord = validFilesRawData[i];
             }
-          );
+            this.$emit('upload', res);
+            resolve(res);
+          },
+          (err: any) => {
+            for (let i = 0; i < err.length; i++) {
+              err[i].fileRecord = validFilesRawData[i];
+            }
+            this.$emit('upload:error', err);
+            reject(err);
+          }
+        );
       });
     },
     deleteUpload(
