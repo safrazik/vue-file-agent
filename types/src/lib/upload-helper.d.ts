@@ -5,6 +5,7 @@ declare type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
 export interface TusOptions {
     retryDelays?: number[];
     metadata?: any;
+    chunkSize?: number;
 }
 export declare type TusOptionsFn = (fileRecord: FileRecord) => TusOptions;
 declare class UploadHelper {
