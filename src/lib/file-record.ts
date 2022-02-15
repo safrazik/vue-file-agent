@@ -301,7 +301,7 @@ class FileRecord {
   }
 
   public isImage(): boolean {
-    return this.file && !!this.file.type.match(/image((?!vnd).)*$/i);
+    return this.file && this.file.type !== 'image/x-wmf' && !!this.file.type.match(/image((?!vnd).)*$/i);
   }
 
   public isVideo(): boolean {
