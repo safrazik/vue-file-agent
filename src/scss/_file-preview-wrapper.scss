@@ -49,6 +49,16 @@
     }
   }
 
+  .file-loader-overlay {
+    content: url('../assets/loading-spinner.svg');
+    position: absolute;
+    top: 30%;
+    right: 0;
+    bottom: 0;
+    left: 30%;
+    z-index: 4;
+  }
+
   .file-category-audio-playable,
   .file-category-video-playable {
     .file-preview .file-icon {

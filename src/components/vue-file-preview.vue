@@ -38,15 +38,16 @@
         </span>
       </span>
       <span class="file-preview-overlay"></span>
+      <span class="file-loader-overlay" v-if="isLoading"></span>
       <span
         class="thumbnail"
         style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
         v-if="fileRecord.isImage() || fileRecord.isPlayableVideo()"
       >
         <a v-if="hasLinkableUrl" :href="fileRecord.url()" target="_blank" :title="fileRecord.name()">
-          <img class="file-preview-img" :src="fileRecord.src()" />
+          <img class="file-preview-img" ref="imgRef" :src="fileRecord.src()" />
         </a>
-        <img v-else class="file-preview-img" :src="fileRecord.src()" />
+        <img v-else class="file-preview-img" :src="fileRecord.src()" ref="imgRef" />
       </span>
       <span class="file-ext">{{ fileRecord.ext() }}</span>
       <span class="file-size">{{ fileRecord.size() }}</span>
@@ -109,5 +110,22 @@ import mixin from './vue-file-preview-mixin';
 
 export default Vue.extend({
   mixins: [mixin],
+
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
+  mounted() {
+    if (this.fileRecord.isImage() || this.fileRecord.isPlayableVideo()) this.handleFileLoadEvent();
+  },
+  methods: {
+    handleFileLoadEvent() {
+      this.isLoading = true;
+      this.$refs.imgRef.addEventListener('load', () => {
+        this.isLoading = false;
+      });
+    },
+  },
 });
 </script>
