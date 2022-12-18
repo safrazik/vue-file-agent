@@ -6,6 +6,16 @@
       height: 53px;
       padding: 0;
 
+      .file-loader-overlay {
+        content: url('../assets/loading-spinner.svg');
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 4;
+      }
+
       &::before,
       &::after {
         box-shadow: none;
