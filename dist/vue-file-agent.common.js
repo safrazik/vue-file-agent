@@ -1432,6 +1432,10 @@ var Utils = /** @class */ (function () {
     Utils.prototype.resizeImage = function (thumbnailSize, file, url, calculateAverageColor, withCredentials) {
         var image = new Image();
         image.setAttribute('crossOrigin', withCredentials ? 'use-credentials' : 'anonymous');
+        // FLAG: tif/tiff is not supported by most modern browsers
+        if (file === null || file === void 0 ? void 0 : file.type.includes('image/tif')) {
+            return Promise.reject(new Error('Unsupported image format for thumbnail preview'));
+        }
         return url
             ? this.resizeImageUrl(image, url, thumbnailSize, calculateAverageColor)
             : this.resizeImageFile(image, file, thumbnailSize, calculateAverageColor);

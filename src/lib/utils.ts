@@ -374,7 +374,10 @@ class Utils {
   ): Promise<ImageThumbnail | null> {
     const image = new Image();
     image.setAttribute('crossOrigin', withCredentials ? 'use-credentials' : 'anonymous');
-
+    // FLAG: tif/tiff is not supported by most modern browsers
+    if (file?.type.includes('image/tif')) {
+      return Promise.reject(new Error('Unsupported image format for thumbnail preview'));
+    }
     return url
       ? this.resizeImageUrl(image, url, thumbnailSize, calculateAverageColor)
       : this.resizeImageFile(image, file as File, thumbnailSize, calculateAverageColor);
