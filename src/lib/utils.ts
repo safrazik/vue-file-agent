@@ -354,7 +354,7 @@ class Utils {
       if (!(file instanceof File)) {
         return reject('Invalid file object. Use url or a valid instance of File class');
       }
-      if (createObjectURL && revokeObjectURL) {
+      if (createObjectURL && !!revokeObjectURL) {
         shouldRevoke = true;
         image.src = createObjectURL(file);
         return;
@@ -374,6 +374,7 @@ class Utils {
   ): Promise<ImageThumbnail | null> {
     const image = new Image();
     image.setAttribute('crossOrigin', withCredentials ? 'use-credentials' : 'anonymous');
+
     return url
       ? this.resizeImageUrl(image, url, thumbnailSize, calculateAverageColor)
       : this.resizeImageFile(image, file as File, thumbnailSize, calculateAverageColor);

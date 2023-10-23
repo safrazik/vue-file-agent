@@ -1,4 +1,4 @@
-export declare type ConfigureFn = (request: XMLHttpRequest) => any;
+export type ConfigureFn = (request: XMLHttpRequest) => any;
 export interface AjaxResponse {
     data: any;
     status: number;
@@ -6,7 +6,7 @@ export interface AjaxResponse {
     headers: string;
     request: XMLHttpRequest;
 }
-export declare type AjaxRequestData = FormData | any;
+export type AjaxRequestData = FormData | any;
 export interface AjaxError extends Error {
     error: true;
     code: string;

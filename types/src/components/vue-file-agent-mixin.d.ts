@@ -1,8 +1,8 @@
+import VueFileIcon from './vue-file-icon.vue';
 import FileRecord from '../lib/file-record';
 import { RawFileRecord } from '../lib/file-record';
-import Vue from 'vue';
 import { ConfigureFn } from '../lib/ajax-request';
-declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
+declare const _default: import("vue/types/vue").ExtendedVue<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>, {
     fileRecords: FileRecord[];
     rawFileRecords: RawFileRecord[];
     isDragging: boolean;
@@ -18,10 +18,10 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
     getFileRecordOrRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord, raw: boolean): FileRecord | RawFileRecord;
     getFileRecordRawInstance(fileRecordOrRaw: FileRecord | RawFileRecord): RawFileRecord;
     getFileRecordInstance(fileRecordOrRaw: FileRecord | RawFileRecord): FileRecord;
-    prepareConfigureFn(configureXhr?: ConfigureFn | undefined): ConfigureFn | undefined;
-    upload(url: string, headers: object, fileRecordsOrRaw: FileRecord[] | RawFileRecord[], createFormData?: ((fileRecord: FileRecord) => FormData) | undefined, configureXhr?: ConfigureFn | undefined): Promise<any>;
-    deleteUpload(url: string, headers: object, fileRecordOrRaw: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
-    updateUpload(url: string, headers: object, fileRecord: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn | undefined): Promise<any>;
+    prepareConfigureFn(configureXhr?: ConfigureFn): ConfigureFn | undefined;
+    upload(url: string, headers: object, fileRecordsOrRaw: FileRecord[] | RawFileRecord[], createFormData?: ((fileRecord: FileRecord) => FormData) | undefined, configureXhr?: ConfigureFn): Promise<any>;
+    deleteUpload(url: string, headers: object, fileRecordOrRaw: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn): Promise<any>;
+    updateUpload(url: string, headers: object, fileRecord: FileRecord | RawFileRecord, uploadData?: any, configureXhr?: ConfigureFn): Promise<any>;
     autoUpload(fileRecords: FileRecord[] | RawFileRecord[]): Promise<any>;
     autoDeleteUpload(fileRecord: FileRecord | RawFileRecord): Promise<any>;
     autoUpdateUpload(fileRecord: FileRecord): Promise<any>;
@@ -45,11 +45,12 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue, {
         collection: any;
     }): void;
 }, {
+    withCredentials: boolean | undefined;
     canAddMore: boolean;
     helpTextComputed: string;
     isDeletable: boolean;
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+}, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>, {}, import("vue/types/v3-component-options").ComponentOptionsMixin, import("vue/types/v3-component-options").ComponentOptionsMixin>;
 export default _default;

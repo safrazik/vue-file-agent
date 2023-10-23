@@ -1,12 +1,12 @@
 import { ConfigureFn, AjaxResponse, AjaxError } from './ajax-request';
 import FileRecord from './file-record';
-declare type ProgressFn = (event: ProgressEvent) => void;
-declare type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
+type ProgressFn = (event: ProgressEvent) => void;
+type CreateFormDataFn = (fileRecord: FileRecord) => FormData;
 export interface TusOptions {
     retryDelays?: number[];
     metadata?: any;
 }
-export declare type TusOptionsFn = (fileRecord: FileRecord) => TusOptions;
+export type TusOptionsFn = (fileRecord: FileRecord) => TusOptions;
 declare class UploadHelper {
     addHeaders(xhr: XMLHttpRequest, headers: object): XMLHttpRequest;
     doUpload(url: string, headers: object, formData: FormData, progressCallback: ProgressFn, configureFn?: ConfigureFn): Promise<AjaxResponse>;

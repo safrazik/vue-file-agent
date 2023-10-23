@@ -1,4 +1,4 @@
-export declare type RGBA = [number, number, number, number];
+export type RGBA = [number, number, number, number];
 export interface VideoThumbnail {
     url: string;
     color?: RGBA;
@@ -13,7 +13,7 @@ export interface ImageThumbnail {
 declare class Utils {
     arrayMove(arr: any[], previousIndex: number, newIndex: number): any[];
     getAverageColor(arr: Uint8ClampedArray): RGBA | undefined;
-    createVideoThumbnail(video: HTMLVideoElement, canvas: HTMLCanvasElement, thumbnailSize: number, calculateAverageColor?: boolean): Promise<VideoThumbnail>;
+    createVideoThumbnail(video: HTMLVideoElement, canvas: HTMLCanvasElement, thumbnailSize: number, calculateAverageColor?: boolean, withCredentials?: boolean): Promise<VideoThumbnail>;
     getDataURL(file: File): Promise<string>;
     getImageOrientationFromArrayBuffer(buffer: ArrayBuffer): number;
     getImageOrientation(file: File): Promise<number>;
@@ -21,7 +21,7 @@ declare class Utils {
     getImageResized(image: HTMLImageElement, widthLimit: number, heightLimit?: number, orientation?: number, calculateAverageColor?: boolean): ImageThumbnail | null;
     resizeImageUrl(image: HTMLImageElement, url: string, thumbnailSize: number, calculateAverageColor?: boolean): Promise<ImageThumbnail | null>;
     resizeImageFile(image: HTMLImageElement, file: File, thumbnailSize: number, calculateAverageColor?: boolean): Promise<ImageThumbnail | null>;
-    resizeImage(thumbnailSize: number, file?: File, url?: string, calculateAverageColor?: boolean): Promise<ImageThumbnail | null>;
+    resizeImage(thumbnailSize: number, file?: File, url?: string, calculateAverageColor?: boolean, withCredentials?: boolean): Promise<ImageThumbnail | null>;
     getSizeFormatted(bytes: number): string;
     getSizeParsed(size: string): number;
     getColorForText(text: string): string;

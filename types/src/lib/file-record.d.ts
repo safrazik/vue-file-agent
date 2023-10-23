@@ -10,6 +10,7 @@ interface Options {
     read: boolean;
     thumbnailSize?: number;
     averageColor?: boolean;
+    withCredentials?: boolean;
 }
 interface ErrorText {
     common?: string;

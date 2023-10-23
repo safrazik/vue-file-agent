@@ -1,18 +1,15 @@
+import VueFileIcon from './components/vue-file-icon.vue';
 import VueFileAgentMixin from './components/vue-file-agent-mixin';
 import VueFilePreviewMixin from './components/vue-file-preview-mixin';
 import utils from './lib/utils';
 import plugins from './lib/plugins';
 import FileRecord from './lib/file-record';
-import _Vue from 'vue';
 export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
-    VueFileIcon: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, {
-        viewBoxComputed: string;
-        icon: import("./lib/icons").SvgIcon;
-    }, Record<"ext" | "name" | "viewBox", any>>;
-    VueFilePreview: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
-    VueFileAgent: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
-    component: import("vue/types/vue").ExtendedVue<_Vue, unknown, unknown, unknown, Record<never, any>>;
-    mixin: import("vue/types/vue").ExtendedVue<_Vue, {
+    VueFileIcon: import("vue").VueConstructor<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>>;
+    VueFilePreview: import("vue").VueConstructor<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>>;
+    VueFileAgent: import("vue").VueConstructor<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>>;
+    component: import("vue").VueConstructor<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>>;
+    mixin: import("vue/types/vue").ExtendedVue<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>, {
         fileRecords: FileRecord[];
         rawFileRecords: import("./lib/file-record").RawFileRecord[];
         isDragging: boolean;
@@ -55,17 +52,18 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
             collection: any;
         }): void;
     }, {
+        withCredentials: boolean | undefined;
         canAddMore: boolean;
         helpTextComputed: string;
         isDeletable: boolean;
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+    }, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>, {}, import("vue/types/v3-component-options").ComponentOptionsMixin, import("vue/types/v3-component-options").ComponentOptionsMixin>;
     plugins: {
         tus: any;
     };
-    VueFileAgentMixin: import("vue/types/vue").ExtendedVue<_Vue, {
+    VueFileAgentMixin: import("vue/types/vue").ExtendedVue<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>, {
         fileRecords: FileRecord[];
         rawFileRecords: import("./lib/file-record").RawFileRecord[];
         isDragging: boolean;
@@ -108,14 +106,15 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
             collection: any;
         }): void;
     }, {
+        withCredentials: boolean | undefined;
         canAddMore: boolean;
         helpTextComputed: string;
         isDeletable: boolean;
         isSortable: boolean;
         hasMultiple: boolean;
         shouldRead: boolean;
-    }, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
-    VueFilePreviewMixin: import("vue/types/vue").ExtendedVue<_Vue, {
+    }, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>, {}, import("vue/types/v3-component-options").ComponentOptionsMixin, import("vue/types/v3-component-options").ComponentOptionsMixin>;
+    VueFilePreviewMixin: import("vue/types/vue").ExtendedVue<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>, {
         isEditInputFocused: boolean;
         isEditCancelable: boolean;
         fileRecord: FileRecord;
@@ -133,11 +132,11 @@ export declare class VueFileAgentPlugin implements Vue.PluginObject<any> {
         dismissError(): void;
     }, {
         hasLinkableUrl: boolean;
-    }, Record<"averageColor" | "deletable" | "disabled" | "editable" | "errorText" | "linkable" | "thumbnailSize" | "value", any>>;
+    }, Record<"averageColor" | "deletable" | "disabled" | "editable" | "errorText" | "linkable" | "thumbnailSize" | "value" | "withCredentials", any>, {}, import("vue/types/v3-component-options").ComponentOptionsMixin, import("vue/types/v3-component-options").ComponentOptionsMixin>;
     install: Vue.PluginFunction<any>;
 }
 declare const vfaPlugin: VueFileAgentPlugin;
-export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
+export declare const mixin: import("vue/types/vue").ExtendedVue<VueFileIcon<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => VueFileIcon<Record<string, any>, Record<string, any>, never, never, any>>, {
     fileRecords: FileRecord[];
     rawFileRecords: import("./lib/file-record").RawFileRecord[];
     isDragging: boolean;
@@ -180,13 +179,14 @@ export declare const mixin: import("vue/types/vue").ExtendedVue<_Vue, {
         collection: any;
     }): void;
 }, {
+    withCredentials: boolean | undefined;
     canAddMore: boolean;
     helpTextComputed: string;
     isDeletable: boolean;
     isSortable: boolean;
     hasMultiple: boolean;
     shouldRead: boolean;
-}, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>>;
+}, Record<"accept" | "auto" | "averageColor" | "capture" | "compact" | "deletable" | "disabled" | "editable" | "errorText" | "helpText" | "linkable" | "maxFiles" | "maxSize" | "meta" | "multiple" | "progress" | "read" | "readonly" | "resumable" | "sortable" | "theme" | "thumbnailSize" | "uploadConfig" | "uploadHeaders" | "uploadUrl" | "uploadWithCredentials" | "value", any>, {}, import("vue/types/v3-component-options").ComponentOptionsMixin, import("vue/types/v3-component-options").ComponentOptionsMixin>;
 export { VueFileAgentMixin, VueFilePreviewMixin };
 export { utils, FileRecord, plugins };
 export declare const FileData: typeof FileRecord;

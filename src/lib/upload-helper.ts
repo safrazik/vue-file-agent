@@ -247,7 +247,7 @@ class UploadHelper {
     uploadData: any,
     configureFn?: ConfigureFn
   ) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: any, reject) => {
       if (fileRecord.xhr) {
         // probably updated while being uploaded.
         fileRecord.xhrQueue = () => {
@@ -381,7 +381,7 @@ class UploadHelper {
   }
 
   public tusDeleteUpload(tus: any, url: string, headers: object, fileRecord: FileRecord) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: any, reject) => {
       if (!tus) {
         return reject('tus required');
       }
@@ -390,7 +390,7 @@ class UploadHelper {
       }
       // const shouldTerminate = true;
       const abort = (shouldTerminate: boolean) => {
-        return new Promise((res, rej) => {
+        return new Promise((res: any, rej) => {
           fileRecord.tusUpload.abort(shouldTerminate, (err: any) => {
             if (err) {
               this.prepareUploadError(fileRecord, err);
