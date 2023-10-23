@@ -124,7 +124,7 @@ export default Vue.extend({
             canvas,
             fileRecord.thumbnailSize,
             this.averageColor !== false,
-            this.withCredentials
+            // this.withCredentials
           )
           .then((thumbnail) => {
             fileRecord.imageColor = thumbnail.color;
@@ -351,6 +351,7 @@ export default Vue.extend({
       if (this.hasMultiple && this.maxFiles && files.length > this.maxFiles - this.fileRecords.length) {
         files = files.slice(0, this.maxFiles - this.fileRecords.length);
       }
+
       for (const file of files) {
         fileRecords.push(
           new FileRecord(
@@ -381,7 +382,6 @@ export default Vue.extend({
       } else {
         this.fileRecords = fileRecords;
       }
-
       FileRecord.readFiles(fileRecords).then((fileRecordsNew: FileRecord[]) => {
         const allFileRecordsRaw = FileRecord.toRawArray(this.fileRecords);
         this.rawFileRecords = allFileRecordsRaw;

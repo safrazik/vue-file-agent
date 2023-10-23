@@ -64,7 +64,7 @@ export default Vue.extend({
           canvas,
           this.fileRecord.thumbnailSize,
           this.averageColor !== false,
-          this.withCredentials === true
+          // this.withCredentials === true
         )
         .then((thumbnail) => {
           fileRecord.imageColor = thumbnail.color;
